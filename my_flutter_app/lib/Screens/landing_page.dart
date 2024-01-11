@@ -83,7 +83,7 @@ class LandingPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
+                  const Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -101,7 +101,7 @@ class LandingPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(width: 80),
+                  const SizedBox(width: 80),
                   Expanded(
                     child: DecoratedBox(
                       decoration: const BoxDecoration(
@@ -127,14 +127,14 @@ class LandingPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Premium Class Program',
                         style: TextStyle(
                             fontSize: 40,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey),
                       ),
-                      SizedBox(height: 65),
+                      const SizedBox(height: 65),
                       Container(
                         padding: const EdgeInsets.only(left: 60, right: 60),
                         child: Row(
@@ -150,7 +150,7 @@ class LandingPage extends StatelessWidget {
                                       'assets/component-2.png',
                                       fit: BoxFit.fill,
                                     ),
-                                    ListTile(
+                                    const ListTile(
                                       title: Text(
                                         'Mentor Terpercaya & Terverifikasi baik',
                                         textAlign: TextAlign.center,
@@ -181,7 +181,7 @@ class LandingPage extends StatelessWidget {
                                       'assets/component-2.png',
                                       fit: BoxFit.fill,
                                     ),
-                                    ListTile(
+                                    const ListTile(
                                       title: Text(
                                         'Mentor Terpercaya & Terverifikasi baik',
                                         textAlign: TextAlign.center,
@@ -211,7 +211,7 @@ class LandingPage extends StatelessWidget {
                                       'assets/component-2.png',
                                       fit: BoxFit.fill,
                                     ),
-                                    ListTile(
+                                    const ListTile(
                                       title: Text(
                                         'Mentor Terpercaya & Terverifikasi baik',
                                         textAlign: TextAlign.center,
@@ -248,7 +248,7 @@ class LandingPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
+                        const Row(
                           children: [
                             Text(
                               'Session Gratis',
@@ -259,7 +259,7 @@ class LandingPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 45),
+                        const SizedBox(height: 45),
                         Container(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -278,8 +278,8 @@ class LandingPage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 45),
-                              Expanded(
+                              const SizedBox(height: 45),
+                              const Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
@@ -309,11 +309,13 @@ class LandingPage extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 150, vertical: 50),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 150, vertical: 50),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'About',
@@ -322,34 +324,43 @@ class LandingPage extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black),
                           ),
-                          SizedBox(height: 45),
-                          Text(
-                            'Mentoring',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.grey),
+                          SizedBox(height: 30),
+                          Container(
+                            padding: const EdgeInsets.only(left: 8),
+                            width: 200,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Mentoring',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.grey),
+                                ),
+                                SizedBox(height: 25),
+                                Text(
+                                  'Session',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.grey),
+                                ),
+                                SizedBox(height: 25),
+                                Text(
+                                  'Premium Class',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.grey),
+                                ),
+                              ],
+                            ),
                           ),
-                          SizedBox(height: 45),
-                          Text(
-                            'Session',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.grey),
-                          ),
-                          SizedBox(height: 45),
-                          Text(
-                            'Premium Class',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.grey),
-                          ),
-                          SizedBox(height: 45),
                         ],
                       ),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Help',
@@ -358,31 +369,84 @@ class LandingPage extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black),
                           ),
-                          SizedBox(height: 45),
-                          Text(
-                            'Privacy',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.grey),
+                          SizedBox(height: 30),
+                          Container(
+                            padding: const EdgeInsets.only(left: 8),
+                            width: 200,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Privacy',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.grey),
+                                ),
+                                SizedBox(height: 25),
+                                Text(
+                                  'Blog',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.grey),
+                                ),
+                                SizedBox(height: 25),
+                                Text(
+                                  'Conditions',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.grey),
+                                ),
+                              ],
+                            ),
                           ),
-                          SizedBox(height: 45),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
                           Text(
-                            'Blog',
+                            'Contact Us',
                             style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.grey),
+                                fontSize: 32,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
                           ),
-                          SizedBox(height: 45),
-                          Text(
-                            'Conditions',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.grey),
+                          SizedBox(height: 30),
+                          Container(
+                            padding: const EdgeInsets.only(left: 8),
+                            width: 300,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Phone : 1234567',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.grey),
+                                ),
+                                SizedBox(height: 25),
+                                Text(
+                                  'Email : what@gmail.com',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.grey),
+                                ),
+                                SizedBox(height: 25),
+                                Text(
+                                  'Location : 123, Jekardah',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.grey),
+                                ),
+                              ],
+                            ),
                           ),
-                          SizedBox(height: 45),
                         ],
                       ),
                       Column(
@@ -394,19 +458,82 @@ class LandingPage extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black),
                           ),
-                          SizedBox(height: 45),
-                          Text(
-                            'Jl. Raya Bogor KM 30, Jakarta Timur',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.grey),
+                          SizedBox(height: 30),
+                          Row(
+                            children: [
+                              Image.asset(
+                                'assets/social-icons/behance.png',
+                                height: 24,
+                                width: 24,
+                              ),
+                              SizedBox(width: 25),
+                              Image.asset(
+                                'assets/social-icons/instagram.png',
+                                height: 24,
+                                width: 24,
+                              ),
+                              SizedBox(width: 25),
+                              Image.asset(
+                                'assets/social-icons/linkedin.png',
+                                height: 24,
+                                width: 24,
+                              ),
+                            ],
                           ),
+                          SizedBox(height: 30),
+                          Row(
+                            children: [
+                              Image.asset(
+                                'assets/social-icons/whatsapp.png',
+                                height: 24,
+                                width: 24,
+                              ),
+                              SizedBox(width: 25),
+                              Image.asset(
+                                'assets/social-icons/twitter.png',
+                                height: 24,
+                                width: 24,
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 50),
                         ],
                       ),
                     ],
                   ),
                 ),
+                // horizontal line
+                Container(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Divider(
+                          color: Colors.grey,
+                          thickness: 2,
+                        ),
+                      ),
+                      // copy right
+                    ],
+                  ),
+                ),
+                // copyright at center
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 150, vertical: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Copyright   ©   2023. All rights reserved',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20),
               ],
             ),
           ],
