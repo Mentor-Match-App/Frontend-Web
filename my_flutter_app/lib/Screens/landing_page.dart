@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/widget/footer.dart';
+import 'package:my_flutter_app/widget/navbar.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
@@ -7,73 +8,9 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Row(
-          children: [
-            Image.asset(
-              'assets/logo-1.png',
-              height: 150,
-              width: 150,
-            ),
-            const SizedBox(width: 10),
-          ],
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(left: 10, right: 20),
-            child: TextButton(
-              onPressed: () {},
-              child: const Text(
-                'Program dan layanan',
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, right: 30),
-            child: TextButton(
-              onPressed: () {},
-              child: const Text(
-                'Mentor',
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-          ),
-          OutlinedButton(
-            onPressed: () {},
-            style: OutlinedButton.styleFrom(
-              side: const BorderSide(color: Colors.orange),
-              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(8)),
-              ),
-            ),
-            child: const Text(
-              'Masuk',
-              style: TextStyle(fontSize: 15, color: Colors.orange),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                ),
-              ),
-              child: const Text(
-                'Daftar',
-                style: TextStyle(fontSize: 15, color: Colors.white),
-              ),
-            ),
-          ),
-        ],
-      ),
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight),
+          child: NavbarWidget()),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +43,7 @@ class LandingPage extends StatelessWidget {
                   Expanded(
                     child: DecoratedBox(
                       decoration: const BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                       child: SizedBox(
                         width: 202.12,
@@ -142,6 +79,7 @@ class LandingPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Card(
+                              color: Color(0xFFF9F1F0),
                               child: Container(
                                 height: 400,
                                 width: 300,
@@ -173,6 +111,7 @@ class LandingPage extends StatelessWidget {
                               ),
                             ),
                             Card(
+                              color: Color(0xFFF9F1F0),
                               child: Container(
                                 height: 400,
                                 width: 300,
@@ -203,6 +142,7 @@ class LandingPage extends StatelessWidget {
                               ),
                             ),
                             Card(
+                              color: Color(0xFFF9F1F0),
                               child: Container(
                                 height: 400,
                                 width: 300,

@@ -1,0 +1,122 @@
+import 'package:flutter/material.dart';
+import 'package:my_flutter_app/widget/navbar.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class SignUpPage extends StatelessWidget {
+  const SignUpPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: NavbarWidget(),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 150, vertical: 100),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Daftar untuk memulai Mentorship',
+                        style: TextStyle(
+                            fontSize: 40, fontWeight: FontWeight.normal),
+                      ),
+                      SizedBox(height: 28),
+                      Text(
+                        'Mari lanjutkan langkah untuk dunia pendidikan yang lebih baik dengan sesio mentoring bersama mentor-mentor ahli yang dapat membantu kamu dalam mencapai target dan tujuan.',
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.w200),
+                      ),
+                      SizedBox(height: 50), // Add space
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 50,
+                        ),
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.orange,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 105,
+                                vertical: 35), // Increase horizontal padding
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                            ),
+                          ),
+                          child: Text(
+                            'Register with Google',
+                            style: GoogleFonts.poppins(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 5), // Add space
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 10,
+                          right: 50,
+                          top: 5,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Sudah punya akun? ',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                // Add your login logic here
+                              },
+                              child: Text(
+                                'Login',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 80),
+                Expanded(
+                  child: DecoratedBox(
+                    decoration: const BoxDecoration(
+                      color: Colors.black,
+                    ),
+                    child: SizedBox(
+                      width: 42.12,
+                      child: Image.asset(
+                        'assets/component-1.png',
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
