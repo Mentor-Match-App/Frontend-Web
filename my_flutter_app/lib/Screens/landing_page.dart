@@ -43,12 +43,12 @@ class LandingPage extends StatelessWidget {
                   Expanded(
                     child: DecoratedBox(
                       decoration: const BoxDecoration(
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                       child: SizedBox(
                         width: 202.12,
                         child: Image.asset(
-                          'assets/component-1.png',
+                          'Handoff/ilustrator/first-screen.png',
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -86,7 +86,7 @@ class LandingPage extends StatelessWidget {
                                 child: Column(
                                   children: [
                                     Image.asset(
-                                      'assets/component-2.png',
+                                      'Handoff/ilustrator/Premiumclassverified.png',
                                       fit: BoxFit.fill,
                                     ),
                                     const ListTile(
@@ -118,7 +118,7 @@ class LandingPage extends StatelessWidget {
                                 child: Column(
                                   children: [
                                     Image.asset(
-                                      'assets/component-2.png',
+                                      'Handoff/ilustrator/Premiumclassverified.png',
                                       fit: BoxFit.fill,
                                     ),
                                     const ListTile(
@@ -149,7 +149,7 @@ class LandingPage extends StatelessWidget {
                                 child: Column(
                                   children: [
                                     Image.asset(
-                                      'assets/component-2.png',
+                                      'Handoff/ilustrator/Premiumclassverified.png',
                                       fit: BoxFit.fill,
                                     ),
                                     const ListTile(
@@ -213,7 +213,7 @@ class LandingPage extends StatelessWidget {
                                   child: SizedBox(
                                     width: 902.12,
                                     child: Image.asset(
-                                      'assets/component-3.png',
+                                      'Handoff/ilustrator/Sessiongratisteacher.png',
                                       fit: BoxFit.fill,
                                     ),
                                   ),

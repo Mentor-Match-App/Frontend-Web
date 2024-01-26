@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/Screens/signin_page.dart';
+import 'package:my_flutter_app/Screens/login_page.dart';
+import 'package:my_flutter_app/Screens/signup_page.dart';
 import 'package:my_flutter_app/widget/navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SignUpPage extends StatelessWidget {
-  const SignUpPage({super.key});
+class SignInPage extends StatelessWidget {
+  const SignInPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,13 @@ class SignUpPage extends StatelessWidget {
                           horizontal: 50,
                         ),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginPage()),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.orange,
                             padding: EdgeInsets.symmetric(
@@ -54,7 +61,7 @@ class SignUpPage extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            'Register with Google',
+                            'Login with Google',
                             style: GoogleFonts.poppins(
                               fontSize: 16,
                               color: Colors.white,
@@ -73,7 +80,7 @@ class SignUpPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Sudah punya akun? ',
+                              'Belum punya akun? ',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.normal,
@@ -84,13 +91,13 @@ class SignUpPage extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const SignInPage()),
+                                      builder: (context) => const SignUpPage()),
                                 );
                               },
                               child: Text(
-                                'Login',
+                                'Register',
                                 style: GoogleFonts.poppins(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -111,7 +118,7 @@ class SignUpPage extends StatelessWidget {
                     child: SizedBox(
                       width: 42.12,
                       child: Image.asset(
-                        'Handoff/ilustrator/register.png',
+                        'Handoff/ilustrator/login.png',
                         fit: BoxFit.fill,
                       ),
                     ),

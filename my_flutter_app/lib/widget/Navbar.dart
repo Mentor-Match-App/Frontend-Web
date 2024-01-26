@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_flutter_app/Screens/signin_page.dart';
 import 'package:my_flutter_app/Screens/signup_page.dart';
 
 class NavbarWidget extends StatelessWidget {
@@ -16,7 +17,7 @@ class NavbarWidget extends StatelessWidget {
           Row(
             children: [
               Image.asset(
-                'assets/logo-1.png',
+                'Handoff/logo/LogoWeb.png',
                 height: 150, // Increase the height for a larger logo
                 width: 150, // Increase the width for a larger logo
               ),
@@ -29,7 +30,12 @@ class NavbarWidget extends StatelessWidget {
               NavBarItem(title: 'Mentor', onPressed: () {}),
               const SizedBox(width: 20),
               OutlinedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SignInPage()),
+                  );
+                },
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Colors.orange),
                   padding: const EdgeInsets.symmetric(

@@ -166,19 +166,19 @@ class _FooterWidgetState extends State<FooterWidget> {
                     Row(
                       children: [
                         Image.asset(
-                          'assets/social-icons/behance.png',
+                          'Handoff/icon/social-icons/behance.png',
                           height: 24,
                           width: 24,
                         ),
                         SizedBox(width: 25),
                         Image.asset(
-                          'assets/social-icons/instagram.png',
+                          'Handoff/icon/social-icons/instagram.png',
                           height: 24,
                           width: 24,
                         ),
                         SizedBox(width: 25),
                         Image.asset(
-                          'assets/social-icons/linkedin.png',
+                          'Handoff/icon/social-icons/linkedin.png',
                           height: 24,
                           width: 24,
                         ),
@@ -188,13 +188,13 @@ class _FooterWidgetState extends State<FooterWidget> {
                     Row(
                       children: [
                         Image.asset(
-                          'assets/social-icons/whatsapp.png',
+                          'Handoff/icon/social-icons/whatsapp.png',
                           height: 24,
                           width: 24,
                         ),
                         SizedBox(width: 25),
                         Image.asset(
-                          'assets/social-icons/twitter.png',
+                          'Handoff/icon/social-icons/twitter.png',
                           height: 24,
                           width: 24,
                         ),
