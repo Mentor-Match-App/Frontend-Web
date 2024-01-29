@@ -121,7 +121,7 @@ class LoginPage extends StatelessWidget {
                       child: SizedBox(
                         width: 42.12,
                         child: Image.asset(
-                          'Handoff/ilustrator/choose-role.png',
+                          'Handoff/ilustrator/choose_role.png',
                           fit: BoxFit.fill,
                         ),
                       ),

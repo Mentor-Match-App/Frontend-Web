@@ -48,7 +48,7 @@ class LandingPage extends StatelessWidget {
                       child: SizedBox(
                         width: 202.12,
                         child: Image.asset(
-                          'Handoff/ilustrator/first-screen.png',
+                          'Handoff/ilustrator/first_screen.png',
                           fit: BoxFit.fill,
                         ),
                       ),
