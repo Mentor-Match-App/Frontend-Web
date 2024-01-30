@@ -1,5 +1,10 @@
 import "package:flutter/material.dart";
-import 'Screens/landing_page.dart';
+import 'package:my_flutter_app/admin/screen/menu_admin/create_community_admin.dart';
+import 'package:my_flutter_app/admin/screen/menu_dasboard_admin/detail_pengajuan_verifikasi_kelas.dart';
+import 'package:my_flutter_app/admin/screen/dasboard_admin_screen.dart';
+import 'package:my_flutter_app/admin/screen/menu_admin/dasboard_home.dart';
+import 'package:my_flutter_app/admin/screen/menu_admin/notification_admin_screen.dart';
+import 'package:my_flutter_app/admin/screen/menu_dasboard_admin/verifikasi_mentor_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +21,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: const LandingPage(),
+      home: DashboardAdminScreen()
     );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
+import 'package:my_flutter_app/widget/button_widget.dart';
 import 'package:my_flutter_app/widget/footer.dart';
 
 class LandingPage extends StatelessWidget {
@@ -40,38 +42,8 @@ class LandingPage extends StatelessWidget {
               ),
             ),
           ),
-          OutlinedButton(
-            onPressed: () {},
-            style: OutlinedButton.styleFrom(
-              side: const BorderSide(color: Colors.orange),
-              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(8)),
-              ),
-            ),
-            child: const Text(
-              'Masuk',
-              style: TextStyle(fontSize: 15, color: Colors.orange),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                ),
-              ),
-              child: const Text(
-                'Daftar',
-                style: TextStyle(fontSize: 15, color: Colors.white),
-              ),
-            ),
-          ),
+          SmallOutlineButtonWidget(text: "Masuk"),
+          SmallElevatedButtonWidget(text: "Daftar"),
         ],
       ),
       body: SingleChildScrollView(
@@ -79,26 +51,22 @@ class LandingPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 150, vertical: 100),
+              padding: const EdgeInsets.symmetric(horizontal: 150, vertical: 100),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Selamat datang di Aplikasi MentorMatch',
-                          style: TextStyle(
-                              fontSize: 40, fontWeight: FontWeight.normal),
+                          style: FontFamily().titleText,
                         ),
-                        SizedBox(height: 28),
+                        const SizedBox(height: 28),
                         Text(
-                          'Mari lanjutkan langkah untuk dunia pendidikan yang lebih baik dengan sesio mentoring bersama mentor-mentor ahli yang dapat membantu kamu dalam mencapai target dan tujuan.',
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.w200),
-                        ),
+                            'Mari lanjutkan langkah untuk dunia pendidikan yang lebih baik dengan sesio mentoring bersama mentor-mentor ahli yang dapat membantu kamu dalam mencapai target dan tujuan.',
+                            style: FontFamily().regulerText),
                       ],
                     ),
                   ),
@@ -142,7 +110,7 @@ class LandingPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Card(
-                              child: Container(
+                              child: SizedBox(
                                 height: 400,
                                 width: 300,
                                 child: Column(
@@ -173,7 +141,7 @@ class LandingPage extends StatelessWidget {
                               ),
                             ),
                             Card(
-                              child: Container(
+                              child: SizedBox(
                                 height: 400,
                                 width: 300,
                                 child: Column(
@@ -203,7 +171,7 @@ class LandingPage extends StatelessWidget {
                               ),
                             ),
                             Card(
-                              child: Container(
+                              child: SizedBox(
                                 height: 400,
                                 width: 300,
                                 child: Column(
@@ -242,74 +210,70 @@ class LandingPage extends StatelessWidget {
             ),
             Column(
               children: [
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 150, vertical: 50),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Row(
-                          children: [
-                            Text(
-                              'Session Gratis',
-                              style: TextStyle(
-                                  fontSize: 40,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 45),
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: DecoratedBox(
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                  ),
-                                  child: SizedBox(
-                                    width: 902.12,
-                                    child: Image.asset(
-                                      'assets/component-3.png',
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 150, vertical: 50),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Row(
+                        children: [
+                          Text(
+                            'Session Gratis',
+                            style: TextStyle(
+                                fontSize: 40,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 45),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: DecoratedBox(
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              child: SizedBox(
+                                width: 902.12,
+                                child: Image.asset(
+                                  'assets/component-3.png',
+                                  fit: BoxFit.fill,
                                 ),
                               ),
-                              const SizedBox(height: 45),
-                              const Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      'Nikmati Session Gratis dengan\n para mentor berpengalaman',
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                          fontSize: 35,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                    SizedBox(height: 28),
-                                    Text(
-                                      'Bergabunglah dalam session gratis di MentorMatch dan rasakan pengalaman pembelajaran yang membawa\n Anda Keluar dari Zona nyaman. Sesi ini dirancang untuk memberi Anda gambaran nyata tentang potensi dan keuntungan belajar dengan mentor ahli.',
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w200),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
+                            ),
                           ),
-                        )
-                      ],
-                    ),
+                          const SizedBox(height: 45),
+                          const Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  'Nikmati Session Gratis dengan\n para mentor berpengalaman',
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                      fontSize: 35,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                                SizedBox(height: 28),
+                                Text(
+                                  'Bergabunglah dalam session gratis di MentorMatch dan rasakan pengalaman pembelajaran yang membawa\n Anda Keluar dari Zona nyaman. Sesi ini dirancang untuk memberi Anda gambaran nyata tentang potensi dan keuntungan belajar dengan mentor ahli.',
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w200),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      )
+                    ],
                   ),
                 ),
-                FooterWidget(),
+                const FooterWidget(),
               ],
             ),
           ],
