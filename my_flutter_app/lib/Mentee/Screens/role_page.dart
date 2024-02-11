@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_flutter_app/Screens/profile_page.dart';
+import 'package:my_flutter_app/Mentee/Screens/profile_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

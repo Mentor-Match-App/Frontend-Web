@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/Screens/signin_page.dart';
+import 'package:my_flutter_app/Mentee/Screens/role_page.dart';
+import 'package:my_flutter_app/Mentee/Screens/signin_page.dart';
 import 'package:my_flutter_app/widget/navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -42,7 +43,13 @@ class SignUpPage extends StatelessWidget {
                           horizontal: 50,
                         ),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginPage()),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.orange,
                             padding: EdgeInsets.symmetric(

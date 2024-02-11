@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_flutter_app/Screens/signin_page.dart';
-import 'package:my_flutter_app/Screens/signup_page.dart';
+import 'package:my_flutter_app/Mentee/Screens/signin_page.dart';
+import 'package:my_flutter_app/Mentee/Screens/signup_page.dart';
 
 class NavbarWidget extends StatelessWidget {
   const NavbarWidget({Key? key}) : super(key: key);
@@ -16,10 +16,13 @@ class NavbarWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              Image.asset(
-                'Handoff/logo/LogoWeb.png',
-                height: 150, // Increase the height for a larger logo
-                width: 150, // Increase the width for a larger logo
+              Container(
+                padding: const EdgeInsets.all(8),
+                child: Image.asset(
+                  'Handoff/logo/LogoWeb.png',
+                  height: 150,
+                  width: 150,
+                ),
               ),
               const SizedBox(width: 20),
             ],
