@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/Mentee/Screens/PremiumClass/premiumclass_page.dart';
 import 'package:my_flutter_app/Mentee/Screens/Session/session_page.dart';
+import 'package:my_flutter_app/Mentee/Screens/community_page.dart';
+import 'package:my_flutter_app/Mentee/Screens/myclass_page.dart';
 
 class CustomDropdown extends StatefulWidget {
   @override
@@ -130,7 +132,12 @@ class NavbarWidgetUser extends StatelessWidget {
             children: [
               CustomDropdown(),
               TextButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CommunityPage()),
+                  );
+                },
                 icon: Icon(
                   Icons.people_outline_outlined,
                   color: Colors.black,
@@ -144,7 +151,12 @@ class NavbarWidgetUser extends StatelessWidget {
                 ),
               ),
               TextButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyClassPage()),
+                  );
+                },
                 icon: Icon(
                   Icons.book_outlined,
                   color: Colors.black,

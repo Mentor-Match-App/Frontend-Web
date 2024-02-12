@@ -4,16 +4,18 @@ import 'package:google_fonts/google_fonts.dart';
 class MentorCard extends StatelessWidget {
   final String imageUrl;
   final String name;
-  final String workTitle;
-  final String workplace;
+  final String? workTitle;
+  final String? workplace;
   final String status;
+  final Function()? onStatusTap; // Nullable callback function for status tap
 
   MentorCard({
     required this.imageUrl,
     required this.name,
-    required this.workTitle,
-    required this.workplace,
+    this.workTitle,
+    this.workplace,
     required this.status,
+    this.onStatusTap,
   });
 
   @override
@@ -52,63 +54,94 @@ class MentorCard extends StatelessWidget {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 30),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.work_outline_rounded,
-                          size: 20,
-                          color: Colors.black,
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          workTitle,
-                          style: GoogleFonts.poppins(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
+                    if (workTitle != null && workplace != null) ...[
+                      SizedBox(height: 25),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.work_outline_rounded,
+                            size: 20,
+                            color: Colors.black,
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.business_rounded,
-                          size: 20,
-                          color: Colors.black,
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          workplace,
-                          style: GoogleFonts.poppins(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
+                          SizedBox(width: 10),
+                          Text(
+                            workTitle!,
+                            style: GoogleFonts.poppins(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 35),
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-                      decoration: BoxDecoration(
-                        color: Colors.orange,
-                        borderRadius: BorderRadius.circular(4),
+                        ],
                       ),
-                      child: SizedBox(
-                        width: 300,
-                        child: Text(
-                          status,
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.white,
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.business_rounded,
+                            size: 20,
+                            color: Colors.black,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            workplace!,
+                            style: GoogleFonts.poppins(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                    SizedBox(
+                        height:
+                            workTitle != null && workplace != null ? 45 : 75),
+                    if (onStatusTap != null) ...[
+                      InkWell(
+                        onTap: onStatusTap, // Handle tap on the status
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 18),
+                          decoration: BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: SizedBox(
+                            width: 300,
+                            child: Text(
+                              status,
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.poppins(
+                                fontSize: 18,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                    ],
+                    if (onStatusTap == null) ...[
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                        decoration: BoxDecoration(
+                          color: Colors.orange,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: SizedBox(
+                          width: 300,
+                          child: Text(
+                            status,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(
+                              fontSize: 18,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ],
                 ),
               ),

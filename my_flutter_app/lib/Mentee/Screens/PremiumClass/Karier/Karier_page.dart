@@ -103,7 +103,7 @@ class _KarierPageState extends State<KarierPage> {
       'Handoff/icon/categoryIcon/Karier/data_analys.png',
       'Handoff/icon/categoryIcon/Karier/design.png',
       'Handoff/icon/categoryIcon/Karier/finance.png',
-      'Handoff/icon/categoryIcon/Karier/Front_End .png',
+      'Handoff/icon/categoryIcon/Karier/Front_End.png',
       'Handoff/icon/categoryIcon/Karier/marketing.png',
       'Handoff/icon/categoryIcon/Karier/Quality_Assurance.png',
       'Handoff/icon/categoryIcon/Karier/Security_Engineer.png',

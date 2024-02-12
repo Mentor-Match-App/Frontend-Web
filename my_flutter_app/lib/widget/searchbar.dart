@@ -24,7 +24,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         child: TextField(
           controller: _searchController,
           decoration: InputDecoration(
-            hintText: 'Search by name,company, role ',
+            hintText: widget.title,
             prefixIcon: IconButton(
               icon: Icon(
                 Icons.search,
