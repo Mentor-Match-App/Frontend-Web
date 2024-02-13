@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_flutter_app/Mentee/Screens/PremiumClass/evaluasiempty.dart';
 import 'package:my_flutter_app/Mentee/Screens/myclass_page.dart';
 import 'package:my_flutter_app/widget/custombutton.dart';
+import 'package:my_flutter_app/Mentee/Screens/PremiumClass/reviewmentor.dart';
 
 class CustomInfoContainer extends StatelessWidget {
   final String title;
@@ -19,7 +21,7 @@ class CustomInfoContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20.0), // Added padding
+      padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
         color: Color(0xFFF8F1F1),
         borderRadius: BorderRadius.circular(8.0),
@@ -50,8 +52,7 @@ class CustomInfoContainer extends StatelessWidget {
                 ),
               ),
             ),
-          if (actionWidget != null)
-            SizedBox(height: 20), // Added conditional spacing
+          if (actionWidget != null) SizedBox(height: 20),
           if (actionWidget != null) actionWidget!,
         ],
       ),
@@ -71,29 +72,31 @@ class _PremiumClassDetailPageState extends State<PremiumClassDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
+        preferredSize: Size.fromHeight(80.0),
         child: Padding(
-          padding: const EdgeInsets.only(top: 35.0),
+          padding: const EdgeInsets.only(left: 55.0),
           child: Row(
             children: [
-              const SizedBox(width: 55),
-              TextButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MyClassPage()),
-                  );
-                },
-                icon: Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  color: Colors.black,
-                ),
-                label: Text(
-                  'Premium Class',
-                  style: GoogleFonts.poppins(
-                    fontSize: 20,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.orange,
+              Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MyClassPage()),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.arrow_back_ios_new_rounded,
+                    color: Colors.black,
+                  ),
+                  label: Text(
+                    'Premium Class',
+                    style: GoogleFonts.poppins(
+                      fontSize: 20,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.orange,
+                    ),
                   ),
                 ),
               ),
@@ -196,14 +199,24 @@ class _PremiumClassDetailPageState extends State<PremiumClassDetailPage> {
                             CustomButton(
                               buttonText: "Evaluasi",
                               onPressed: () {
-                                // Add your custom functionality here
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return EvaluasiMenteePage();
+                                  },
+                                );
                               },
                             ),
                             SizedBox(height: 40),
                             CustomButton(
                               buttonText: "Review Mentor",
                               onPressed: () {
-                                // Add your custom functionality here
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return ReviewMentorDialog();
+                                  },
+                                );
                               },
                             )
                           ],

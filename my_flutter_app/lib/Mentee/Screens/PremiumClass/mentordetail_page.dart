@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/widget/navbaruser.dart';
 import 'package:my_flutter_app/widget/reviewwidget.dart';
 import 'package:my_flutter_app/widget/profileavatar.dart';
-import 'package:my_flutter_app/widget/bookingwidget.dart';
+import 'package:my_flutter_app/Mentee/Screens/PremiumClass/bookingpopup.dart';
 import 'package:my_flutter_app/widget/experiencewidget.dart';
 
 class DetailMentorScreen extends StatefulWidget {
