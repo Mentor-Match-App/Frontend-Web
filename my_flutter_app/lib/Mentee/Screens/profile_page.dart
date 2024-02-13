@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/widget/form.dart';
-import 'package:my_flutter_app/widget/savebutton.dart';
+import 'package:my_flutter_app/widget/custombutton.dart';
 import 'package:my_flutter_app/widget/skillform.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -95,7 +95,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           CustomForm(
                               title: "About", subtitle: "Tell about you"),
                           SizedBox(height: 50),
-                          SaveButton(),
+                          CustomButton(
+                            buttonText: "Simpan",
+                            onPressed: () {
+                              // Add your custom functionality here
+                            },
+                          )
                         ],
                       ),
                     ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_flutter_app/Mentee/Screens/PremiumClass/detailpremiumclass_page.dart';
 import 'package:my_flutter_app/widget/navbaruser.dart';
 
 class MyClassPage extends StatefulWidget {
@@ -216,7 +217,14 @@ class _MyClassPageState extends State<MyClassPage>
                             width: 327,
                             height: 60,
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const PremiumClassDetailPage()),
+                                );
+                              },
                               style: ButtonStyle(
                                 shape: MaterialStateProperty.all<
                                     RoundedRectangleBorder>(

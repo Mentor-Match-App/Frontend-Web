@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SaveButton extends StatelessWidget {
+class CustomButton extends StatelessWidget {
+  final String buttonText;
+  final VoidCallback? onPressed;
+
+  CustomButton({required this.buttonText, this.onPressed});
+
   @override
   Widget build(BuildContext context) {
-    return _buildSimpanButton();
+    return _buildCustomButton();
   }
 
-  Widget _buildSimpanButton() {
+  Widget _buildCustomButton() {
     return Container(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {
-          // Add functionality for the "Simpan" button
-        },
+        onPressed: onPressed,
         child: Padding(
           padding: EdgeInsets.symmetric(
             vertical: 24,
             horizontal: 8,
           ),
           child: Text(
-            "Simpan",
+            buttonText,
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontSize: 24,
@@ -32,7 +35,7 @@ class SaveButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
-          backgroundColor: Colors.orange,
+          backgroundColor: Color(0xFFE78839),
           padding: EdgeInsets.symmetric(
             horizontal: 8,
             vertical: 6,
