@@ -3,9 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CustomButton extends StatelessWidget {
   final String buttonText;
+  final IconData? icon;
   final VoidCallback? onPressed;
 
-  CustomButton({required this.buttonText, this.onPressed});
+  CustomButton({required this.buttonText, this.icon, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +23,27 @@ class CustomButton extends StatelessWidget {
             vertical: 24,
             horizontal: 8,
           ),
-          child: Text(
-            buttonText,
-            style: GoogleFonts.poppins(
-              color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.normal,
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (icon != null)
+                Padding(
+                  padding: EdgeInsets.only(right: 8),
+                  child: Icon(
+                    icon,
+                    size: 24,
+                    color: Colors.white,
+                  ),
+                ),
+              Text(
+                buttonText,
+                style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ],
           ),
         ),
         style: ElevatedButton.styleFrom(

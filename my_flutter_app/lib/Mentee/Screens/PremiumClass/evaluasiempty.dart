@@ -56,14 +56,14 @@ class CustomInfoContainer extends StatelessWidget {
   }
 }
 
-class EvaluasiMenteePage extends StatefulWidget {
-  const EvaluasiMenteePage({Key? key}) : super(key: key);
+class EvaluasiMenteeEmptyPage extends StatefulWidget {
+  const EvaluasiMenteeEmptyPage({Key? key}) : super(key: key);
 
   @override
-  _EvaluasiMenteePageState createState() => _EvaluasiMenteePageState();
+  _EvaluasiMenteeEmptyPageState createState() => _EvaluasiMenteeEmptyPageState();
 }
 
-class _EvaluasiMenteePageState extends State<EvaluasiMenteePage> {
+class _EvaluasiMenteeEmptyPageState extends State<EvaluasiMenteeEmptyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

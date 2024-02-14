@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:my_flutter_app/widget/custombutton.dart';
 import 'package:my_flutter_app/Mentee/Screens/PremiumClass/detailpremiumclass_page.dart';
 
 class CustomInfoContainer extends StatelessWidget {
   final String title;
   final String? subtitle;
   final Widget? actionWidget;
+  final IconData? icon;
 
   const CustomInfoContainer({
     required this.title,
     this.subtitle,
     this.actionWidget,
+    this.icon,
   });
 
   @override
@@ -26,15 +30,26 @@ class CustomInfoContainer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: GoogleFonts.poppins(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.orange,
-            ),
+          Row(
+            children: [
+              if (icon != null)
+                Icon(
+                  icon,
+                  color: Colors.black,
+                  size: 42,
+                ),
+              SizedBox(width: icon != null ? 10 : 0),
+              Text(
+                title,
+                style: GoogleFonts.poppins(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.orange,
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 10),
           if (subtitle != null && subtitle!.isNotEmpty)
             SingleChildScrollView(
               child: Container(
@@ -80,7 +95,8 @@ class _EvaluasiMenteeFillPageState extends State<EvaluasiMenteeFillPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => PremiumClassDetailPage()),
+                        builder: (context) => PremiumClassDetailPage(),
+                      ),
                     );
                   },
                   icon: Icon(
@@ -136,21 +152,99 @@ class _EvaluasiMenteeFillPageState extends State<EvaluasiMenteeFillPage> {
                                   "3. Evaluasi akan di berikan oleh mentor yang membimbingan kelas dalam bentuk formulir yang akan dikirim pada saat kegiatan mentoring berlangsung (zoom meeting).\n"
                                   "4. Hasil dari evaluasi akan dikirim mentor pada halaman ini apabila mentee telah menyelesaikan dan mentor telah menilai dari jawaban yang mentee berikan.",
                             ),
-                            SizedBox(height: 55),
-                            Center(
-                              child: Column(
+                            CustomInfoContainer(
+                              title: "Akses Link Evaluasi",
+                              actionWidget: Column(
                                 children: [
-                                  Image.asset(
-                                    'Handoff/ilustrator/learn_by_online.png',
-                                    width: 500,
-                                    fit: BoxFit.fill,
+                                  CustomButton(
+                                    buttonText: "Evaluasi User Understanding",
+                                    icon: Icons.link_rounded,
+                                    onPressed: () {
+                                      launchYouTubeLink(
+                                          'https://youtu.be/yn_1SYlkqiE?si=6XaG-CpB0AI4Br02');
+                                    },
                                   ),
-                                  SizedBox(height: 20),
-                                  Text(
-                                    "Kamu Belum Memiliki Evaluasi",
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
+                                  SizedBox(height: 25),
+                                  CustomButton(
+                                    buttonText:
+                                        "Prinsip-prinsip desain aksesibilitas",
+                                    icon: Icons.link_rounded,
+                                    onPressed: () {
+                                      launchYouTubeLink(
+                                          'https://youtu.be/yn_1SYlkqiE?si=6XaG-CpB0AI4Br02');
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                            CustomInfoContainer(
+                              title: "Evaluasi yang telah dikerjakan",
+                              icon: Icons.check_rounded,
+                              actionWidget: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "Materi Evaluasi : Evaluasi User Understanding",
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                      SizedBox(width: 10),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10),
+                                  Container(
+                                    width: double.infinity,
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    padding: EdgeInsets.all(35.0),
+                                    margin: EdgeInsets.only(top: 5.0),
+                                    child: Text(
+                                      "Selamat atas penyelesaian Chapter 1, [Nama Mentee]! Pemahaman konsepnya sudah baik, dan analisisnya mendalam. Tetapi, tambahkan contoh atau aplikasi praktis untuk pemahaman yang lebih baik. Pastikan selalu mencantumkan sumber dan variasikan gaya penulisan. Untuk Chapter 2, fokus pada [area/topik spesifik] untuk memperdalam pemahaman. Jika ada pertanyaan, jangan ragu untuk bertanya. Bagus sekali, [Nama Mentee]! Saya yakin dengan ketekunan Anda, Anda akan berhasil di bab-bab berikutnya. Terima kasih.",
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 25),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "Materi Evaluasi : Evaluasi User Understanding",
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                      SizedBox(width: 10),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10),
+                                  Container(
+                                    width: double.infinity,
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    padding: EdgeInsets.all(35.0),
+                                    margin: EdgeInsets.only(top: 5.0),
+                                    child: Text(
+                                      "Selamat atas penyelesaian Chapter 1, [Nama Mentee]! Pemahaman konsepnya sudah baik, dan analisisnya mendalam. Tetapi, tambahkan contoh atau aplikasi praktis untuk pemahaman yang lebih baik. Pastikan selalu mencantumkan sumber dan variasikan gaya penulisan. Untuk Chapter 2, fokus pada [area/topik spesifik] untuk memperdalam pemahaman. Jika ada pertanyaan, jangan ragu untuk bertanya. Bagus sekali, [Nama Mentee]! Saya yakin dengan ketekunan Anda, Anda akan berhasil di bab-bab berikutnya. Terima kasih.",
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.normal,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -168,5 +262,13 @@ class _EvaluasiMenteeFillPageState extends State<EvaluasiMenteeFillPage> {
         ),
       ),
     );
+  }
+
+  void launchYouTubeLink(String youtubeLink) async {
+    if (await canLaunch(youtubeLink)) {
+      await launch(youtubeLink);
+    } else {
+      throw 'Could not launch $youtubeLink';
+    }
   }
 }
