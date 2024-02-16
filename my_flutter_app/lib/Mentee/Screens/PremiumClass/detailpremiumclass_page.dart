@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_flutter_app/Mentee/Screens/PremiumClass/evaluasiempty.dart';
+// import 'package:my_flutter_app/Mentee/Screens/PremiumClass/evaluasiempty.dart';
+import 'package:my_flutter_app/Mentee/Screens/PremiumClass/evaluasifill.dart';
 import 'package:my_flutter_app/Mentee/Screens/myclass_page.dart';
 import 'package:my_flutter_app/widget/custombutton.dart';
 import 'package:my_flutter_app/Mentee/Screens/PremiumClass/reviewmentor.dart';
@@ -202,7 +203,7 @@ class _PremiumClassDetailPageState extends State<PremiumClassDetailPage> {
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return EvaluasiMenteeEmptyPage();
+                                    return EvaluasiMenteeFillPage();
                                   },
                                 );
                               },

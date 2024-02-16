@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/Mentee/Screens/PremiumClass/mentordetail_page.dart';
 import 'package:my_flutter_app/widget/searchbar.dart';
 import 'package:my_flutter_app/widget/navbaruser.dart';
 import 'package:my_flutter_app/widget/mentorcard.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-import 'package:my_flutter_app/widget/footer.dart'; // Import FooterWidget
+import 'package:my_flutter_app/widget/footer.dart';
 
 class SekolahDasarPage extends StatefulWidget {
   const SekolahDasarPage({Key? key}) : super(key: key);
@@ -68,16 +69,28 @@ class _SekolahDasarPageState extends State<SekolahDasarPage> {
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: List.generate(3, (cardIndex) {
-                                final mentorIndex = index * 3 + cardIndex + 1;
-                                return MentorCard(
-                                  imageUrl: 'Handoff/ilustrator/profile.png',
-                                  name: 'Mentor $mentorIndex',
-                                  workTitle: 'Job Title $mentorIndex',
-                                  workplace: 'Workplace $mentorIndex',
-                                  status: 'Available',
-                                );
-                              }),
+                              children: List.generate(
+                                3,
+                                (cardIndex) {
+                                  final mentorIndex = index * 3 + cardIndex + 1;
+                                  return MentorCard(
+                                    imageUrl: 'Handoff/ilustrator/profile.png',
+                                    name: 'Mentor $mentorIndex',
+                                    workTitle: 'Job Title $mentorIndex',
+                                    workplace: 'Workplace $mentorIndex',
+                                    status: 'Available',
+                                    onStatusTap: () async {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              DetailMentorScreen(), // Replace with the actual page
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
                             ),
                             SizedBox(
                                 height: 16.0), // Add space between MentorCards

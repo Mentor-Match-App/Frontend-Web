@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/Mentee/Screens/PremiumClass/mentordetail_page.dart';
 import 'package:my_flutter_app/widget/searchbar.dart';
 import 'package:my_flutter_app/widget/navbaruser.dart';
 import 'package:my_flutter_app/widget/mentorcard.dart';
@@ -76,6 +77,15 @@ class _KarierPageState extends State<KarierPage> {
                                   workTitle: 'Job Title $mentorIndex',
                                   workplace: 'Workplace $mentorIndex',
                                   status: 'Available',
+                                  onStatusTap: () async {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            DetailMentorScreen(), // Replace with the actual page
+                                      ),
+                                    );
+                                  },
                                 );
                               }),
                             ),

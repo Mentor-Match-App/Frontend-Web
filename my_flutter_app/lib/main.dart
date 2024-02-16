@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import 'package:my_flutter_app/Mentee/Screens/personalprofile.dart';
+import 'package:my_flutter_app/Mentee/Screens/landing_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: PersonalProfilePage(),
+      home: LandingPage(),
     );
   }
 }

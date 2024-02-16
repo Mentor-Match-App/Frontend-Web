@@ -3,8 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/Mentee/Screens/PremiumClass/premiumclass_page.dart';
 import 'package:my_flutter_app/Mentee/Screens/Session/session_page.dart';
 import 'package:my_flutter_app/Mentee/Screens/community_page.dart';
+import 'package:my_flutter_app/Mentee/Screens/landing_page.dart';
 import 'package:my_flutter_app/Mentee/Screens/myclass_page.dart';
 import 'package:my_flutter_app/Mentee/Screens/notification_page.dart';
+import 'package:my_flutter_app/Mentee/Screens/personalprofile.dart';
 
 class CustomDropdown extends StatefulWidget {
   @override
@@ -118,12 +120,26 @@ class NavbarWidgetUser extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                child: Image.asset(
-                  'Handoff/logo/LogoWeb.png',
-                  height: 150,
-                  width: 150,
+              GestureDetector(
+                onTap: () {
+                  // Redirect to the homepage
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LandingPage()),
+                  );
+                },
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      child: Image.asset(
+                        'Handoff/logo/LogoWeb.png',
+                        height: 150,
+                        width: 150,
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                  ],
                 ),
               ),
               const SizedBox(width: 20),
@@ -184,12 +200,25 @@ class NavbarWidgetUser extends StatelessWidget {
                 },
               ),
               const SizedBox(width: 20),
-              _buildCircularImage(
-                'https://picsum.photos/250?image=9',
-                40,
-                40,
-                null,
-              ),
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PersonalProfilePage()),
+                      );
+                    },
+                    child: _buildCircularImage(
+                      'https://picsum.photos/250?image=9',
+                      40,
+                      40,
+                      null,
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ],

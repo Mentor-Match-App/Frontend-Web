@@ -65,7 +65,7 @@ class NavbarWidget extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
+                  backgroundColor: Color(0xFFE78839),
                   padding: const EdgeInsets.symmetric(
                       horizontal: 25,
                       vertical: 15), // Increase horizontal padding

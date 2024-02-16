@@ -11,123 +11,127 @@ class SignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
+        preferredSize: Size.fromHeight(80.0),
         child: NavbarWidget(),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 150, vertical: 100),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Daftar untuk memulai Mentorship',
-                        style: TextStyle(
-                            fontSize: 40, fontWeight: FontWeight.normal),
-                      ),
-                      SizedBox(height: 28),
-                      Text(
-                        'Mari lanjutkan langkah untuk dunia pendidikan yang lebih baik dengan sesio mentoring bersama mentor-mentor ahli yang dapat membantu kamu dalam mencapai target dan tujuan.',
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.w200),
-                      ),
-                      SizedBox(height: 50), // Add space
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 50,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 150, vertical: 100),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Daftar untuk memulai Mentorship',
+                          style: TextStyle(
+                              fontSize: 40, fontWeight: FontWeight.normal),
                         ),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginPage()),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.orange,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 125,
-                                vertical: 35), // Increase horizontal padding
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                            ),
+                        SizedBox(height: 28),
+                        Text(
+                          'Mari lanjutkan langkah untuk dunia pendidikan yang lebih baik dengan sesio mentoring bersama mentor-mentor ahli yang dapat membantu kamu dalam mencapai target dan tujuan.',
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.w200),
+                        ),
+                        SizedBox(height: 50), // Add space
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 50,
                           ),
-                          child: Text(
-                            'Register with Google',
-                            style: GoogleFonts.poppins(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 5), // Add space
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 10,
-                          right: 50,
-                          top: 5,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Sudah punya akun? ',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.normal,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginPage()),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFFE78839),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 125,
+                                  vertical: 35), // Increase horizontal padding
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8)),
                               ),
                             ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const SignInPage()),
-                                );
-                              },
-                              child: Text(
-                                'Login',
-                                style: GoogleFonts.poppins(
+                            child: Text(
+                              'Register with Google',
+                              style: GoogleFonts.poppins(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 5), // Add space
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 10,
+                            right: 50,
+                            top: 5,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Sudah punya akun? ',
+                                style: TextStyle(
                                   fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.normal,
                                 ),
                               ),
-                            ),
-                          ],
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SignInPage()),
+                                  );
+                                },
+                                child: Text(
+                                  'Login',
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 80),
+                  Expanded(
+                    child: DecoratedBox(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: SizedBox(
+                        width: 42.12,
+                        child: Image.asset(
+                          'Handoff/ilustrator/register.png',
+                          fit: BoxFit.fill,
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 80),
-                Expanded(
-                  child: DecoratedBox(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                    ),
-                    child: SizedBox(
-                      width: 42.12,
-                      child: Image.asset(
-                        'Handoff/ilustrator/register.png',
-                        fit: BoxFit.fill,
-                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

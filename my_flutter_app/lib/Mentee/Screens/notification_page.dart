@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_flutter_app/Mentee/Screens/myclass_page.dart';
+import 'package:my_flutter_app/Mentee/Screens/homepage.dart';
 
 class CustomInfoContainer extends StatelessWidget {
   final String title;
@@ -103,7 +103,7 @@ class _NotificationPageState extends State<NotificationPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MyClassPage()),
+                      MaterialPageRoute(builder: (context) => HomePage()),
                     );
                   },
                   icon: Icon(
