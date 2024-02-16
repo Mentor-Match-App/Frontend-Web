@@ -58,7 +58,7 @@ class _MyClassPageState extends State<MyClassPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
+        preferredSize: Size.fromHeight(80.0),
         child: NavbarWidgetUser(),
       ),
       body: Column(

@@ -17,7 +17,7 @@ class _SessionPageState extends State<SessionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
+        preferredSize: Size.fromHeight(80.0),
         child: NavbarWidgetUser(),
       ),
       body: ListView(
