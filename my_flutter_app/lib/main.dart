@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 // import 'package:my_flutter_app/Mentee/Screens/PremiumClass/detailpremiumclass_page.dart';
-import 'package:my_flutter_app/Mentee/Screens/PremiumClass/evaluasifill.dart';
+// import 'package:my_flutter_app/Mentee/Screens/landing_page.dart';
+import 'package:my_flutter_app/Mentee/Screens/notification_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: EvaluasiMenteeFillPage(),
+      home: NotificationPage(),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:my_flutter_app/Mentee/Screens/PremiumClass/premiumclass_page.dar
 import 'package:my_flutter_app/Mentee/Screens/Session/session_page.dart';
 import 'package:my_flutter_app/Mentee/Screens/community_page.dart';
 import 'package:my_flutter_app/Mentee/Screens/myclass_page.dart';
+import 'package:my_flutter_app/Mentee/Screens/notification_page.dart';
 
 class CustomDropdown extends StatefulWidget {
   @override
@@ -175,7 +176,12 @@ class NavbarWidgetUser extends StatelessWidget {
                   Icons.notifications_outlined,
                   color: Colors.black,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => NotificationPage()),
+                  );
+                },
               ),
               const SizedBox(width: 20),
               _buildCircularImage(
