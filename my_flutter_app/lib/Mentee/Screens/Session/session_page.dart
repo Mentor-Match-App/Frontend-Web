@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/Mentee/Screens/Session/mentorsessiondetail_page.dart';
 import 'package:my_flutter_app/widget/searchbar.dart';
 import 'package:my_flutter_app/widget/navbaruser.dart';
 import 'package:my_flutter_app/widget/mentorcard.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-import 'package:my_flutter_app/widget/footer.dart';
+import 'package:my_flutter_app/widget/footer.dart'; // Import FooterWidget
 
 class SessionPage extends StatefulWidget {
   const SessionPage({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class _SessionPageState extends State<SessionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80.0),
+        preferredSize: Size.fromHeight(kToolbarHeight),
         child: NavbarWidgetUser(),
       ),
       body: ListView(
@@ -76,6 +77,15 @@ class _SessionPageState extends State<SessionPage> {
                                   workTitle: 'Job Title $mentorIndex',
                                   workplace: 'Workplace $mentorIndex',
                                   status: 'Available',
+                                  onStatusTap: () async {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            DetailSessionMentorScreen(), // Replace with the actual page
+                                      ),
+                                    );
+                                  },
                                 );
                               }),
                             ),

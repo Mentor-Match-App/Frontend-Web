@@ -3,25 +3,27 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/widget/navbaruser.dart';
 import 'package:my_flutter_app/widget/reviewwidget.dart';
 import 'package:my_flutter_app/widget/profileavatar.dart';
-import 'package:my_flutter_app/Mentee/Screens/PremiumClass/bookingpopup.dart';
+import 'package:my_flutter_app/Mentee/Screens/PremiumClass/bookingpremiumpopup.dart';
 import 'package:my_flutter_app/widget/experiencewidget.dart';
 
-class DetailMentorScreen extends StatefulWidget {
-  DetailMentorScreen({Key? key}) : super(key: key);
+class DetailPremiumClassMentorScreen extends StatefulWidget {
+  DetailPremiumClassMentorScreen({Key? key}) : super(key: key);
 
   @override
-  State<DetailMentorScreen> createState() => _DetailMentorScreenState();
+  State<DetailPremiumClassMentorScreen> createState() =>
+      _DetailPremiumClassMentorScreenState();
   void _showBookingPopupMenu(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return BookingPopupMenu();
+        return BookingPremiumPopupMenu();
       },
     );
   }
 }
 
-class _DetailMentorScreenState extends State<DetailMentorScreen> {
+class _DetailPremiumClassMentorScreenState
+    extends State<DetailPremiumClassMentorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -379,7 +381,8 @@ class _DetailMentorScreenState extends State<DetailMentorScreen> {
                       SizedBox(height: 30),
                       ElevatedButton(
                         onPressed: () {
-                          DetailMentorScreen()._showBookingPopupMenu(context);
+                          DetailPremiumClassMentorScreen()
+                              ._showBookingPopupMenu(context);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/widget/paymentwidget.dart';
 
-class BookingPopupMenu extends StatelessWidget {
-  const BookingPopupMenu({Key? key}) : super(key: key);
+class BookingPremiumPopupMenu extends StatelessWidget {
+  const BookingPremiumPopupMenu({Key? key}) : super(key: key);
 
   void _showPaymentPopupMenu(BuildContext context) {
     showDialog(
@@ -30,7 +30,7 @@ class BookingPopupMenu extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () {
-                      BookingPopupMenu()._showPaymentPopupMenu(context);
+                      BookingPremiumPopupMenu()._showPaymentPopupMenu(context);
                     },
                     icon: Icon(
                       Icons.close,
@@ -121,7 +121,7 @@ class BookingPopupMenu extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.pop(context);
-                        BookingPopupMenu()._showPaymentPopupMenu(context);
+                        BookingPremiumPopupMenu()._showPaymentPopupMenu(context);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xffE78938), // Background color

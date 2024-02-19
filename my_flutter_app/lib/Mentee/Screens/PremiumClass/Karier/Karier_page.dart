@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/Mentee/Screens/PremiumClass/mentordetail_page.dart';
+import 'package:my_flutter_app/Mentee/Screens/PremiumClass/mentorpremiumdetail_page.dart';
 import 'package:my_flutter_app/widget/searchbar.dart';
 import 'package:my_flutter_app/widget/navbaruser.dart';
 import 'package:my_flutter_app/widget/mentorcard.dart';
@@ -82,7 +82,7 @@ class _KarierPageState extends State<KarierPage> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            DetailMentorScreen(), // Replace with the actual page
+                                            DetailPremiumClassMentorScreen(), // Replace with the actual page
                                       ),
                                     );
                                   },
