@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/Mentee/Screens/PremiumClass/premiumclass_page.dart';
 import 'package:my_flutter_app/Mentee/Screens/Session/session_page.dart';
-import 'package:my_flutter_app/Mentee/Screens/community_page.dart';
+import 'package:my_flutter_app/Mentee/Screens/communitymentee_page.dart';
 import 'package:my_flutter_app/Mentee/Screens/landing_page.dart';
-import 'package:my_flutter_app/Mentee/Screens/myclass_page.dart';
-import 'package:my_flutter_app/Mentee/Screens/notification_page.dart';
+import 'package:my_flutter_app/Mentee/Screens/myclassmentee_page.dart';
+import 'package:my_flutter_app/Mentee/Screens/notificationmentee_page.dart';
 import 'package:my_flutter_app/Mentee/Screens/personalprofile.dart';
+import 'package:my_flutter_app/Mentor/Screens/communitymentor_page.dart';
+import 'package:my_flutter_app/Mentor/Screens/notificationmentor_page.dart';
 
 class CustomDropdown extends StatefulWidget {
   @override
@@ -107,8 +109,8 @@ class _CustomDropdownState extends State<CustomDropdown> {
   }
 }
 
-class NavbarWidgetUser extends StatelessWidget {
-  const NavbarWidgetUser({Key? key}) : super(key: key);
+class NavbarWidgetMentee extends StatelessWidget {
+  const NavbarWidgetMentee({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +154,8 @@ class NavbarWidgetUser extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => CommunityPage()),
+                    MaterialPageRoute(
+                        builder: (context) => CommunityMenteePage()),
                   );
                 },
                 icon: Icon(
@@ -171,7 +174,8 @@ class NavbarWidgetUser extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MyClassPage()),
+                    MaterialPageRoute(
+                        builder: (context) => MyClassMenteePage()),
                   );
                 },
                 icon: Icon(
@@ -195,7 +199,8 @@ class NavbarWidgetUser extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => NotificationPage()),
+                    MaterialPageRoute(
+                        builder: (context) => NotificationMenteePage()),
                   );
                 },
               ),
@@ -247,6 +252,100 @@ class NavbarWidgetUser extends StatelessWidget {
             color: Colors.grey,
           );
         },
+      ),
+    );
+  }
+}
+
+class NavbarWidgetMentor extends StatelessWidget {
+  const NavbarWidgetMentor({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LandingPage()),
+              );
+            },
+            child: Image.asset(
+              'Handoff/logo/LogoWeb.png',
+              height: 150,
+              width: 150,
+            ),
+          ),
+          Row(
+            children: [
+              TextButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CommunityMentorPage()),
+                  );
+                },
+                icon: Icon(Icons.people_outline_outlined, color: Colors.black),
+                label: Text(
+                  'Community',
+                  style: GoogleFonts.poppins(fontSize: 16, color: Colors.black),
+                ),
+              ),
+              TextButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MyClassMenteePage()),
+                  );
+                },
+                icon: Icon(Icons.book_outlined, color: Colors.black),
+                label: Text(
+                  'My Class',
+                  style: GoogleFonts.poppins(fontSize: 16, color: Colors.black),
+                ),
+              ),
+              IconButton(
+                icon: Icon(Icons.notifications_outlined, color: Colors.black),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NotificationMentorPage()),
+                  );
+                },
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PersonalProfilePage()),
+                  );
+                },
+                child: ClipOval(
+                  child: Image.network(
+                    'https://picsum.photos/250?image=9',
+                    height: 40,
+                    width: 40,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) => Container(
+                      height: 40,
+                      width: 40,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

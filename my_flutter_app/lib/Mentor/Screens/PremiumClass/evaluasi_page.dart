@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_flutter_app/Mentee/Screens/PremiumClass/detailpremiumclassmentee_page.dart';
+import 'package:my_flutter_app/Mentor/Screens/PremiumClass/detailpremiumclassmentor.dart';
+import 'package:my_flutter_app/widget/form.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:my_flutter_app/widget/custombutton.dart';
 
 class CustomInfoContainer extends StatelessWidget {
   final String title;
   final String? subtitle;
   final Widget? actionWidget;
+  final IconData? icon;
 
   const CustomInfoContainer({
     required this.title,
     this.subtitle,
     this.actionWidget,
+    this.icon,
   });
 
   @override
@@ -26,15 +31,26 @@ class CustomInfoContainer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: GoogleFonts.poppins(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.orange,
-            ),
+          Row(
+            children: [
+              if (icon != null)
+                Icon(
+                  icon,
+                  color: Colors.black,
+                  size: 42,
+                ),
+              SizedBox(width: icon != null ? 10 : 0),
+              Text(
+                title,
+                style: GoogleFonts.poppins(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.orange,
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 10),
           if (subtitle != null && subtitle!.isNotEmpty)
             SingleChildScrollView(
               child: Container(
@@ -56,15 +72,14 @@ class CustomInfoContainer extends StatelessWidget {
   }
 }
 
-class EvaluasiMenteeEmptyPage extends StatefulWidget {
-  const EvaluasiMenteeEmptyPage({Key? key}) : super(key: key);
+class EvaluasiMentorPage extends StatefulWidget {
+  const EvaluasiMentorPage({Key? key}) : super(key: key);
 
   @override
-  _EvaluasiMenteeEmptyPageState createState() =>
-      _EvaluasiMenteeEmptyPageState();
+  _EvaluasiMentorPageState createState() => _EvaluasiMentorPageState();
 }
 
-class _EvaluasiMenteeEmptyPageState extends State<EvaluasiMenteeEmptyPage> {
+class _EvaluasiMentorPageState extends State<EvaluasiMentorPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +96,8 @@ class _EvaluasiMenteeEmptyPageState extends State<EvaluasiMenteeEmptyPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => PremiumClassMenteeDetailPage()),
+                        builder: (context) => PremiumClassMentorDetailPage(),
+                      ),
                     );
                   },
                   icon: Icon(
@@ -126,7 +142,7 @@ class _EvaluasiMenteeEmptyPageState extends State<EvaluasiMenteeEmptyPage> {
                               subtitle: "3 Bulan",
                             ),
                             CustomInfoContainer(
-                              title: "Nama Mentor",
+                              title: "Nama Mentee",
                               subtitle: "Steven Jobs",
                             ),
                             CustomInfoContainer(
@@ -137,25 +153,74 @@ class _EvaluasiMenteeEmptyPageState extends State<EvaluasiMenteeEmptyPage> {
                                   "3. Evaluasi akan di berikan oleh mentor yang membimbingan kelas dalam bentuk formulir yang akan dikirim pada saat kegiatan mentoring berlangsung (zoom meeting).\n"
                                   "4. Hasil dari evaluasi akan dikirim mentor pada halaman ini apabila mentee telah menyelesaikan dan mentor telah menilai dari jawaban yang mentee berikan.",
                             ),
-                            SizedBox(height: 55),
-                            Center(
-                              child: Column(
-                                children: [
-                                  Image.asset(
-                                    'Handoff/ilustrator/learn_by_online.png',
-                                    width: 500,
-                                    fit: BoxFit.fill,
-                                  ),
-                                  SizedBox(height: 20),
-                                  Text(
-                                    "Kamu Belum Memiliki Evaluasi",
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Link Zoom",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.orange,
+                                ),
                               ),
+                            ),
+                            CustomForm(
+                              title: "Topik atau Materi",
+                              subtitle: "Masukkan topik atau materi",
+                            ),
+                            CustomForm(
+                              title: "Link Evaluasi",
+                              subtitle: "Masukkan link evaluasi",
+                            ),
+                            SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Container(
+                                  width: 650,
+                                  child: CustomButton(
+                                    buttonText: "Kirim",
+                                    onPressed: () {
+                                      // Your onPressed function here
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 20),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Hasil Evaluasi Mentee",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.orange,
+                                ),
+                              ),
+                            ),
+                            CustomForm(
+                              title: "Topik atau Materi",
+                              subtitle: "Masukkan topik atau materi",
+                            ),
+                            CustomForm(
+                              title: "Saran & Masukan dari hasil evaluasi",
+                              subtitle: "Masukkan link evaluasi",
+                            ),
+                            SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Container(
+                                  width: 650,
+                                  child: CustomButton(
+                                    buttonText: "Kirim",
+                                    onPressed: () {
+                                      // Your onPressed function here
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -169,5 +234,13 @@ class _EvaluasiMenteeEmptyPageState extends State<EvaluasiMenteeEmptyPage> {
         ),
       ),
     );
+  }
+
+  void launchYouTubeLink(String youtubeLink) async {
+    if (await canLaunch(youtubeLink)) {
+      await launch(youtubeLink);
+    } else {
+      throw 'Could not launch $youtubeLink';
+    }
   }
 }

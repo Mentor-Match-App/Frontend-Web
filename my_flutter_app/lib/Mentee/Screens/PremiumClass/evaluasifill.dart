@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:my_flutter_app/widget/custombutton.dart';
-import 'package:my_flutter_app/Mentee/Screens/PremiumClass/detailpremiumclass_page.dart';
+import 'package:my_flutter_app/Mentee/Screens/PremiumClass/detailpremiumclassmentee_page.dart';
 
 class CustomInfoContainer extends StatelessWidget {
   final String title;
@@ -95,7 +95,7 @@ class _EvaluasiMenteeFillPageState extends State<EvaluasiMenteeFillPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PremiumClassDetailPage(),
+                        builder: (context) => PremiumClassMenteeDetailPage(),
                       ),
                     );
                   },

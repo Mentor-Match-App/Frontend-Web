@@ -30,7 +30,7 @@ class _DetailSessionMentorScreenState extends State<DetailSessionMentorScreen> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
-        child: NavbarWidgetUser(),
+        child: NavbarWidgetMentee(),
       ),
       body: SingleChildScrollView(
         child: Column(

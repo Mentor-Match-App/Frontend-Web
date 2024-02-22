@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:my_flutter_app/Mentee/Screens/PremiumClass/evaluasiempty.dart';
 import 'package:my_flutter_app/Mentee/Screens/PremiumClass/evaluasifill.dart';
-import 'package:my_flutter_app/Mentee/Screens/myclass_page.dart';
+import 'package:my_flutter_app/Mentee/Screens/myclassmentee_page.dart';
 import 'package:my_flutter_app/widget/custombutton.dart';
 import 'package:my_flutter_app/Mentee/Screens/PremiumClass/reviewmentor.dart';
 
@@ -61,14 +61,14 @@ class CustomInfoContainer extends StatelessWidget {
   }
 }
 
-class PremiumClassDetailPage extends StatefulWidget {
-  const PremiumClassDetailPage({Key? key}) : super(key: key);
+class PremiumClassMenteeDetailPage extends StatefulWidget {
+  const PremiumClassMenteeDetailPage({Key? key}) : super(key: key);
 
   @override
-  _PremiumClassDetailPageState createState() => _PremiumClassDetailPageState();
+  _PremiumClassMenteeDetailPageState createState() => _PremiumClassMenteeDetailPageState();
 }
 
-class _PremiumClassDetailPageState extends State<PremiumClassDetailPage> {
+class _PremiumClassMenteeDetailPageState extends State<PremiumClassMenteeDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +84,8 @@ class _PremiumClassDetailPageState extends State<PremiumClassDetailPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MyClassPage()),
+                      MaterialPageRoute(
+                          builder: (context) => MyClassMenteePage()),
                     );
                   },
                   icon: Icon(

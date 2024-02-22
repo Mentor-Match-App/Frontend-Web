@@ -6,7 +6,7 @@ import 'package:my_flutter_app/widget/navbaruser.dart';
 import 'package:my_flutter_app/widget/mentorcard.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class CommunityPage extends StatelessWidget {
+class CommunityMenteePage extends StatelessWidget {
   final List<String> communityImages = [
     'Handoff/communityLogo/Flutter.png',
     'Handoff/communityLogo/HTMLCSS.png',
@@ -40,7 +40,7 @@ class CommunityPage extends StatelessWidget {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0),
-        child: NavbarWidgetUser(),
+        child: NavbarWidgetMentee(),
       ),
       body: SingleChildScrollView(
         child: Column(

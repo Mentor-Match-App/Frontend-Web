@@ -137,7 +137,7 @@ class PremiumClassPage extends StatelessWidget {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0),
-        child: NavbarWidgetUser(),
+        child: NavbarWidgetMentee(),
       ),
       body: SingleChildScrollView(
         child: Column(

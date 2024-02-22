@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/widget/form.dart';
 import 'package:my_flutter_app/widget/custombutton.dart';
-import 'package:my_flutter_app/widget/skillform.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+class MenteeProfilePage extends StatefulWidget {
+  const MenteeProfilePage({Key? key}) : super(key: key);
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _MenteeProfilePageState createState() => _MenteeProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _MenteeProfilePageState extends State<MenteeProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

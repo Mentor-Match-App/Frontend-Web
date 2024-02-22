@@ -19,7 +19,7 @@ class _SekolahDasarPageState extends State<SekolahDasarPage> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
-        child: NavbarWidgetUser(),
+        child: NavbarWidgetMentee(),
       ),
       body: ListView(
         children: [

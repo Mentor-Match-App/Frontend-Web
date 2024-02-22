@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_flutter_app/Mentee/Screens/PremiumClass/detailpremiumclass_page.dart';
+import 'package:my_flutter_app/Mentor/Screens/PremiumClass/detailpremiumclassmentor.dart';
 import 'package:my_flutter_app/widget/navbaruser.dart';
 
-class MyClassPage extends StatefulWidget {
-  MyClassPage({Key? key}) : super(key: key);
+class MyClassMentorPage extends StatefulWidget {
+  MyClassMentorPage({Key? key}) : super(key: key);
 
   @override
-  State<MyClassPage> createState() => _MyClassPageState();
+  State<MyClassMentorPage> createState() => _MyClassMentorPageState();
 }
 
 class MyClass {
@@ -27,7 +27,7 @@ class MySession {
   MySession({required this.title, required this.time, required this.mentor});
 }
 
-class _MyClassPageState extends State<MyClassPage>
+class _MyClassMentorPageState extends State<MyClassMentorPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -59,7 +59,7 @@ class _MyClassPageState extends State<MyClassPage>
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0),
-        child: NavbarWidgetUser(),
+        child: NavbarWidgetMentor(),
       ),
       body: Column(
         children: [
@@ -222,7 +222,7 @@ class _MyClassPageState extends State<MyClassPage>
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const PremiumClassDetailPage()),
+                                          const PremiumClassMentorDetailPage()),
                                 );
                               },
                               style: ButtonStyle(

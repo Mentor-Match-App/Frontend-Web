@@ -4,15 +4,15 @@ import 'package:my_flutter_app/widget/navbaruser.dart';
 import 'package:my_flutter_app/widget/mentorcard.dart';
 import 'package:my_flutter_app/widget/educationbutton.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key});
+class MenteeHomePage extends StatelessWidget {
+  const MenteeHomePage({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0),
-        child: NavbarWidgetUser(),
+        child: NavbarWidgetMentee(),
       ),
       body: SingleChildScrollView(
         child: Column(

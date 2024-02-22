@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_flutter_app/Mentee/Screens/profilefill_page.dart';
+import 'package:my_flutter_app/Mentee/Screens/personal_mentee_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -66,7 +66,8 @@ class LoginPage extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const ProfilePage()),
+                                    builder: (context) =>
+                                        const MenteeProfilePage()),
                               );
                             },
                             style: ElevatedButton.styleFrom(

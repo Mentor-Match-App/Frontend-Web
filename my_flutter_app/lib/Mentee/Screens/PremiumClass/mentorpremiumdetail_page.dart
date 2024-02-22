@@ -29,7 +29,7 @@ class _DetailPremiumClassMentorScreenState
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
-        child: NavbarWidgetUser(),
+        child: NavbarWidgetMentee(),
       ),
       body: SingleChildScrollView(
         child: Column(

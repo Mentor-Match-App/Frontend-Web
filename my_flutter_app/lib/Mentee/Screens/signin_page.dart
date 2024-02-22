@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/Mentee/Screens/homepage.dart';
+import 'package:my_flutter_app/Mentee/Screens/homepage_mentee.dart';
 import 'package:my_flutter_app/Mentee/Screens/signup_page.dart';
 import 'package:my_flutter_app/widget/navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -49,7 +49,8 @@ class SignInPage extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const HomePage()),
+                                    builder: (context) =>
+                                        const MenteeHomePage()),
                               );
                             },
                             style: ElevatedButton.styleFrom(
