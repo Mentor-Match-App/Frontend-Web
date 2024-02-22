@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/Mentee/Screens/personal_mentee_page.dart';
+import 'package:my_flutter_app/Mentor/Screens/personaldata_mentor_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -71,7 +72,7 @@ class LoginPage extends StatelessWidget {
                               );
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.orange,
+                              backgroundColor: Color(0xFFE78839),
                               padding: EdgeInsets.symmetric(
                                 horizontal: 125,
                                 vertical: 35,
@@ -96,9 +97,16 @@ class LoginPage extends StatelessWidget {
                             horizontal: 50,
                           ),
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const MentorProfilePage()),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.orange,
+                              backgroundColor: Color(0xFFE78839),
                               padding: EdgeInsets.symmetric(
                                 horizontal: 125,
                                 vertical: 35,
