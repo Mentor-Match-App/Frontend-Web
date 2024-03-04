@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/Mentee/Screens/personal_mentee_page.dart';
 import 'package:my_flutter_app/Mentor/Screens/personaldata_mentor_page.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class ChooseRoleScreen extends StatelessWidget {
+  const ChooseRoleScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

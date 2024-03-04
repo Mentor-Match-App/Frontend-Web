@@ -1,7 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import "package:flutter/material.dart";
-import 'package:my_flutter_app/Mentee/Screens/landing_page.dart';
+import 'package:my_flutter_app/admin/screen/dasboard_admin_screen.dart';
+import 'package:my_flutter_app/firebase_options.dart';
+import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Pastikan ini dipanggil pertama
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await UserPreferences.init();
   runApp(const MyApp());
 }
 
@@ -16,7 +24,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: LandingPage(),
+      home: DashboardAdminScreen(),
     );
   }
 }

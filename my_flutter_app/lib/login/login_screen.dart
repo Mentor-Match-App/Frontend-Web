@@ -1,11 +1,81 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/Mentee/Screens/role_page.dart';
-import 'package:my_flutter_app/Mentee/Screens/signin_page.dart';
-import 'package:my_flutter_app/widget/navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:my_flutter_app/admin/screen/dasboard_admin_screen.dart';
+import 'package:my_flutter_app/login/choose_role_screen.dart';
+import 'package:my_flutter_app/login/login_service.dart';
+import 'package:my_flutter_app/widget/navbar.dart';
 
-class SignUpPage extends StatelessWidget {
-  const SignUpPage({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool _isLoggingIn = false;
+
+  Future<void> signInWithGoogle() async {
+    setState(() {
+      _isLoggingIn = true;
+    });
+
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      if (googleUser != null) {
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
+        final OAuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        UserCredential userCredential =
+            await FirebaseAuth.instance.signInWithCredential(credential);
+        final User? user = userCredential.user;
+
+        if (user != null) {
+          // Mengambil ID token dari Firebase Auth
+          String? idToken = await user.getIdToken();
+          print('ID Token: $idToken');
+
+          // Membuat instance AuthService dan memanggil loginUser
+          AuthService authService = AuthService();
+          await authService.loginUser(idToken!);
+
+          // Cek data yang disimpan di SharedPreferences
+          Map<String, String?> userData = await AuthService.getUserData();
+
+          // Navigasi ke halaman lain setelah login berhasil
+          // Navigator.of(context).pushReplacement(
+          //     MaterialPageRoute(builder: (context) => ChooseRoleScreen()));
+
+          // Navigate to admin dashboard if userType is admin
+          if (userData['userType'] == 'Admin') {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => DashboardAdminScreen()));
+          } else {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => ChooseRoleScreen()));
+          }
+        }
+      }
+    } catch (e) {
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Login failed: $e"),
+        ),
+      );
+    } finally {
+      setState(() {
+        _isLoggingIn = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +115,11 @@ class SignUpPage extends StatelessWidget {
                             horizontal: 50,
                           ),
                           child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LoginPage()),
-                              );
-                            },
+                            onPressed: _isLoggingIn
+                                ? null
+                                : () async {
+                                    await signInWithGoogle();
+                                  },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Color(0xFFE78839),
                               padding: EdgeInsets.symmetric(
@@ -63,7 +131,7 @@ class SignUpPage extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              'Register with Google',
+                              'Login with Google',
                               style: GoogleFonts.poppins(
                                 fontSize: 16,
                                 color: Colors.white,
@@ -72,43 +140,6 @@ class SignUpPage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 5), // Add space
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 10,
-                            right: 50,
-                            top: 5,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Sudah punya akun? ',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SignInPage()),
-                                  );
-                                },
-                                child: Text(
-                                  'Login',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
                       ],
                     ),
                   ),
@@ -121,7 +152,7 @@ class SignUpPage extends StatelessWidget {
                       child: SizedBox(
                         width: 42.12,
                         child: Image.asset(
-                          'Handoff/ilustrator/register.png',
+                          'Handoff/ilustrator/login.png',
                           fit: BoxFit.fill,
                         ),
                       ),
