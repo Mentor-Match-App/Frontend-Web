@@ -8,6 +8,7 @@ import 'package:my_flutter_app/admin/screen/menu_admin/pembayaran_admin_screen.d
 import 'package:my_flutter_app/admin/screen/menu_admin/program_layanan_screen.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/sidebar_admin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardAdminScreen extends StatefulWidget {
   @override
@@ -30,6 +31,23 @@ class _DashboardAdminScreenState extends State<DashboardAdminScreen>
   void _handleMenuSelected(String menu) {
     setState(() {
       _selectedMenu = menu;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfileData();
+  }
+
+  String _name = "";
+  String _photoUrl = "";
+
+  Future<void> _loadProfileData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _name = prefs.getString('name') ?? "";
+      _photoUrl = prefs.getString('photoUrl') ?? "";
     });
   }
 
@@ -96,10 +114,18 @@ class _DashboardAdminScreenState extends State<DashboardAdminScreen>
                           );
                         },
                       ),
-                      const CircleAvatar(
+                      // ClipOval(
+                      //   child: Image.network(
+                      //     _photoUrl,
+                      //     fit: BoxFit.cover,
+                      //     width: 20,
+                      //     height: 20,
+                      //   ),
+                      // ),
+
+                      CircleAvatar(
                         radius: 20,
-                        backgroundImage:
-                            AssetImage('assets/Handoff/ilustrator/profile.png'),
+                        backgroundImage: NetworkImage(_photoUrl),
                       ),
                     ],
                   ),

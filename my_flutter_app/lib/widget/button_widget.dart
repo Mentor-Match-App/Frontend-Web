@@ -3,7 +3,12 @@ import 'package:my_flutter_app/widget/menucategory.dart';
 
 class SmallElevatedButtonWidget extends StatefulWidget {
   final String text;
-  SmallElevatedButtonWidget({Key? key, required this.text}) : super(key: key);
+  final void Function()? onPressed;
+  SmallElevatedButtonWidget({
+    Key? key,
+    required this.text,
+    this.onPressed,
+  }) : super(key: key);
 
   @override
   State<SmallElevatedButtonWidget> createState() =>
@@ -16,7 +21,7 @@ class _SmallElevatedButtonWidgetState extends State<SmallElevatedButtonWidget> {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: widget.onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: ColorStyle().primaryColors,
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
@@ -35,7 +40,12 @@ class _SmallElevatedButtonWidgetState extends State<SmallElevatedButtonWidget> {
 
 class SmallOutlineButtonWidget extends StatefulWidget {
   final String text;
-  SmallOutlineButtonWidget({Key? key, required this.text}) : super(key: key);
+  final void Function()? onPressed;
+  SmallOutlineButtonWidget({
+    Key? key,
+    required this.text,
+    this.onPressed,
+  }) : super(key: key);
 
   @override
   State<SmallOutlineButtonWidget> createState() =>
@@ -46,7 +56,7 @@ class _SmallOutlineButtonWidgetState extends State<SmallOutlineButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: () {},
+      onPressed: widget.onPressed,
       style: OutlinedButton.styleFrom(
         side: BorderSide(color: ColorStyle().primaryColors),
         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
@@ -118,7 +128,7 @@ class _RegularOutlineButtonWidgetState
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20),
       child: OutlinedButton(
-        onPressed: () {},
+        onPressed: widget.onPressed,
         style: OutlinedButton.styleFrom(
           side: BorderSide(
               color: ColorStyle()

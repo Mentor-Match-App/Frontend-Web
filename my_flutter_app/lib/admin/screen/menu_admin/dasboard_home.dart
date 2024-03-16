@@ -5,6 +5,7 @@ import 'package:my_flutter_app/admin/screen/menu_dasboard_admin/pengajuan_pembay
 import 'package:my_flutter_app/widget/card/card_active_widget_admin.dart';
 import 'package:my_flutter_app/widget/card/card_admin_widget.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreenAdmin extends StatefulWidget {
   HomeScreenAdmin({
@@ -39,6 +40,21 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _loadProfileData();
+  }
+
+  String _name = "";
+
+  Future<void> _loadProfileData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _name = prefs.getString('name') ?? "";
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -51,13 +67,13 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Hai , Alexander',
-                  style: FontFamily().regularText,
+                  'Hai , $_name',
+                  style: FontFamily().titleText,
                 ),
               ),
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text('Hai , Alexander',
+                child: Text('Welcome to Admin Dashboard',
                     style: FontFamily().regularText.copyWith(
                           fontSize: 12,
                           fontWeight: FontWeight.w200,

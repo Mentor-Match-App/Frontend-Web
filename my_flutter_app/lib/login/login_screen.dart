@@ -49,17 +49,25 @@ class _LoginScreenState extends State<LoginScreen> {
           // Cek data yang disimpan di SharedPreferences
           Map<String, String?> userData = await AuthService.getUserData();
 
-          // Navigasi ke halaman lain setelah login berhasil
-          // Navigator.of(context).pushReplacement(
-          //     MaterialPageRoute(builder: (context) => ChooseRoleScreen()));
-
-          // Navigate to admin dashboard if userType is admin
-          if (userData['userType'] == 'Admin') {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => DashboardAdminScreen()));
-          } else {
+          // Tentukan navigasi berdasarkan userType
+          String? userType = userData['userType'];
+          if (userType == null) {
+            // Jika userType belum ada atau null, navigasi ke ChooseRoleScreen
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => ChooseRoleScreen()));
+          } else {
+            // Jika userType ada, navigasi ke halaman yang sesuai berdasarkan userType
+            // Contoh:
+            if (userType == "Mentee") {
+              // Navigator.of(context).pushReplacement(MaterialPageRoute(
+              //     builder: (context) => BottomNavbarMenteeScreen()));
+            } else if (userType == "Mentor") {
+              // Navigator.of(context).pushReplacement(MaterialPageRoute(
+              //     builder: (context) => BottomNavbarMentorScreen()));
+            } else if (userType == "Admin") {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => DashboardAdminScreen()));
+            }
           }
         }
       }

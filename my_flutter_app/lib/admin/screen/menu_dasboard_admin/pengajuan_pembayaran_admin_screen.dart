@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/admin/screen/menu_admin/pembayaran_admin_screen.dart';
+import 'package:my_flutter_app/admin/model/unverified_transaction.dart'; // Adjust the import path as necessary
+import 'package:my_flutter_app/admin/screen/menu_dasboard_admin/tabel_pengajuan_pembayaran.dart';
+import 'package:my_flutter_app/admin/service/unverified_transaction_service.dart'; // Adjust the import path as necessary
 import 'package:my_flutter_app/widget/menucategory.dart';
 
 class PengajuanPembayaraAdminScreenState extends StatefulWidget {
@@ -12,6 +14,9 @@ class PengajuanPembayaraAdminScreenState extends StatefulWidget {
 
 class _PengajuanPembayaraAdminScreenStateState
     extends State<PengajuanPembayaraAdminScreenState> {
+  final UnverifiedTransactionService _unverifiedTransactionService =
+      UnverifiedTransactionService();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,9 +31,23 @@ class _PengajuanPembayaraAdminScreenStateState
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Padding(
+            Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("150 Pengajuan"),
+              child: FutureBuilder<List<Transaction>>(
+                future:
+                    _unverifiedTransactionService.fetchUnverifiedTransactions(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Text("Loading...");
+                  } else if (snapshot.hasError) {
+                    return Text("Error: ${snapshot.error}");
+                  } else if (snapshot.hasData) {
+                    return Text("${snapshot.data!.length} Pengajuan");
+                  } else {
+                    return const Text("0 Pengajuan");
+                  }
+                },
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -40,7 +59,7 @@ class _PengajuanPembayaraAdminScreenStateState
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PembayaranAdminScreen(),
+                        builder: (context) => TabelVerifikasiPembayaran(),
                       ),
                     );
                   },
