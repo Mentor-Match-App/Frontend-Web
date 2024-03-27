@@ -56,4 +56,8 @@ class UserPreferences {
     final token = getToken();
     return token != null && token.isNotEmpty;
   }
+
+  static Future clearPreferences() async {
+    await _preferences.clear();
+  }
 }

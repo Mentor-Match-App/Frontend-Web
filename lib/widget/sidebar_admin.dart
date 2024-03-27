@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/login/login_screen.dart';
+import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 
 class SideBarAdmin extends StatefulWidget {
@@ -46,6 +48,9 @@ class _SideBarAdminState extends State<SideBarAdmin> {
               _buildMenuSideBar("Mentor", Icons.emoji_people_rounded),
               _buildMenuSideBar("Community", Icons.workspaces_filled),
               _buildMenuSideBar("Pembayaran", Icons.payment),
+              SizedBox(height: 260),
+              _buildLogoutButton(),
+
               // Tambahkan item menu lain jika ada
             ],
           ),
@@ -72,6 +77,29 @@ class _SideBarAdminState extends State<SideBarAdmin> {
         style: TextButton.styleFrom(
           alignment: Alignment.centerLeft,
           backgroundColor: backgroundColor,
+        ),
+      ),
+    );
+  }
+
+  _buildLogoutButton() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextButton.icon(
+        onPressed: () {
+          UserPreferences.clearPreferences();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => LoginScreen(),
+            ),
+          );
+        },
+        icon: Icon(Icons.logout, color: ColorStyle().primaryColors),
+        label:
+            Text('Logout', style: TextStyle(color: ColorStyle().primaryColors)),
+        style: TextButton.styleFrom(
+          alignment: Alignment.centerLeft,
         ),
       ),
     );
