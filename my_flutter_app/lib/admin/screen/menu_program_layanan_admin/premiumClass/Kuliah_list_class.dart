@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_flutter_app/admin/model/list_class_model.dart';
+import 'package:my_flutter_app/admin/service/list_class_service.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 
 class KuliahListPremiumClassAdminScreenState extends StatefulWidget {
@@ -12,7 +14,14 @@ class KuliahListPremiumClassAdminScreenState extends StatefulWidget {
 
 class _KuliahListPremiumClassAdminScreenStateState
     extends State<KuliahListPremiumClassAdminScreenState> {
+  late Future<List<Class>> _listClassesFuture;
   @override
+  void initState() {
+    super.initState();
+    _listClassesFuture =
+        ListClassService().fetchClassesByEducationLevel('Kuliah');
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -23,144 +32,132 @@ class _KuliahListPremiumClassAdminScreenStateState
               ),
         ),
       ),
-      body: ListView(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Padding(
+      body: FutureBuilder<List<Class>>(
+        future: _listClassesFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Error loading classes'),
+            );
+          } else {
+            final classes = snapshot.data!;
+            return ListView.builder(
+              itemCount: classes.length,
+              itemBuilder: (context, index) {
+                final Class classData = classes[index];
+                return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: ColorStyle().tertiaryColors,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(24),
-                          child: Column(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: ColorStyle().tertiaryColors,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    child: Image.asset(
-                                      fit: BoxFit.cover,
-                                      "assets/Handoff/Ilustrator/profile.png",
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "UI/UX Research and Design",
-                                          style:
-                                              FontFamily().titleText.copyWith(
-                                                    fontSize: 12,
-                                                  ),
-                                        ),
-                                        Text(
-                                          "3 Bulan",
-                                          style:
-                                              FontFamily().regularText.copyWith(
-                                                    fontSize: 12,
-                                                  ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.emoji_people_rounded,
-                                              color:
-                                                  ColorStyle().secondaryColors,
-                                            ),
-                                            Text(": Stevenley",
-                                                style: FontFamily()
-                                                    .regularText
-                                                    .copyWith(
-                                                      fontSize: 12,
-                                                    )),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(Icons.person,
-                                                color: ColorStyle()
-                                                    .secondaryColors),
-                                            Text(": Thiyaraal",
-                                                style: FontFamily()
-                                                    .regularText
-                                                    .copyWith(
-                                                      fontSize: 12,
-                                                    )),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                              SizedBox(
+                                  child: Image.network(
+                                classData.mentor?.photoUrl ?? '',
+                                width: 100,
+                                height: 100,
+                              )),
+                              const SizedBox(
+                                width: 10,
                               ),
-                              const SizedBox(height: 12),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      'htttps/inilinkmentorigyangakankamuakses',
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      classData.name ?? '',
+                                      style: FontFamily().titleText.copyWith(
+                                            fontSize: 12,
+                                          ),
+                                    ),
+                                    Text(
+                                      "${classData.durationInDays} Bulan",
                                       style: FontFamily().regularText.copyWith(
                                             fontSize: 12,
                                           ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    width: 12,
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      // Menyalin teks ke clipboard
-                                      Clipboard.setData(const ClipboardData(
-                                          text:
-                                              'htttps/inilinkmentorigyangakankamuakses'));
-
-                                      // Tampilkan snackbar atau pesan bahwa teks telah disalin
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          duration: const Duration(seconds: 2),
-                                          backgroundColor:
-                                              ColorStyle().tertiaryColors,
-                                          behavior: SnackBarBehavior.floating,
-                                          content: Text('Link disalin',
-                                              style: FontFamily()
-                                                  .regularText
-                                                  .copyWith(
-                                                    fontSize: 12,
-                                                  )),
-                                        ),
-                                      );
-                                    },
-                                    icon: const Icon(Icons.copy),
-                                  )
-                                ],
+                                    Text("Mentor: ${classData.mentor?.name}",
+                                        style:
+                                            FontFamily().regularText.copyWith(
+                                                  fontSize: 12,
+                                                )),
+                                    Text(
+                                      "Mentee: ${classData.transactions?.isNotEmpty ?? false ? classData.transactions!.map((e) => e.user?.name).join(', ') : 'Belum ada Mentee'}",
+                                      style: FontFamily().regularText.copyWith(
+                                            fontSize: 12,
+                                          ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ],
                           ),
-                        ),
+                          const SizedBox(height: 12),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  classData.zoomLink ??
+                                      'Link Zoom belum tersedia',
+                                  style: FontFamily().regularText.copyWith(
+                                        fontSize: 12,
+                                      ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 12,
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  // Menyalin teks ke clipboard
+                                  Clipboard.setData(
+                                    ClipboardData(
+                                        text: classData.zoomLink ?? ''),
+                                  );
+
+                                  // Tampilkan snackbar atau pesan bahwa teks telah disalin
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      duration: const Duration(seconds: 2),
+                                      backgroundColor:
+                                          ColorStyle().tertiaryColors,
+                                      behavior: SnackBarBehavior.floating,
+                                      content: Text(
+                                        'Link disalin',
+                                        style:
+                                            FontFamily().regularText.copyWith(
+                                                  fontSize: 12,
+                                                ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                icon: const Icon(Icons.copy),
+                              )
+                            ],
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                )
-              ],
-            ),
-          )
-        ],
+                );
+              },
+            );
+          }
+        },
       ),
     );
   }

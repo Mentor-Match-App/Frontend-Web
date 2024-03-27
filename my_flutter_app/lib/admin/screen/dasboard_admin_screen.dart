@@ -11,6 +11,10 @@ import 'package:my_flutter_app/widget/sidebar_admin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardAdminScreen extends StatefulWidget {
+  final String? selectedMenu; // Define the named parameter as optional
+
+  DashboardAdminScreen({Key? key, this.selectedMenu}) : super(key: key);
+
   @override
   _DashboardAdminScreenState createState() => _DashboardAdminScreenState();
 }
@@ -37,6 +41,7 @@ class _DashboardAdminScreenState extends State<DashboardAdminScreen>
   @override
   void initState() {
     super.initState();
+    _selectedMenu = widget.selectedMenu ?? 'Dashboard';
     _loadProfileData();
   }
 

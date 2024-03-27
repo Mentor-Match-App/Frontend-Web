@@ -5,11 +5,13 @@ import 'package:my_flutter_app/widget/menucategory.dart';
 class CardCommunity extends StatefulWidget {
   final String title;
   final String imagePath;
+  final Function()? onPressed;
 
   CardCommunity({
     Key? key,
     required this.imagePath,
     required this.title,
+    this.onPressed,
   }) : super(key: key);
 
   @override
@@ -34,7 +36,7 @@ class _CardCommunityState extends State<CardCommunity> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(
+              Image.network(
                 widget.imagePath,
                 height: 100,
                 width: 111,
@@ -51,7 +53,16 @@ class _CardCommunityState extends State<CardCommunity> {
                 ),
               ),
               SizedBox(height: 12),
-              SmallElevatedButtonWidget(text: "Bergabung"),
+              if (widget.title == 'Create Community')
+                SmallElevatedButtonWidget(
+                  text: 'Buat Komunitas Baru',
+                  onPressed: widget.onPressed,
+                ),
+              if (widget.title != 'Create Community')
+                SmallElevatedButtonWidget(
+                  text: 'Bergabung',
+                  onPressed: widget.onPressed,
+                ),
             ],
           ),
         ),

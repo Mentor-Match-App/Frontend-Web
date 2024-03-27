@@ -331,44 +331,53 @@ class _DetailPengajuanKelasScreenState
                         }).toList()
                       : [ContainerField(text: 'Terms and Conditions')],
                 ),
-                TittleTextField(
-                  title: 'Link Zoom',
-                  color: ColorStyle().secondaryColors,
-                  textAlign: TextAlign.start,
-                ),
 
-                //  text field for zoom link
-                Container(
-                  width: 1300,
-                  padding: EdgeInsets.all(12),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: ColorStyle()
-                          .tertiaryColors, // Contoh warna latar belakang, sesuaikan dengan kebutuhan
-                      contentPadding:
-                          EdgeInsets.all(8.0), // Padding dalam container
-                      hintText:
-                          'Masukkan link zoom di sini', // Teks bantu untuk memberi tahu pengguna
-                      border: OutlineInputBorder(
-                        borderSide:
-                            BorderSide.none, // Menghilangkan border luar
-                        borderRadius:
-                            BorderRadius.circular(4), // Membulatkan sudut
+                if (classDetail.location == 'Online')
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TittleTextField(
+                        title: 'Link Zoom',
+                        color: ColorStyle().secondaryColors,
+                        textAlign: TextAlign.start,
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide.none, // Gaya border saat enabled
-                        borderRadius:
-                            BorderRadius.circular(4), // Membulatkan sudut
+                      Container(
+                        width: 1300,
+                        padding: EdgeInsets.all(12),
+                        child: TextField(
+                          controller: zoomLinkController,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: ColorStyle()
+                                .tertiaryColors, // Contoh warna latar belakang, sesuaikan dengan kebutuhan
+                            contentPadding:
+                                EdgeInsets.all(8.0), // Padding dalam container
+                            hintText:
+                                'Masukkan link zoom di sini', // Teks bantu untuk memberi tahu pengguna
+                            border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide.none, // Menghilangkan border luar
+                              borderRadius:
+                                  BorderRadius.circular(4), // Membulatkan sudut
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide.none, // Gaya border saat enabled
+                              borderRadius:
+                                  BorderRadius.circular(4), // Membulatkan sudut
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide.none, // Gaya border saat fokus
+                              borderRadius:
+                                  BorderRadius.circular(4), // Membulatkan sudut
+                            ),
+                          ),
+                        ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide.none, // Gaya border saat fokus
-                        borderRadius:
-                            BorderRadius.circular(4), // Membulatkan sudut
-                      ),
-                    ),
+                    ],
                   ),
-                ),
+
                 SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
