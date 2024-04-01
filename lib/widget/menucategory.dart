@@ -30,7 +30,7 @@ class FontFamily {
     color: ColorStyle().textColors,
   );
   TextStyle boldText = GoogleFonts.poppins(
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w400,
     fontSize: 12,
     color: ColorStyle().textColors,
   );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/admin/model/mentor_model.dart';
+import 'package:my_flutter_app/admin/screen/menu_admin/detail_mentor_admin.dart';
 import 'package:my_flutter_app/admin/service/mentor_service.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 
@@ -58,7 +59,15 @@ class _MentorScreenState extends State<MentorScreen> {
                               width: 160,
                               height: 40,
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => DetailMentorAdmin(
+                                          mentorDetail: mentors),
+                                    ),
+                                  );
+                                },
                                 style: ElevatedButton.styleFrom(
                                   primary: ColorStyle().primaryColors,
                                   onPrimary: Colors.white,

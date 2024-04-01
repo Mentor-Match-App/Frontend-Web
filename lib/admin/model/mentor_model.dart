@@ -51,6 +51,10 @@ class Mentor {
   String? accountNumber;
   String? accountName;
   dynamic rejectReason;
+  List<Experience>? experiences;
+  List<Class>? mentorClass;
+  List<Session>? session;
+  List<MentorReview>? mentorReviews;
 
   Mentor({
     this.id,
@@ -67,6 +71,10 @@ class Mentor {
     this.accountNumber,
     this.accountName,
     this.rejectReason,
+    this.experiences,
+    this.mentorClass,
+    this.session,
+    this.mentorReviews,
   });
 
   factory Mentor.fromMap(Map<String, dynamic> json) => Mentor(
@@ -86,6 +94,21 @@ class Mentor {
         accountNumber: json["accountNumber"],
         accountName: json["accountName"],
         rejectReason: json["rejectReason"],
+        experiences: json["experiences"] == null
+            ? []
+            : List<Experience>.from(
+                json["experiences"]!.map((x) => Experience.fromMap(x))),
+        mentorClass: json["class"] == null
+            ? []
+            : List<Class>.from(json["class"]!.map((x) => Class.fromMap(x))),
+        session: json["session"] == null
+            ? []
+            : List<Session>.from(
+                json["session"]!.map((x) => Session.fromMap(x))),
+        mentorReviews: json["mentorReviews"] == null
+            ? []
+            : List<MentorReview>.from(
+                json["mentorReviews"]!.map((x) => MentorReview.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
@@ -104,5 +127,139 @@ class Mentor {
         "accountNumber": accountNumber,
         "accountName": accountName,
         "rejectReason": rejectReason,
+        "experiences": experiences == null
+            ? []
+            : List<dynamic>.from(experiences!.map((x) => x.toMap())),
+        "class": mentorClass == null
+            ? []
+            : List<dynamic>.from(mentorClass!.map((x) => x.toMap())),
+        "session": session == null
+            ? []
+            : List<dynamic>.from(session!.map((x) => x.toMap())),
+        "mentorReviews": mentorReviews == null
+            ? []
+            : List<dynamic>.from(mentorReviews!.map((x) => x.toMap())),
+      };
+}
+
+class Experience {
+  String? id;
+  String? userId;
+  bool? isCurrentJob;
+  String? company;
+  String? jobTitle;
+
+  Experience({
+    this.id,
+    this.userId,
+    this.isCurrentJob,
+    this.company,
+    this.jobTitle,
+  });
+
+  factory Experience.fromMap(Map<String, dynamic> json) => Experience(
+        id: json["id"],
+        userId: json["userId"],
+        isCurrentJob: json["isCurrentJob"],
+        company: json["company"],
+        jobTitle: json["jobTitle"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "id": id,
+        "userId": userId,
+        "isCurrentJob": isCurrentJob,
+        "company": company,
+        "jobTitle": jobTitle,
+      };
+}
+
+class Class {
+  String? name;
+  bool? isVerified;
+
+  Class({
+    this.name,
+    this.isVerified,
+  });
+
+  factory Class.fromMap(Map<String, dynamic> json) => Class(
+        name: json["name"],
+        isVerified: json["isVerified"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "name": name,
+        "isVerified": isVerified,
+      };
+}
+
+class MentorReview {
+  String? id;
+  String? reviewerId;
+  String? mentorId;
+  String? content;
+  Reviewer? reviewer;
+
+  MentorReview({
+    this.id,
+    this.reviewerId,
+    this.mentorId,
+    this.content,
+    this.reviewer,
+  });
+
+  factory MentorReview.fromMap(Map<String, dynamic> json) => MentorReview(
+        id: json["id"],
+        reviewerId: json["reviewerId"],
+        mentorId: json["mentorId"],
+        content: json["content"],
+        reviewer: json["reviewer"] == null
+            ? null
+            : Reviewer.fromMap(json["reviewer"]),
+      );
+
+  Map<String, dynamic> toMap() => {
+        "id": id,
+        "reviewerId": reviewerId,
+        "mentorId": mentorId,
+        "content": content,
+        "reviewer": reviewer?.toMap(),
+      };
+}
+
+class Reviewer {
+  String? name;
+
+  Reviewer({
+    this.name,
+  });
+
+  factory Reviewer.fromMap(Map<String, dynamic> json) => Reviewer(
+        name: json["name"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "name": name,
+      };
+}
+
+class Session {
+  String? title;
+  bool? isActive;
+
+  Session({
+    this.title,
+    this.isActive,
+  });
+
+  factory Session.fromMap(Map<String, dynamic> json) => Session(
+        title: json["title"],
+        isActive: json["isActive"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "title": title,
+        "isActive": isActive,
       };
 }

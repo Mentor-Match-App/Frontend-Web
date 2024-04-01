@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_flutter_app/Mentee/Screens/personal_mentee_page.dart';
-import 'package:my_flutter_app/Mentor/Screens/personaldata_mentor_page.dart';
+import 'package:my_flutter_app/login/choose_role_service.dart';
 
-class ChooseRoleScreen extends StatelessWidget {
+class ChooseRoleScreen extends StatefulWidget {
   const ChooseRoleScreen({super.key});
+
+  @override
+  State<ChooseRoleScreen> createState() => _ChooseRoleScreenState();
+}
+
+class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
+  final ChooseRoleService chooseRoleService = ChooseRoleService();
 
   @override
   Widget build(BuildContext context) {
@@ -63,13 +69,28 @@ class ChooseRoleScreen extends StatelessWidget {
                             horizontal: 50,
                           ),
                           child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const MenteeProfilePage()),
-                              );
+                            onPressed: () async {
+                              // Start the async operation
+                              await chooseRoleService.chooseRole("Mentee");
+
+                              // if (mounted) {
+                              //   Navigator.pushAndRemoveUntil(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //       builder: (context) =>
+                              //           const EditProfileMenteeScreen(
+                              //         skills: [],
+                              //         linkedin: '',
+                              //         about: '',
+                              //         location: '',
+                              //         currentJob: '',
+                              //         currentCompany: '',
+                              //         experiences: [],
+                              //       ),
+                              //     ),
+                              //     (route) => false,
+                              //   );
+                              // }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Color(0xFFE78839),
@@ -97,13 +118,20 @@ class ChooseRoleScreen extends StatelessWidget {
                             horizontal: 50,
                           ),
                           child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const MentorProfilePage()),
-                              );
+                            onPressed: () async {
+                              // Assuming you have an instance of AuthService
+                              await chooseRoleService.chooseRole("Mentor");
+
+                              // if (mounted) {
+                              //   Navigator.pushAndRemoveUntil(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //       builder: (context) =>
+                              //           RegisterMentorScreen(),
+                              //     ),
+                              //     (route) => false,
+                              //   );
+                              // }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Color(0xFFE78839),

@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import "package:flutter/material.dart";
 import 'package:my_flutter_app/admin/screen/dasboard_admin_screen.dart';
+import 'package:my_flutter_app/admin/screen/menu_admin/detail_mentee_admin.dart';
 import 'package:my_flutter_app/firebase_options.dart';
 import 'package:my_flutter_app/login/login_screen.dart';
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';

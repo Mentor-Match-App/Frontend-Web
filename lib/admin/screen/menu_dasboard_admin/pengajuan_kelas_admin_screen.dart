@@ -30,7 +30,6 @@ class _PengajuanKelasAdminScreenState extends State<PengajuanKelasAdminScreen> {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error.toString()}'));
         } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-          // Check for non-empty data
           List<Class> classes = snapshot.data!;
           return SingleChildScrollView(
               child: Column(
