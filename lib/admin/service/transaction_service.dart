@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:my_flutter_app/admin/model/transaction_model.dart';
+import 'package:my_flutter_app/style/baseURl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TransactionService {
-  static const String _baseUrl = 'https://hwx70h6x-8000.asse.devtunnels.ms';
-
   final Dio _dio = Dio();
 
   Future<List<Transaction>> fetchTransactions() async {
@@ -15,7 +14,7 @@ class TransactionService {
       if (token == null) throw Exception('Token not found');
 
       final Response response = await _dio.get(
-        '$_baseUrl/admin/list-transaction',
+        '$baseUrl/admin/list-transaction',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',

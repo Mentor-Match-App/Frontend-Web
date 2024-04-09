@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:my_flutter_app/admin/model/unverified_class_model.dart';
+import 'package:my_flutter_app/style/baseURl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UnverifiedClassService {
-  static const String _baseUrl = 'https://hwx70h6x-8000.asse.devtunnels.ms';
-
   final Dio _dio = Dio();
 
   Future<List<Class>> fetchUnverifiedClasses() async {
@@ -15,7 +14,7 @@ class UnverifiedClassService {
       if (token == null) throw Exception('Token not found');
 
       final Response response = await _dio.get(
-        '$_baseUrl/admin/unverified-class',
+        '$baseUrl/admin/unverified-class',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -53,7 +52,7 @@ class UnverifiedClassService {
       if (token == null) throw Exception('Token not found');
 
       final Response response = await _dio.patch(
-        '$_baseUrl/admin/verify-class',
+        '$baseUrl/admin/verify-class',
         data: {
           'classId': classId,
           'zoomLink': zoomLink,
@@ -86,7 +85,7 @@ class UnverifiedClassService {
       if (token == null) throw Exception('Token not found');
 
       final Response response = await _dio.patch(
-        '$_baseUrl/admin/reject-class',
+        '$baseUrl/admin/reject-class',
         data: {
           'classId': classId,
           'rejectReason': rejectReason,

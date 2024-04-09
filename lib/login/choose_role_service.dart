@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:my_flutter_app/style/baseURl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChooseRoleService {
   Dio dio = Dio();
-  final String baseUrl = "https://hwx70h6x-8000.asse.devtunnels.ms";
 
   Future<void> chooseRole(String selectedRole) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -32,96 +32,102 @@ class _ComunityScreenState extends State<ComunityScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<CommunityModels>(
-      future: _communityModelsFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error.toString()}'));
-        } else if (snapshot.hasData && snapshot.data!.communities!.isNotEmpty) {
-          // Check for non-empty data
-          List<Community> communities = snapshot.data!.communities!;
-
-          return Column(
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Community List',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CreateNewCommunityScreen(),
-                          ),
-                        );
-                      },
-                      icon: Icon(Icons.add, color: ColorStyle().whiteColors),
-                      label: Text(
-                        'Add Community',
-                        style: TextStyle(
-                          color: ColorStyle().whiteColors,
-                          fontSize: 12,
-                          fontFamily: FontFamily().titleText.fontFamily,
-                        ),
-                      ),
-                      // style
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: ColorStyle().primaryColors,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 25, vertical: 15),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                        ),
-                      ),
-                    ),
-                  ],
+              Text(
+                'Community List',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              GridView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: communities.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  childAspectRatio: 0.8,
-                ),
-                itemBuilder: (BuildContext context, int index) {
-                  return CardCommunity(
-                    title: communities[index].name ?? '',
-                    imagePath: communities[index].imageUrl ?? '',
-                    onPressed: () {
-                      if (index == 0) {
-                        // navigate to create community screen
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CreateNewCommunityScreen(),
-                          ),
-                        );
-                      } else {
-                        _launchURL(communities[index].link ?? '');
-                      }
-                    },
+              ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreateNewCommunityScreen(),
+                    ),
                   );
                 },
+                icon: Icon(Icons.add, color: ColorStyle().whiteColors),
+                label: Text(
+                  'Add Community',
+                  style: TextStyle(
+                    color: ColorStyle().whiteColors,
+                    fontSize: 12,
+                    fontFamily: FontFamily().titleText.fontFamily,
+                  ),
+                ),
+                // style
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorStyle().primaryColors,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                  ),
+                ),
               ),
             ],
-          );
-        } else {
-          return Center(child: Text('No data'));
-        }
-      },
+          ),
+        ),
+        FutureBuilder<CommunityModels>(
+          future: _communityModelsFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error.toString()}'));
+            } else if (snapshot.hasData &&
+                snapshot.data!.communities!.isNotEmpty) {
+              // Check for non-empty data
+              List<Community> communities = snapshot.data!.communities!;
+
+              return Column(
+                children: [
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: communities.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      childAspectRatio: 0.8,
+                    ),
+                    itemBuilder: (BuildContext context, int index) {
+                      return CardCommunity(
+                        title: communities[index].name ?? '',
+                        imagePath: communities[index].imageUrl ?? '',
+                        onPressed: () {
+                          if (index == 0) {
+                            // navigate to create community screen
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    CreateNewCommunityScreen(),
+                              ),
+                            );
+                          } else {
+                            _launchURL(communities[index].link ?? '');
+                          }
+                        },
+                      );
+                    },
+                  ),
+                ],
+              );
+            } else {
+              return Center(child: Text('No Community Data'));
+            }
+          },
+        ),
+      ],
     );
   }
 }

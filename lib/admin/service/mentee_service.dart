@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:my_flutter_app/admin/model/mentee_model.dart';
+import 'package:my_flutter_app/style/baseURl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MenteeService {
-  static const String _baseUrl = 'https://hwx70h6x-8000.asse.devtunnels.ms';
-
   final Dio _dio = Dio();
 
 // fetch  all mentee
@@ -16,7 +15,7 @@ class MenteeService {
       if (token == null) throw Exception('Token not found');
 
       final Response response = await _dio.get(
-        '$_baseUrl/admin/list-mentee',
+        '$baseUrl/admin/list-mentee',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',

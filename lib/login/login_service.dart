@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:my_flutter_app/style/baseURl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   Dio dio = Dio();
-  final String baseUrl =
-      "https://hwx70h6x-8000.asse.devtunnels.ms"; // Ganti dengan URL server Anda
 
   Future<void> loginUser(String idToken) async {
     try {

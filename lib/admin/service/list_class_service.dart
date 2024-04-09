@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:my_flutter_app/admin/model/list_class_model.dart';
+import 'package:my_flutter_app/style/baseURl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ListClassService {
-  static const String _baseUrl = 'https://hwx70h6x-8000.asse.devtunnels.ms';
-
   final Dio _dio = Dio();
 
   Future<List<Class>> fetchClassesByEducationLevel(
@@ -16,7 +15,7 @@ class ListClassService {
       if (token == null) throw Exception('Token not found');
 
       final Response response = await _dio.get(
-        '$_baseUrl/admin/list-class/$educationLevel',
+        '$baseUrl/admin/list-class/$educationLevel',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',

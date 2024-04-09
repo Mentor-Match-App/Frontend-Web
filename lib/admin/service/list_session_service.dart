@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:my_flutter_app/admin/model/list_session_model.dart';
+import 'package:my_flutter_app/style/baseURl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ListSessionService {
-  static const String _baseUrl = 'https://hwx70h6x-8000.asse.devtunnels.ms';
-
   final Dio _dio = Dio();
 
   Future<List<Session>> fetchSessions() async {
@@ -15,7 +14,7 @@ class ListSessionService {
       if (token == null) throw Exception('Token not found');
 
       final Response response = await _dio.get(
-        '$_baseUrl/admin/list-session',
+        '$baseUrl/admin/list-session',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -51,7 +50,7 @@ class ListSessionService {
       if (token == null) throw Exception('Token not found');
 
       final Response response = await _dio.patch(
-        '$_baseUrl/admin/add-zoom-link-session',
+        '$baseUrl/admin/add-zoom-link-session',
         data: {
           'sessionId': sessionId,
           'zoomLink': zoomLink,

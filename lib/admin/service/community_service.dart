@@ -1,11 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:my_flutter_app/admin/model/community_model.dart';
+import 'package:my_flutter_app/style/baseURl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CommunityService {
   final Dio _dio = Dio();
-
-  final String baseUrl = "https://hwx70h6x-8000.asse.devtunnels.ms";
 
   Future<CommunityModels> fetchCommunities() async {
     try {

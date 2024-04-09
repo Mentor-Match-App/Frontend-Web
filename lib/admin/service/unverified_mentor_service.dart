@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:my_flutter_app/admin/model/unverified_mentor_model.dart';
+import 'package:my_flutter_app/style/baseURl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UnverifiedMentorService {
-  static const String _baseUrl = 'https://hwx70h6x-8000.asse.devtunnels.ms';
-
   final Dio _dio = Dio();
 
   Future<List<Mentor>> fetchUnverifiedMentors() async {
@@ -15,7 +14,7 @@ class UnverifiedMentorService {
       if (token == null) throw Exception('Token not found');
 
       final Response response = await _dio.get(
-        '$_baseUrl/admin/unverified-mentor',
+        '$baseUrl/admin/unverified-mentor',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -53,7 +52,7 @@ class UnverifiedMentorService {
       if (token == null) throw Exception('Token not found');
 
       final Response response = await _dio.patch(
-        '$_baseUrl/admin/verify-mentor',
+        '$baseUrl/admin/verify-mentor',
         data: {
           'mentorId': mentorId,
         },
@@ -85,7 +84,7 @@ class UnverifiedMentorService {
       if (token == null) throw Exception('Token not found');
 
       final Response response = await _dio.patch(
-        '$_baseUrl/admin/reject-mentor',
+        '$baseUrl/admin/reject-mentor',
         data: {
           'mentorId': mentorId,
           'rejectReason': rejectReason,

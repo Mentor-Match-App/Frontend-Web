@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:my_flutter_app/admin/model/unverified_transaction.dart';
+import 'package:my_flutter_app/style/baseURl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UnverifiedTransactionService {
-  static const String _baseUrl = 'https://hwx70h6x-8000.asse.devtunnels.ms';
-
   final Dio _dio = Dio();
 
   Future<List<Transaction>> fetchUnverifiedTransactions() async {
@@ -15,7 +14,7 @@ class UnverifiedTransactionService {
       if (token == null) throw Exception('Token not found');
 
       final Response response = await _dio.get(
-        '$_baseUrl/admin/unverified-transaction',
+        '$baseUrl/admin/unverified-transaction',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -53,7 +52,7 @@ class UnverifiedTransactionService {
       if (token == null) throw Exception('Token not found');
 
       final Response response = await _dio.patch(
-        '$_baseUrl/admin/verify-transaction',
+        '$baseUrl/admin/verify-transaction',
         data: {
           'transactionId': transactionId,
         },
@@ -82,7 +81,7 @@ class UnverifiedTransactionService {
       if (token == null) throw Exception('Token not found');
 
       final Response response = await _dio.patch(
-        '$_baseUrl/admin/reject-transaction',
+        '$baseUrl/admin/reject-transaction',
         data: {
           'transactionId': transactionId,
         },
