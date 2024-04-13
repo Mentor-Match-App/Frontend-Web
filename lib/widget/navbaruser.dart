@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_flutter_app/Mentee/Screens/PremiumClass/premiumclass_page.dart';
-import 'package:my_flutter_app/Mentee/Screens/Session/session_page.dart';
-import 'package:my_flutter_app/Mentee/Screens/communitymentee_page.dart';
-import 'package:my_flutter_app/Mentee/Screens/landing_page.dart';
-import 'package:my_flutter_app/Mentee/Screens/myclassmentee_page.dart';
-import 'package:my_flutter_app/Mentee/Screens/notificationmentee_page.dart';
-import 'package:my_flutter_app/Mentee/Screens/personalprofile.dart';
 import 'package:my_flutter_app/Mentor/Screens/communitymentor_page.dart';
 import 'package:my_flutter_app/Mentor/Screens/notificationmentor_page.dart';
+import 'package:my_flutter_app/mentee/screen/PremiumClass/premiumclass_page.dart';
+import 'package:my_flutter_app/mentee/screen/Session/session_page.dart';
+import 'package:my_flutter_app/mentee/screen/landing_page.dart';
+import 'package:my_flutter_app/mentee/screen/myclassmentee_page.dart';
+import 'package:my_flutter_app/mentee/screen/notificationmentee_page.dart';
+import 'package:my_flutter_app/mentee/screen/personalprofile.dart';
 
 class CustomDropdown extends StatefulWidget {
   @override
@@ -150,46 +149,6 @@ class NavbarWidgetMentee extends StatelessWidget {
           Row(
             children: [
               CustomDropdown(),
-              TextButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CommunityMenteePage()),
-                  );
-                },
-                icon: Icon(
-                  Icons.people_outline_outlined,
-                  color: Colors.black,
-                ),
-                label: Text(
-                  'Community',
-                  style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              TextButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MyClassMenteePage()),
-                  );
-                },
-                icon: Icon(
-                  Icons.book_outlined,
-                  color: Colors.black,
-                ),
-                label: Text(
-                  'My Class',
-                  style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
               const SizedBox(width: 20),
               IconButton(
                 icon: Icon(

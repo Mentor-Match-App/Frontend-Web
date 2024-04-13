@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/admin/screen/dasboard_admin_screen.dart';
 import 'package:my_flutter_app/admin/service/community_service.dart';
-import 'package:my_flutter_app/style/tittle_text.dart';
-import 'package:my_flutter_app/widget/button_widget.dart';
+import 'package:my_flutter_app/style/text.dart';
+import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-import 'package:my_flutter_app/widget/text_field_widget.dart';
+import 'package:my_flutter_app/widget/text_field.dart';
 
 class CreateNewCommunityScreen extends StatefulWidget {
   CreateNewCommunityScreen({Key? key}) : super(key: key);

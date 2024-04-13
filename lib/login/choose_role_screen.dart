@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/login/choose_role_service.dart';
+import 'package:my_flutter_app/mentee/screen/profile/edit_profile_mentee_screen.dart';
+import 'package:my_flutter_app/widget/menucategory.dart';
 
 class ChooseRoleScreen extends StatefulWidget {
   const ChooseRoleScreen({super.key});
@@ -15,6 +17,7 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorStyle().whiteColors,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: Row(
@@ -35,89 +38,107 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
         ),
       ),
       body: SingleChildScrollView(
+          child: Padding(
+        padding: const EdgeInsets.all(32.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 150, vertical: 100),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Choose your Role',
-                          style: TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.normal,
+            Text(
+              'Choose your Role',
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w400,
+                color: Color(0xff0A1737),
+                fontSize: 32,
+              ),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            Text(
+              'Ingin memberi panduan sebagai mentor atau mendapatkan bimbingan sebagai mentee? Sebagai mentor, Anda bisa berbagi pengalaman dan inspirasi. Sebagai mentee, Anda dapat belajar dari yang lebih berpengalaman',
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w300,
+                color: Color(0xff0A1737),
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.left,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  width: 400,
+                  height: 700,
+                  decoration: BoxDecoration(
+                    color: ColorStyle().whiteColors,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Container(
+                          height: 500,
+                          decoration: BoxDecoration(
+                            color: ColorStyle().tertiaryColors,
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                        ),
-                        SizedBox(height: 28),
-                        Text(
-                          'Ingin memberi panduan sebagai mentor atau mendapatkan bimbingan sebagai mentee? Sebagai mentor, Anda bisa berbagi pengalaman dan inspirasi. Sebagai mentee, Anda dapat belajar dari yang lebih berpengalaman.',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                        SizedBox(height: 50),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 50,
-                          ),
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              // Start the async operation
-                              await chooseRoleService.chooseRole("Mentee");
-
-                              // if (mounted) {
-                              //   Navigator.pushAndRemoveUntil(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (context) =>
-                              //           const EditProfileMenteeScreen(
-                              //         skills: [],
-                              //         linkedin: '',
-                              //         about: '',
-                              //         location: '',
-                              //         currentJob: '',
-                              //         currentCompany: '',
-                              //         experiences: [],
-                              //       ),
-                              //     ),
-                              //     (route) => false,
-                              //   );
-                              // }
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFE78839),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 125,
-                                vertical: 35,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8)),
-                              ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              children: [
+                                Image.asset(
+                                  'Handoff/ilustrator/mentor_role.png',
+                                  width: 265,
+                                  height: 265,
+                                  fit: BoxFit.fill,
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  'Mentor',
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  'Seorang mentor adalah individu yang memiliki pengetahuan, pengalaman, dan keahlian dalam suatu bidang tertentu, serta bersedia untuk berbagi pengetahuan dan memberikan bimbingan kepada orang lain yang ingin belajar dan berkembang.',
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w200),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
                             ),
-                            child: Text(
-                              'As a Mentee',
-                              style: GoogleFonts.poppins(
-                                fontSize: 16,
-                                color: Colors.white,
-                              ),
-                            ),
                           ),
                         ),
-                        SizedBox(height: 20),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 50,
-                          ),
-                          child: ElevatedButton(
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        width: 250,
+                        height: 60,
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        ColorStyle().primaryColors)),
                             onPressed: () async {
                               // Assuming you have an instance of AuthService
                               await chooseRoleService.chooseRole("Mentor");
@@ -133,50 +154,125 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
                               //   );
                               // }
                             },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFE78839),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 125,
-                                vertical: 35,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8)),
-                              ),
-                            ),
                             child: Text(
                               'As a Mentor',
-                              style: GoogleFonts.poppins(
-                                fontSize: 16,
-                                color: Colors.white,
-                              ),
+                              style: FontFamily().buttonText.copyWith(
+                                    fontSize: 14,
+                                  ),
+                            )),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  width: 400,
+                  height: 700,
+                  decoration: BoxDecoration(
+                    color: ColorStyle().whiteColors,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Container(
+                          height: 500,
+                          decoration: BoxDecoration(
+                            color: ColorStyle().tertiaryColors,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              children: [
+                                Image.asset(
+                                  'Handoff/ilustrator/mentee_role.png',
+                                  width: 265,
+                                  height: 265,
+                                  fit: BoxFit.fill,
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  'Mentee',
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  'Seorang mentee adalah individu yang aktif mencari bimbingan dan nasihat dari seorang mentor untuk mengembangkan diri pribadi atau profesional.',
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w200),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    child: DecoratedBox(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
                       ),
-                      child: SizedBox(
-                        width: 42.12,
-                        child: Image.asset(
-                          'Handoff/ilustrator/choose_role.png',
-                          fit: BoxFit.fill,
-                        ),
+                      SizedBox(
+                        height: 20,
                       ),
-                    ),
+                      SizedBox(
+                        width: 250,
+                        height: 60,
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        ColorStyle().primaryColors)),
+                            onPressed: () async {
+                              // Start the async operation
+                              await chooseRoleService.chooseRole("Mentee");
+
+                              if (mounted) {
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const EditProfileMenteeScreen(
+                                      skills: [],
+                                      linkedin: '',
+                                      about: '',
+                                      location: '',
+                                      currentJob: '',
+                                      currentCompany: '',
+                                      experiences: [],
+                                    ),
+                                  ),
+                                  (route) => false,
+                                );
+                              }
+                            },
+                            child: Text(
+                              'As a Mentee',
+                              style: FontFamily().buttonText.copyWith(
+                                    fontSize: 14,
+                                  ),
+                            )),
+                      )
+                    ],
                   ),
-                ],
-              ),
+                )
+              ],
             ),
+            //
           ],
         ),
-      ),
+      )),
     );
   }
 }

@@ -119,15 +119,6 @@ class _DashboardAdminScreenState extends State<DashboardAdminScreen>
                           );
                         },
                       ),
-                      // ClipOval(
-                      //   child: Image.network(
-                      //     _photoUrl,
-                      //     fit: BoxFit.cover,
-                      //     width: 20,
-                      //     height: 20,
-                      //   ),
-                      // ),
-
                       CircleAvatar(
                         radius: 20,
                         backgroundImage: NetworkImage(_photoUrl),
