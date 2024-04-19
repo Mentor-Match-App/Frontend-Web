@@ -22,14 +22,14 @@ class _CategoriCardWidgetState extends State<CategoriCardWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 55.00),
       child: InkWell(
         onTap: widget.onTap,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(widget.img, height: 32, width: 32),
+            Image.asset(widget.img, height: 40, width: 40),
             const SizedBox(height: 8), // Add space between image and text
             Text(
               widget.title,

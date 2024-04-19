@@ -25,21 +25,17 @@ class _SideBarMenteeState extends State<SideBarMentee> {
     return Container(
       width: widget.size,
       color: ColorStyle().whiteColors,
-      child: ListView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildMenuSideBar("Dashboard", Icons.dashboard),
-              _buildMenuSideBar("My Class", Icons.book_online_outlined),
-              _buildMenuSideBar("Community", Icons.workspaces_filled),
-
-              SizedBox(height: 260),
-              _buildLogoutButton(),
-
-              // Tambahkan item menu lain jika ada
-            ],
-          ),
+          _buildMenuSideBar("Dashboard", Icons.dashboard),
+          _buildMenuSideBar("My Class", Icons.menu_book_sharp),
+          _buildMenuSideBar("Community", Icons.workspaces_filled),
+      
+          SizedBox(height: 260),
+          _buildLogoutButton(),
+      
+          // Tambahkan item menu lain jika ada
         ],
       ),
     );

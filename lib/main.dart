@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import "package:flutter/material.dart";
+import 'package:my_flutter_app/Mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/admin/screen/dasboard_admin_screen.dart';
 import 'package:my_flutter_app/firebase_options.dart';
 import 'package:my_flutter_app/login/login_screen.dart';
-import 'package:my_flutter_app/mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
 
 void main() async {
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
     if (isLoggedIn) {
       switch (userType) {
         case 'Mentee':
-          // homeScreen = BottomNavbarMenteeScreen();
+          homeScreen = MenteeHomePage();
           break;
         case 'Mentor':
           // homeScreen = BottomNavbarMentorScreen();
@@ -47,13 +47,12 @@ class MyApp extends StatelessWidget {
       }
     }
     return MaterialApp(
-      title: 'MentorMatch',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      debugShowCheckedModeBanner: false,
-      // home: LoginScreen(),
-      home: MenteeHomePage(),
-    );
+        title: 'MentorMatch',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        debugShowCheckedModeBanner: false,
+        // home: LoginScreen(),
+        home: homeScreen);
   }
 }

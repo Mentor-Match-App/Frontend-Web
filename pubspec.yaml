@@ -75,6 +75,7 @@ flutter:
     - assets/Handoff/ilustrator/
     - assets/Handoff/icon/adminIcon/
     - assets/Handoff/icon/categoryIcon/Karier/
+    - assets/Handoff/icon/categoryIcon/Kuliah/
     - assets/Handoff/icon/categoryIcon/SMA/
     - assets/Handoff/icon/categoryIcon/SMP/
     - assets/Handoff/icon/categoryIcon/SD/

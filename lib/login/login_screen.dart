@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_flutter_app/admin/screen/dasboard_admin_screen.dart';
 import 'package:my_flutter_app/login/choose_role_screen.dart';
 import 'package:my_flutter_app/login/login_service.dart';
+import 'package:my_flutter_app/mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/widget/navbar.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -59,8 +60,8 @@ class _LoginScreenState extends State<LoginScreen> {
             // Jika userType ada, navigasi ke halaman yang sesuai berdasarkan userType
             // Contoh:
             if (userType == "Mentee") {
-              // Navigator.of(context).pushReplacement(MaterialPageRoute(
-              //     builder: (context) => BottomNavbarMenteeScreen()));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => MenteeHomePage()));
             } else if (userType == "Mentor") {
               // Navigator.of(context).pushReplacement(MaterialPageRoute(
               //     builder: (context) => BottomNavbarMentorScreen()));

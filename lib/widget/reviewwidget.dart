@@ -17,18 +17,11 @@ class ReviewWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Icon(Icons.emoji_emotions_outlined,
-                  size: 40,
-                  color:
-                      const Color(0xff0A1737)), // Use secondaryColors directly
-              SizedBox(
-                width: 4,
-              ),
               Text(
                 name,
                 style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16,
                   color:
                       const Color(0xff0A1737), // Use secondaryColors directly
                 ),
@@ -39,7 +32,7 @@ class ReviewWidget extends StatelessWidget {
             review,
             style: GoogleFonts.poppins(
               fontWeight: FontWeight.w300,
-              fontSize: 18,
+              fontSize: 14,
               color: const Color(0xff313030), // Use textColors directly
             ),
           )

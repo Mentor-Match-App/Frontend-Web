@@ -24,7 +24,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                     Text(
                       'About',
                       style: TextStyle(
-                          fontSize: 32,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
@@ -38,7 +38,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                           Text(
                             'Mentoring',
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 14,
                                 fontWeight: FontWeight.normal,
                                 color: Colors.grey),
                           ),
@@ -46,7 +46,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                           Text(
                             'Session',
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 14,
                                 fontWeight: FontWeight.normal,
                                 color: Colors.grey),
                           ),
@@ -54,7 +54,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                           Text(
                             'Premium Class',
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 14,
                                 fontWeight: FontWeight.normal,
                                 color: Colors.grey),
                           ),
@@ -69,7 +69,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                     Text(
                       'Help',
                       style: TextStyle(
-                          fontSize: 32,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
@@ -83,7 +83,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                           Text(
                             'Privacy',
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 14,
                                 fontWeight: FontWeight.normal,
                                 color: Colors.grey),
                           ),
@@ -91,7 +91,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                           Text(
                             'Blog',
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 14,
                                 fontWeight: FontWeight.normal,
                                 color: Colors.grey),
                           ),
@@ -99,7 +99,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                           Text(
                             'Conditions',
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 14,
                                 fontWeight: FontWeight.normal,
                                 color: Colors.grey),
                           ),
@@ -114,7 +114,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                     Text(
                       'Contact Us',
                       style: TextStyle(
-                          fontSize: 32,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
@@ -128,7 +128,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                           Text(
                             'Phone : 1234567',
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 14,
                                 fontWeight: FontWeight.normal,
                                 color: Colors.grey),
                           ),
@@ -136,7 +136,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                           Text(
                             'Email : what@gmail.com',
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 14,
                                 fontWeight: FontWeight.normal,
                                 color: Colors.grey),
                           ),
@@ -144,7 +144,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                           Text(
                             'Location : 123, Jekardah',
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 14,
                                 fontWeight: FontWeight.normal,
                                 color: Colors.grey),
                           ),
@@ -158,7 +158,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                     Text(
                       'Social Media',
                       style: TextStyle(
-                          fontSize: 32,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
@@ -200,7 +200,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 50),
+                    SizedBox(height: 35),
                   ],
                 ),
               ],
@@ -222,21 +222,20 @@ class _FooterWidgetState extends State<FooterWidget> {
           ),
           // copyright at center
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 150, vertical: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   'Copyright   ©   2023. All rights reserved',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 14,
                       fontWeight: FontWeight.normal,
                       color: Colors.grey),
                 ),
               ],
             ),
           ),
-          SizedBox(height: 20),
         ],
       ),
     );
