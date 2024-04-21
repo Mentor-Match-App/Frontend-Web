@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_flutter_app/Mentee/screen/PremiumClass/detailpremiumclassmentee_page.dart';
+
 import 'package:my_flutter_app/widget/navbaruser.dart';
 
 class MyClassMenteePage extends StatefulWidget {
@@ -218,12 +218,12 @@ class _MyClassMenteePageState extends State<MyClassMenteePage>
                             height: 60,
                             child: ElevatedButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const PremiumClassMenteeDetailPage()),
-                                );
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) =>
+                                //           const PremiumClassMenteeDetailPage()),
+                                // );
                               },
                               style: ButtonStyle(
                                 shape: MaterialStateProperty.all<

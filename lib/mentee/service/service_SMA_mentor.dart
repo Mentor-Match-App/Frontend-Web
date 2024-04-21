@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:my_flutter_app/mentee/model/category_SMA_model.dart';
+import 'package:my_flutter_app/mentee/model/category_sma_model.dart';
 import 'package:my_flutter_app/style/baseURl.dart';
 
 class SMAServices {

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/mentee/model/mentor_model.dart';
 import 'package:my_flutter_app/mentee/model/session_model.dart';
-import 'package:my_flutter_app/mentee/screen/PremiumClass/premiumclass_page.dart';
+import 'package:my_flutter_app/mentee/screen/premium_class/detail_mentor_all_screen.dart';
+import 'package:my_flutter_app/mentee/screen/premium_class/premiumclass_page.dart';
+import 'package:my_flutter_app/mentee/screen/session/detail_mentor_session_screen.dart';
+import 'package:my_flutter_app/mentee/screen/session/session_screen.dart';
 import 'package:my_flutter_app/mentee/service/mentor_service.dart';
 import 'package:my_flutter_app/mentee/service/session_mentor_service.dart';
 import 'package:my_flutter_app/widget/card_mentor.dart';
@@ -134,7 +137,29 @@ class _DashboardMenteeState extends State<DashboardMentee> {
                             currentJob?.jobTitle ?? 'Placeholder Job';
 
                         return CardItemMentor(
-                          onPressesd: () {},
+                          onPressesd: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailMentorAllScreen(
+                                  experiences: mentor.experiences ?? [],
+                                  email: mentor.email ?? '',
+                                  classes: mentor.mentorClass ?? [],
+                                  about: mentor.about ?? '',
+                                  name: mentor.name ?? 'No Name',
+                                  photoUrl: mentor.photoUrl ?? '',
+                                  skills: mentor.skills ?? [],
+                                  classid: mentor.id.toString(),
+                                  company: company,
+                                  job: jobTitle,
+                                  linkedin: mentor.linkedin ?? '',
+                                  mentor: mentor,
+                                  location: mentor.location ?? '',
+                                  mentorReviews: mentor.mentorReviews ?? [],
+                                ),
+                              ),
+                            );
+                          },
                           imagePath: mentor.photoUrl.toString(),
                           name: mentor.name ?? 'No Name',
                           job: jobTitle,
@@ -158,7 +183,14 @@ class _DashboardMenteeState extends State<DashboardMentee> {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SessionScreen(),
+                            ),
+                          );
+                        },
                         child: Text(
                           "See All",
                           style: GoogleFonts.poppins(
@@ -219,7 +251,7 @@ class _DashboardMenteeState extends State<DashboardMentee> {
                             ? ColorStyle().disableColors
                             : ColorStyle().primaryColors;
                         ////// slot///////
-                        SessionData sessionElement = mentor.session!.first;
+                        SessionElement sessionElement = mentor.session!.first;
                         int maxParticipants =
                             sessionElement.maxParticipants ?? 0;
                         int currentParticipants =
@@ -233,7 +265,20 @@ class _DashboardMenteeState extends State<DashboardMentee> {
                           child: CardItemMentor(
                             title: isSessionFull ? "Full Booked" : "Available",
                             color: buttonColor,
-                            onPressesd: () {},
+                            onPressesd: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetailMentorSessionScreen(
+                                    availableSlots: availableSlots,
+                                    detailmentor: mentor,
+                                    totalParticipants: numberOfParticipants,
+                                    mentorReviews: mentor.mentorReviews ?? [],
+                                  ),
+                                ),
+                              );
+                            },
                             imagePath: mentor.photoUrl ??
                                 'assets/Handoff/ilustrator/profile.png',
                             name: mentor.name ?? 'No Name',

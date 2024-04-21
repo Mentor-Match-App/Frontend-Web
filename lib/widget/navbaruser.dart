@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/Mentor/Screens/communitymentor_page.dart';
 import 'package:my_flutter_app/Mentor/Screens/notificationmentor_page.dart';
-import 'package:my_flutter_app/mentee/screen/PremiumClass/premiumclass_page.dart';
-import 'package:my_flutter_app/mentee/screen/Session/session_page.dart';
+import 'package:my_flutter_app/mentee/screen/premium_class/premiumclass_page.dart';
+import 'package:my_flutter_app/mentee/screen/session/session_screen.dart';
 import 'package:my_flutter_app/mentee/screen/landing_page.dart';
 import 'package:my_flutter_app/mentee/screen/myclassmentee_page.dart';
 import 'package:my_flutter_app/mentee/screen/notificationmentee_page.dart';
@@ -93,7 +93,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
       } else if (result == 'Sessions') {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => SessionPage()),
+          MaterialPageRoute(builder: (context) => SessionScreen()),
         );
       }
 

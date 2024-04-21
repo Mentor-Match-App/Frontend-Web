@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:my_flutter_app/mentee/model/category_SMP_model.dart';
+import 'package:my_flutter_app/mentee/model/category_smp_model.dart';
 import 'package:my_flutter_app/style/baseURl.dart';
 
 class SMPServices {
