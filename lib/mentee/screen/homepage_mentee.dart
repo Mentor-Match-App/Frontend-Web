@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_flutter_app/mentee/screen/sidebar/community_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/dashboard_mentee.dart';
 import 'package:my_flutter_app/widget/footer.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
@@ -71,7 +72,7 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
       case 'My CLass':
       // return MenteeScreen();
       case 'Community':
-      // return ComunityScreen();
+        return CommunityMentee();
       default:
         return DashboardMentee();
     }

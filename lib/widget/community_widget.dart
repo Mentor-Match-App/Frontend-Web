@@ -24,7 +24,7 @@ class _CardCommunityState extends State<CardCommunity> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        height: 208,
+        height: 300,
         width: 220,
         decoration: BoxDecoration(
           color: ColorStyle().tertiaryColors,
@@ -33,14 +33,14 @@ class _CardCommunityState extends State<CardCommunity> {
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.network(
                 widget.imagePath,
-                height: 100,
-                width: 111,
-                fit: BoxFit.fill,
+                height: 150,
+                width: 150,
+                fit: BoxFit.cover,
               ),
               SizedBox(height: 12),
               Text(
