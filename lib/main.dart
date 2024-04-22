@@ -4,7 +4,7 @@ import 'package:my_flutter_app/Mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/admin/screen/dasboard_admin_screen.dart';
 import 'package:my_flutter_app/firebase_options.dart';
 import 'package:my_flutter_app/login/login_screen.dart';
-import 'package:my_flutter_app/mentee/model/mentee_person.dart';
+import 'package:my_flutter_app/mentee/screen/profile/mentee_profile_screen.dart';
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
 
 void main() async {
@@ -55,6 +55,6 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         // home: LoginScreen(),
         // home: homeScreen);
-        home: MenteeHomePage());
+        home: homeScreen);
   }
 }

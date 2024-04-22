@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/Mentor/Screens/communitymentor_page.dart';
 import 'package:my_flutter_app/Mentor/Screens/notificationmentor_page.dart';
-import 'package:my_flutter_app/mentee/screen/premium_class/premiumclass_page.dart';
-import 'package:my_flutter_app/mentee/screen/session/session_screen.dart';
+import 'package:my_flutter_app/mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/landing_page.dart';
 import 'package:my_flutter_app/mentee/screen/myclassmentee_page.dart';
 import 'package:my_flutter_app/mentee/screen/notificationmentee_page.dart';
 import 'package:my_flutter_app/mentee/screen/personalprofile.dart';
+import 'package:my_flutter_app/mentee/screen/premium_class/premiumclass_page.dart';
+import 'package:my_flutter_app/mentee/screen/profile/mentee_profile_screen.dart';
+import 'package:my_flutter_app/mentee/screen/session/session_screen.dart';
 
 class CustomDropdown extends StatefulWidget {
   @override
@@ -126,7 +128,7 @@ class NavbarWidgetMentee extends StatelessWidget {
                   // Redirect to the homepage
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LandingPage()),
+                    MaterialPageRoute(builder: (context) => MenteeHomePage()),
                   );
                 },
                 child: Row(
@@ -171,7 +173,7 @@ class NavbarWidgetMentee extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => PersonalProfilePage()),
+                            builder: (context) => ProfileMenteeScreen()),
                       );
                     },
                     child: _buildCircularImage(

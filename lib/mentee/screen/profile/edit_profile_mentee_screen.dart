@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/Mentee/service/profile_service.dart';
+import 'package:my_flutter_app/mentee/screen/profile/mentee_profile_screen.dart';
 import 'package:my_flutter_app/style/text.dart';
 import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/flushsBar_widget.dart';
@@ -379,15 +380,11 @@ class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
           _updateUserProfile(); // Memanggil _updateUserProfile() tanpa await
           showTopSnackBar(context, 'Profile updated successfully',
               leftBarIndicatorColor: ColorStyle().succesColors);
-          // Navigator.pushAndRemoveUntil(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => const BottomNavbarMenteeScreen(
-          //       activeScreen: 3,
-          //     ),
-          //   ),
-          //   (route) => false,
-          // );
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => ProfileMenteeScreen()),
+            (route) => false,
+          );
         }
       },
     );

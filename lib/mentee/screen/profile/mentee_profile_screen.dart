@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/Mentee/screen/profile/edit_profile_mentee_screen.dart';
 import 'package:my_flutter_app/Mentee/service/profile_service.dart';
-import 'package:my_flutter_app/login/login_screen.dart';
 import 'package:my_flutter_app/mentee/model/profile_model.dart';
-import 'package:my_flutter_app/style/text.dart';
-import 'package:my_flutter_app/widget/category_card.dart';
-import 'package:my_flutter_app/widget/experiencewidget.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/profileavatar.dart';
-import 'package:my_flutter_app/widget/show_dialog_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../../preferences/ preferences_helper.dart';
 
 class ProfileMenteeScreen extends StatefulWidget {
   ProfileMenteeScreen({Key? key}) : super(key: key);
@@ -43,10 +37,9 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
   final ProfileService menteeService = ProfileService();
 
   void _navigateToEditProfile() async {
-    final mentee = await menteeService
-        .getMenteeProfile(); // Assuming you fetch the mentee profile here
+    final mentee = await menteeService.getMenteeProfile();
 
-    if (!mounted) return; // Check if the widget is still in the widget tree
+    if (!mounted) return;
 
     if (mentee != null && mentee.user != null) {
       List<Map<String, String>> experiencesMaps = mentee.user!.experiences!
@@ -90,6 +83,7 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorStyle().whiteColors,
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,8 +105,7 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
         ),
       ),
       body: FutureBuilder<MenteeProfile>(
-        future: menteeService
-            .getMenteeProfile(), // Call the asynchronous fetchMentee method here
+        future: menteeService.getMenteeProfile(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -127,265 +120,325 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
 
             return ListView(
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      height: MediaQuery.of(context).size.height * 0.20,
-                      decoration: BoxDecoration(
-                          color: ColorStyle()
-                              .tertiaryColors // Warna latar belakang yang diinginkan
-                          ),
+                Container(
+                  height: 60,
+                  color: ColorStyle().tertiaryColors,
+                ),
+                Container(
+                  width: double.maxFinite,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFFf8f0f0), // #F8F0F0
+                        Colors.white,
+                      ],
+                      stops: [0.5, 0.5],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
                     ),
-                    Transform.translate(
-                      offset: Offset(0.0, -120 / 2.0),
-                      child: Center(
-                        child: Column(
-                          children: [
-                            ProfileAvatar(
-                              imageUrl: mentee?.user!.photoUrl ?? '',
-                            ),
-                            SizedBox(
-                              height:
-                                  40, // Adjust the height to ensure enough space for the Stack
-                              child: Stack(
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 20,
+                      left: 50,
+                      right: 50,
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ProfileAvatar(
+                          imageUrl: mentee?.user!.photoUrl ?? '',
+                          radius: 80,
+                        ),
+                        SizedBox(width: 20),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Center(
-                                    child: Text(
-                                      mentee!.user?.name ?? '',
-                                      style: FontFamily().boldText.copyWith(
-                                            fontSize: 16,
-                                          ),
+                                  Text(
+                                    mentee?.user!.name ?? '',
+                                    style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16,
+                                      color:
+                                          Colors.black, // Text color adjusted
                                     ),
                                   ),
-                                  Positioned(
-                                      right: 0,
-                                      top:
-                                          0, // Adjust as needed to position the edit icon correctly
-                                      child: IconButton(
-                                        icon: Icon(Icons.edit),
+                                  Expanded(
+                                      child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      IconButton(
                                         onPressed: _navigateToEditProfile,
-                                      )),
+                                        icon: Icon(Icons.edit),
+                                      ),
+                                    ],
+                                  ))
                                 ],
                               ),
-                            ),
-                            Builder(
-                              builder: (context) {
-                                // Check if there are experiences and if any of them is marked as a current job.
-                                var hasCurrentJob = mentee.user?.experiences
-                                        ?.any((element) =>
-                                            element.isCurrentJob == true) ??
-                                    false;
-
-                                // Only display the Row widget if there is a current job experience.
-                                if (hasCurrentJob) {
-                                  var currentExperience =
-                                      mentee.user!.experiences!.firstWhere(
-                                    (element) => element.isCurrentJob == true,
-                                  );
-
-                                  String jobTitle =
-                                      currentExperience.jobTitle ??
-                                          "No Job Title";
-                                  String company =
-                                      currentExperience.company ?? "No Company";
-
-                                  return Center(
+                              SizedBox(height: 20),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.work_outline_outlined,
+                                        size: 20,
+                                        color: const Color(0xffE78938),
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        mentee?.user!.experiences!
+                                                .firstWhere((element) =>
+                                                    element.isCurrentJob ==
+                                                    true)
+                                                .jobTitle ??
+                                            '',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(width: 20),
+                                  Expanded(
                                     child: Row(
-                                      mainAxisSize: MainAxisSize
-                                          .min, // Ensures the Row only takes up necessary space
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Icon(
-                                          Icons.work,
-                                          color: ColorStyle().primaryColors,
+                                          Icons.location_on_outlined,
+                                          size: 20,
+                                          color: const Color(0xffE78938),
                                         ),
-                                        SizedBox(
-                                            width:
-                                                8), // Provides a small gap between the icon and the text
+                                        SizedBox(width: 5),
                                         Text(
-                                          "$jobTitle at $company",
-                                          style: FontFamily().regularText,
+                                          mentee?.user!.location ?? '',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 18,
+                                          ),
                                         ),
                                       ],
                                     ),
-                                  );
-                                } else {
-                                  // Return an empty Container if there's no current job experience.
-                                  return Container();
-                                }
-                              },
-                            ),
-
-// For Location Information Row
-                            Center(
-                              child: Row(
-                                mainAxisSize: MainAxisSize
-                                    .min, // This ensures the Row only takes up necessary space
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 5),
+                              Row(
                                 children: [
                                   Icon(
-                                    Icons.location_on,
-                                    color: ColorStyle().primaryColors,
+                                    Icons.home_work_outlined,
+                                    size: 20,
+                                    color: const Color(0xffE78938),
                                   ),
-                                  SizedBox(
-                                      width:
-                                          8), // Provides a small gap between the icon and the text
+                                  SizedBox(width: 4),
                                   Text(
-                                    mentee.user?.location ?? '',
-                                    style: FontFamily().regularText,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TitleProfile(
-                                  title: "About",
-                                  color: ColorStyle().primaryColors,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 12.0),
-                                  child: Text(
-                                    mentee.user?.about ?? '',
-                                    style: FontFamily().regularText,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 12.0, top: 8.0),
-                                  child: Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Container(
-                                      width: 120,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        color: ColorStyle().primaryColors,
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      child: TextButton.icon(
-                                        style: TextButton.styleFrom(
-                                          primary: ColorStyle().whiteColors,
-                                        ),
-                                        onPressed: () {
-                                          final linkedlnlink =
-                                              mentee?.user!.linkedin ?? '';
-                                          _launchURL(linkedlnlink);
-                                        },
-                                        icon: Icon(Icons.link),
-                                        label: Text('Linkedln',
-                                            style: FontFamily()
-                                                .regularText
-                                                .copyWith(
-                                                  color:
-                                                      ColorStyle().whiteColors,
-                                                )),
-                                      ),
+                                    mentee?.user!.experiences!
+                                            .firstWhere((element) =>
+                                                element.isCurrentJob == true)
+                                            .company ??
+                                        '',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16,
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(40.0),
+                  child: Container(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "About",
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18,
+                              color: Color(0xffE78938),
                             ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                          ),
+                          SizedBox(height: 12),
+                          Text(
+                            mentee?.user!.about ?? '',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16,
+                              color: Color(0xff313030),
+                            ),
+                          ),
+                          SizedBox(height: 12),
+                          SizedBox(
+                            width: 200,
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                backgroundColor:
+                                    Color(0xffE78938), // Primary color
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 20.0,
+                                  horizontal: 34.0,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0.0),
+                                ),
+                              ),
+                              onPressed: () {
+                                final linkedlnlink =
+                                    mentee?.user!.linkedin ?? '';
+                                _launchURL(linkedlnlink);
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  TitleProfile(
-                                    title: 'Experience',
-                                    color: ColorStyle().primaryColors,
+                                  Image.asset(
+                                    'Handoff/icon/social-icons/linkedin.png',
+                                    width: 20.0,
+                                    height: 20.0,
+                                    color: Colors.white,
                                   ),
-                                  Column(
-                                    children: mentee.user!.experiences
-                                            ?.where((experience) =>
-                                                experience.isCurrentJob ==
-                                                false)
-                                            .map((experience) {
-                                          return ExperienceWidget(
-                                            role: experience.jobTitle ??
-                                                'No Job Title',
-                                            company: experience.company ??
-                                                'No Company',
-                                          );
-                                        }).toList() ??
-                                        [
-                                          Text('No experiences')
-                                        ], // Jika tidak ada pengalaman atau list kosong, tampilkan 'No experiences'
-                                  )
+                                  SizedBox(width: 8.0),
+                                  Text(
+                                    "Linkedin",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: TitleProfile(
-                                title: 'Skills',
-                                color: ColorStyle().primaryColors,
-                              ),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            "Skill",
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18,
+                              color: Color(0xffE78938),
                             ),
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: mentee.user!.skills
-                                          ?.map((skill) => SkillCard(
-                                                skill: skill,
-                                              ))
-                                          .toList() ??
-                                      [Text('No skills')]),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: mentee?.user!.skills
+                                      ?.map((skill) => SkillCard(skill: skill))
+                                      .toList() ??
+                                  [Text('No skills')],
                             ),
-                            const SizedBox(
-                              height: 24,
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            "Experience",
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18,
+                              color: Color(0xffE78938),
                             ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: TextButton.icon(
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return CustomConfirmationDialog(
-                                        aksi: 'Keluar',
-                                        aksi2: 'Batal',
-                                        title: "Konfirmasi",
-                                        content:
-                                            "Apakah kamu yakin ingin keluar dari aplikasi MentorMatch?",
-                                        onConfirm: () async {
-                                          // Tulis logika logout Anda di sini
-                                          // Misalnya, membersihkan shared preferences dan navigasi ke halaman login
-                                          await UserPreferences
-                                              .clearPreferences();
-                                          Navigator.of(context)
-                                              .pushAndRemoveUntil(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    LoginScreen()),
-                                            (Route<dynamic> route) => false,
-                                          );
-                                        },
-                                      );
-                                    },
+                          ),
+                          SizedBox(height: 20),
+                          Column(
+                            children: mentee?.user!.experiences
+                                    ?.map((experience) {
+                                  return ExperienceWidget(
+                                    role: experience.jobTitle ?? 'No Job Title',
+                                    company: experience.company ?? 'No Company',
                                   );
-                                },
-                                icon: Icon(Icons.logout,
-                                    color: ColorStyle().secondaryColors),
-                                label: Text(
-                                  'Logout',
-                                  style: FontFamily().regularText.copyWith(
-                                      color: ColorStyle().secondaryColors),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                                }).toList() ??
+                                [Text('No experiences')],
+                          ),
+                        ]),
+                  ),
+                )
               ],
             );
           }
         },
+      ),
+    );
+  }
+}
+
+class SkillCard extends StatelessWidget {
+  final String skill;
+  SkillCard({Key? key, required this.skill}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 12.0),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(
+              color: ColorStyle().secondaryColors,
+              width: 1.5,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(skill,
+                style: FontFamily().regularText.copyWith(
+                      fontSize: 14,
+                    )),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ExperienceWidget extends StatelessWidget {
+  final String role;
+  final String company;
+  ExperienceWidget({Key? key, required this.role, required this.company})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 12.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(Icons.work_outline_outlined,
+              size: 20, color: ColorStyle().primaryColors),
+          SizedBox(width: 8), // Sesuaikan sesuai dengan kebutuhan Anda
+          Column(
+            crossAxisAlignment:
+                CrossAxisAlignment.start, // Atur sesuai kebutuhan
+            children: [
+              Text(role, style: FontFamily().boldText.copyWith(fontSize: 16)),
+              Text(company,
+                  style: FontFamily().regularText.copyWith(fontSize: 14)),
+            ],
+          )
+        ],
       ),
     );
   }
