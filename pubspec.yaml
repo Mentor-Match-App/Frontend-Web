@@ -79,6 +79,9 @@ flutter:
     - assets/Handoff/icon/categoryIcon/SMA/
     - assets/Handoff/icon/categoryIcon/SMP/
     - assets/Handoff/icon/categoryIcon/SD/
+    - assets/Handoff/icon/MyClass/
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
