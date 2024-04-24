@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/my_class/my_class_booking_mentee.dart';
+import 'package:my_flutter_app/mentee/screen/sidebar/my_class/my_session_booking_mentee_screen.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 
 class MyClassMentee extends StatefulWidget {
@@ -99,9 +100,9 @@ class _MyClassMenteeState extends State<MyClassMentee> {
             children: [
               isClassActive
                   ? MyClassBookingMentee()
-                  // : isSessionActive
-                  //     ? MySessionBooking()
-                  : MyClassBookingMentee(),
+                  : isSessionActive
+                      ? MySessionBooking()
+                      : MyClassBookingMentee(),
             ],
           )
         ],

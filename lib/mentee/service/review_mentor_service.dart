@@ -7,7 +7,7 @@ class ReviewService {
   Future<String> sendReview(
       String content, String userId, String mentorId) async {
     try {
-      final response = await _dio.post(baseUrl, data: {
+      final response = await _dio.post("$baseUrl/mentee/$userId/review", data: {
         "mentorId": mentorId,
         "userId":
             userId, // Pastikan konsistensi nama kunci sesuai dengan backend

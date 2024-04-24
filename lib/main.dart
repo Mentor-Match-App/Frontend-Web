@@ -4,8 +4,10 @@ import 'package:my_flutter_app/Mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/admin/screen/dasboard_admin_screen.dart';
 import 'package:my_flutter_app/firebase_options.dart';
 import 'package:my_flutter_app/login/login_screen.dart';
+import 'package:my_flutter_app/mentee/provider/review_mentor_provider.dart';
 import 'package:my_flutter_app/mentee/screen/profile/mentee_profile_screen.dart';
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,14 +49,20 @@ class MyApp extends StatelessWidget {
         // homeScreen = ChooseRoleScreen();
       }
     }
-    return MaterialApp(
-        title: 'MentorMatch',
+     return MultiProvider(
+      providers: [
+        // ChangeNotifierProvider(create: (_) => CreateSessionProvider()),
+        // ChangeNotifierProvider(create: (_) => CreateClassProvider()),
+        ChangeNotifierProvider(create: (_) => ReviewProvider()),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
         ),
-        debugShowCheckedModeBanner: false,
-        // home: LoginScreen(),
-        // home: homeScreen);
-        home: homeScreen);
+        home: homeScreen,
+      ),
+    );
   }
 }

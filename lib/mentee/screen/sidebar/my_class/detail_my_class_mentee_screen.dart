@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_flutter_app/mentee/model/my_class_model.dart';
+import 'package:my_flutter_app/mentee/screen/sidebar/my_class/evaluasi_mentee_screen.dart';
+import 'package:my_flutter_app/mentee/screen/sidebar/my_class/list_materi_class_mentee.dart';
+import 'package:my_flutter_app/mentee/screen/sidebar/my_class/review_mentor_screen.dart';
 import 'package:my_flutter_app/style/text.dart';
 import 'package:my_flutter_app/widget/category_card.dart';
 import 'package:my_flutter_app/widget/flushsBar_widget.dart';
@@ -335,14 +338,14 @@ class _DetailMyClassMenteeScreenState extends State<DetailMyClassMenteeScreen> {
                             title: "Materi",
                             icon: 'assets/Handoff/icon/MyClass/materi_icon.png',
                             onTap: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => MaterMyClass(
-                              //       learningMaterial: widget.learningMaterial,
-                              //     ),
-                              //   ),
-                              // );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MaterMyClass(
+                                    learningMaterial: widget.learningMaterial,
+                                  ),
+                                ),
+                              );
                             }),
                         const SizedBox(
                           width: 8,
@@ -352,14 +355,14 @@ class _DetailMyClassMenteeScreenState extends State<DetailMyClassMenteeScreen> {
                           title: "Evaluasi",
                           icon: 'assets/Handoff/icon/MyClass/evaluasi_icon.png',
                           onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => EvaluasiMenteeScreen(
-                            //       evaluasi: widget.evaluasi,
-                            //     ),
-                            //   ),
-                            // );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EvaluasiMenteeScreen(
+                                  evaluasi: widget.evaluasi,
+                                ),
+                              ),
+                            );
                           },
                         ),
                         const SizedBox(
@@ -371,18 +374,18 @@ class _DetailMyClassMenteeScreenState extends State<DetailMyClassMenteeScreen> {
                           title: "Review",
                           icon: 'assets/Handoff/icon/MyClass/review_icon.png',
                           onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => ReviewMentorScreen(
-                            //       mentorId: widget.mentorId,
-                            //       mentorPhoto: widget.mentorPhoto,
-                            //       mentorName: widget.mentorName,
-                            //       classPeriode: widget.periode,
-                            //       className: widget.namaKelas,
-                            //     ),
-                            //   ),
-                            // );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ReviewMentorScreen(
+                                  mentorId: widget.mentorId,
+                                  mentorPhoto: widget.mentorPhoto,
+                                  mentorName: widget.mentorName,
+                                  classPeriode: widget.periode,
+                                  className: widget.namaKelas,
+                                ),
+                              ),
+                            );
                           },
                         )
                       ],

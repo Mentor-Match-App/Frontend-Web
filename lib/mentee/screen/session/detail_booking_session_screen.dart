@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_flutter_app/mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/premium_class/SD/detail_class_mentor_sd_screen.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 
@@ -251,13 +252,13 @@ class _DetailBookingSessionState extends State<DetailBookingSession> {
                                 child: ElevatedButtonWidget(
                                   title: "Lihat Session",
                                   onPressed: () {
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) =>
-                                    //         const MenteeHomePage(),
-                                    //   ),
-                                    // );
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const MenteeHomePage(),
+                                      ),
+                                    );
                                   },
                                 ),
                               ),
