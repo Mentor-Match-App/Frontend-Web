@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_flutter_app/mentor/Screens/communitymentor_page.dart';
-import 'package:my_flutter_app/mentor/Screens/notificationmentor_page.dart';
 import 'package:my_flutter_app/mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/landing_page.dart';
 import 'package:my_flutter_app/mentee/screen/myclassmentee_page.dart';
 import 'package:my_flutter_app/mentee/screen/notificationmentee_page.dart';
-import 'package:my_flutter_app/mentee/screen/personalprofile.dart';
 import 'package:my_flutter_app/mentee/screen/premium_class/premiumclass_page.dart';
 import 'package:my_flutter_app/mentee/screen/profile/mentee_profile_screen.dart';
 import 'package:my_flutter_app/mentee/screen/session/session_screen.dart';
+import 'package:my_flutter_app/mentor/Screens/communitymentor_page.dart';
+import 'package:my_flutter_app/mentor/Screens/notificationmentor_page.dart';
+import 'package:my_flutter_app/mentor/screens/profile/mentor_profile_screen.dart';
 
 class CustomDropdown extends StatefulWidget {
   @override
@@ -287,7 +287,7 @@ class NavbarWidgetMentor extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => PersonalProfilePage()),
+                        builder: (context) => ProfileMentorScreen()),
                   );
                 },
                 child: ClipOval(
