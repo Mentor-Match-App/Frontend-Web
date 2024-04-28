@@ -5,7 +5,7 @@ import 'package:my_flutter_app/admin/screen/dasboard_admin_screen.dart';
 import 'package:my_flutter_app/firebase_options.dart';
 import 'package:my_flutter_app/login/login_screen.dart';
 import 'package:my_flutter_app/mentee/provider/review_mentor_provider.dart';
-import 'package:my_flutter_app/mentee/screen/profile/mentee_profile_screen.dart';
+import 'package:my_flutter_app/mentor/Screens/homepage_mentor.dart';
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
 import 'package:provider/provider.dart';
 
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
           homeScreen = MenteeHomePage();
           break;
         case 'Mentor':
-          // homeScreen = BottomNavbarMentorScreen();
+          homeScreen = MentorHomePage();
           break;
         case 'Admin':
           homeScreen = DashboardAdminScreen();
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         // homeScreen = ChooseRoleScreen();
       }
     }
-     return MultiProvider(
+    return MultiProvider(
       providers: [
         // ChangeNotifierProvider(create: (_) => CreateSessionProvider()),
         // ChangeNotifierProvider(create: (_) => CreateClassProvider()),

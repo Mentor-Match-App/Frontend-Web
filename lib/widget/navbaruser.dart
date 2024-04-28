@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_flutter_app/Mentor/Screens/communitymentor_page.dart';
-import 'package:my_flutter_app/Mentor/Screens/notificationmentor_page.dart';
+import 'package:my_flutter_app/mentor/Screens/communitymentor_page.dart';
+import 'package:my_flutter_app/mentor/Screens/notificationmentor_page.dart';
 import 'package:my_flutter_app/mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/landing_page.dart';
 import 'package:my_flutter_app/mentee/screen/myclassmentee_page.dart';

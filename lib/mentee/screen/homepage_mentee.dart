@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_flutter_app/mentee/screen/sidebar/community_mentee.dart';
+import 'package:my_flutter_app/mentee/screen/sidebar/community_user.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/dashboard_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/my_class/my_class_mentee.dart';
 import 'package:my_flutter_app/widget/footer.dart';
@@ -17,7 +17,7 @@ class MenteeHomePage extends StatefulWidget {
 
 class _MenteeHomePageState extends State<MenteeHomePage> {
   double _size = 200.0;
-  String _selectedMenu = 'My Class';
+  String _selectedMenu = 'Dasboard';
 
   void _handleMenuSelected(String menu) {
     setState(() {
@@ -68,12 +68,10 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
 
   Widget _getSelectedScreen() {
     switch (_selectedMenu) {
-      case 'Program & Layanan':
-      // return ProgramLayananContent();
       case 'My Class':
         return MyClassMentee();
       case 'Community':
-        return CommunityMentee();
+        return CommunityScreen();
       default:
         return DashboardMentee();
     }

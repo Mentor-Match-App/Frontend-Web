@@ -6,6 +6,8 @@ import 'package:my_flutter_app/admin/screen/dasboard_admin_screen.dart';
 import 'package:my_flutter_app/login/choose_role_screen.dart';
 import 'package:my_flutter_app/login/login_service.dart';
 import 'package:my_flutter_app/mentee/screen/homepage_mentee.dart';
+import 'package:my_flutter_app/mentor/Screens/homepage_mentor.dart';
+import 'package:my_flutter_app/mentor/screens/register_mentor/verification_page.dart';
 import 'package:my_flutter_app/widget/navbar.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -57,17 +59,19 @@ class _LoginScreenState extends State<LoginScreen> {
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => ChooseRoleScreen()));
           } else {
-            // Jika userType ada, navigasi ke halaman yang sesuai berdasarkan userType
-            // Contoh:
             if (userType == "Mentee") {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => MenteeHomePage()));
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => MenteeHomePage()));
             } else if (userType == "Mentor") {
-              // Navigator.of(context).pushReplacement(MaterialPageRoute(
-              //     builder: (context) => BottomNavbarMentorScreen()));
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => MentorHomePage()));
             } else if (userType == "Admin") {
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => DashboardAdminScreen()));
+            } else if (userType == "PendingMentor" ||
+                userType == "RejectedMentor") {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => VerificationPage()));
             }
           }
         }

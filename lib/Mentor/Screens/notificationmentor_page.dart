@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_flutter_app/Mentor/Screens/homepage_mentor.dart';
+import 'package:my_flutter_app/mentor/Screens/homepage_mentor.dart';
 
 class CustomInfoContainer extends StatelessWidget {
   final String title;

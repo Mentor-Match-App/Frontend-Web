@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_flutter_app/Mentor/Screens/PremiumClass/detailpremiumclassmentor.dart';
+import 'package:my_flutter_app/mentor/Screens/premium_class/detailpremiumclassmentor.dart';
 import 'package:my_flutter_app/widget/navbaruser.dart';
 
 class MyClassMentorPage extends StatefulWidget {
