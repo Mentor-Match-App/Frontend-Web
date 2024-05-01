@@ -47,7 +47,7 @@ class CommunityMentorPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 150, vertical: 100),
+              padding: EdgeInsets.all(32),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -94,50 +94,44 @@ class CommunityMentorPage extends StatelessWidget {
             ),
             Column(
               children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 150, vertical: 100),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Choose a community, find support, and achieve success together',
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.black,
-                        ),
-                      ),
-                      SizedBox(height: 35),
-                      SearchBarWidget(
-                        title: 'Search by name of community',
-                        onPressed: () {},
-                      ),
-                      SizedBox(height: 35),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children:
-                              List.generate(communityImages.length, (index) {
-                            return MentorCard(
-                              imageUrl: communityImages[index],
-                              name: communityNames[index],
-                              status: 'Join Community',
-                              onStatusTap: () async {
-                                // Use the url_launcher package to open the corresponding link
-                                final url = communityLinks[index];
-                                if (await canLaunch(url)) {
-                                  await launch(url);
-                                } else {
-                                  throw 'Could not launch $url';
-                                }
-                              },
-                            );
-                          }),
-                        ),
-                      ),
-                    ],
+                Text(
+                  'Choose a community, find support, and achieve success together',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black,
                   ),
                 ),
+                SizedBox(height: 35),
+                SearchBarWidget(
+                  title: 'Search by name of community',
+                  onPressed: () {},
+                ),
+                SizedBox(height: 35),
+             SingleChildScrollView(
+  scrollDirection: Axis.horizontal,
+  child: Wrap(
+    spacing: 8.0, // Jarak antara widget di dalam Wrap
+    runSpacing: 8.0, // Jarak antara baris di dalam Wrap
+    children: List.generate(communityImages.length, (index) {
+      return MentorCardCommunity(
+        imageUrl: communityImages[index],
+        name: communityNames[index],
+        status: 'Join Community',
+        onStatusTap: () async {
+          // Gunakan paket url_launcher untuk membuka tautan yang sesuai
+          final url = communityLinks[index];
+          if (await canLaunch(url)) {
+            await launch(url);
+          } else {
+            throw 'Could not launch $url';
+          }
+        },
+      );
+    }),
+  ),
+),
+
               ],
             ),
             SizedBox(height: 28),

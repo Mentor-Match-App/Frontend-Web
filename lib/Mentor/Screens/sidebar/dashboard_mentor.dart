@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_flutter_app/Mentor/Screens/create_class_and_session/create_class/persetujuan_create_class_mentor.dart';
+import 'package:my_flutter_app/Mentor/Screens/create_class_and_session/create_session/form_create_session.dart';
 import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 
@@ -50,7 +52,14 @@ class _DashboardMentorState extends State<DashboardMentor> {
                     ),
                     ElevatedButtonWidget(
                       title: "Buat Kelas",
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PersetujuanPremiClassMentor(),
+                          ),
+                        );
+                      },
                     )
                   ],
                 ),
@@ -123,7 +132,14 @@ class _DashboardMentorState extends State<DashboardMentor> {
                     ),
                     ElevatedButtonWidget(
                       title: "Buat Session",
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FormCreateSessionScreen(),
+                          ),
+                        );
+                      },
                     )
                   ],
                 ),

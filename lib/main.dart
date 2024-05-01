@@ -6,6 +6,8 @@ import 'package:my_flutter_app/firebase_options.dart';
 import 'package:my_flutter_app/login/login_screen.dart';
 import 'package:my_flutter_app/mentee/provider/review_mentor_provider.dart';
 import 'package:my_flutter_app/mentor/Screens/homepage_mentor.dart';
+import 'package:my_flutter_app/mentor/provider/create_class_provider.dart';
+import 'package:my_flutter_app/mentor/provider/create_session_provider.dart';
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
 import 'package:provider/provider.dart';
 
@@ -51,8 +53,8 @@ class MyApp extends StatelessWidget {
     }
     return MultiProvider(
       providers: [
-        // ChangeNotifierProvider(create: (_) => CreateSessionProvider()),
-        // ChangeNotifierProvider(create: (_) => CreateClassProvider()),
+        ChangeNotifierProvider(create: (_) => CreateSessionProvider()),
+        ChangeNotifierProvider(create: (_) => CreateClassProvider()),
         ChangeNotifierProvider(create: (_) => ReviewProvider()),
       ],
       child: MaterialApp(
@@ -66,3 +68,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+

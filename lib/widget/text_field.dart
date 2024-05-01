@@ -67,3 +67,43 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     );
   }
 }
+
+class TextFieldWidgetBig extends StatefulWidget {
+  final String title;
+  final String? Function(String?)? validator; // Tambahkan validator
+  final TextEditingController descriptionController;
+
+  TextFieldWidgetBig(
+      {Key? key,
+      required this.title,
+      required this.descriptionController,
+      this.validator})
+      : super(key: key);
+
+  @override
+  State<TextFieldWidgetBig> createState() => _TextFieldWidgetBigState();
+}
+
+class _TextFieldWidgetBigState extends State<TextFieldWidgetBig> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        validator: widget.validator,
+        controller: widget.descriptionController,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+          filled: true,
+          fillColor: ColorStyle().tertiaryColors, // Ganti warna latar belakang
+          hintText: widget.title,
+          hintStyle: FontFamily().regularText,
+        ),
+        maxLines: 5,
+      ),
+    );
+  }
+}

@@ -8,8 +8,11 @@ import 'package:my_flutter_app/mentee/screen/premium_class/premiumclass_page.dar
 import 'package:my_flutter_app/mentee/screen/profile/mentee_profile_screen.dart';
 import 'package:my_flutter_app/mentee/screen/session/session_screen.dart';
 import 'package:my_flutter_app/mentor/Screens/communitymentor_page.dart';
+import 'package:my_flutter_app/mentor/Screens/homepage_mentor.dart';
 import 'package:my_flutter_app/mentor/Screens/notificationmentor_page.dart';
 import 'package:my_flutter_app/mentor/screens/profile/mentor_profile_screen.dart';
+import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomDropdown extends StatefulWidget {
   @override
@@ -18,6 +21,7 @@ class CustomDropdown extends StatefulWidget {
 
 class _CustomDropdownState extends State<CustomDropdown> {
   String? selectedValue;
+
 
   @override
   Widget build(BuildContext context) {
@@ -110,9 +114,29 @@ class _CustomDropdownState extends State<CustomDropdown> {
   }
 }
 
-class NavbarWidgetMentee extends StatelessWidget {
+class NavbarWidgetMentee extends StatefulWidget {
   const NavbarWidgetMentee({Key? key}) : super(key: key);
 
+  @override
+  State<NavbarWidgetMentee> createState() => _NavbarWidgetMenteeState();
+}
+
+class _NavbarWidgetMenteeState extends State<NavbarWidgetMentee> {
+    String _photoUrl = "";
+
+  Future<void> _loadProfile() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      /// photourl
+      _photoUrl = prefs.getString('photoUrl') ?? "";
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfile();
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -177,7 +201,7 @@ class NavbarWidgetMentee extends StatelessWidget {
                       );
                     },
                     child: _buildCircularImage(
-                      'https://picsum.photos/250?image=9',
+                      _photoUrl,
                       40,
                       40,
                       null,
@@ -218,9 +242,30 @@ class NavbarWidgetMentee extends StatelessWidget {
   }
 }
 
-class NavbarWidgetMentor extends StatelessWidget {
+class NavbarWidgetMentor extends StatefulWidget {
   const NavbarWidgetMentor({Key? key}) : super(key: key);
 
+  @override
+  State<NavbarWidgetMentor> createState() => _NavbarWidgetMentorState();
+  
+}
+
+class _NavbarWidgetMentorState extends State<NavbarWidgetMentor> {
+    String _photoUrl = "";
+
+  Future<void> _loadProfile() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      /// photourl
+      _photoUrl = prefs.getString('photoUrl') ?? "";
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfile();
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -233,7 +278,7 @@ class NavbarWidgetMentor extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LandingPage()),
+                MaterialPageRoute(builder: (context) => MentorHomePage()),
               );
             },
             child: Image.asset(
@@ -292,7 +337,7 @@ class NavbarWidgetMentor extends StatelessWidget {
                 },
                 child: ClipOval(
                   child: Image.network(
-                    'https://picsum.photos/250?image=9',
+                    _photoUrl,
                     height: 40,
                     width: 40,
                     fit: BoxFit.cover,

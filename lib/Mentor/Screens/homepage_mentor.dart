@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/community_user.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/my_class/my_class_mentee.dart';
+import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_class_mentor.dart';
 import 'package:my_flutter_app/mentor/screens/sidebar/dashboard_mentor.dart';
 import 'package:my_flutter_app/widget/footer.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
@@ -69,7 +70,7 @@ class _MentorHomePageState extends State<MentorHomePage> {
   Widget _getSelectedScreen() {
     switch (_selectedMenu) {
       case 'My Class':
-        return MyClassMentee();
+        return MyClassMentorListScreen();
       case 'Community':
         return CommunityScreen();
       default:

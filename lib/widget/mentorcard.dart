@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MentorCard extends StatelessWidget {
+class MentorCardCommunity extends StatelessWidget {
   final String imageUrl;
   final String name;
   final String? workTitle;
@@ -9,7 +9,7 @@ class MentorCard extends StatelessWidget {
   final String status;
   final Function()? onStatusTap; // Nullable callback function for status tap
 
-  MentorCard({
+  MentorCardCommunity({
     required this.imageUrl,
     required this.name,
     this.workTitle,

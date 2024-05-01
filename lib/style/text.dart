@@ -10,13 +10,16 @@ class TittleTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      title!,
-      style: FontFamily().titleText.copyWith(
-            fontSize: 18,
-            color: color,
-          ),
-      textAlign: textAlign,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        title!,
+        style: FontFamily().titleText.copyWith(
+              fontSize: 18,
+              color: color,
+            ),
+        textAlign: textAlign,
+      ),
     );
   }
 }

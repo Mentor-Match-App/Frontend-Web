@@ -30,71 +30,69 @@ class _MyClassMenteeState extends State<MyClassMentee> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  width: 150,
-                  height: 38,
-                  decoration: BoxDecoration(
-                    color: Colors.white, // Mengatur background putih
-                    border: Border(
-                      bottom: BorderSide(
-                        color: isClassActive
-                            ? ColorStyle()
-                                .secondaryColors // Warna border ketika aktif
-                            : Colors.transparent,
-                        width: 2, // Lebar border
-                      ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                width: 150,
+                height: 38,
+                decoration: BoxDecoration(
+                  color: Colors.white, // Mengatur background putih
+                  border: Border(
+                    bottom: BorderSide(
+                      color: isClassActive
+                          ? ColorStyle()
+                              .secondaryColors // Warna border ketika aktif
+                          : Colors.transparent,
+                      width: 2, // Lebar border
                     ),
                   ),
-                  child: TextButton(
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    changeClass("Premium Class");
+                  },
+                  child: Text(
+                    "Premium Class",
+                    style: FontFamily().boldText.copyWith(
+                          color: isClassActive
+                              ? ColorStyle().blackColors
+                              : ColorStyle().disableColors,
+                        ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Container(
+                width: 150,
+                height: 38,
+                decoration: BoxDecoration(
+                  color: Colors.white, // Mengatur background putih
+                  border: Border(
+                    bottom: BorderSide(
+                      color: isSessionActive
+                          ? ColorStyle()
+                              .secondaryColors // Warna border ketika aktif
+                          : Colors.transparent,
+                      width: 2, // Lebar border
+                    ),
+                  ),
+                ),
+                child: TextButton(
                     onPressed: () {
-                      changeClass("Premium Class");
+                      changeClass("Session");
                     },
-                    child: Text(
-                      "Premium Class",
-                      style: FontFamily().boldText.copyWith(
-                            color: isClassActive
+                    child: Text("Session",
+                        style: FontFamily().boldText.copyWith(
+                            color: isSessionActive
                                 ? ColorStyle().blackColors
-                                : ColorStyle().disableColors,
-                          ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Container(
-                  width: 150,
-                  height: 38,
-                  decoration: BoxDecoration(
-                    color: Colors.white, // Mengatur background putih
-                    border: Border(
-                      bottom: BorderSide(
-                        color: isSessionActive
-                            ? ColorStyle()
-                                .secondaryColors // Warna border ketika aktif
-                            : Colors.transparent,
-                        width: 2, // Lebar border
-                      ),
-                    ),
-                  ),
-                  child: TextButton(
-                      onPressed: () {
-                        changeClass("Session");
-                      },
-                      child: Text("Session",
-                          style: FontFamily().boldText.copyWith(
-                              color: isSessionActive
-                                  ? ColorStyle().blackColors
-                                  : ColorStyle().disableColors))),
-                ),
-              ],
-            ),
+                                : ColorStyle().disableColors))),
+              ),
+            ],
           ),
           Column(
             children: [

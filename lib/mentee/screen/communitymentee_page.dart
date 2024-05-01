@@ -40,7 +40,7 @@ class CommunityMenteePage extends StatelessWidget {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0),
-        child: NavbarWidgetMentee(),
+        child: NavbarWidgetMentor(),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -118,7 +118,7 @@ class CommunityMenteePage extends StatelessWidget {
                         child: Row(
                           children:
                               List.generate(communityImages.length, (index) {
-                            return MentorCard(
+                            return MentorCardCommunity(
                               imageUrl: communityImages[index],
                               name: communityNames[index],
                               status: 'Join Community',
