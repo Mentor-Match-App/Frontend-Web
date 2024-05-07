@@ -9,9 +9,12 @@ import 'package:my_flutter_app/mentee/screen/profile/mentee_profile_screen.dart'
 import 'package:my_flutter_app/mentee/screen/session/session_screen.dart';
 import 'package:my_flutter_app/mentor/Screens/communitymentor_page.dart';
 import 'package:my_flutter_app/mentor/Screens/homepage_mentor.dart';
+import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_class_mentor.dart';
 import 'package:my_flutter_app/mentor/Screens/notificationmentor_page.dart';
 import 'package:my_flutter_app/mentor/screens/profile/mentor_profile_screen.dart';
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
+import 'package:my_flutter_app/widget/logo_button.dart';
+import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomDropdown extends StatefulWidget {
@@ -21,7 +24,6 @@ class CustomDropdown extends StatefulWidget {
 
 class _CustomDropdownState extends State<CustomDropdown> {
   String? selectedValue;
-
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +124,7 @@ class NavbarWidgetMentee extends StatefulWidget {
 }
 
 class _NavbarWidgetMenteeState extends State<NavbarWidgetMentee> {
-    String _photoUrl = "";
+  String _photoUrl = "";
 
   Future<void> _loadProfile() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -137,6 +139,7 @@ class _NavbarWidgetMenteeState extends State<NavbarWidgetMentee> {
     super.initState();
     _loadProfile();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -147,28 +150,7 @@ class _NavbarWidgetMenteeState extends State<NavbarWidgetMentee> {
         children: [
           Row(
             children: [
-              GestureDetector(
-                onTap: () {
-                  // Redirect to the homepage
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MenteeHomePage()),
-                  );
-                },
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      child: Image.asset(
-                        'Handoff/logo/LogoWeb.png',
-                        height: 150,
-                        width: 150,
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                  ],
-                ),
-              ),
+              ButtonLogoMenteeMatch(),
               const SizedBox(width: 20),
             ],
           ),
@@ -247,17 +229,21 @@ class NavbarWidgetMentor extends StatefulWidget {
 
   @override
   State<NavbarWidgetMentor> createState() => _NavbarWidgetMentorState();
-  
 }
 
 class _NavbarWidgetMentorState extends State<NavbarWidgetMentor> {
-    String _photoUrl = "";
+  String _photoUrl = "";
+  String _name = "";
+    String _namedepan = "";
 
   Future<void> _loadProfile() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       /// photourl
       _photoUrl = prefs.getString('photoUrl') ?? "";
+      //name
+      _name = prefs.getString('name') ?? "";
+       _namedepan = _name.split(' ')[0]; // Ambil bagian pertama (nama depan)
     });
   }
 
@@ -266,6 +252,7 @@ class _NavbarWidgetMentorState extends State<NavbarWidgetMentor> {
     super.initState();
     _loadProfile();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -274,49 +261,42 @@ class _NavbarWidgetMentorState extends State<NavbarWidgetMentor> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MentorHomePage()),
-              );
-            },
-            child: Image.asset(
-              'Handoff/logo/LogoWeb.png',
-              height: 150,
-              width: 150,
-            ),
-          ),
+          ButtonLogoMentorMatch(),
           Row(
             children: [
-              TextButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CommunityMentorPage()),
-                  );
-                },
-                icon: Icon(Icons.people_outline_outlined, color: Colors.black),
-                label: Text(
-                  'Community',
-                  style: GoogleFonts.poppins(fontSize: 16, color: Colors.black),
-                ),
-              ),
-              TextButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MyClassMenteePage()),
-                  );
-                },
-                icon: Icon(Icons.book_outlined, color: Colors.black),
-                label: Text(
-                  'My Class',
-                  style: GoogleFonts.poppins(fontSize: 16, color: Colors.black),
-                ),
-              ),
+              // TextButton.icon(
+              //   onPressed: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //           builder: (context) => CommunityMentorPage()),
+              //     );
+              //   },
+              //   icon: Icon(Icons.people_outline_outlined, color: Colors.black),
+              //   label: Text(
+              //     'Community',
+              //     style: GoogleFonts.poppins(fontSize: 16, color: Colors.black),
+              //   ),
+              // ),
+              // TextButton.icon(
+              //   onPressed: () {
+              //     Navigator.pushAndRemoveUntil(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (context) => MentorHomePage(
+              //                   key:
+              //                       UniqueKey(), // Jika diperlukan, Anda dapat memberikan kunci unik untuk memastikan widget yang dirender adalah baru
+              //                   selectedMenu:
+              //                       'My Class', // Tetapkan nilai _selectedMenu ke 'My Class'
+              //                 )),
+              //         (route) => false);
+              //   },
+              //   icon: Icon(Icons.book_outlined, color: Colors.black),
+              //   label: Text(
+              //     'My Class',
+              //     style: GoogleFonts.poppins(fontSize: 16, color: Colors.black),
+              //   ),
+              // ),
               IconButton(
                 icon: Icon(Icons.notifications_outlined, color: Colors.black),
                 onPressed: () {
@@ -329,10 +309,12 @@ class _NavbarWidgetMentorState extends State<NavbarWidgetMentor> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
+                  Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ProfileMentorScreen()),
+                      builder: (context) => ProfileMentorScreen(),
+                    ),
+                    (route) => false,
                   );
                 },
                 child: ClipOval(
@@ -345,6 +327,17 @@ class _NavbarWidgetMentorState extends State<NavbarWidgetMentor> {
                       height: 40,
                       width: 40,
                       color: Colors.grey,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding:  EdgeInsets.only(left: 8.0, right: 8.0),
+                child: SizedBox(
+                  child: Text(
+                    "Hallo, \n$_namedepan",
+                    style:FontFamily().boldText.copyWith(
+                      color: ColorStyle().blackColors,
                     ),
                   ),
                 ),

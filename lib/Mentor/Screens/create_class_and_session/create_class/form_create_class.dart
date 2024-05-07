@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 // ignore: depend_on_referenced_packages
@@ -16,8 +15,6 @@ import 'package:my_flutter_app/widget/text_field_dropdown.dart';
 import 'package:my_flutter_app/widget/time_picker_widget.dart';
 import 'package:provider/provider.dart';
 
-
-
 class FormCreatePremiumClassScreen extends StatefulWidget {
   const FormCreatePremiumClassScreen({Key? key}) : super(key: key);
 
@@ -28,6 +25,7 @@ class FormCreatePremiumClassScreen extends StatefulWidget {
 
 class _FormCreatePremiumClassScreenState
     extends State<FormCreatePremiumClassScreen> {
+  bool _isLoading = false;
   String selectedLocation = 'Offline';
   /////////////////////// Dropdown Widget ///////////////////////
   String selectedEducationLevel = 'SD';
@@ -169,6 +167,11 @@ class _FormCreatePremiumClassScreenState
 //////////////////// onSubmit ///////////////////////
   void onSubmit(BuildContext context) async {
     try {
+      // Set isLoading to true to show loading indicator
+      setState(() {
+        _isLoading = true;
+      });
+
       int capacitymentee = 0;
       if (maxParticipantsController.text.isNotEmpty) {
         capacitymentee = int.parse(maxParticipantsController.text);
@@ -252,6 +255,11 @@ class _FormCreatePremiumClassScreenState
       //// jika gagal maka tampilkan error message ///
     } catch (error) {
       print('Error: $error');
+    } finally {
+      // Set isLoading to false after submit process finished
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -303,7 +311,8 @@ class _FormCreatePremiumClassScreenState
       body: ListView(
         children: [
           Padding(
-            padding: const EdgeInsets.only( top :12, left: 32, right: 32, bottom: 12),
+            padding:
+                const EdgeInsets.only(top: 12, left: 32, right: 32, bottom: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -577,7 +586,7 @@ class _FormCreatePremiumClassScreenState
                             ),
                           ),
                         Row(
-                            mainAxisAlignment: MainAxisAlignment.end, 
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             IconButton(
                               icon: Icon(
@@ -631,7 +640,7 @@ class _FormCreatePremiumClassScreenState
                             ),
                           ),
                         Row(
-                         mainAxisAlignment: MainAxisAlignment.end, 
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             IconButton(
                               icon: Icon(
@@ -639,8 +648,7 @@ class _FormCreatePremiumClassScreenState
                                 color: ColorStyle().primaryColors,
                               ),
                               onPressed: () => deleteTextField(
-                                  termsController,
-                                  termsController.length - 1),
+                                  termsController, termsController.length - 1),
                             ),
                             IconButton(
                               icon: Icon(
@@ -657,15 +665,15 @@ class _FormCreatePremiumClassScreenState
                 ),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: ElevatedButtonWidget(
-                    onPressed: () {
-                      onSubmit(
-                        context,
-                      );
-                    },
-                    title: "Kirim",
-                  ),
-                ),
+                  child: _isLoading
+                      ? CircularProgressIndicator(
+                          color: ColorStyle().secondaryColors
+                        ) // Tampilkan CircularProgressIndicator jika isLoading true
+                      : ElevatedButtonWidget(
+                          onPressed: () => onSubmit(context),
+                          title: "Kirim Pengajuan",
+                        ),
+                )
               ],
             ),
           )

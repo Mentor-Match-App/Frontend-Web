@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/community_user.dart';
-import 'package:my_flutter_app/mentee/screen/sidebar/my_class/my_class_mentee.dart';
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_class_mentor.dart';
 import 'package:my_flutter_app/mentor/screens/sidebar/dashboard_mentor.dart';
+import 'package:my_flutter_app/mentor/Screens/search_page_mentor.dart';
 import 'package:my_flutter_app/widget/footer.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/navbaruser.dart';
 import 'package:my_flutter_app/widget/sidebar_mentee.dart';
 
 class MentorHomePage extends StatefulWidget {
-  const MentorHomePage({Key? key});
+  final String selectedMenu;
+  const MentorHomePage({Key? key, this.selectedMenu = 'Dashboard'});
 
   @override
   State<MentorHomePage> createState() => _MentorHomePageState();
@@ -20,10 +21,11 @@ class _MentorHomePageState extends State<MentorHomePage> {
   double _size = 200.0;
   String _selectedMenu = 'Dashboard';
 
-  void _handleMenuSelected(String menu) {
-    setState(() {
-      _selectedMenu = menu;
-    });
+  @override
+  void initState() {
+    super.initState();
+    _selectedMenu =
+        widget.selectedMenu; // Tetapkan nilai _selectedMenu dari widget
   }
 
   @override
@@ -39,14 +41,18 @@ class _MentorHomePageState extends State<MentorHomePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SearchBar(),
+              SearchBarMentor(),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SideBarMentee(
                       key: UniqueKey(),
                       size: _size,
-                      onMenuSelected: _handleMenuSelected,
+                      onMenuSelected: (menu) {
+                        setState(() {
+                          _selectedMenu = menu;
+                        });
+                      },
                       selectedMenu: _selectedMenu),
                   Expanded(
                     child: SingleChildScrollView(
@@ -79,10 +85,10 @@ class _MentorHomePageState extends State<MentorHomePage> {
   }
 }
 
-class SearchBar extends StatelessWidget {
-  const SearchBar({
-    super.key,
-  });
+class SearchBarMentor extends StatelessWidget {
+  const SearchBarMentor({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -92,30 +98,46 @@ class SearchBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            "Find Mentor",
+            "Search",
             style: GoogleFonts.poppins(
               fontWeight: FontWeight.w500,
               color: Color(0xff0A1737),
               fontSize: 16,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 60,
           ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Container(
-              width: 800,
-              height: 40,
-              decoration: BoxDecoration(
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SearchPageMentorweb()),
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                width: 800,
+                height: 40,
+                decoration: BoxDecoration(
                   border: Border.all(color: ColorStyle().tertiaryColors),
-                  borderRadius: BorderRadius.circular(8)),
-              child: const TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  labelText: 'Seacrh by name , company, role',
-                  prefixIcon: Icon(Icons.search), // Icon pencarian di sini
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: TextField(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SearchPageMentorweb()),
+                    );
+                  },
+                  obscureText: false,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    labelText: 'Search by mentee name, class, or class name',
+                    prefixIcon: Icon(Icons.search),
+                  ),
                 ),
               ),
             ),

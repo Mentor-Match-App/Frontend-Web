@@ -39,6 +39,7 @@ class _FormCreateSessionScreenState extends State<FormCreateSessionScreen> {
     "Desain",
     "Front End",
   ];
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -53,60 +54,91 @@ class _FormCreateSessionScreenState extends State<FormCreateSessionScreen> {
     super.dispose();
   }
 
-  void submitSession() async {
-    DateTime? date;
-    try {
-      date = DateFormat('yyyy-MM-dd').parse(dateController.text);
-    } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Format tanggal tidak valid')));
-      return;
-    }
+void submitSession() async {
+  DateTime? date;
+  DateTime startTime;
+  DateTime endTime;
+  
+  try {
+    setState(() {
+      _isLoading = true;
+    });
 
-    DateTime startTime;
-    DateTime endTime;
-    try {
-      // Parse String time from startTimeController and endTimeController into DateTime objects
-      DateTime selectedDate =
-          DateFormat('yyyy-MM-dd').parse(dateController.text);
-      DateTime startTimeParsed =
-          DateFormat.Hm().parse(startTimeController.text);
-      DateTime endTimeParsed = DateFormat.Hm().parse(endTimeController.text);
+    // Parse date from the dateController
+    date = DateFormat('yyyy-MM-dd').parse(dateController.text);
 
-      // Combine selectedDate with parsed times to get the full DateTime objects
-      startTime = DateTime(selectedDate.year, selectedDate.month,
-          selectedDate.day, startTimeParsed.hour, startTimeParsed.minute);
-      endTime = DateTime(selectedDate.year, selectedDate.month,
-          selectedDate.day, endTimeParsed.hour, endTimeParsed.minute);
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Format waktu tidak valid')));
-      return;
-    }
-    bool success =
-        await Provider.of<CreateSessionProvider>(context, listen: false)
-            .submitSession(
-      category: categoryController.text,
-      date: date,
-      startTime: startTime,
-      endTime: endTime,
-      maxParticipants: int.tryParse(capacityController.text) ?? 0,
-      description: descriptionController.text,
-      title: topicController.text,
-    );
-    if (!mounted) return;
-    if (success) {
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => SuccesCreateSessionScreen()),
-        (route) => false,
-      );
-    } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('Gagal membuat sesi')));
-    }
+    // Parse String time from startTimeController and endTimeController into DateTime objects
+    DateTime selectedDate =
+        DateFormat('yyyy-MM-dd').parse(dateController.text);
+    DateTime startTimeParsed =
+        DateFormat.Hm().parse(startTimeController.text);
+    DateTime endTimeParsed = DateFormat.Hm().parse(endTimeController.text);
+
+    // Combine selectedDate with parsed times to get the full DateTime objects
+    startTime = DateTime(selectedDate.year, selectedDate.month,
+        selectedDate.day, startTimeParsed.hour, startTimeParsed.minute);
+    endTime = DateTime(selectedDate.year, selectedDate.month,
+        selectedDate.day, endTimeParsed.hour, endTimeParsed.minute);
+  } catch (e) {
+    // Stop showing CircularProgressIndicator and show Snackbar for required fields
+    setState(() {
+      _isLoading = false;
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Semua field harus diisi')));
+    return;
   }
 
-  //
+  // Check if all text fields are filled
+  if (categoryController.text.isEmpty ||
+      descriptionController.text.isEmpty ||
+      topicController.text.isEmpty ||
+      dateController.text.isEmpty ||
+      startTimeController.text.isEmpty ||
+      endTimeController.text.isEmpty) {
+    // If any text field is empty, show top snackbar with the message
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Semua field harus diisi'),
+      behavior: SnackBarBehavior.floating,
+    ));
+    // Stop showing CircularProgressIndicator
+    setState(() {
+      _isLoading = false;
+    });
+    return;
+  }
+
+  bool success =
+      await Provider.of<CreateSessionProvider>(context, listen: false)
+          .submitSession(
+    context: context,
+    category: categoryController.text,
+    date: date,
+    startTime: startTime,
+    endTime: endTime,
+    maxParticipants: int.tryParse(capacityController.text) ?? 0,
+    description: descriptionController.text,
+    title: topicController.text,
+  );
+
+  // Check if success and if there was no error already handled by provider
+  if (success && context != null && ScaffoldMessenger.of(context).mounted) {
+    // Navigation is only done if context is available and still mounted
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => SuccesCreateSessionScreen()),
+      (route) => false,
+    );
+  } else {
+    // Stop showing CircularProgressIndicator
+    setState(() {
+      _isLoading = false;
+    });
+  }
+}
+
+
+  //r
 
   @override
   Widget build(BuildContext context) {
@@ -246,12 +278,14 @@ class _FormCreateSessionScreenState extends State<FormCreateSessionScreen> {
                 ),
                 Align(
                   alignment: Alignment.bottomRight,
-                  child: ElevatedButtonWidget(
-                    onPressed: () {
-                      submitSession();
-                    },
-                    title: "Kirim",
-                  ),
+                  child: _isLoading
+                      ? const CircularProgressIndicator()
+                      : ElevatedButtonWidget(
+                          onPressed: () {
+                            submitSession();
+                          },
+                          title: "Kirim",
+                        ),
                 ),
               ],
             ),

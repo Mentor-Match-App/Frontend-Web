@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_flutter_app/mentee/screen/search_page_myclass_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/community_user.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/dashboard_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/my_class/my_class_mentee.dart';
@@ -38,7 +39,7 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SearchBar(),
+              const SearchBarMentee(),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -78,12 +79,12 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
   }
 }
 
-class SearchBar extends StatelessWidget {
-  const SearchBar({
+class SearchBarMentee extends StatelessWidget {
+  const SearchBarMentee({
     super.key,
   });
 
-  @override
+   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -91,30 +92,46 @@ class SearchBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            "Find Mentor",
+            "Search",
             style: GoogleFonts.poppins(
               fontWeight: FontWeight.w500,
               color: Color(0xff0A1737),
               fontSize: 16,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 60,
           ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Container(
-              width: 800,
-              height: 40,
-              decoration: BoxDecoration(
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SearchPageMenteeWeb()),
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                width: 800,
+                height: 40,
+                decoration: BoxDecoration(
                   border: Border.all(color: ColorStyle().tertiaryColors),
-                  borderRadius: BorderRadius.circular(8)),
-              child: const TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  labelText: 'Seacrh by name , company, role',
-                  prefixIcon: Icon(Icons.search), // Icon pencarian di sini
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: TextField(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>SearchPageMenteeWeb()),
+                    );
+                  },
+                  obscureText: false,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    labelText: 'Search by mentee name, class, or class name',
+                    prefixIcon: Icon(Icons.search),
+                  ),
                 ),
               ),
             ),

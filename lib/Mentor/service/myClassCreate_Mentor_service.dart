@@ -5,8 +5,6 @@ import 'package:my_flutter_app/style/baseURl.dart';
 import '../../preferences/ preferences_helper.dart';
 
 class ListClassMentor {
-
-
   final Dio _dio = Dio();
 
   Future<List<Session>> fetchSessionsForCurrentUser() async {
@@ -47,4 +45,24 @@ class ListClassMentor {
       throw Exception("Failed to load class data: $e");
     }
   }
+
+  // Future<List<AllClass>> fetchClassesForCurrentUser() async {
+  //   final userId = UserPreferences.getUserId();
+  //   try {
+  //     final response = await _dio.get('$baseUrl/users/$userId/my-class');
+  //     if (response.statusCode == 200) {
+  //       MyClassMentorMondel model = MyClassMentorMondel.fromMap(response.data);
+  //       if (model.user != null && model.user!.userClass != null) {
+  //         return model.user!.userClass!;
+  //       } else {
+  //         throw Exception("Class data not found");
+  //       }
+  //     } else {
+  //       throw Exception("Failed to load classes");
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //     throw Exception("Failed to load classes: $e");
+  //   }
+  // }
 }

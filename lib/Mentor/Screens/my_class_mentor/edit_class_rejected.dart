@@ -16,7 +16,7 @@ import '../../../widget/flushsBar_widget.dart';
 import '../../../widget/text_field.dart';
 
 class EditRejectedClass extends StatefulWidget {
-  final Class classData;
+  final AllClass classData;
   EditRejectedClass({Key? key, required this.classData}) : super(key: key);
 
   @override

@@ -185,16 +185,32 @@ class _MyMateriMentorState extends State<MyMateriMentor> {
             SizedBox(height: 12),
             Align(
               alignment: Alignment.centerRight,
-              child: SmallElevatedButton(
-                onPressed: _isLoading ? null : _sendMaterial,
-                height: 40,
-                width: 118,
-                title: "Kirim",
-                style: FontFamily().buttonText.copyWith(
-                      fontSize: 12,
-                      color: ColorStyle().whiteColors,
+              child: _isLoading
+                  ? CircularProgressIndicator() // Tampilkan indikator loading jika sedang loading
+                  : SmallElevatedButton(
+                      onPressed: _isLoading
+                          ? null
+                          : () {
+                              // Ketika tombol ditekan, atur _isLoading menjadi true
+                              setState(() {
+                                _isLoading = true;
+                              });
+                              // Lakukan aksi yang diperlukan (contoh: _sendMaterial)
+                              _sendMaterial().then((_) {
+                                // Ketika aksi selesai, atur _isLoading menjadi false
+                                setState(() {
+                                  _isLoading = false;
+                                });
+                              });
+                            },
+                      height: 40,
+                      width: 118,
+                      title: "Kirim",
+                      style: FontFamily().buttonText.copyWith(
+                            fontSize: 12,
+                            color: ColorStyle().whiteColors,
+                          ),
                     ),
-              ),
             ),
           ],
         ),

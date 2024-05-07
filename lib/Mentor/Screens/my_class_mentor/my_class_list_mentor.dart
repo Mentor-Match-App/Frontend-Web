@@ -25,7 +25,7 @@ class _MyClassCreateMentorState extends State<MyClassCreateMentor> {
     classData = ListClassMentor().fetchClassData();
   }
 
-  ClassStatus getClassStatus(Class classData) {
+  ClassStatus getClassStatus(AllClass classData) {
     DateTime now = DateTime.now();
     DateTime? startDate = classData.startDate != null
         ? DateTime.parse(classData.startDate!)

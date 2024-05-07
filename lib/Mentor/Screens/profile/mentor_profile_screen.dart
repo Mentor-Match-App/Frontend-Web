@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_flutter_app/mentor/Screens/homepage_mentor.dart';
 import 'package:my_flutter_app/mentor/model/profile_model.dart';
 import 'package:my_flutter_app/mentor/screens/profile/edit_profile_mentor_screen.dart';
 import 'package:my_flutter_app/mentor/service/profile_service.dart';
+import 'package:my_flutter_app/widget/logo_button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/profileavatar.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -88,7 +90,7 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset('assets/Handoff/logo/LogoMobile.png'),
+            ButtonLogoMentorMatch(),
             IconButton(
               onPressed: () {
                 // Navigator.push(

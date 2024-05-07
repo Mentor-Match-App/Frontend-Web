@@ -68,11 +68,17 @@ class _DetailEvaluastionMenteeMentorScreenState
 
   ///sendfeedback///
   void _sendFeedback() async {
+    setState(() {
+      _isLoading = true;
+    });
     if (
         // ignore: unrelated_type_equality_checks
         selectedMateriFeedback == null ||
             _hasilEvaluasiController.text.isEmpty ||
             _nilaiEvaluasiController.text.isEmpty) {
+      setState(() {
+        _isLoading = false;
+      });
       // Tampilkan pesan error jika salah satu field kosong
       showTopSnackBar(context, "Field tidak boleh kosong",
           leftBarIndicatorColor: ColorStyle().errorColors);
@@ -87,6 +93,10 @@ class _DetailEvaluastionMenteeMentorScreenState
         widget.currentMenteeId,
         _hasilEvaluasiController.text,
         int.parse(_nilaiEvaluasiController.text));
+
+    setState(() {
+      _isLoading = false;
+    });
 
     if (errorMessage == null) {
       // ignore: use_build_context_synchronously
@@ -133,10 +143,9 @@ class _DetailEvaluastionMenteeMentorScreenState
           IconButton(
             onPressed: () {
               Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => NotificationMentorPage())
-              );
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => NotificationMentorPage()));
             },
             icon: Icon(
               Icons.notifications_none_outlined,
@@ -181,7 +190,6 @@ class _DetailEvaluastionMenteeMentorScreenState
                               nameMentee: widget.menteeName,
                               classId: widget.classId,
                               currentMenteeId: widget.currentMenteeId,
-                              
                             ),
                           ),
                         );
@@ -306,18 +314,20 @@ class _DetailEvaluastionMenteeMentorScreenState
                             const SizedBox(height: 12),
                             Align(
                               alignment: Alignment.centerRight,
-                              child: SmallElevatedButton(
-                                onPressed: () {
-                                  _sendFeedback();
-                                },
-                                height: 40,
-                                width: 118,
-                                title: "Kirim",
-                                style: FontFamily().buttonText.copyWith(
-                                      fontSize: 12,
-                                      color: ColorStyle().whiteColors,
+                              child: _isLoading
+                                  ? CircularProgressIndicator() // Show loading indicator
+                                  : SmallElevatedButton(
+                                      onPressed: () {
+                                        _sendFeedback();
+                                      },
+                                      height: 40,
+                                      width: 118,
+                                      title: "Kirim",
+                                      style: FontFamily().buttonText.copyWith(
+                                            fontSize: 12,
+                                            color: ColorStyle().whiteColors,
+                                          ),
                                     ),
-                              ),
                             ),
                           ],
                         ),
