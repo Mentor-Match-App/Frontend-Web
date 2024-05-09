@@ -96,6 +96,7 @@ class _FinanceSessionScreenState extends State<FinanceSessionScreen> {
                           detailmentor: mentor,
                           totalParticipants: numberOfParticipants,
                           mentorReviews: mentor.mentorReviews ?? [],
+                                                    session: mentor.session,
                         ),
                       ),
                     );

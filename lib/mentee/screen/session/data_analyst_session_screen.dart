@@ -97,6 +97,7 @@ class _DataAnalystSessionScreenState extends State<DataAnalystSessionScreen> {
                           detailmentor: mentor,
                           totalParticipants: numberOfParticipants,
                           mentorReviews: mentor.mentorReviews ?? [],
+                                                    session: mentor.session,
                         ),
                       ),
                     );

@@ -96,6 +96,7 @@ class _DesignSessionScreenState extends State<DesignSessionScreen> {
                           detailmentor: mentor,
                           totalParticipants: numberOfParticipants,
                           mentorReviews: mentor.mentorReviews ?? [],
+                                                    session: mentor.session,
                         ),
                       ),
                     );

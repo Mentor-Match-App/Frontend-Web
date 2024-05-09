@@ -271,6 +271,7 @@ class _DashboardMenteeState extends State<DashboardMentee> {
                                 MaterialPageRoute(
                                   builder: (context) =>
                                       DetailMentorSessionScreen(
+                                    session: mentor.session,
                                     availableSlots: availableSlots,
                                     detailmentor: mentor,
                                     totalParticipants: numberOfParticipants,

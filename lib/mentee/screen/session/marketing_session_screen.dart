@@ -96,6 +96,7 @@ class _MarketingSessionScreenState extends State<MarketingSessionScreen> {
                           detailmentor: mentor,
                           totalParticipants: numberOfParticipants,
                           mentorReviews: mentor.mentorReviews ?? [],
+                                                    session: mentor.session,
                         ),
                       ),
                     );

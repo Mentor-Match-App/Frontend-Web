@@ -96,6 +96,7 @@ class _FrontEndSessionScreenState extends State<FrontEndSessionScreen> {
                           detailmentor: mentor,
                           totalParticipants: numberOfParticipants,
                           mentorReviews: mentor.mentorReviews ?? [],
+                                                    session: mentor.session,
                         ),
                       ),
                     );

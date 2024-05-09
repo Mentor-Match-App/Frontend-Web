@@ -13,6 +13,7 @@ import 'package:my_flutter_app/widget/reviewwidget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailMentorSessionScreen extends StatefulWidget {
+  final List<SessionElement>? session;
   final Mentor detailmentor;
   final int availableSlots;
   final int totalParticipants;
@@ -20,6 +21,7 @@ class DetailMentorSessionScreen extends StatefulWidget {
 
   DetailMentorSessionScreen(
       {Key? key,
+      required this.session,
       required this.totalParticipants,
       required this.availableSlots,
       required this.detailmentor,
@@ -57,6 +59,8 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
     String formattedJadwal = parsedJadwal != null
         ? DateFormat('dd MMMM yyyy').format(parsedJadwal)
         : "No scheduled session";
+
+    bool _isloading = false;
 
     return Scaffold(
       backgroundColor: ColorStyle().whiteColors,
@@ -337,309 +341,371 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                     SizedBox(
                       height: 40,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: mentorDetail.session != null &&
-                              mentorDetail.session!.isNotEmpty
-                          ? Column(
-                              children: mentorDetail.session!.map((session) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 40),
-                                  child: Container(
-                                    width: 600,
-                                    decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: ColorStyle().tertiaryColors,
-                                            blurRadius: 4,
-                                            spreadRadius: 4,
-                                            offset:
-                                                Offset(0, 4), // Shadow position
-                                          ),
-                                        ],
-                                        color: Colors.white,
+                    Container(
+                      color: Colors.white,
+                      width: MediaQuery.of(context).size.width / 2,
+                      padding: EdgeInsets.all(55),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: mentorDetail.session != null &&
+                                    mentorDetail.session!.isNotEmpty
+                                ? ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: mentorDetail.session!.length,
+                                    itemBuilder: (context, index) {
+                                      final session =
+                                          mentorDetail.session![index];
 
-                                        // border radius
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5))),
-                                    child: Padding(
-                                        padding: const EdgeInsets.all(32.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Icon(
-                                                  Icons.tag,
-                                                  size: 40,
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Flexible(
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        "Topic",
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 14,
-                                                          color:
-                                                              Color(0xffE78938),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      Text(
-                                                        session.title ?? "",
-                                                        overflow: TextOverflow
-                                                            .visible,
-                                                        softWrap: true,
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontSize: 14,
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 30,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Icon(
-                                                  Icons.access_time,
-                                                  size: 40,
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Flexible(
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        "Time",
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 14,
-                                                          color:
-                                                              Color(0xffE78938),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      Text(
-                                                        formattedJadwal +
-                                                            " " +
-                                                            formattedStartTime +
-                                                            " - " +
-                                                            formattedEndTime,
-                                                        overflow: TextOverflow
-                                                            .visible,
-                                                        softWrap: true,
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontSize: 14,
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 30,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Icon(
-                                                  Icons.location_on,
-                                                  size: 40,
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Flexible(
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        "Location",
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 14,
-                                                          color:
-                                                              Color(0xffE78938),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      Text(
-                                                        "Zoom Meeting",
-                                                        overflow: TextOverflow
-                                                            .visible,
-                                                        softWrap: true,
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontSize: 14,
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 30,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Icon(
-                                                  Icons.person_add_alt_1,
-                                                  size: 40,
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Flexible(
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        "Available Slot",
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 14,
-                                                          color:
-                                                              Color(0xffE78938),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      Text(
-                                                        widget.availableSlots
-                                                            .toString(),
-                                                        overflow: TextOverflow
-                                                            .visible,
-                                                        softWrap: true,
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontSize: 14,
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 40,
-                                            ),
-                                            Align(
-                                              alignment: Alignment.center,
-                                              child: SizedBox(
-                                                width: double.maxFinite,
-                                                child: TextButton(
-                                                  style: TextButton.styleFrom(
-                                                    backgroundColor: Color(
-                                                        0xffE78938), // Primary color
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                      vertical: 20.0,
-                                                      horizontal: 34.0,
-                                                    ),
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10.0),
-                                                    ),
-                                                  ),
-                                                  onPressed: () {
-                                                    _showDialog(context);
-                                                  },
-                                                  child: Text(
-                                                    "Booking Session",
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 14,
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                ),
+                                      String formattedJadwal =
+                                          DateFormat('dd MMM yyyy').format(
+                                              DateTime.parse(
+                                                  session.dateTime ?? ""));
+                                      String formattedStartTime =
+                                          DateFormat('HH:mm').format(
+                                              DateTime.parse(
+                                                  session.startTime ?? ""));
+                                      String formattedEndTime =
+                                          DateFormat('HH:mm').format(
+                                              DateTime.parse(
+                                                  session.endTime ?? ""));
+
+                                      return Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 40),
+                                        child: Container(
+                                          width: 600,
+                                          decoration: BoxDecoration(
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color:
+                                                    ColorStyle().tertiaryColors,
+                                                blurRadius: 4,
+                                                spreadRadius: 4,
+                                                offset: Offset(0, 4),
                                               ),
-                                            ),
-                                          ],
-                                        )),
+                                            ],
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(5)),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(32.0),
+                                            child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.tag,
+                                                        size: 40,
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                      Flexible(
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              "Topic",
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                fontSize: 14,
+                                                                color: Color(
+                                                                    0xffE78938),
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                                height: 10),
+                                                            Text(
+                                                              session.title ??
+                                                                  "",
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .visible,
+                                                              softWrap: true,
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                fontSize: 14,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(height: 30),
+                                                  // Tambah bagian ini untuk waktu, lokasi, dan slot yang tersedia
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.access_time,
+                                                        size: 40,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Flexible(
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              "Time",
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                fontSize: 14,
+                                                                color: Color(
+                                                                    0xffE78938),
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            Text(
+                                                              formattedJadwal +
+                                                                  " " +
+                                                                  formattedStartTime +
+                                                                  " - " +
+                                                                  formattedEndTime,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .visible,
+                                                              softWrap: true,
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                fontSize: 14,
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+
+                                                  SizedBox(height: 30),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.location_on,
+                                                        size: 40,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Flexible(
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              "Location",
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                fontSize: 14,
+                                                                color: Color(
+                                                                    0xffE78938),
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            Text(
+                                                              "Zoom Meeting",
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .visible,
+                                                              softWrap: true,
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                fontSize: 14,
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+
+                                                  SizedBox(height: 30),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.person_add_alt_1,
+                                                        size: 40,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Flexible(
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              "Available Slot",
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                fontSize: 14,
+                                                                color: Color(
+                                                                    0xffE78938),
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            Text(
+                                                              widget
+                                                                  .availableSlots
+                                                                  .toString(),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .visible,
+                                                              softWrap: true,
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                fontSize: 14,
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                                height: 40),
+                                                            Align(
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child: SizedBox(
+                                                                width: double
+                                                                    .maxFinite,
+                                                                child:
+                                                                    TextButton(
+                                                                  style: TextButton
+                                                                      .styleFrom(
+                                                                    backgroundColor:
+                                                                        Color(
+                                                                            0xffE78938), // Primary color
+                                                                    padding:
+                                                                        EdgeInsets
+                                                                            .symmetric(
+                                                                      vertical:
+                                                                          20.0,
+                                                                      horizontal:
+                                                                          34.0,
+                                                                    ),
+                                                                    shape:
+                                                                        RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10.0),
+                                                                    ),
+                                                                  ),
+                                                                  onPressed:
+                                                                      () {
+                                                                    _showDialog(
+                                                                        context,
+                                                                        session
+                                                                            .id
+                                                                            .toString());
+                                                                  },
+                                                                  child: Text(
+                                                                    "Booking Session",
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      fontSize:
+                                                                          14,
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
+                                                ]),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  )
+                                : Center(
+                                    child: Text(
+                                      'Belum ada program',
+                                      style: FontFamily().regularText,
+                                    ),
                                   ),
-                                );
-                              }).toList(),
-                            )
-                          : Center(
-                              child: Text(
-                                'Belum ada program',
-                                style: FontFamily().regularText,
-                              ),
-                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -651,8 +717,9 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
     );
   }
 
-  void _showDialog(BuildContext context) {
+  void _showDialog(BuildContext context, String sessionId) {
     final mentorDetail = widget.detailmentor;
+
 
     DateTime? parsedJadwal;
     if (mentorDetail.session != null && mentorDetail.session!.isNotEmpty) {
@@ -718,55 +785,55 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                       },
                       title: "Cancel",
                     ),
-                    SmallElevatedButton(
-                      style: FontFamily().regularText.copyWith(
-                          color: ColorStyle().whiteColors, fontSize: 16),
-                      height: 48,
-                      width: 150,
-                      onPressed: () async {
-                        try {
-                          String? userId = await UserPreferences.getUserId();
-                          if (userId != null) {
-                            var result = await bookSession(
-                                widget.detailmentor.session!
-                                    .map((session) => session.id)
-                                    .join(","),
-                                userId);
-                            if (result.isSuccess) {
-
-                              // ignore: use_build_context_synchronously
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => DetailBookingSession(
-                                          nama_mentor: widget.detailmentor.name
-                                              .toString(),
-                                          nama_session: widget
-                                              .detailmentor.session!
-                                              .map((session) => session.title)
-                                              .join(", "),
-                                          jadwal_session:
-                                              formattedJadwal +
-                                                            " " +
-                                                            formattedStartTime +
-                                                            " - " +
-                                                            formattedEndTime,
-                                        )),
-                                (Route<dynamic> route) => false,
-                              );
+                    SizedBox(
+                      child: 
+                      
+                      SmallElevatedButton(
+                        style: FontFamily().regularText.copyWith(
+                            color: ColorStyle().whiteColors, fontSize: 16),
+                        height: 48,
+                        width: 150,
+                        onPressed: () async {
+                          try {
+                            String? userId = await UserPreferences.getUserId();
+                            if (userId != null) {
+                              var result = await bookSession(sessionId, userId);
+                              if (result.isSuccess) {
+                                // ignore: use_build_context_synchronously
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          DetailBookingSession(
+                                            nama_mentor: widget
+                                                .detailmentor.name
+                                                .toString(),
+                                            nama_session: widget
+                                                .detailmentor.session!
+                                                .map((session) => session.title)
+                                                .join(", "),
+                                            jadwal_session: formattedJadwal +
+                                                " " +
+                                                formattedStartTime +
+                                                " - " +
+                                                formattedEndTime,
+                                          )),
+                                  (Route<dynamic> route) => false,
+                                );
+                              } else {
+                                // Jika booking gagal, tampilkan pesan error
+                                throw Exception(result.message);
+                              }
                             } else {
-                              // Jika booking gagal, tampilkan pesan error
-                              throw Exception(result.message);
+                              throw Exception(
+                                  "Anda belum login, silahkan login terlebih dahulu.");
                             }
-                          } else {
-                            throw Exception(
-                                "Anda belum login, silahkan login terlebih dahulu.");
+                          } catch (e) {
+                            showTopSnackBar(context, e.toString());
                           }
-                        } catch (e) {
-                          showTopSnackBar(context, e.toString());
-                        }
-                      },
-                      title: "Booking",
+                        },
+                        title: "Booking",
+                      ),
                     )
                   ],
                 ),

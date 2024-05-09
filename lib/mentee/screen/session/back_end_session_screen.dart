@@ -92,6 +92,7 @@ class _BackEndSessionScreenState extends State<BackEndSessionScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => DetailMentorSessionScreen(
+                          session: mentor.session,
                           availableSlots: availableSlots,
                           detailmentor: mentor,
                           totalParticipants: numberOfParticipants,
