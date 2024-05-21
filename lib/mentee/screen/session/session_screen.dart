@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/session/all_session_screen.dart';
 import 'package:my_flutter_app/mentee/screen/session/back_end_session_screen.dart';
 import 'package:my_flutter_app/mentee/screen/session/data_analyst_session_screen.dart';
@@ -144,10 +145,7 @@ class _SessionScreenState extends State<SessionScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SearchBarWidget(
-                  title: 'Search by name, role, company',
-                  onPressed: () {},
-                ),
+              const SearchBarMentee(),
                 SizedBox(
                   height: 20,
                 ),

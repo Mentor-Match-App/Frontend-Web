@@ -124,9 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         SizedBox(height: 50), // Add space
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 50,
-                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 0),
                           child: ElevatedButton(
                             onPressed: _isLoggingIn
                                 ? null

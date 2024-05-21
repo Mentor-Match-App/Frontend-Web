@@ -47,7 +47,7 @@ class _CardPremiumClassOptionsState extends State<CardPremiumClassOptions> {
                   children: [
                     Text(widget.description!, style: FontFamily().regularText),
                     const SizedBox(height: 12),
-                    SmallElevatedButton(
+                    SmallElevatedButtonTag(
                       width: 120,
                       height: 36,
                       onPressed: widget.onPressed,

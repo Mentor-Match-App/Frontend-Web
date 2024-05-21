@@ -84,35 +84,36 @@ class SearchBarMentee extends StatelessWidget {
     super.key,
   });
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
-            "Search",
-            style: GoogleFonts.poppins(
-              fontWeight: FontWeight.w500,
-              color: Color(0xff0A1737),
-              fontSize: 16,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "Search",
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w500,
+                color: Color(0xff0A1737),
+                fontSize: 16,
+              ),
             ),
           ),
           const SizedBox(
-            width: 60,
+            width: 32, // Adjust this value to give some space between the text and the search bar
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SearchPageMenteeWeb()),
-              );
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchPageMenteeWeb()),
+                );
+              },
               child: Container(
-                width: 800,
                 height: 40,
                 decoration: BoxDecoration(
                   border: Border.all(color: ColorStyle().tertiaryColors),
@@ -123,13 +124,14 @@ class SearchBarMentee extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>SearchPageMenteeWeb()),
+                        builder: (context) => SearchPageMenteeWeb(),
+                      ),
                     );
                   },
                   obscureText: false,
                   decoration: const InputDecoration(
                     border: InputBorder.none,
-                    labelText: 'Search by mentee name, class, or class name',
+                    labelText: 'Search by mentor name, class name',
                     prefixIcon: Icon(Icons.search),
                   ),
                 ),
@@ -141,3 +143,4 @@ class SearchBarMentee extends StatelessWidget {
     );
   }
 }
+

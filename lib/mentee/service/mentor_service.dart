@@ -18,4 +18,13 @@ class MentorService {
       throw Exception("Failed to fetch filtered mentors: $error");
     }
   }
+
+  Future<MentorClassModel> fetchPremiumMentors() async {
+    try {
+      final response = await _dio.get('$baseUrl/class/filter-mentors');
+      return MentorClassModel.fromMap(response.data);
+    } catch (error) {
+      throw Exception("Failed to fetch premium mentors: $error");
+    }
+  }
 }

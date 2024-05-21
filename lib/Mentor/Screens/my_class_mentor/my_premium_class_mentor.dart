@@ -110,7 +110,7 @@ class _MyPremiumClassMentorScreenState
   Widget createStatusButton(String title, Color color) {
     return Align(
       alignment: Alignment.centerRight,
-      child: SmallElevatedButton(
+      child: SmallElevatedButtonTag(
         color: color,
         onPressed: () {}, // Define the action
         height: 28,

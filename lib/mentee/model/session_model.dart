@@ -11,7 +11,7 @@ String sessionToMap(Session data) => json.encode(data.toMap());
 class Session {
   bool? error;
   String? message;
-  List<Mentor>? mentors;
+  List<MentorSession>? mentors;
 
   Session({
     this.error,
@@ -24,7 +24,7 @@ class Session {
         message: json["message"],
         mentors: json["mentors"] == null
             ? []
-            : List<Mentor>.from(json["mentors"]!.map((x) => Mentor.fromMap(x))),
+            : List<MentorSession>.from(json["mentors"]!.map((x) => MentorSession.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
@@ -36,7 +36,7 @@ class Session {
       };
 }
 
-class Mentor {
+class MentorSession {
   String? id;
   String? userType;
   String? email;
@@ -55,7 +55,7 @@ class Mentor {
   List<Experience>? experiences;
   List<MentorReview>? mentorReviews;
 
-  Mentor({
+  MentorSession({
     this.id,
     this.userType,
     this.email,
@@ -75,7 +75,7 @@ class Mentor {
     this.mentorReviews,
   });
 
-  factory Mentor.fromMap(Map<String, dynamic> json) => Mentor(
+  factory MentorSession.fromMap(Map<String, dynamic> json) => MentorSession(
         id: json["id"],
         userType: json["userType"],
         email: json["email"],

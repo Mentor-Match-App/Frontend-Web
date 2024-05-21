@@ -7,6 +7,7 @@ import 'package:my_flutter_app/mentee/service/bookingClassService/bookclass_mode
 import 'package:my_flutter_app/mentee/service/bookingClassService/bookclass_service.dart';
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
 import 'package:my_flutter_app/style/text.dart';
+import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 
 class DetailClassMentorSMA extends StatefulWidget {
@@ -470,7 +471,7 @@ class _DetailClassMentorSMAState extends State<DetailClassMentorSMA> {
                       },
                       title: "Cancel",
                     ),
-                    SmallElevatedButton(
+                    SmallElevatedButton2(
                       style: FontFamily().regularText.copyWith(
                           color: ColorStyle().whiteColors, fontSize: 16),
                       height: 48,
@@ -552,134 +553,7 @@ class _DetailClassMentorSMAState extends State<DetailClassMentorSMA> {
   }
 }
 
-class SmallElevatedButton extends StatelessWidget {
-  final Function()? onPressed;
-  final double height;
-  final double width;
-  final String title;
-  final Color color; // Keep this if you want to allow custom colors
-  final TextStyle? style;
 
-  const SmallElevatedButton({
-    Key? key,
-    this.onPressed,
-    this.title = "", // Provide a default value for title
-    this.color = Colors.blue, // This will be overridden if not used
-    this.style, // You may provide a default style or handle it in the build method
-    this.height = 32,
-    this.width = 72,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // Determine the color to use, defaulting to ColorStyle().primaryColors if color is Colors.blue
-    final buttonColor = color == Colors.blue
-        ? MaterialStateProperty.all<Color>(ColorStyle().primaryColors)
-        : MaterialStateProperty.all<Color>(color);
-
-    return SizedBox(
-      width: width,
-      height: height,
-      child: ElevatedButton(
-        style: ButtonStyle(
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-          backgroundColor: buttonColor, // Use the determined color
-        ),
-        onPressed: onPressed,
-        child: Text(
-          title,
-          style: style, // Use the provided style or a default one
-        ),
-      ),
-    );
-  }
-}
-
-/////otline Button////////
-
-class SmallOutlinedButton extends StatelessWidget {
-  final Function()? onPressed;
-  final double height;
-  final double width;
-  final String title;
-  final Color color;
-  final TextStyle? style;
-
-  const SmallOutlinedButton({
-    Key? key,
-    this.onPressed,
-    this.title = "",
-    this.color = Colors.blue,
-    this.style,
-    this.height = 32,
-    this.width = 72,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
-      height: height,
-      child: OutlinedButton(
-        style: ButtonStyle(
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-          side: MaterialStateProperty.all<BorderSide>(
-            BorderSide(
-                color: ColorStyle().primaryColors), // Set the border color
-          ),
-        ),
-        onPressed: onPressed,
-        child: Text(
-          title,
-          style: style,
-        ),
-      ),
-    );
-  }
-}
-
-class ElevatedButtonWidget extends StatelessWidget {
-  final Function()? onPressed;
-  final String? title;
-  final Color? color;
-  const ElevatedButtonWidget({Key? key, this.onPressed, this.title, this.color})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 48,
-      child: ElevatedButton(
-        style: ButtonStyle(
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            backgroundColor:
-                MaterialStateProperty.all<Color>(ColorStyle().primaryColors)),
-
-        onPressed: onPressed,
-        // },
-        child: Text(
-          title!,
-          style: FontFamily().buttonText.copyWith(
-                fontSize: 16,
-              ),
-        ),
-      ),
-    );
-  }
-}
 
 class CustomMoneyText extends StatelessWidget {
   final int amount; // Nilai angka dari database

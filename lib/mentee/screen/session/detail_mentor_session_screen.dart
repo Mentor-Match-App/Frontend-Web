@@ -6,6 +6,7 @@ import 'package:my_flutter_app/mentee/model/session_model.dart';
 import 'package:my_flutter_app/mentee/screen/session/detail_booking_session_screen.dart';
 import 'package:my_flutter_app/mentee/service/bookSessionService/bookSesion.dart';
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
+import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/navbaruser.dart';
 import 'package:my_flutter_app/widget/profileavatar.dart';
@@ -14,7 +15,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class DetailMentorSessionScreen extends StatefulWidget {
   final List<SessionElement>? session;
-  final Mentor detailmentor;
+  final MentorSession detailmentor;
   final int availableSlots;
   final int totalParticipants;
   final List<MentorReview> mentorReviews;
@@ -788,7 +789,7 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                     SizedBox(
                       child: 
                       
-                      SmallElevatedButton(
+                      SmallElevatedButton2(
                         style: FontFamily().regularText.copyWith(
                             color: ColorStyle().whiteColors, fontSize: 16),
                         height: 48,
@@ -946,133 +947,6 @@ class ExperienceWidget extends StatelessWidget {
             ],
           )
         ],
-      ),
-    );
-  }
-}
-
-class SmallOutlinedButton extends StatelessWidget {
-  final Function()? onPressed;
-  final double height;
-  final double width;
-  final String title;
-  final Color color;
-  final TextStyle? style;
-
-  const SmallOutlinedButton({
-    Key? key,
-    this.onPressed,
-    this.title = "",
-    this.color = Colors.blue,
-    this.style,
-    this.height = 32,
-    this.width = 72,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
-      height: height,
-      child: OutlinedButton(
-        style: ButtonStyle(
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-          side: MaterialStateProperty.all<BorderSide>(
-            BorderSide(
-                color: ColorStyle().primaryColors), // Set the border color
-          ),
-        ),
-        onPressed: onPressed,
-        child: Text(
-          title,
-          style: style,
-        ),
-      ),
-    );
-  }
-}
-
-class ElevatedButtonWidget extends StatelessWidget {
-  final Function()? onPressed;
-  final String? title;
-  final Color? color;
-  const ElevatedButtonWidget({Key? key, this.onPressed, this.title, this.color})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 48,
-      child: ElevatedButton(
-        style: ButtonStyle(
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            backgroundColor:
-                MaterialStateProperty.all<Color>(ColorStyle().primaryColors)),
-
-        onPressed: onPressed,
-        // },
-        child: Text(
-          title!,
-          style: FontFamily().buttonText.copyWith(
-                fontSize: 16,
-              ),
-        ),
-      ),
-    );
-  }
-}
-
-class SmallElevatedButton extends StatelessWidget {
-  final Function()? onPressed;
-  final double height;
-  final double width;
-  final String title;
-  final Color color; // Keep this if you want to allow custom colors
-  final TextStyle? style;
-
-  const SmallElevatedButton({
-    Key? key,
-    this.onPressed,
-    this.title = "", // Provide a default value for title
-    this.color = Colors.blue, // This will be overridden if not used
-    this.style, // You may provide a default style or handle it in the build method
-    this.height = 32,
-    this.width = 72,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // Determine the color to use, defaulting to ColorStyle().primaryColors if color is Colors.blue
-    final buttonColor = color == Colors.blue
-        ? MaterialStateProperty.all<Color>(ColorStyle().primaryColors)
-        : MaterialStateProperty.all<Color>(color);
-
-    return SizedBox(
-      width: width,
-      height: height,
-      child: ElevatedButton(
-        style: ButtonStyle(
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-          backgroundColor: buttonColor, // Use the determined color
-        ),
-        onPressed: onPressed,
-        child: Text(
-          title,
-          style: style, // Use the provided style or a default one
-        ),
       ),
     );
   }

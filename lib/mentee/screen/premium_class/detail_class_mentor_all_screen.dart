@@ -7,6 +7,7 @@ import 'package:my_flutter_app/mentee/service/bookingClassService/bookclass_mode
 import 'package:my_flutter_app/mentee/service/bookingClassService/bookclass_service.dart';
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
 import 'package:my_flutter_app/style/text.dart';
+import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 
 class DetailClassMentorAll extends StatefulWidget {
@@ -403,7 +404,7 @@ class _DetailClassMentorAllState extends State<DetailClassMentorAll> {
                   SizedBox(
                     height: 20,
                   ),
-                  ElevatedButtonWidget(
+                  ElevatedButtonWidget2(
                     onPressed: () {
                       _showDialog(context);
                     },
@@ -470,7 +471,7 @@ class _DetailClassMentorAllState extends State<DetailClassMentorAll> {
                       },
                       title: "Cancel",
                     ),
-                    SmallElevatedButton(
+                    SmallElevatedButtonTag(
                       style: FontFamily().regularText.copyWith(
                           color: ColorStyle().whiteColors, fontSize: 16),
                       height: 48,
@@ -552,7 +553,7 @@ class _DetailClassMentorAllState extends State<DetailClassMentorAll> {
   }
 }
 
-class SmallElevatedButton extends StatelessWidget {
+class SmallElevatedButtonTag extends StatelessWidget {
   final Function()? onPressed;
   final double height;
   final double width;
@@ -560,7 +561,7 @@ class SmallElevatedButton extends StatelessWidget {
   final Color color; // Keep this if you want to allow custom colors
   final TextStyle? style;
 
-  const SmallElevatedButton({
+  const SmallElevatedButtonTag({
     Key? key,
     this.onPressed,
     this.title = "", // Provide a default value for title
@@ -646,40 +647,6 @@ class SmallOutlinedButton extends StatelessWidget {
   }
 }
 
-class ElevatedButtonWidget extends StatelessWidget {
-  final Function()? onPressed;
-  final String? title;
-  final Color? color;
-  const ElevatedButtonWidget({Key? key, this.onPressed, this.title, this.color})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 48,
-      child: ElevatedButton(
-        style: ButtonStyle(
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            backgroundColor:
-                MaterialStateProperty.all<Color>(ColorStyle().primaryColors)),
-
-        onPressed: onPressed,
-        // },
-        child: Text(
-          title!,
-          style: FontFamily().buttonText.copyWith(
-                fontSize: 16,
-              ),
-        ),
-      ),
-    );
-  }
-}
 
 class CustomMoneyText extends StatelessWidget {
   final int amount; // Nilai angka dari database

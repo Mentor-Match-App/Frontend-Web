@@ -59,7 +59,7 @@ class _MySessionBookingState extends State<MySessionBooking> {
   createStatusButton(String title, Color color) {
     return Align(
       alignment: Alignment.centerRight,
-      child: SmallElevatedButton(
+      child: SmallElevatedButtonTag(
         color: color,
         onPressed: () {}, // Tentukan tindakan yang diinginkan
         height: 28,
@@ -199,10 +199,12 @@ class _MySessionBookingState extends State<MySessionBooking> {
                                     _launchURL(zommLink);
                                   },
                                   icon: Icon(Icons.link),
-                                  label: Text('Join Session',
-                                      style: FontFamily().regularText.copyWith(
-                                            color: ColorStyle().whiteColors,
-                                          )),
+                                  label: Text(
+                                    'Join Session',
+                                    style: FontFamily().regularText.copyWith(
+                                          color: ColorStyle().whiteColors,
+                                        ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -215,7 +217,7 @@ class _MySessionBookingState extends State<MySessionBooking> {
               }).toList(),
             ),
           );
-         } else {
+        } else {
           return const Text('Kamu belum memiliki session saat ini');
         }
       },

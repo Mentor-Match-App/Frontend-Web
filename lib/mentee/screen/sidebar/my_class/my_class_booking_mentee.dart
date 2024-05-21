@@ -3,6 +3,7 @@ import 'package:my_flutter_app/mentee/model/my_class_model.dart';
 import 'package:my_flutter_app/mentee/screen/session/detail_mentor_session_screen.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/my_class/detail_my_class_mentee_screen.dart';
 import 'package:my_flutter_app/mentee/service/my_class_service.dart';
+import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -54,7 +55,7 @@ class _MyClassBookingMenteeState extends State<MyClassBookingMentee> {
   Widget createStatusButton(String title, Color color) {
     return Align(
       alignment: Alignment.centerRight,
-      child: SmallElevatedButton(
+      child: SmallElevatedButton2(
         color: color,
         onPressed: () {}, // Define the action
         height: 28,

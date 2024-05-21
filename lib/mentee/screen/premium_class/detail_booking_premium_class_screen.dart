@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:my_flutter_app/Mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/premium_class/SD/detail_class_mentor_sd_screen.dart';
+import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/flushsBar_widget.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 
@@ -292,7 +293,7 @@ class _DetailBookingClassState extends State<DetailBookingClass> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(12.0),
-                                child: ElevatedButtonWidget(
+                                child: ElevatedButtonWidget2(
                                   title: "Kembali Ke Beranda",
                                   onPressed: () {
                                     Navigator.push(

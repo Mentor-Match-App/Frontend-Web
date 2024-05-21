@@ -148,7 +148,7 @@ class _ReviewMentorScreenState extends State<ReviewMentorScreen> {
                   SizedBox(
                     child: _isSendingReview
                         ? const CircularProgressIndicator()
-                        : SmallElevatedButton(
+                        : SmallElevatedButtonTag(
                             width: 150,
                             height: 38,
                             title: "Kirim",

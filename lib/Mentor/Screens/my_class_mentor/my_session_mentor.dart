@@ -85,7 +85,7 @@ class _MySessionCreateState extends State<MySessionCreate> {
   createStatusButton(String title, Color color) {
     return Align(
       alignment: Alignment.centerRight,
-      child: SmallElevatedButton(
+      child: SmallElevatedButtonTag(
         color: color,
         onPressed: () {}, // Tentukan tindakan yang diinginkan
         height: 28,

@@ -128,7 +128,7 @@ class _MyClassCreateMentorState extends State<MyClassCreateMentor> {
                           children: [
                             Align(
                               alignment: Alignment.centerRight,
-                              child: SmallElevatedButton(
+                              child: SmallElevatedButtonTag(
                                 color: buttonColor,
                                 onPressed: () {},
                                 height: 30,
