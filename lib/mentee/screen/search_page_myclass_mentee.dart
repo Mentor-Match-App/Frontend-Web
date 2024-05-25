@@ -93,19 +93,19 @@ class _SearchPageMenteeWebState extends State<SearchPageMenteeWeb> {
   }
 
   // Fetch premium mentors
-Future<void> _fetchPremiumMentors() async {
-  try {
-    final MentorClassModel mentors = await MentorService().fetchPremiumMentors();
-    setState(() {
-      _mentorsPremium = mentors.mentors ?? [];
-      _filteredMentorsPremium = _mentorsPremium;
-    });
-    print('Fetched Premium Mentors: $_mentorsPremium'); // Debugging statement
-  } catch (e) {
-    print('Error fetching premium mentors: $e');
+  Future<void> _fetchPremiumMentors() async {
+    try {
+      final MentorClassModel mentors =
+          await MentorService().fetchPremiumMentors();
+      setState(() {
+        _mentorsPremium = mentors.mentors ?? [];
+        _filteredMentorsPremium = _mentorsPremium;
+      });
+      print('Fetched Premium Mentors: $_mentorsPremium'); // Debugging statement
+    } catch (e) {
+      print('Error fetching premium mentors: $e');
+    }
   }
-}
-
 
   ///// void filterclass ////
   void _filterClasses(String query) {
@@ -139,16 +139,19 @@ Future<void> _fetchPremiumMentors() async {
         return nameLower.contains(queryLower) ||
             skillsLower.contains(queryLower);
       }).toList();
-     // Filter premium mentors
-    _filteredMentorsPremium = _mentorsPremium.where((mentor) {
-      final nameLower = mentor.name?.toLowerCase() ?? '';
-      final skillsLower = mentor.skills?.map((skill) => skill.toLowerCase()).join(', ') ?? '';
-      final queryLower = query.toLowerCase();
-      return nameLower.contains(queryLower) || skillsLower.contains(queryLower);
-    }).toList();
+      // Filter premium mentors
+      _filteredMentorsPremium = _mentorsPremium.where((mentor) {
+        final nameLower = mentor.name?.toLowerCase() ?? '';
+        final skillsLower =
+            mentor.skills?.map((skill) => skill.toLowerCase()).join(', ') ?? '';
+        final queryLower = query.toLowerCase();
+        return nameLower.contains(queryLower) ||
+            skillsLower.contains(queryLower);
+      }).toList();
 
-    print('Filtered Premium Mentors: $_filteredMentorsPremium'); // Debugging statement
-  });
+      print(
+          'Filtered Premium Mentors: $_filteredMentorsPremium'); // Debugging statement
+    });
   }
 
   ///// future user data ////
@@ -633,6 +636,33 @@ Future<void> _fetchPremiumMentors() async {
                                   return Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: CardItemMentor(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                DetailMentorSessionScreen(
+                                              session: mentor.session,
+                                              availableSlots: mentor
+                                                      .session!.isEmpty
+                                                  ? 0
+                                                  : mentor.session!.first
+                                                          .maxParticipants! -
+                                                      (mentor
+                                                              .session!
+                                                              .first
+                                                              .participant
+                                                              ?.length ??
+                                                          0),
+                                              detailmentor: mentor,
+                                              totalParticipants:
+                                                  numberOfParticipants,
+                                              mentorReviews:
+                                                  mentor.mentorReviews ?? [],
+                                            ),
+                                          ),
+                                        );
+                                      },
                                       title: isSessionFull
                                           ? "Full Booked"
                                           : "Available",
@@ -753,6 +783,33 @@ Future<void> _fetchPremiumMentors() async {
                                   return Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: CardItemMentor(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetailMentorAllScreen(
+                                                experiences:
+                                                    mentor.experiences ?? [],
+                                                email: mentor.email ?? '',
+                                                classes:
+                                                    mentor.mentorClass ?? [],
+                                                about: mentor.about ?? '',
+                                                name: mentor.name ?? 'No Name',
+                                                photoUrl: mentor.photoUrl ?? '',
+                                                skills: mentor.skills ?? [],
+                                                classid: mentor.id.toString(),
+                                                company: company,
+                                                job: jobTitle,
+                                                linkedin: mentor.linkedin ?? '',
+                                                mentor: mentor,
+                                                location: mentor.location ?? '',
+                                                mentorReviews:
+                                                    mentor.mentorReviews ?? [],
+                                              ),
+                                            ),
+                                          );
+                                        },
                                         onPressesd: () {
                                           Navigator.push(
                                             context,

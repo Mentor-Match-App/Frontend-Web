@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_flutter_app/Mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/premium_class/detail_class_mentor_all_screen.dart';
 import 'package:my_flutter_app/mentor/Screens/homepage_mentor.dart';
-import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_class_mentor.dart';
+import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_class_mentor_sidebar.dart';
 import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 
@@ -54,7 +54,7 @@ class _SuccesCreateClassScreenState extends State<SuccesCreateClassScreen> {
                                     key:
                                         UniqueKey(), // Jika diperlukan, Anda dapat memberikan kunci unik untuk memastikan widget yang dirender adalah baru
                                     selectedMenu:
-                                        'My Class', // Tetapkan nilai _selectedMenu ke 'My Class'
+                                        'Class', // Tetapkan nilai _selectedMenu ke 'Class'
                                   )),
                           (route) => false);
                     },

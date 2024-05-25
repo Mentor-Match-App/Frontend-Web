@@ -83,6 +83,30 @@ class _AllSDScreenState extends State<AllSDScreen> {
               String company = currentJob?.company ?? 'Placeholder Company';
               String jobTitle = currentJob?.jobTitle ?? 'Placeholder Job';
               return CardItemMentor(
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailMentorSDScreen(
+                        experiences: mentor.experiences ?? [],
+                        email: mentor.email ?? '',
+                        classes: mentor.mentorClass ?? [],
+                        about: mentor.about ?? '',
+                        name: mentor.name ?? 'No Name',
+                        photoUrl: mentor.photoUrl ?? '',
+                        skills: mentor.skills ?? [],
+                        classid: mentor.id.toString(),
+                        company: company,
+                        job: jobTitle,
+                        linkedin: mentor.linkedin ?? '',
+                        mentor: mentor,
+                        location: mentor.location ?? '',
+                        mentorReviews: mentor.mentorReviews ?? [],
+                      ),
+                    ),
+                  );
+                
+                },
                 title: availabilityStatus,
                 color: buttonColor,
                 onPressesd: () {

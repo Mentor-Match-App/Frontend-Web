@@ -137,6 +137,29 @@ class _DashboardMenteeState extends State<DashboardMentee> {
                             currentJob?.jobTitle ?? 'Placeholder Job';
 
                         return CardItemMentor(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailMentorAllScreen(
+                                  experiences: mentor.experiences ?? [],
+                                  email: mentor.email ?? '',
+                                  classes: mentor.mentorClass ?? [],
+                                  about: mentor.about ?? '',
+                                  name: mentor.name ?? 'No Name',
+                                  photoUrl: mentor.photoUrl ?? '',
+                                  skills: mentor.skills ?? [],
+                                  classid: mentor.id.toString(),
+                                  company: company,
+                                  job: jobTitle,
+                                  linkedin: mentor.linkedin ?? '',
+                                  mentor: mentor,
+                                  location: mentor.location ?? '',
+                                  mentorReviews: mentor.mentorReviews ?? [],
+                                ),
+                              ),
+                            );
+                          },
                           onPressesd: () {
                             Navigator.push(
                               context,
@@ -263,6 +286,21 @@ class _DashboardMenteeState extends State<DashboardMentee> {
                           height: 350,
                           width: 250,
                           child: CardItemMentor(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetailMentorSessionScreen(
+                                    session: mentor.session,
+                                    availableSlots: availableSlots,
+                                    detailmentor: mentor,
+                                    totalParticipants: numberOfParticipants,
+                                    mentorReviews: mentor.mentorReviews ?? [],
+                                  ),
+                                ),
+                              );
+                            },
                             title: isSessionFull ? "Full Booked" : "Available",
                             color: buttonColor,
                             onPressesd: () {

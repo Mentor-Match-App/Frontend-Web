@@ -87,6 +87,29 @@ class _BahasaSMAScreenState extends State<BahasaSMAScreen> {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CardItemMentor(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailMentorSMAScreen(
+                          experiences: mentor.experiences ?? [],
+                          email: mentor.email ?? '',
+                          classes: mentor.mentorClass ?? [],
+                          about: mentor.about ?? '',
+                          name: mentor.name ?? 'No Name',
+                          photoUrl: mentor.photoUrl ?? '',
+                          skills: mentor.skills ?? [],
+                          classid: mentor.id.toString(),
+                          company: company,
+                          job: jobTitle,
+                          linkedin: mentor.linkedin ?? '',
+                          mentor: mentor,
+                          location: mentor.location ?? '',
+                          mentorReviews: mentor.mentorReviews ?? [],
+                        ),
+                      ),
+                    );
+                  },
                   title: availabilityStatus,
                   color: buttonColor,
 

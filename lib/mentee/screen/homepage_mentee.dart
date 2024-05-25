@@ -3,14 +3,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/mentee/screen/search_page_myclass_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/community_user.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/dashboard_mentee.dart';
-import 'package:my_flutter_app/mentee/screen/sidebar/my_class/my_class_mentee.dart';
+import 'package:my_flutter_app/mentee/screen/sidebar/my_class/my_class_mentee_sidebar.dart';
 import 'package:my_flutter_app/widget/footer.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/navbaruser.dart';
 import 'package:my_flutter_app/widget/sidebar_mentee.dart';
 
 class MenteeHomePage extends StatefulWidget {
-  const MenteeHomePage({Key? key});
+  final String selectedMenu;
+  const MenteeHomePage({Key? key, this.selectedMenu = 'Dashboard'});
 
   @override
   State<MenteeHomePage> createState() => _MenteeHomePageState();
@@ -20,10 +21,16 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
   double _size = 200.0;
   String _selectedMenu = 'Dasboard';
 
-  void _handleMenuSelected(String menu) {
-    setState(() {
-      _selectedMenu = menu;
-    });
+  // void _handleMenuSelected(String menu) {
+  //   setState(() {
+  //     _selectedMenu = menu;
+  //   });
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedMenu = widget.selectedMenu;
   }
 
   @override
@@ -46,7 +53,11 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
                   SideBarMentee(
                       key: UniqueKey(),
                       size: _size,
-                      onMenuSelected: _handleMenuSelected,
+                      onMenuSelected: (menu) {
+                        setState(() {
+                          _selectedMenu = menu;
+                        });
+                      },
                       selectedMenu: _selectedMenu),
                   Expanded(
                     child: SingleChildScrollView(
@@ -69,7 +80,7 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
 
   Widget _getSelectedScreen() {
     switch (_selectedMenu) {
-      case 'My Class':
+      case 'Class':
         return MyClassMentee();
       case 'Community':
         return CommunityScreen();
@@ -103,14 +114,16 @@ class SearchBarMentee extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            width: 32, // Adjust this value to give some space between the text and the search bar
+            width:
+                32, // Adjust this value to give some space between the text and the search bar
           ),
           Expanded(
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SearchPageMenteeWeb()),
+                  MaterialPageRoute(
+                      builder: (context) => SearchPageMenteeWeb()),
                 );
               },
               child: Container(
@@ -143,4 +156,3 @@ class SearchBarMentee extends StatelessWidget {
     );
   }
 }
-

@@ -85,6 +85,25 @@ class _DesignSessionScreenState extends State<DesignSessionScreen> {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CardItemMentor(
+                   onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailMentorSessionScreen(
+                            session: mentor.session,
+                            availableSlots: mentor.session!.isEmpty
+                                ? 0
+                                : mentor.session!.first.maxParticipants! -
+                                    (mentor.session!.first.participant
+                                            ?.length ??
+                                        0),
+                            detailmentor: mentor,
+                            totalParticipants: numberOfParticipants,
+                            mentorReviews: mentor.mentorReviews ?? [],
+                          ),
+                        ),
+                      );
+                    },
                   title: isSessionFull ? "Full Booked" : "Available",
                   color: buttonColor,
                   onPressesd: () {

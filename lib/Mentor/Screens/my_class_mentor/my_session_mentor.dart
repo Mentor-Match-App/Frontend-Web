@@ -84,16 +84,13 @@ class _MySessionCreateState extends State<MySessionCreate> {
 
   createStatusButton(String title, Color color) {
     return Align(
-      alignment: Alignment.centerRight,
-      child: SmallElevatedButtonTag(
-        color: color,
-        onPressed: () {}, // Tentukan tindakan yang diinginkan
-        height: 28,
-        width: 124,
-        title: title,
-        style: FontFamily().buttonText,
-      ),
-    );
+        alignment: Alignment.centerRight,
+        child: Text(
+          title,
+          style: FontFamily().boldText.copyWith(
+                color: color, fontSize: 16,
+              ),
+        ));
   }
 
   @override
@@ -184,7 +181,7 @@ class _MySessionCreateState extends State<MySessionCreate> {
                               session.title!,
                               style: FontFamily().boldText.copyWith(
                                   fontSize: 14,
-                                  color: ColorStyle().secondaryColors),
+                                  color: ColorStyle().primaryColors),
                             ),
                             const SizedBox(height: 12),
                             Text(
@@ -205,7 +202,7 @@ class _MySessionCreateState extends State<MySessionCreate> {
                               child: Align(
                                 alignment: Alignment.centerRight,
                                 child: Container(
-                                  width: 150,
+                                  width: 160,
                                   height: 48,
                                   decoration: BoxDecoration(
                                     color: ColorStyle().primaryColors,

@@ -6,16 +6,16 @@ import 'package:my_flutter_app/mentor/model/my_class_mentor_model.dart';
 import 'package:my_flutter_app/mentor/service/myClassCreate_Mentor_service.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 
-class MyPremiumClassMentorScreen extends StatefulWidget {
-  MyPremiumClassMentorScreen({Key? key}) : super(key: key);
+class AllClassMentorScreen extends StatefulWidget {
+  AllClassMentorScreen({Key? key}) : super(key: key);
 
   @override
-  State<MyPremiumClassMentorScreen> createState() =>
-      _MyPremiumClassMentorScreenState();
+  State<AllClassMentorScreen> createState() =>
+      _AllClassMentorScreenState();
 }
 
-class _MyPremiumClassMentorScreenState
-    extends State<MyPremiumClassMentorScreen> {
+class _AllClassMentorScreenState
+    extends State<AllClassMentorScreen> {
   late Future<MyClassMentorMondel> classData;
   int _getPriority(AllClass userClass) {
     DateTime now = DateTime.now();
@@ -109,16 +109,11 @@ class _MyPremiumClassMentorScreenState
 
   Widget createStatusButton(String title, Color color) {
     return Align(
-      alignment: Alignment.centerRight,
-      child: SmallElevatedButtonTag(
-        color: color,
-        onPressed: () {}, // Define the action
-        height: 28,
-        width: 124,
-        title: title,
-        style: FontFamily().buttonText,
-      ),
-    );
+        alignment: Alignment.centerRight,
+        child: Text(
+          title,
+          style: FontFamily().boldText.copyWith(color: color, fontSize: 16),
+        ));
   }
 
   @override
@@ -160,127 +155,108 @@ class _MyPremiumClassMentorScreenState
                   int statusButton = _getPriority(data);
                   return Padding(
                     padding: const EdgeInsets.all(12.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: ColorStyle().tertiaryColors,
-                          width: 2,
-                        ),
-                        color: Colors.transparent,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (statusButton == 1)
-                              createStatusButton(
-                                  "Rejected", ColorStyle().errorColors),
-                            if (statusButton == 2)
-                              createStatusButton(
-                                  "Pending", ColorStyle().pendingColors),
-                            if (statusButton == 3)
-                              createStatusButton(
-                                  "Full", ColorStyle().fullbookedColors),
-                            if (statusButton == 4)
-                              createStatusButton(
-                                  "Active", ColorStyle().succesColors),
-                            if (statusButton == 5)
-                              createStatusButton(
-                                  "Completed", ColorStyle().disableColors),
-                            if (statusButton == 6)
-                              createStatusButton(
-                                  "Expired", ColorStyle().blackColors),
-                            if (statusButton == 7)
-                              createStatusButton(
-                                  "Unavailable", ColorStyle().primaryColors),
-                            if (statusButton == 8)
-                              createStatusButton(
-                                  "Available", ColorStyle().secondaryColors),
-                            SizedBox(height: 12),
-                            Text(
-                                //nama kelas
-                                data.name ?? '',
-                                style: FontFamily().titleText.copyWith(
-                                      color: ColorStyle().secondaryColors,
-                                    )),
-                            SizedBox(height: 12),
-                            Text(
-                              'Jumlah mentee terdaftar : ${approvedTransactionsCount}',
-                              style: FontFamily().regularText,
-                            ),
-
-                            const SizedBox(height: 12),
-                            Text(
-                              //durationIndays
-                              'Durasi kelas : ${data.durationInDays} hari',
-                              style: FontFamily().regularText,
-                            ),
-                            // buat align text button di kanan menuju DetailMyclass namun aoabila statusnya rejected maka ke editrejectedClaas
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: TextButton(
-                                onPressed: () {
-                                  if (statusButton == 1) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => EditRejectedClass(
-                                          classData: data,
-                                        ),
-                                      ),
-                                    );
-                                  } else {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            DetailMyClassMentorScreen(
-                                          feedbacks: data.feedbacks ?? [],
-                                          addressMentoring:
-                                              data.address ?? 'Meeting Zoom',
-                                          locationMentoring:
-                                              data.location ?? '',
-                                          approvedTransactionsCount:
-                                              approvedTransactionsCount,
-                                          transactions: data.transactions ?? [],
-                                          evaluation: data.evaluations ?? [],
-                                          learningMaterial:
-                                              data.learningMaterial ?? [],
-                                          userClass: data,
-                                          aksesLinkZoom: data.zoomLink ?? '',
-                                          deskripsiKelas:
-                                              data.description.toString(),
-                                          classid: data.id.toString(),
-                                          durationInDays:
-                                              data.durationInDays ?? 0,
-                                          endDate: DateTime.parse(
-                                              data.endDate ?? ''),
-                                          startDate: DateTime.parse(
-                                              data.startDate ?? ''),
-                                          term: data.terms ?? [],
-                                          maxParticipants:
-                                              data.maxParticipants ?? 0,
-                                          schedule: data.schedule ?? '',
-                                          targetLearning:
-                                              data.targetLearning ?? [],
-                                          linkZoom: data.zoomLink ?? '',
-                                          namaKelas: data.name ?? '',
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                },
-                                child: Text(
-                                  'Lihat Kelas',
-                                  style: FontFamily().buttonText.copyWith(
-                                        color: ColorStyle().secondaryColors,
-                                      ),
-                                ),
+                    child: GestureDetector(
+                      onTap: () {
+                        if (statusButton == 1) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditRejectedClass(
+                                classData: data,
                               ),
                             ),
-                          ],
+                          );
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailMyClassMentorScreen(
+                                feedbacks: data.feedbacks ?? [],
+                                addressMentoring:
+                                    data.address ?? 'Meeting Zoom',
+                                locationMentoring: data.location ?? '',
+                                approvedTransactionsCount:
+                                    approvedTransactionsCount,
+                                transactions: data.transactions ?? [],
+                                evaluation: data.evaluations ?? [],
+                                learningMaterial: data.learningMaterial ?? [],
+                                userClass: data,
+                                aksesLinkZoom: data.zoomLink ?? '',
+                                deskripsiKelas: data.description.toString(),
+                                classid: data.id.toString(),
+                                durationInDays: data.durationInDays ?? 0,
+                                endDate: DateTime.parse(data.endDate ?? ''),
+                                startDate: DateTime.parse(data.startDate ?? ''),
+                                term: data.terms ?? [],
+                                maxParticipants: data.maxParticipants ?? 0,
+                                schedule: data.schedule ?? '',
+                                targetLearning: data.targetLearning ?? [],
+                                linkZoom: data.zoomLink ?? '',
+                                namaKelas: data.name ?? '',
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: ColorStyle().tertiaryColors,
+                            width: 2,
+                          ),
+                          color: Colors.transparent,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (statusButton == 1)
+                                createStatusButton(
+                                    "Rejected", ColorStyle().errorColors),
+                              if (statusButton == 2)
+                                createStatusButton(
+                                    "Pending", ColorStyle().pendingColors),
+                              if (statusButton == 3)
+                                createStatusButton(
+                                    "Full", ColorStyle().fullbookedColors),
+                              if (statusButton == 4)
+                                createStatusButton(
+                                    "Active", ColorStyle().succesColors),
+                              if (statusButton == 5)
+                                createStatusButton(
+                                    "Completed", ColorStyle().disableColors),
+                              if (statusButton == 6)
+                                createStatusButton(
+                                    "Expired", ColorStyle().blackColors),
+                              if (statusButton == 7)
+                                createStatusButton(
+                                    "Unavailable", ColorStyle().primaryColors),
+                              if (statusButton == 8)
+                                createStatusButton(
+                                    "Available", ColorStyle().secondaryColors),
+                              SizedBox(height: 12),
+                              Text(
+                                  //nama kelas
+                                  data.name ?? '',
+                                  style: FontFamily().titleText.copyWith(
+                                        color: ColorStyle().primaryColors,
+                                      )),
+                              SizedBox(height: 12),
+                              Text(
+                                'Jumlah mentee terdaftar : ${approvedTransactionsCount}',
+                                style: FontFamily().regularText,
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                //durationIndays
+                                'Durasi kelas : ${data.durationInDays} hari',
+                                style: FontFamily().regularText,
+                              ),
+                              const SizedBox(height: 12),
+                            ],
+                          ),
                         ),
                       ),
                     ),

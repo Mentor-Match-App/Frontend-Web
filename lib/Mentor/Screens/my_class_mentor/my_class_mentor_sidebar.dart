@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_class_list_mentor.dart';
+import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_class_mentor_screen.dart';
 
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_premium_class_mentor.dart';
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_session_mentor.dart';
@@ -15,24 +15,24 @@ class MyClassMentorListScreen extends StatefulWidget {
 }
 
 class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
-  bool isPremiumClassActive = false;
-  bool isClassActive = true;
+  bool isAllClassActive = true; 
+  bool isMyClassActive = false;
   bool isSessionActive = false; // Renamed for consistency
   void changeClass(String menu) {
     setState(() {
-      if (menu == "My Class") {
-        isClassActive = true;
+      if (menu == "Premium Class") {
+        isMyClassActive = true;
         isSessionActive = false;
-        isPremiumClassActive = false;
+        isAllClassActive = false;
       } else if (menu == "My Session") {
         // Corrected the condition
-        isClassActive = false;
+        isMyClassActive = false;
         isSessionActive = true;
-        isPremiumClassActive = false;
+        isAllClassActive = false;
       } else {
-        menu == "My Premium Class";
-        isPremiumClassActive = true;
-        isClassActive = false;
+        menu == "All Class";
+        isAllClassActive = true;
+        isMyClassActive = false;
 
         isSessionActive = false;
       }
@@ -56,7 +56,30 @@ class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
                   border: Border(
                     bottom: BorderSide(
                       width: 2,
-                      color: isClassActive
+                      color: isAllClassActive
+                          ? ColorStyle().secondaryColors
+                          : Colors.transparent,
+                    ),
+                  ),
+                ),
+                child: TextButton(
+                    onPressed: () {
+                      changeClass("All Class");
+                    },
+                    child: Text("All Class",
+                        style: FontFamily().boldText.copyWith(
+                            color: isAllClassActive
+                                ? ColorStyle().blackColors
+                                : ColorStyle().disableColors))),
+              ),
+              Container(
+                width: 150,
+                height: 38,
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      width: 2,
+                      color: isMyClassActive
                           ? ColorStyle().secondaryColors
                           : Colors.transparent,
                     ),
@@ -64,12 +87,12 @@ class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
                 ),
                 child: TextButton(
                   onPressed: () {
-                    changeClass("My Class");
+                    changeClass("Premium Class");
                   },
                   child: Text(
-                    "My Class",
+                    "Premium Class",
                     style: FontFamily().boldText.copyWith(
-                        color: isClassActive
+                        color: isMyClassActive
                             ? ColorStyle().blackColors
                             : ColorStyle().disableColors),
                   ),
@@ -78,44 +101,18 @@ class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                 width: 150,
-                height: 38,
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      width: 2,
-                      color: isPremiumClassActive
-                          ? ColorStyle().secondaryColors
-                          : Colors.transparent,
-                    ),
-                  ),
-                ),
-                  child: TextButton(
-                      onPressed: () {
-                        changeClass("My Premium Class");
-                      },
-                      child: Text("Premium Class",
-                          style: FontFamily().boldText.copyWith(
-                              color: isPremiumClassActive
-                                  ? ColorStyle().blackColors
-                                  : ColorStyle().disableColors))),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
                   width: 150,
-                height: 38,
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      width: 2,
-                      color: isSessionActive
-                          ? ColorStyle().secondaryColors
-                          : Colors.transparent,
+                  height: 38,
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        width: 2,
+                        color: isSessionActive
+                            ? ColorStyle().secondaryColors
+                            : Colors.transparent,
+                      ),
                     ),
                   ),
-                ),
                   child: TextButton(
                       onPressed: () {
                         changeClass("My Session");
@@ -132,13 +129,13 @@ class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
         ),
         Column(
           children: [
-            isClassActive
-                ? MyClassCreateMentor()
+            isAllClassActive
+                ? AllClassMentorScreen()
                 : isSessionActive
                     ? MySessionCreate()
-                    : isPremiumClassActive
-                        ? MyPremiumClassMentorScreen()
-                        : MyClassCreateMentor()
+                    : isMyClassActive
+                        ? MyClassMentorScreen()
+                        :   AllClassMentorScreen()
           ],
         )
       ],

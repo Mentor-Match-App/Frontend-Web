@@ -29,7 +29,7 @@ class _SideBarMenteeState extends State<SideBarMentee> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildMenuSideBar("Dashboard", Icons.dashboard),
-          _buildMenuSideBar("My Class", Icons.menu_book_sharp),
+          _buildMenuSideBar("Class", Icons.menu_book_sharp),
           _buildMenuSideBar("Community", Icons.workspaces_filled),
       
           SizedBox(height: 260),

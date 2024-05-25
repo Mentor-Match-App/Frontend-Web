@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/landing_page.dart';
-import 'package:my_flutter_app/mentee/screen/myclassmentee_page.dart';
+
 import 'package:my_flutter_app/mentee/screen/notificationmentee_page.dart';
 import 'package:my_flutter_app/mentee/screen/premium_class/premiumclass_page.dart';
 import 'package:my_flutter_app/mentee/screen/profile/mentee_profile_screen.dart';
 import 'package:my_flutter_app/mentee/screen/session/session_screen.dart';
 import 'package:my_flutter_app/mentor/Screens/communitymentor_page.dart';
 import 'package:my_flutter_app/mentor/Screens/homepage_mentor.dart';
-import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_class_mentor.dart';
+import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_class_mentor_sidebar.dart';
 import 'package:my_flutter_app/mentor/Screens/notificationmentor_page.dart';
 import 'package:my_flutter_app/mentor/screens/profile/mentor_profile_screen.dart';
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
@@ -234,7 +234,7 @@ class NavbarWidgetMentor extends StatefulWidget {
 class _NavbarWidgetMentorState extends State<NavbarWidgetMentor> {
   String _photoUrl = "";
   String _name = "";
-    String _namedepan = "";
+  String _namedepan = "";
 
   Future<void> _loadProfile() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -243,7 +243,7 @@ class _NavbarWidgetMentorState extends State<NavbarWidgetMentor> {
       _photoUrl = prefs.getString('photoUrl') ?? "";
       //name
       _name = prefs.getString('name') ?? "";
-       _namedepan = _name.split(' ')[0]; // Ambil bagian pertama (nama depan)
+      _namedepan = _name.split(' ')[0]; // Ambil bagian pertama (nama depan)
     });
   }
 
@@ -332,13 +332,13 @@ class _NavbarWidgetMentorState extends State<NavbarWidgetMentor> {
                 ),
               ),
               Padding(
-                padding:  EdgeInsets.only(left: 8.0, right: 8.0),
+                padding: EdgeInsets.only(left: 8.0, right: 8.0),
                 child: SizedBox(
                   child: Text(
                     "Hallo, \n$_namedepan",
-                    style:FontFamily().boldText.copyWith(
-                      color: ColorStyle().blackColors,
-                    ),
+                    style: FontFamily().boldText.copyWith(
+                          color: ColorStyle().blackColors,
+                        ),
                   ),
                 ),
               ),
