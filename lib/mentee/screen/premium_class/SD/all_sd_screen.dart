@@ -31,7 +31,16 @@ class _AllSDScreenState extends State<AllSDScreen> {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
-          final mentors = snapshot.data!.mentors!;
+           // Filter mentors based on availability of classes
+          final mentors = snapshot.data!.mentors!.where((mentor) {
+            // Periksa apakah mentor memiliki setidaknya satu kelas yang tersedia
+            return mentor.mentorClass!
+                .any((classMentor) => classMentor.isAvailable == true);
+          }).toList();
+
+          if (mentors.isEmpty) {
+            return Center(child: Text(" Mentor masi tidak tersedia"));
+          }
 
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(

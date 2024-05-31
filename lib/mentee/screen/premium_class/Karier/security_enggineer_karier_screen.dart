@@ -34,8 +34,9 @@ class _SecurityEngineerKarierScreenState
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
           final mentorsWithLanguageCategory = snapshot.data!.mentors!
-              .where((mentor) => mentor.mentorClass!.any(
-                  (mentorClass) => mentorClass.category == 'Security Engineer'))
+              .where((mentor) => mentor.mentorClass!.any((mentorClass) =>
+                  mentorClass.category == 'Security Engineer' &&
+                  mentorClass.isAvailable == true))
               .toList();
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -51,6 +52,7 @@ class _SecurityEngineerKarierScreenState
                 (exp) => exp.isCurrentJob ?? false,
                 orElse: () => ExperienceKarier(),
               );
+
               // Fungsi untuk mendapatkan slot yang tersedia
               int getAvailableSlotCount(ClassMentorKarier kelas) {
                 int approvedCount = kelas.transactions

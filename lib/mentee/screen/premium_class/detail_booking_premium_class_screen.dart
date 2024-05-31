@@ -130,7 +130,7 @@ class _DetailBookingClassState extends State<DetailBookingClass> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Text(
-                                              "${NumberFormat.currency(locale: 'id', symbol: 'Rp').format(widget.price + widget.uniqueCode)}",
+                                              "${NumberFormat.currency(locale: 'id', symbol: 'Rp').format(widget.price)},${widget.uniqueCode.toString().padLeft(3, '0')}",
                                               style: FontFamily()
                                                   .boldText
                                                   .copyWith(

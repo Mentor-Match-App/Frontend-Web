@@ -60,7 +60,7 @@ class _CardCommunityState extends State<CardCommunity> {
                 ),
               if (widget.title != 'Create Community')
                 SmallElevatedButtonWidget(
-                  text: 'Bergabung',
+                  text: 'Lihat',
                   onPressed: widget.onPressed,
                 ),
             ],

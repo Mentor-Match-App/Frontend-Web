@@ -90,17 +90,31 @@ class _DashboardMenteeState extends State<DashboardMentee> {
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
+                      // Tentukan panjang daftar mentor yang telah difilter
                       children: List.generate(
-                          ////yang ditampilkan hanya 6 aja
-                          mentorClassData.mentors!.length > 6
+                          mentorClassData.mentors!
+                                      .where((mentor) => mentor.mentorClass!
+                                          .any((kelas) =>
+                                              kelas.isAvailable == true))
+                                      .length >
+                                  6
                               ? 6
-                              : mentorClassData.mentors!.length, (index) {
-                        final mentor = mentorClassData.mentors![index];
+                              : mentorClassData.mentors!
+                                  .where((mentor) => mentor.mentorClass!.any(
+                                      (kelas) => kelas.isAvailable == true))
+                                  .length, (index) {
+                        // Dapatkan mentor yang telah difilter
+                        final mentor = mentorClassData.mentors!
+                            .where((mentor) => mentor.mentorClass!
+                                .any((kelas) => kelas.isAvailable == true))
+                            .toList()[index];
+
                         ExperienceClassAll? currentJob =
                             mentor.experiences?.firstWhere(
                           (exp) => exp.isCurrentJob ?? false,
                           orElse: () => ExperienceClassAll(),
                         );
+
                         // Fungsi untuk mendapatkan slot yang tersedia
                         int getAvailableSlotCount(ClassAll kelas) {
                           int approvedCount = kelas.transactions
@@ -123,7 +137,7 @@ class _DashboardMenteeState extends State<DashboardMentee> {
                           return availableSlots > 0 ? availableSlots : 0;
                         }
 
-// Fungsi untuk menentukan apakah semua kelas dalam daftar mentor dianggap penuh
+                        // Fungsi untuk menentukan apakah semua kelas dalam daftar mentor dianggap penuh
                         bool allClassesFull =
                             mentor.mentorClass!.every((classMentor) {
                           int availableSlotCount =

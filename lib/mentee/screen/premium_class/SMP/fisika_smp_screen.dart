@@ -31,9 +31,10 @@ class _FisikaSMPScreenState extends State<FisikaSMPScreen> {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
-          final mentors = snapshot.data!.mentors!
-              .where((mentor) => mentor.mentorClass!
-                  .any((mentorClass) => mentorClass.category == 'Fisika'))
+          final mentorsWithLanguageCategory = snapshot.data!.mentors!
+              .where((mentor) => mentor.mentorClass!.any((mentorClass) =>
+                  mentorClass.category == 'Fisika' &&
+                  mentorClass.isAvailable == true))
               .toList();
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -41,15 +42,14 @@ class _FisikaSMPScreenState extends State<FisikaSMPScreen> {
                 mainAxisSpacing: 10,
                 mainAxisExtent: 350,
                 maxCrossAxisExtent: 250),
-            itemCount: mentors.length,
+            itemCount: mentorsWithLanguageCategory.length,
             itemBuilder: (context, index) {
-              final mentor = mentors[index];
+              final mentor = mentorsWithLanguageCategory[index];
               // Logika untuk menentukan currentExperience sama seperti sebelumnya
               ExperienceSMP? currentJob = mentor.experiences?.firstWhere(
                 (exp) => exp.isCurrentJob ?? false,
                 orElse: () => ExperienceSMP(),
               );
-
               // Fungsi untuk mendapatkan slot yang tersedia
               int getAvailableSlotCount(ClassMentorSMP kelas) {
                 int approvedCount = kelas.transactions

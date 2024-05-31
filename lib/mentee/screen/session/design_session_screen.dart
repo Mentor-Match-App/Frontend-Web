@@ -31,7 +31,7 @@ class _DesignSessionScreenState extends State<DesignSessionScreen> {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error.toString()}'));
         } else if (snapshot.hasData && snapshot.data!.mentors!.isNotEmpty) {
-          final mentors = snapshot.data!.mentors!
+         final mentors = snapshot.data!.mentors!
               .where((mentor) => mentor.session!.any((sessionElement) =>
                   sessionElement.isActive == true &&
                   sessionElement.category == "Desain"))
@@ -56,28 +56,32 @@ class _DesignSessionScreenState extends State<DesignSessionScreen> {
                 maxCrossAxisExtent: 250),
             itemCount: mentors.length,
             itemBuilder: (context, index) {
+                /// membawa data session category = "Back End" ke detail session
               final mentor = mentors[index];
-
+              // Logika untuk menentukan currentExperience sama seperti sebelumnya
               final currentExperience = mentor.experiences!.firstWhere(
                 (experience) => experience.isCurrentJob ?? false,
-                orElse: () => Experience(),
+                orElse: () =>
+                    Experience(), // Menyediakan default Experience jika tidak ditemukan
               );
 
+              ////// session active///////
               final activeSessions =
                   mentor.session!.where((s) => s.isActive == true).toList();
-
+              //// buat session full apabila jumlah participant sudah mencapai maxParticipants
               final isSessionFull = activeSessions.isNotEmpty &&
                   activeSessions.any((session) =>
                       session.participant!.length >= session.maxParticipants!);
 
+              ///numberOfParticipants = jumlah participant yang sudah join
               final numberOfParticipants = activeSessions.isNotEmpty
                   ? activeSessions.first.participant!.length
                   : 0;
-
+              ////// button color is full //////
               final Color buttonColor = isSessionFull
                   ? ColorStyle().disableColors
                   : ColorStyle().primaryColors;
-
+              ////// slot///////
               SessionElement sessionElement = mentor.session!.first;
               int maxParticipants = sessionElement.maxParticipants ?? 0;
               int currentParticipants = sessionElement.participant?.length ?? 0;

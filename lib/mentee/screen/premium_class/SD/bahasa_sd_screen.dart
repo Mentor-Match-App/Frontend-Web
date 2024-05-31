@@ -32,11 +32,15 @@ class _BahasaSDScreenState extends State<BahasaSDScreen> {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
-          final mentors = snapshot.data!.mentors!
-              .where((mentor) => mentor.mentorClass!
-                  .any((mentorClass) => mentorClass.category == 'Bahasa'))
+           final mentorsWithLanguageCategory = snapshot.data!.mentors!
+              .where((mentor) => mentor.mentorClass!.any((mentorClass) =>
+                  mentorClass.category == 'Bahasa' &&
+                  mentorClass.isAvailable == true))
               .toList();
 
+          if (mentorsWithLanguageCategory.isEmpty) {
+            return Center(child: Text("No available mentors"));
+          }
           return 
           GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -47,10 +51,10 @@ class _BahasaSDScreenState extends State<BahasaSDScreen> {
 
                 // ratio
                 ),
-            itemCount: mentors.length,
+            itemCount: mentorsWithLanguageCategory.length,
             itemBuilder: (context, index) {
-              final mentor = mentors[index];
-              // create for experience is current job true or false
+              final mentor = mentorsWithLanguageCategory[index];
+              // Logika untuk menentukan currentExperience sama seperti sebelumnya
               ExperienceSD? currentJob = mentor.experiences?.firstWhere(
                 (exp) => exp.isCurrentJob ?? false,
                 orElse: () => ExperienceSD(),

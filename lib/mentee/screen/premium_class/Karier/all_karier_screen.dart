@@ -32,7 +32,12 @@ class _AllKarierScreenState extends State<AllKarierScreen> {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
-          final mentors = snapshot.data!.mentors!;
+          final mentors = snapshot.data!.mentors!.where((mentor) {
+            // Periksa apakah mentor memiliki setidaknya satu kelas yang tersedia
+            return mentor.mentorClass!
+                .any((classMentor) => classMentor.isAvailable == true);
+          }).toList();
+
 
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -42,7 +47,7 @@ class _AllKarierScreenState extends State<AllKarierScreen> {
                 maxCrossAxisExtent: 250),
             itemCount: mentors.length,
             itemBuilder: (context, index) {
-              final mentor = mentors[index];
+               final mentor = mentors[index];
               // create for experience is current job true or false
               ExperienceKarier? currentJob = mentor.experiences?.firstWhere(
                 (exp) => exp.isCurrentJob ?? false,

@@ -31,10 +31,15 @@ class _DesainKuliahScreenState extends State<DesainKuliahScreen> {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
-          final mentorsWithLanguageCategory = snapshot.data!.mentors!
-              .where((mentor) => mentor.mentorClass!
-                  .any((mentorClass) => mentorClass.category == 'Desain'))
+           final mentorsWithLanguageCategory = snapshot.data!.mentors!
+              .where((mentor) => mentor.mentorClass!.any((mentorClass) =>
+                  mentorClass.category == 'Desain' &&
+                  mentorClass.isAvailable == true))
               .toList();
+
+          if (mentorsWithLanguageCategory.isEmpty) {
+            return Center(child: Text("No available mentors"));
+          }
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 crossAxisSpacing: 10,

@@ -31,19 +31,24 @@ class _TeknologiSMAScreenState extends State<TeknologiSMAScreen> {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
-          final mentors = snapshot.data!.mentors!
-              .where((mentor) => mentor.mentorClass!
-                  .any((mentorClass) => mentorClass.category == 'Teknologi'))
+           final mentorsWithLanguageCategory = snapshot.data!.mentors!
+              .where((mentor) => mentor.mentorClass!.any((mentorClass) =>
+                  mentorClass.category == 'Teknologi' &&
+                  mentorClass.isAvailable == true))
               .toList();
+
+          if (mentorsWithLanguageCategory.isEmpty) {
+            return Center(child: Text("No available mentors"));
+          }
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
                 mainAxisExtent: 350,
                 maxCrossAxisExtent: 250),
-            itemCount: mentors.length,
+            itemCount:  mentorsWithLanguageCategory.length,
             itemBuilder: (context, index) {
-              final mentor = mentors[index];
+               final mentor = mentorsWithLanguageCategory[index];
               // Logika untuk menentukan currentExperience sama seperti sebelumnya
               ExperienceSMA? currentJob = mentor.experiences?.firstWhere(
                 (exp) => exp.isCurrentJob ?? false,

@@ -32,10 +32,15 @@ class _MathSDScreenState extends State<MathSDScreen> {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
-          final mentors = snapshot.data!.mentors!
-              .where((mentor) => mentor.mentorClass!
-                  .any((mentorClass) => mentorClass.category == 'Matematika'))
+              final mentorsWithLanguageCategory = snapshot.data!.mentors!
+              .where((mentor) => mentor.mentorClass!.any((mentorClass) =>
+                  mentorClass.category == 'Matematika' &&
+                  mentorClass.isAvailable == true))
               .toList();
+
+          if (mentorsWithLanguageCategory.isEmpty) {
+            return Center(child: Text("No available mentors"));
+          }
 
           return 
           GridView.builder(
@@ -47,10 +52,10 @@ class _MathSDScreenState extends State<MathSDScreen> {
 
                 // ratio
                 ),
-            itemCount: mentors.length,
+            itemCount: mentorsWithLanguageCategory.length,
             itemBuilder: (context, index) {
-              final mentor = mentors[index];
-              // create for experience is current job true or false
+               final mentor = mentorsWithLanguageCategory[index];
+              // Logika untuk menentukan currentExperience sama seperti sebelumnya
               ExperienceSD? currentJob = mentor.experiences?.firstWhere(
                 (exp) => exp.isCurrentJob ?? false,
                 orElse: () => ExperienceSD(),

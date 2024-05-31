@@ -33,9 +33,14 @@ class _FrontEndKarierScreenState extends State<FrontEndKarierScreen> {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
           final mentorsWithLanguageCategory = snapshot.data!.mentors!
-              .where((mentor) => mentor.mentorClass!
-                  .any((mentorClass) => mentorClass.category == 'Front End'))
+              .where((mentor) => mentor.mentorClass!.any((mentorClass) =>
+                  mentorClass.category == 'Front End' &&
+                  mentorClass.isAvailable == true))
               .toList();
+
+          if (mentorsWithLanguageCategory.isEmpty) {
+            return Center(child: Text("No available mentors"));
+          }
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 crossAxisSpacing: 10,
@@ -44,12 +49,13 @@ class _FrontEndKarierScreenState extends State<FrontEndKarierScreen> {
                 maxCrossAxisExtent: 250),
             itemCount: mentorsWithLanguageCategory.length,
             itemBuilder: (context, index) {
-              final mentor = mentorsWithLanguageCategory[index];
+             final mentor = mentorsWithLanguageCategory[index];
               // Logika untuk menentukan currentExperience sama seperti sebelumnya
               ExperienceKarier? currentJob = mentor.experiences?.firstWhere(
                 (exp) => exp.isCurrentJob ?? false,
                 orElse: () => ExperienceKarier(),
               );
+
               // Fungsi untuk mendapatkan slot yang tersedia
               int getAvailableSlotCount(ClassMentorKarier kelas) {
                 int approvedCount = kelas.transactions

@@ -23,7 +23,7 @@ class SearchPageMenteeWeb extends StatefulWidget {
 }
 
 class _SearchPageMenteeWebState extends State<SearchPageMenteeWeb> {
-  final TextEditingController _searchController = TextEditingController();
+ final TextEditingController _searchController = TextEditingController();
   final Dio _dio = Dio();
   bool isSearching = false;
 
@@ -83,9 +83,16 @@ class _SearchPageMenteeWebState extends State<SearchPageMenteeWeb> {
     try {
       final List<MentorSession> mentors =
           await SessionServices().fetchAvailableMentors();
+
+      // Filter the mentors to only include those who have at least one active session
+      final List<MentorSession> activeMentors = mentors.where((mentor) {
+        return mentor.session?.any((session) => session.isActive == true) ??
+            false;
+      }).toList();
+
       setState(() {
-        _mentorsSessions = mentors;
-        _filteredMentors = _mentorsSessions;
+        _mentorsSessions = activeMentors;
+        _filteredMentors = activeMentors;
       });
     } catch (e) {
       print(e);
@@ -97,8 +104,15 @@ class _SearchPageMenteeWebState extends State<SearchPageMenteeWeb> {
     try {
       final MentorClassModel mentors =
           await MentorService().fetchPremiumMentors();
+
+      // Filter the mentors to only include those who have at least one available class
+      final availableMentors = mentors.mentors!.where((mentor) =>
+          mentor.mentorClass!.any((mentorClass) =>
+              mentorClass.isAvailable == true &&
+              mentorClass.isActive == false));
+
       setState(() {
-        _mentorsPremium = mentors.mentors ?? [];
+        _mentorsPremium = availableMentors.toList();
         _filteredMentorsPremium = _mentorsPremium;
       });
       print('Fetched Premium Mentors: $_mentorsPremium'); // Debugging statement
@@ -233,6 +247,7 @@ class _SearchPageMenteeWebState extends State<SearchPageMenteeWeb> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -269,7 +284,8 @@ class _SearchPageMenteeWebState extends State<SearchPageMenteeWeb> {
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: ListView(
+              child: 
+              ListView(
                 children: [
                   if (_filteredClasses.isNotEmpty)
                     isSearching

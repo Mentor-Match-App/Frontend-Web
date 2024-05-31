@@ -33,9 +33,14 @@ class _InformatikaKuliahScreenState extends State<InformatikaKuliahScreen> {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
           final mentorsWithLanguageCategory = snapshot.data!.mentors!
-              .where((mentor) => mentor.mentorClass!.any(
-                  (mentorClass) => mentorClass.category == 'Teknik Informasi'))
+              .where((mentor) => mentor.mentorClass!.any((mentorClass) =>
+                  mentorClass.category == 'Teknik Infromasi' &&
+                  mentorClass.isAvailable == true))
               .toList();
+
+          if (mentorsWithLanguageCategory.isEmpty) {
+            return Center(child: Text("No available mentors"));
+          }
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 crossAxisSpacing: 10,
@@ -44,7 +49,7 @@ class _InformatikaKuliahScreenState extends State<InformatikaKuliahScreen> {
                 maxCrossAxisExtent: 250),
             itemCount: mentorsWithLanguageCategory.length,
             itemBuilder: (context, index) {
-              final mentor = mentorsWithLanguageCategory[index];
+             final mentor = mentorsWithLanguageCategory[index];
               // Logika untuk menentukan currentExperience sama seperti sebelumnya
               ExperienceKuliah? currentJob = mentor.experiences?.firstWhere(
                 (exp) => exp.isCurrentJob ?? false,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_flutter_app/login/login_screen.dart';
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
+import 'package:my_flutter_app/widget/show_dialog_widget.dart';
 
 class SideBarAdmin extends StatefulWidget {
   final double size;
@@ -87,12 +88,26 @@ class _SideBarAdminState extends State<SideBarAdmin> {
       padding: const EdgeInsets.all(8.0),
       child: TextButton.icon(
         onPressed: () {
-          UserPreferences.clearPreferences();
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => LoginScreen(),
-            ),
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return CustomConfirmationDialog(
+                aksi: 'Keluar',
+                aksi2: 'Batal',
+                title: "Konfirmasi",
+                content:
+                    "Apakah kamu yakin ingin keluar dari aplikasi MentorMatch?",
+                onConfirm: () async {
+                  // Tulis logika logout Anda di sini
+                  // Misalnya, membersihkan shared preferences dan navigasi ke halaman login
+                  await UserPreferences.clearPreferences();
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                    (Route<dynamic> route) => false,
+                  );
+                },
+              );
+            },
           );
         },
         icon: Icon(Icons.logout, color: ColorStyle().primaryColors),

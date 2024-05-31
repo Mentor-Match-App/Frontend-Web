@@ -31,10 +31,15 @@ class _TechSDScreenState extends State<TechSDScreen> {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
-          final mentors = snapshot.data!.mentors!
-              .where((mentor) => mentor.mentorClass!
-                  .any((mentorClass) => mentorClass.category == 'Teknologi'))
+          final mentorsWithLanguageCategory = snapshot.data!.mentors!
+              .where((mentor) => mentor.mentorClass!.any((mentorClass) =>
+                  mentorClass.category == 'Teknologi' &&
+                  mentorClass.isAvailable == true))
               .toList();
+
+          if (mentorsWithLanguageCategory.isEmpty) {
+            return Center(child: Text("No available mentors"));
+          }
 
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -45,15 +50,14 @@ class _TechSDScreenState extends State<TechSDScreen> {
 
                 // ratio
                 ),
-            itemCount: mentors.length,
+            itemCount: mentorsWithLanguageCategory.length,
             itemBuilder: (context, index) {
-              final mentor = mentors[index];
-              // create for experience is current job true or false
+              final mentor = mentorsWithLanguageCategory[index];
+              // Logika untuk menentukan currentExperience sama seperti sebelumnya
               ExperienceSD? currentJob = mentor.experiences?.firstWhere(
                 (exp) => exp.isCurrentJob ?? false,
                 orElse: () => ExperienceSD(),
               );
-
               // Fungsi untuk mendapatkan slot yang tersedia
               int getAvailableSlotCount(ClassMentorSD kelas) {
                 int approvedCount = kelas.transactions
@@ -89,7 +93,7 @@ class _TechSDScreenState extends State<TechSDScreen> {
               String company = currentJob?.company ?? 'Placeholder Company';
               String jobTitle = currentJob?.jobTitle ?? 'Placeholder Job';
               return CardItemMentor(
-                 onTap: (){
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -111,7 +115,6 @@ class _TechSDScreenState extends State<TechSDScreen> {
                       ),
                     ),
                   );
-                
                 },
                 title: availabilityStatus,
                 color: buttonColor,
