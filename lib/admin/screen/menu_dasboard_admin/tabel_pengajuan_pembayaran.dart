@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:my_flutter_app/admin/model/unverified_transaction.dart';
 import 'package:my_flutter_app/admin/service/unverified_transaction_service.dart';
 import 'package:my_flutter_app/widget/button.dart';
+import 'package:my_flutter_app/widget/menucategory.dart';
 
 class TabelVerifikasiPembayaran extends StatefulWidget {
   @override
@@ -15,10 +16,18 @@ class _TabelVerifikasiPembayaranState extends State<TabelVerifikasiPembayaran> {
       UnverifiedTransactionService();
   List<Transaction> _transactions = [];
 
+  TextEditingController rejectReasonController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     _fetchTransactions();
+  }
+
+  @override
+  void dispose() {
+    rejectReasonController.dispose();
+    super.dispose();
   }
 
   // Fetch transactions from the service
@@ -33,6 +42,137 @@ class _TabelVerifikasiPembayaranState extends State<TabelVerifikasiPembayaran> {
       // Handle or log error
       print("Error fetching transactions: $e");
     }
+  }
+
+  void _showRejectDialog(String transactionId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minWidth: 160, minHeight: 500),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: IconButton(
+                              icon: Icon(Icons.close),
+                              onPressed: () => Navigator.of(context).pop(),
+                            ),
+                          ),
+                          Text(
+                            "Penolakan Transaksi",
+                            style: FontFamily().titleText.copyWith(
+                                  color: ColorStyle().secondaryColors,
+                                  fontSize: 24,
+                                ),
+                          ),
+                          Text(
+                            "Silahkan isi alasan penolakan transaksi di bawah ini agar pengguna dapat mengetahui alasan transaksi ditolak.",
+                            style: FontFamily().regularText.copyWith(
+                                  color: ColorStyle().disableColors,
+                                  fontSize: 12,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 12),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 40.0, right: 40),
+                    child: Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey, width: 1),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextField(
+                          controller: rejectReasonController,
+                          maxLines: 5, // Set number of lines to make it "large"
+                          decoration: InputDecoration(
+                            hintText:
+                                "Isi alasan penolakan transaksi disini...",
+                            hintStyle: FontFamily().regularText.copyWith(
+                                  color: ColorStyle().disableColors,
+                                  fontSize: 12,
+                                ),
+                            border: InputBorder.none, // Remove default border
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: RegularElevatedButtonWidget(
+                      text: "Kirim",
+                      onPressed: () async {
+                        Navigator.of(context).pop(); // Close the dialog
+                        await _unverifiedTransactionService.rejectTransaction(
+                          transactionId,
+                          rejectReasonController.text,
+                        );
+                        _fetchTransactions(); // Refresh transactions list
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showConfirmationDialog(String transactionId, bool isVerify) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(isVerify ? 'Verifikasi Transaksi' : 'Tolak Transaksi'),
+          content: Text(isVerify
+              ? 'Apakah Anda yakin ingin memverifikasi transaksi ini?'
+              : 'Apakah Anda yakin ingin menolak transaksi ini?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Batal'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+            TextButton(
+              child: Text(isVerify ? 'Verifikasi' : 'Tolak'),
+              onPressed: () async {
+                Navigator.of(context).pop(); // Close the dialog
+                if (isVerify) {
+                  await _unverifiedTransactionService
+                      .verifyTransaction(transactionId);
+                } else {
+                  _showRejectDialog(transactionId);
+                }
+                _fetchTransactions(); // Refresh the transactions list
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -180,8 +320,11 @@ class _TabelVerifikasiPembayaranState extends State<TabelVerifikasiPembayaran> {
           children: [
             SmallOutlineButtonWidget(
               text: "Tolak",
-              onPressed: () => _showConfirmationDialog(
-                  transaction.id.toString(), false), // false for rejection
+              onPressed: () {
+                // Show the reject dialog
+                _showRejectDialog(
+                    transaction.id.toString()); // Pass the transaction ID
+              },
             ),
             SmallElevatedButtonWidget(
               text: "Verifikasi",
@@ -192,41 +335,5 @@ class _TabelVerifikasiPembayaranState extends State<TabelVerifikasiPembayaran> {
         )),
       ]);
     }).toList();
-  }
-
-  void _showConfirmationDialog(String transactionId, bool isVerify) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(isVerify ? 'Verifikasi Transaksi' : 'Tolak Transaksi'),
-          content: Text(isVerify
-              ? 'Apakah Anda yakin ingin memverifikasi transaksi ini?'
-              : 'Apakah Anda yakin ingin menolak transaksi ini?'),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Batal'),
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-            ),
-            TextButton(
-              child: Text(isVerify ? 'Verifikasi' : 'Tolak'),
-              onPressed: () async {
-                Navigator.of(context).pop(); // Close the dialog
-                if (isVerify) {
-                  await _unverifiedTransactionService
-                      .verifyTransaction(transactionId);
-                } else {
-                  await _unverifiedTransactionService
-                      .rejectTransaction(transactionId);
-                }
-                _fetchTransactions(); // Refresh the transactions list
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 }

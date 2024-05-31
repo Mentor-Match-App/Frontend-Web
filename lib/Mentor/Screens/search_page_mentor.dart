@@ -705,7 +705,7 @@ class _SearchPageMentorwebState extends State<SearchPageMentorweb> {
                             ),
                             child: TextButton.icon(
                               style: TextButton.styleFrom(
-                                primary: ColorStyle().whiteColors,
+                                foregroundColor: ColorStyle().whiteColors,
                               ),
                               onPressed: () {
                                 final zommLink = session.zoomLink ?? '';

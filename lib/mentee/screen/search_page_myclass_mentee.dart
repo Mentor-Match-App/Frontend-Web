@@ -538,7 +538,7 @@ class _SearchPageMenteeWebState extends State<SearchPageMenteeWeb> {
                                                 ),
                                                 child: TextButton.icon(
                                                   style: TextButton.styleFrom(
-                                                    primary: ColorStyle()
+                                                    foregroundColor: ColorStyle()
                                                         .whiteColors,
                                                   ),
                                                   onPressed: () {

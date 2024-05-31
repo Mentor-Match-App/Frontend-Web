@@ -73,7 +73,8 @@ class UnverifiedTransactionService {
     }
   }
 
-  Future<void> rejectTransaction(String transactionId) async {
+  Future<void> rejectTransaction(
+      String transactionId, String rejectReason) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       final String? token = prefs.getString('token');
@@ -84,6 +85,7 @@ class UnverifiedTransactionService {
         '$baseUrl/admin/reject-transaction',
         data: {
           'transactionId': transactionId,
+          'rejectReason': rejectReason,
         },
         options: Options(
           headers: {
@@ -92,13 +94,16 @@ class UnverifiedTransactionService {
         ),
       );
 
-      if (response.statusCode != 200) {
+      if (response.statusCode == 200) {
+        print("Reject class success : ${response.data}");
+      } else {
         throw Exception(
-            'Failed to reject transaction. Status code: ${response.statusCode}');
+            'Failed to reject class. Status code: ${response.statusCode}');
       }
+    } on DioError catch (e) {
+      print("Dio error: ${e.response?.data ?? e.message}");
     } catch (e) {
-      // Log the error or handle it in a way that's appropriate for your application
-      throw Exception('Failed to connect to the server: $e');
+      print("Error: $e");
     }
   }
 }
