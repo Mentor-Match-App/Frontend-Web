@@ -69,8 +69,7 @@ class _PengajuanKelasAdminScreenState extends State<PengajuanKelasAdminScreen> {
                                   );
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  primary: ColorStyle().primaryColors,
-                                  onPrimary: Colors.white,
+                                  foregroundColor: Colors.white, backgroundColor: ColorStyle().primaryColors,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),

@@ -30,8 +30,7 @@ class _CategoryCardPremiumClassState extends State<CategoryCardPremiumClass> {
           child: ElevatedButton(
             onPressed: widget.onPressed,
             style: ElevatedButton.styleFrom(
-              primary: ColorStyle().tertiaryColors,
-              onPrimary: ColorStyle().whiteColors,
+              foregroundColor: ColorStyle().whiteColors, backgroundColor: ColorStyle().tertiaryColors,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),

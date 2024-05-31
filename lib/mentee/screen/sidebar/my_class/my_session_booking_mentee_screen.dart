@@ -192,7 +192,7 @@ class _MySessionBookingState extends State<MySessionBooking> {
                                 ),
                                 child: TextButton.icon(
                                   style: TextButton.styleFrom(
-                                    primary: ColorStyle().whiteColors,
+                                    foregroundColor: ColorStyle().whiteColors,
                                   ),
                                   onPressed: () {
                                     final zommLink = session.zoomLink ?? '';

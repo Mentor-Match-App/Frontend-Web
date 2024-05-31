@@ -128,7 +128,7 @@ class _RegularElevatedButtonWidgetState
       child: ElevatedButton(
         onPressed: widget.onPressed,
         style: ElevatedButton.styleFrom(
-          primary: ColorStyle().primaryColors,
+          backgroundColor: ColorStyle().primaryColors,
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
