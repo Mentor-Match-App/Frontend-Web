@@ -69,8 +69,7 @@ class _MentorScreenState extends State<MentorScreen> {
                                   );
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  primary: ColorStyle().primaryColors,
-                                  onPrimary: Colors.white,
+                                  foregroundColor: Colors.white, backgroundColor: ColorStyle().primaryColors,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),

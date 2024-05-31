@@ -151,7 +151,7 @@ class _DetailMenteeAdminState extends State<DetailMenteeAdmin> {
                                     ),
                                     child: TextButton.icon(
                                       style: TextButton.styleFrom(
-                                        primary: ColorStyle().whiteColors,
+                                        foregroundColor: ColorStyle().whiteColors,
                                       ),
                                       onPressed: () {
                                         final linkedlnlink =
