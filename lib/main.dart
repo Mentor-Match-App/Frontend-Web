@@ -6,7 +6,9 @@ import 'package:my_flutter_app/fcm_service.dart';
 import 'package:my_flutter_app/firebase_options.dart';
 import 'package:my_flutter_app/login/login_screen.dart';
 import 'package:my_flutter_app/mentee/provider/review_mentor_provider.dart';
+import 'package:my_flutter_app/mentee/screen/sidebar/my_class/payment_error_mentee_screen.dart';
 import 'package:my_flutter_app/mentor/Screens/homepage_mentor.dart';
+import 'package:my_flutter_app/mentor/Screens/register_mentor/verification_page.dart';
 import 'package:my_flutter_app/mentor/provider/create_class_provider.dart';
 import 'package:my_flutter_app/mentor/provider/create_session_provider.dart';
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
@@ -51,6 +53,9 @@ class MyApp extends StatelessWidget {
         case 'Admin':
           homeScreen = DashboardAdminScreen();
           break;
+        case 'PendingMentor' || 'RejectedMentor':
+          homeScreen = VerificationPage();
+          break;
         default:
         // homeScreen = ChooseRoleScreen();
       }
@@ -71,6 +76,7 @@ class MyApp extends StatelessWidget {
         //   home: Scaffold(
         // body: SearchWidgetini(),
         home: homeScreen,
+        //  homeScreen,
       ),
     );
   }

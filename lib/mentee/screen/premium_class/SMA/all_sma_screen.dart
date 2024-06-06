@@ -38,7 +38,9 @@ class _AllSMAScreenState extends State<AllSMAScreen> {
                 .any((classMentor) => classMentor.isAvailable == true);
           }).toList();
 
-
+ if (mentors.isEmpty) {
+            return WidgetMentorIsNotEmpety();
+          }
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 crossAxisSpacing: 10,

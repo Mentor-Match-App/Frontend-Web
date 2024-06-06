@@ -5,7 +5,7 @@ import 'package:my_flutter_app/mentor/Screens/homepage_mentor.dart';
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_class_mentor_sidebar.dart';
 import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 class SuccesCreateClassScreen extends StatefulWidget {
   SuccesCreateClassScreen({Key? key}) : super(key: key);
 

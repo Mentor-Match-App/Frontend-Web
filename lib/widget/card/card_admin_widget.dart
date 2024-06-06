@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 
 class CardDasboardRightAdmin extends StatefulWidget {
   final String text1;

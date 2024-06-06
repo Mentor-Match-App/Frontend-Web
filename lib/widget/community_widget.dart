@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 class CardCommunity extends StatefulWidget {
   final String title;
   final String imagePath;

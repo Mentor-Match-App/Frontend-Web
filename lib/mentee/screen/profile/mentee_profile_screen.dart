@@ -6,6 +6,7 @@ import 'package:my_flutter_app/mentee/model/profile_model.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/profileavatar.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 
 class ProfileMenteeScreen extends StatefulWidget {
   ProfileMenteeScreen({Key? key}) : super(key: key);

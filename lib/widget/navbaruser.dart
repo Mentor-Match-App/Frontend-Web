@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/landing_page.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/mentee/screen/notificationmentee_page.dart';
 import 'package:my_flutter_app/mentee/screen/premium_class/premiumclass_page.dart';
 import 'package:my_flutter_app/mentee/screen/profile/mentee_profile_screen.dart';

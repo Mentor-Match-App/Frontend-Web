@@ -4,7 +4,7 @@ import 'package:my_flutter_app/mentee/model/my_class_model.dart';
 import 'package:my_flutter_app/mentee/screen/premium_class/detail_class_mentor_all_screen.dart';
 import 'package:my_flutter_app/mentee/service/my_class_service.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MySessionBooking extends StatefulWidget {
@@ -91,6 +91,18 @@ class _MySessionBookingState extends State<MySessionBooking> {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
           final List<ParticipantMyClass> participants = snapshot.data!;
+           if (participants.isEmpty) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height / 2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(child: Text('you dont have any session')),
+                  )),
+            );
+          }
           return SingleChildScrollView(
             child: Column(
               children: participants.map((participant) {
@@ -112,12 +124,17 @@ class _MySessionBookingState extends State<MySessionBooking> {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: ColorStyle().tertiaryColors, // Warna border
-                        width: 2, // Lebar border
-                      ),
-                      color: Colors
-                          .transparent, // Warna bagian dalam, bisa diatur menjadi transparent atau null
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(
+                              0.12), // Mengatur opasitas warna shadow lebih tinggi
+                          blurRadius:
+                              6, // Meningkatkan blur radius untuk shadow yang lebih luas
+                          offset: const Offset(0,
+                              2), // Mengubah offset untuk shadow yang lebih jelas
+                        ),
+                      ],
+                      color: ColorStyle().whiteColors,
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),

@@ -39,8 +39,8 @@ class _DataAnalystKarierScreenState extends State<DataAnalystKarierScreen> {
                   mentorClass.isAvailable == true))
               .toList();
 
-          if (mentorsWithLanguageCategory.isEmpty) {
-            return Center(child: Text("No available mentors"));
+             if (mentorsWithLanguageCategory.isEmpty) {
+            return WidgetMentorIsNotEmpety();
           }
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(

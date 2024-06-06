@@ -5,7 +5,7 @@ import 'package:my_flutter_app/mentor/Screens/my_class_mentor/edit_class_rejecte
 import 'package:my_flutter_app/mentor/model/my_class_mentor_model.dart';
 import 'package:my_flutter_app/mentor/service/myClassCreate_Mentor_service.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 class AllClassMentorScreen extends StatefulWidget {
   AllClassMentorScreen({Key? key}) : super(key: key);
 
@@ -141,6 +141,19 @@ class _AllClassMentorScreenState
           return Text("Error: ${snapshot.error}");
         } else if (snapshot.hasData && snapshot.data!.user?.userClass != null) {
           var userClass = snapshot.data!.user!.userClass!;
+           if (userClass.isEmpty) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height / 2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+
+                    child: Center(child: Text('you dont have any class')),
+                  )),
+            );
+          }
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(12.0),

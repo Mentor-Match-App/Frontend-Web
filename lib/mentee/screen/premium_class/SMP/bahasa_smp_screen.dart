@@ -36,6 +36,9 @@ class _BahasaSMPScreenState extends State<BahasaSMPScreen> {
                   mentorClass.category == 'Bahasa' &&
                   mentorClass.isAvailable == true))
               .toList();
+               if (mentorsWithLanguageCategory.isEmpty) {
+            return WidgetMentorIsNotEmpety();
+          }
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 crossAxisSpacing: 10,

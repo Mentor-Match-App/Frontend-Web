@@ -10,6 +10,7 @@ import 'package:my_flutter_app/widget/flushsBar_widget.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 
 class ReRegisterFormScreen extends StatefulWidget {
   ReRegisterFormScreen({
@@ -54,6 +55,7 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
   String accountName = "";
   List<String> skills = [];
   List<Map<String, String>> experience = [];
+  bool isLoading = false;
 
   /// ambil data profile
   final ProfileService mentorService = ProfileService();
@@ -153,6 +155,10 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
 
   void _updateMentor() async {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+
       final profileData = await mentorService.getMentorProfile();
       try {
         if (mounted) {
@@ -185,11 +191,11 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
                 [],
           );
 
-          // Tampilkan SnackBar jika pembaruan berhasil
-          showTopSnackBar(context, 'Profile updated successfully',
+          // Show SnackBar if the update is successful
+          showTopSnackBar(context, "Registration successful",
               leftBarIndicatorColor: ColorStyle().succesColors);
 
-          // Navigasi ke halaman verifikasi
+          // Navigate to the verification page
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
@@ -199,19 +205,90 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
           );
         }
       } catch (error) {
-        // Menampilkan pesan kesalahan jika terjadi kesalahan saat pembaruan profil mentor
+        // Show error message if there is an error updating the mentor profile
         print('Error updating mentor profile: $error');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'Failed to update mentor profile. Please try again later.',
-            ),
-            backgroundColor: Colors.red, // Warna merah untuk pesan kesalahan
-          ),
+        showTopSnackBar(
+          context,
+          "Failed to update mentor profile",
+          leftBarIndicatorColor: ColorStyle().errorColors,
         );
+      } finally {
+        setState(() {
+          isLoading = false;
+        });
       }
+    } else {
+      // Show Snackbar if the form is not valid
+      showTopSnackBar(
+        context,
+        "Semua field harus diisi",
+        leftBarIndicatorColor: ColorStyle().errorColors,
+      );
     }
   }
+
+  // void _updateMentor() async {
+  //   if (_formKey.currentState!.validate()) {
+  //     final profileData = await mentorService.getMentorProfile();
+  //     try {
+  //       if (mounted) {
+  //         await MentorUpdateService().updateMentor(
+  //           accountNumber: profileData.user?.accountName ?? '',
+  //           accountName: profileData.user?.accountNumber ?? '',
+  //           gender: profileData.user?.gender ?? '',
+  //           mentorId: profileData.user?.id ?? '',
+  //           portfolio: profileData.user?.portofolio ?? '',
+  //           job: profileData.user?.experiences
+  //                   ?.firstWhere((element) => element.isCurrentJob == true,
+  //                       orElse: () => ExperienceMentor())
+  //                   .jobTitle ??
+  //               '',
+  //           company: profileData.user?.experiences
+  //                   ?.firstWhere((element) => element.isCurrentJob == true,
+  //                       orElse: () => ExperienceMentor())
+  //                   .company ??
+  //               '',
+  //           location: profileData.user?.location ?? '',
+  //           skills: profileData.user?.skills ?? [],
+  //           about: profileData.user?.about ?? '',
+  //           linkedin: profileData.user?.linkedin ?? '',
+  //           experiences: profileData.user?.experiences
+  //                   ?.map((exp) => {
+  //                         'role': exp.jobTitle ?? '',
+  //                         'experienceCompany': exp.company ?? ''
+  //                       })
+  //                   .toList() ??
+  //               [],
+  //         );
+
+  //         // Tampilkan SnackBar jika pembaruan berhasil
+  //          showTopSnackBar(context, "Registration successful",
+  //       leftBarIndicatorColor: ColorStyle().succesColors,
+  //       content: const Text("Registration successful"));
+
+  //         // Navigasi ke halaman verifikasi
+  //         Navigator.pushAndRemoveUntil(
+  //           context,
+  //           MaterialPageRoute(
+  //             builder: (context) => VerificationPage(),
+  //           ),
+  //           (route) => false,
+  //         );
+  //       }
+  //     } catch (error) {
+  //       // Menampilkan pesan kesalahan jika terjadi kesalahan saat pembaruan profil mentor
+  //       print('Error updating mentor profile: $error');
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text(
+  //             'Failed to update mentor profile. Please try again later.',
+  //           ),
+  //           backgroundColor: Colors.red, // Warna merah untuk pesan kesalahan
+  //         ),
+  //       );
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -689,12 +766,14 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
   Widget _applyButton() {
     return Align(
       alignment: Alignment.centerRight,
-      child: ElevatedButtonWidget(
-        onPressed: () {
-          _updateMentor();
-        },
-        title: "Apply",
-      ),
+      child: isLoading
+          ? const CircularProgressIndicator()
+          : ElevatedButtonWidget(
+              onPressed: () {
+                _updateMentor();
+              },
+              title: "Apply",
+            ),
     );
   }
 }

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:my_flutter_app/mentor/Screens/homepage_mentor.dart';
 import 'package:my_flutter_app/mentor/screens/register_mentor/re_register_form.dart';
 import 'package:my_flutter_app/mentor/service/profile_service.dart';
+import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 class VerificationPage extends StatefulWidget {
   VerificationPage({Key? key}) : super(key: key);
 
@@ -21,6 +22,7 @@ class _VerificationPageState extends State<VerificationPage> {
   void initState() {
     super.initState();
     _loadUserType();
+
   }
 
   void _loadUserType() async {
@@ -30,6 +32,15 @@ class _VerificationPageState extends State<VerificationPage> {
       _userType = profileData.user?.userType ?? 'Unknown';
       _rejectReason = profileData.user?.rejectReason ?? '';
     });
+    if (_userType == 'Mentor') {
+      await UserPreferences.setUserType(
+          _userType); // Update the user type in preferences
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => MentorHomePage()),
+        (route) => false,
+      );
+    }
   }
 
   /// buat fungtion untuk load data profile mentor

@@ -36,6 +36,9 @@ class _MatematikaSMPScreenState extends State<MatematikaSMPScreen> {
                   mentorClass.category == 'Matematika' &&
                   mentorClass.isAvailable == true))
               .toList();
+               if (mentorsWithLanguageCategory.isEmpty) {
+            return WidgetMentorIsNotEmpety();
+          }
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 crossAxisSpacing: 10,

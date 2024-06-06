@@ -4,6 +4,7 @@ import 'package:my_flutter_app/mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/premium_class/SD/detail_class_mentor_sd_screen.dart';
 import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 
 class DetailBookingSession extends StatefulWidget {
   final String nama_mentor;

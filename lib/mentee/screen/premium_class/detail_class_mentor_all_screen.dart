@@ -6,6 +6,7 @@ import 'package:my_flutter_app/mentee/screen/premium_class/detail_booking_premiu
 import 'package:my_flutter_app/mentee/service/bookingClassService/bookclass_model.dart';
 import 'package:my_flutter_app/mentee/service/bookingClassService/bookclass_service.dart';
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/style/text.dart';
 import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';

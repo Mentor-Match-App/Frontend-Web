@@ -4,7 +4,7 @@ import 'package:my_flutter_app/admin/screen/menu_admin/mentor_review_list.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/profileavatar.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 class DetailMentorAdmin extends StatefulWidget {
   final Mentor mentorDetail;
 

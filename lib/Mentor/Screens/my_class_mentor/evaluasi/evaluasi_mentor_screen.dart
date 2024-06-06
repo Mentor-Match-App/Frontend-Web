@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/mentee/screen/premium_class/detail_class_mentor_all_screen.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/evaluasi/send_feedback_evaluasi.dart';
 import 'package:my_flutter_app/mentor/Screens/notificationmentor_page.dart';
 import 'package:my_flutter_app/mentor/model/my_class_mentor_model.dart';

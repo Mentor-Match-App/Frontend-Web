@@ -5,7 +5,7 @@ import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_premium_class_m
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_session_mentor.dart';
 import 'package:my_flutter_app/mentor/Screens/notificationmentor_page.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 class MyClassMentorListScreen extends StatefulWidget {
   const MyClassMentorListScreen({Key? key}) : super(key: key);
 

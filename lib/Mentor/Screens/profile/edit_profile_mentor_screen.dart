@@ -8,7 +8,7 @@ import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/profileavatar.dart';
 import 'package:my_flutter_app/widget/text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 class EditProfileMentorScreen extends StatefulWidget {
   final List<String> skills;
   final String linkedin;
@@ -385,13 +385,15 @@ class _EditProfileMentorScreenState extends State<EditProfileMentorScreen> {
       title: "Save",
       onPressed: () {
         if (_skills.isEmpty) {
-          showTopSnackBar(context, 'Please add at least one skill',
-              leftBarIndicatorColor: ColorStyle().errorColors);
+               showTopSnackBar(context, "Please add at least one skill",
+          leftBarIndicatorColor: ColorStyle().errorColors,
+         );
         } else if (_formKey.currentState!.validate()) {
           _formKey.currentState!.save();
           _updateUserProfile(); // Memanggil _updateUserProfile() tanpa await
-          showTopSnackBar(context, 'Profile updated successfully',
-              leftBarIndicatorColor: ColorStyle().succesColors);
+           showTopSnackBar(context, "Update Profile Success",
+          leftBarIndicatorColor: ColorStyle().errorColors,
+        );
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => ProfileMentorScreen()),

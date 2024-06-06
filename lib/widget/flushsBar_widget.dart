@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 
 void showTopSnackBar(BuildContext context, String message,
-    {Color leftBarIndicatorColor = Colors.blue}) {
+ {Color leftBarIndicatorColor = const Color(0xff0A1737)}) {
   Flushbar(
     backgroundColor: ColorStyle().secondaryColors,
     message: message,

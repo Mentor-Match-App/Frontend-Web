@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/mentee/model/my_class_model.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MaterMyClass extends StatefulWidget {
@@ -65,23 +65,30 @@ class _MaterMyClassState extends State<MaterMyClass> {
           ),
         ],
       )),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverGrid(
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                mainAxisExtent: 250,
-                maxCrossAxisExtent: 250),
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return _buildGridItem(index);
-              },
-              childCount: widget.learningMaterial.length,
+      body: widget.learningMaterial.isEmpty
+          ? Center(
+              child: Text(
+                "Materials are currently empty",
+                style: FontFamily().regularText,
+              ),
+            )
+          : CustomScrollView(
+              slivers: <Widget>[
+                SliverGrid(
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      mainAxisExtent: 250,
+                      maxCrossAxisExtent: 250),
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      return _buildGridItem(index);
+                    },
+                    childCount: widget.learningMaterial.length,
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 

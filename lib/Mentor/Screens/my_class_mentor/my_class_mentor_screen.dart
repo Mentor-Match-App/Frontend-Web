@@ -4,7 +4,7 @@ import 'package:my_flutter_app/mentee/screen/premium_class/detail_class_mentor_a
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/detail_my_class_mentor_screen.dart';
 import 'package:my_flutter_app/mentor/model/my_class_mentor_model.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 enum ClassStatus { active, inactive, scheduled }
 
 class MyClassMentorScreen extends StatefulWidget {
@@ -69,7 +69,20 @@ class _MyClassMentorScreenState extends State<MyClassMentorScreen> {
         } else if (snapshot.hasError) {
           return Text("Error: ${snapshot.error}");
         } else if (snapshot.hasData && snapshot.data!.user?.userClass != null) {
+          
           var userClass = snapshot.data!.user!.userClass!;
+           if (userClass.isEmpty) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height / 2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(child: Text('you dont have any class')),
+                  )),
+            );
+          }
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(12.0),

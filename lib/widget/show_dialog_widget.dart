@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 class CustomConfirmationDialog extends StatelessWidget {
   final String aksi;
   final String aksi2;

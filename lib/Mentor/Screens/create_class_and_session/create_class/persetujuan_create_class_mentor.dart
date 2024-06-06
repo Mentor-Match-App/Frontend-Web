@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_flutter_app/mentor/Screens/create_class_and_session/create_class/form_create_class.dart';
 import 'package:my_flutter_app/style/text.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 class PersetujuanPremiClassMentor extends StatefulWidget {
   PersetujuanPremiClassMentor({Key? key}) : super(key: key);
 

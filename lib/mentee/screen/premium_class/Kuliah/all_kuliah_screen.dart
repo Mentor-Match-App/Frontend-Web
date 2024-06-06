@@ -40,7 +40,7 @@ class _AllKuliahScreenState extends State<AllKuliahScreen> {
           }).toList();
 
           if (mentors.isEmpty) {
-            return Center(child: Text(" Mentor masi tidak tersedia"));
+            return WidgetMentorIsNotEmpety();
           }
 
           return GridView.builder(

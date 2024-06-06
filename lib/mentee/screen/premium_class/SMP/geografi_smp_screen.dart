@@ -36,6 +36,9 @@ class _GeografiSMPScreenState extends State<GeografiSMPScreen> {
                   mentorClass.category == 'Geografi' &&
                   mentorClass.isAvailable == true))
               .toList();
+               if (mentorsWithLanguageCategory.isEmpty) {
+            return WidgetMentorIsNotEmpety();
+          }
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 crossAxisSpacing: 10,

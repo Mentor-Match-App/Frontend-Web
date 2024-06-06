@@ -36,6 +36,9 @@ class _EkonomiSMPScreenState extends State<EkonomiSMPScreen> {
                   mentorClass.category == 'Ekonomi' &&
                   mentorClass.isAvailable == true))
               .toList();
+               if (mentorsWithLanguageCategory.isEmpty) {
+            return WidgetMentorIsNotEmpety();
+          }
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 crossAxisSpacing: 10,

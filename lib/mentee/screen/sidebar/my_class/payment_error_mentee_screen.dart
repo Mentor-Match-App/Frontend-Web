@@ -1,45 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:my_flutter_app/Mentee/screen/homepage_mentee.dart';
-import 'package:my_flutter_app/mentee/screen/premium_class/SD/detail_class_mentor_sd_screen.dart';
+import 'package:my_flutter_app/mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/flushsBar_widget.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class DetailBookingClass extends StatefulWidget {
-  final int uniqueCode;
+class PaymentErrorScreenMentee extends StatefulWidget {
+  final String classname;
+  final String mentorname;
   final int price;
-  final String nama_mentor;
-  final int durasi;
-  final String nama_kelas;
-
-  DetailBookingClass(
+  // final String paymentdate;
+  final String rejectReason;
+  final int uniqueId;
+  PaymentErrorScreenMentee(
       {Key? key,
+      required this.mentorname,
+      required this.classname,
       required this.price,
-      required this.nama_mentor,
-      required this.durasi,
-      required this.nama_kelas,
-      required this.uniqueCode})
+      // required this.paymentdate,
+      required this.uniqueId,
+      required this.rejectReason})
       : super(key: key);
 
   @override
-  State<DetailBookingClass> createState() => _DetailBookingClassState();
+  State<PaymentErrorScreenMentee> createState() =>
+      _PaymentErrorScreenMenteeState();
 }
 
-String formatCurrency(int amount) {
-  final formatter = NumberFormat.currency(
-      locale: 'id_ID', symbol: 'Rp. ', decimalDigits: 0);
-  return '${formatter.format(amount)},00';
-}
+class _PaymentErrorScreenMenteeState extends State<PaymentErrorScreenMentee> {
+  final String phoneNumber =
+      "+6281362845327"; // Ganti dengan nomor telepon tujuan
 
-class _DetailBookingClassState extends State<DetailBookingClass> {
+  Future<void> _launchWhatsApp() async {
+    final String url = "https://wa.me/$phoneNumber";
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  String formatCurrency(int amount) {
+    final formatter = NumberFormat.currency(
+        locale: 'id_ID', symbol: 'Rp. ', decimalDigits: 0);
+    return '${formatter.format(amount)},00';
+  }
+
   @override
   Widget build(BuildContext context) {
-      int totalAmount = widget.price + widget.uniqueCode;
+    int totalAmount = widget.price + widget.uniqueId;
     return Scaffold(
-      backgroundColor: ColorStyle().whiteColors,
       appBar: AppBar(),
       body: Align(
         alignment: Alignment.center,
@@ -56,13 +69,14 @@ class _DetailBookingClassState extends State<DetailBookingClass> {
                         top: 12.0,
                         left: 24.0,
                         right: 8.0,
+                        bottom: 8.0,
                       ),
                       child: Text(
-                        "Payment Class",
+                        'Transaksi Gagal',
                         style: FontFamily().boldText.copyWith(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 24,
-                            color: ColorStyle().secondaryColors),
+                              fontSize: 26,
+                              color: ColorStyle().errorColors,
+                            ),
                       ),
                     ),
                   ),
@@ -70,7 +84,7 @@ class _DetailBookingClassState extends State<DetailBookingClass> {
                     padding: const EdgeInsets.only(
                         left: 24.0, top: 8.0, bottom: 8.0),
                     child: Text(
-                      "Terima kasih telah melakukan booking kelas dengan kami. Pesanan Anda telah diterima dengan baik. Namun, untuk mengonfirmasi keikutsertaan Anda, pembayaran harus dilakukan.",
+                      "Mohon maaf. transaksi yang kamu lakukan untuk kelas ini tidak berhasil karena ${widget.rejectReason}",
                       style: FontFamily().regularText.copyWith(
                           color: ColorStyle().disableColors, fontSize: 14),
                     ),
@@ -86,9 +100,10 @@ class _DetailBookingClassState extends State<DetailBookingClass> {
                             color: Colors.white,
                           ),
                           child: SizedBox(
-                            width: 42.12,
+                            width: 620,
+                            height: 400,
                             child: Image.asset(
-                              'Handoff/payment.png',
+                              'Handoff/ilustrator/error.png',
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -97,19 +112,8 @@ class _DetailBookingClassState extends State<DetailBookingClass> {
                       Expanded(
                         child: Container(
                           decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: ColorStyle().tertiaryColors,
-                                  blurRadius: 4,
-                                  spreadRadius: 4,
-                                  offset: Offset(0, 4), // Shadow position
-                                ),
-                              ],
-                              color: Colors.white,
-
-                              // border radius
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5))),
+                            color: ColorStyle().whiteColors,
+                          ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -138,7 +142,7 @@ class _DetailBookingClassState extends State<DetailBookingClass> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Text(
-                                             formatCurrency(totalAmount),
+                                              formatCurrency(totalAmount),
                                               style: FontFamily()
                                                   .boldText
                                                   .copyWith(
@@ -170,17 +174,16 @@ class _DetailBookingClassState extends State<DetailBookingClass> {
                                           ),
                                         ),
                                         Tooltip(
-                                            message: widget
-                                                .nama_kelas, // Isi tooltip dengan nama_kelas lengkap
-                                            child: Text(
-                                                widget.nama_kelas.length > 20
-                                                    ? '${widget.nama_kelas.substring(0, 20)}...'
-                                                    : widget.nama_kelas,
-                                                style: FontFamily()
-                                                    .regularText
-                                                    .copyWith(
-                                                        color: ColorStyle()
-                                                            .disableColors))),
+                                          message: widget.classname,
+                                          child: Text(
+                                            widget.classname,
+                                            style: FontFamily()
+                                                .regularText
+                                                .copyWith(
+                                                    color: ColorStyle()
+                                                        .disableColors),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                     Row(
@@ -200,7 +203,7 @@ class _DetailBookingClassState extends State<DetailBookingClass> {
                                                     fontSize: 14),
                                           ),
                                         ),
-                                        Text(widget.nama_mentor,
+                                        Text(widget.mentorname,
                                             style: FontFamily()
                                                 .regularText
                                                 .copyWith(
@@ -208,32 +211,7 @@ class _DetailBookingClassState extends State<DetailBookingClass> {
                                                         .disableColors)),
                                       ],
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: 8.0, top: 8.0),
-                                          child: Text(
-                                            "Periode Kelas",
-                                            style: FontFamily()
-                                                .boldText
-                                                .copyWith(
-                                                    color: ColorStyle()
-                                                        .primaryColors,
-                                                    fontSize: 14),
-                                          ),
-                                        ),
-                                        Text('${widget.durasi} Hari',
-                                            style: FontFamily()
-                                                .regularText
-                                                .copyWith(
-                                                    color: ColorStyle()
-                                                        .disableColors)),
-                                      ],
-                                    ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 8.0,
                                     ),
                                     Padding(
@@ -293,25 +271,36 @@ class _DetailBookingClassState extends State<DetailBookingClass> {
                               Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: Text(
-                                  "*Pembayaran berlaku sampai 24 jam setelah melakukan booking kelas",
-                                  style: FontFamily().regularText.copyWith(
-                                      fontSize: 12,
-                                      color: ColorStyle().errorColors),
-                                ),
+                                    "Silahkan menghubungin kontak admin yang ada di bawah ini untuk informasi lebih lanjut",
+                                    style: FontFamily().regularText.copyWith(
+                                          fontSize: 14,
+                                        )),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: ElevatedButtonWidget2(
-                                  title: "Kembali Ke Beranda",
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const MenteeHomePage(),
-                                      ),
-                                    );
-                                  },
+                              Align(
+                                alignment: Alignment.center,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Container(
+                                    width: 160,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: ColorStyle().succesColors,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: TextButton.icon(
+                                        onPressed: () {},
+                                        label: Text('Whatsapp',
+                                            style: FontFamily()
+                                                .boldText
+                                                .copyWith(
+                                                    color: ColorStyle()
+                                                        .whiteColors,
+                                                    fontSize: 14)),
+                                        icon: Icon(
+                                          Icons.phone,
+                                          color: ColorStyle().whiteColors,
+                                        )),
+                                  ),
                                 ),
                               ),
                             ],

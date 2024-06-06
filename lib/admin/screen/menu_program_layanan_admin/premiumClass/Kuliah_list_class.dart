@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_flutter_app/admin/model/list_class_model.dart';
 import 'package:my_flutter_app/admin/service/list_class_service.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 
 class KuliahListPremiumClassAdminScreenState extends StatefulWidget {

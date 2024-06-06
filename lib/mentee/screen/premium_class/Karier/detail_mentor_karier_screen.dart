@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:my_flutter_app/mentee/model/category_Karier_model.dart';
 
 import 'package:my_flutter_app/mentee/screen/premium_class/Karier/detail_class_mentor_karier_screen.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/navbaruser.dart';
@@ -334,7 +335,9 @@ class _DetailMentorKarierScreenState extends State<DetailMentorKarierScreen> {
                       child: widget.classes != null &&
                               widget.classes!.isNotEmpty
                           ? Column(
-                              children: widget.classes!.map((kelas) {
+                              children: widget.classes!
+                                  .where((kelas) => kelas.isAvailable == true)
+                                  .map((kelas) {
                                 int getApprovedTransactionCount(
                                     ClassMentorKarier kelas) {
                                   int count = kelas.transactions
@@ -342,7 +345,6 @@ class _DetailMentorKarierScreenState extends State<DetailMentorKarierScreen> {
                                               t.paymentStatus == "Approved")
                                           .length ??
                                       0;
-
                                   return count;
                                 }
 
@@ -353,9 +355,11 @@ class _DetailMentorKarierScreenState extends State<DetailMentorKarierScreen> {
                                               t.paymentStatus == "Pending")
                                           .length ??
                                       0;
-
                                   return count;
                                 }
+
+                                int availableSlots = kelas.maxParticipants! -
+                                    getApprovedTransactionCount(kelas);
 
                                 Color buttonColor = getApprovedTransactionCount(
                                                 kelas) +

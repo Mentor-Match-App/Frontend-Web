@@ -5,7 +5,7 @@ import 'package:my_flutter_app/mentee/screen/premium_class/detail_class_mentor_a
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:provider/provider.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 class ReviewMentorScreen extends StatefulWidget {
   final String mentorId;
   final String mentorPhoto;

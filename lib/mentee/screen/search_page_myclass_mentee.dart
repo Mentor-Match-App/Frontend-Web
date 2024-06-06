@@ -12,6 +12,7 @@ import 'package:my_flutter_app/mentee/service/session_mentor_service.dart';
 import 'package:my_flutter_app/widget/card_mentor.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/mentee/model/session_model.dart';
 
 import '../model/session_model.dart';

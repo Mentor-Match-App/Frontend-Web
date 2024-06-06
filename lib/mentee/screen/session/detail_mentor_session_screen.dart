@@ -12,6 +12,7 @@ import 'package:my_flutter_app/widget/navbaruser.dart';
 import 'package:my_flutter_app/widget/profileavatar.dart';
 import 'package:my_flutter_app/widget/reviewwidget.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';import 'package:my_flutter_app/style/fontStyle.dart';
 
 class DetailMentorSessionScreen extends StatefulWidget {
   final List<SessionElement>? session;

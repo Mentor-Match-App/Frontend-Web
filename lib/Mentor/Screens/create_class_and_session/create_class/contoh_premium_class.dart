@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/widget/card/card_premium_class.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 class ContohPremiumClass extends StatefulWidget {
   ContohPremiumClass({Key? key}) : super(key: key);
 

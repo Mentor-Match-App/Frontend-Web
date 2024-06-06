@@ -8,7 +8,7 @@ import 'package:my_flutter_app/widget/navbaruser.dart';
 import 'package:my_flutter_app/widget/profileavatar.dart';
 import 'package:my_flutter_app/widget/reviewwidget.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 class DetailMentorSMPScreen extends StatefulWidget {
   final List<TransactionSMP>? transaction;
   final List<ExperienceSMP> experiences;
@@ -329,37 +329,41 @@ class _DetailMentorSMPScreenState extends State<DetailMentorSMPScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: widget.classes != null &&
-                              widget.classes!.isNotEmpty
-                          ? Column(
-                              children: widget.classes!.map((kelas) {
-                                int getApprovedTransactionCount(
-                                    ClassMentorSMP kelas) {
-                                  int count = kelas.transactions
-                                          ?.where((t) =>
-                                              t.paymentStatus == "Approved")
-                                          .length ??
-                                      0;
+                                widget.classes!.isNotEmpty
+                            ? Column(
+                                children: widget.classes!
+                                    .where((kelas) => kelas.isAvailable == true)
+                                    .map((kelas) {
+                                  int getApprovedTransactionCount(
+                                      ClassMentorSMP kelas) {
+                                    int count = kelas.transactions
+                                            ?.where((t) =>
+                                                t.paymentStatus == "Approved")
+                                            .length ??
+                                        0;
+                                    return count;
+                                  }
 
-                                  return count;
-                                }
+                                  int getPendingTransactionCount(
+                                     ClassMentorSMP kelas) {
+                                    int count = kelas.transactions
+                                            ?.where((t) =>
+                                                t.paymentStatus == "Pending")
+                                            .length ??
+                                        0;
+                                    return count;
+                                  }
 
-                                int getPendingTransactionCount(
-                                    ClassMentorSMP kelas) {
-                                  int count = kelas.transactions
-                                          ?.where((t) =>
-                                              t.paymentStatus == "Pending")
-                                          .length ??
-                                      0;
+                                  int availableSlots = kelas.maxParticipants! -
+                                      getApprovedTransactionCount(kelas);
 
-                                  return count;
-                                }
-
-                                Color buttonColor = getApprovedTransactionCount(
-                                                kelas) +
-                                            getPendingTransactionCount(kelas) ==
-                                        kelas.maxParticipants
-                                    ? Colors.grey
-                                    : ColorStyle().primaryColors;
+                                  Color buttonColor =
+                                      getApprovedTransactionCount(kelas) +
+                                                  getPendingTransactionCount(
+                                                      kelas) ==
+                                              kelas.maxParticipants
+                                          ? Colors.grey
+                                          : ColorStyle().primaryColors;
 
                                 return Container(
                                   width: 600,

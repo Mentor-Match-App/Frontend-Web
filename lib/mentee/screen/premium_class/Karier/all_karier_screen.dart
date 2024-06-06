@@ -38,6 +38,9 @@ class _AllKarierScreenState extends State<AllKarierScreen> {
                 .any((classMentor) => classMentor.isAvailable == true);
           }).toList();
 
+          if (mentors.isEmpty) {
+            return WidgetMentorIsNotEmpety();
+          }
 
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -47,7 +50,7 @@ class _AllKarierScreenState extends State<AllKarierScreen> {
                 maxCrossAxisExtent: 250),
             itemCount: mentors.length,
             itemBuilder: (context, index) {
-               final mentor = mentors[index];
+              final mentor = mentors[index];
               // create for experience is current job true or false
               ExperienceKarier? currentJob = mentor.experiences?.firstWhere(
                 (exp) => exp.isCurrentJob ?? false,

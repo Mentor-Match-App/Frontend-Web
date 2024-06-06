@@ -36,7 +36,9 @@ class _BiologiSMAScreenState extends State<BiologiSMAScreen> {
                   mentorClass.category == 'Biologi' &&
                   mentorClass.isAvailable == true))
               .toList();
-
+ if (mentorsWithLanguageCategory.isEmpty) {
+            return WidgetMentorIsNotEmpety();
+          }
           if (mentorsWithLanguageCategory.isEmpty) {
             return Center(child: Text("No available mentors"));
           }

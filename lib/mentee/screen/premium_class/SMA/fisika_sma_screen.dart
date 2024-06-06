@@ -36,9 +36,8 @@ class _FisikaSMAScreenState extends State<FisikaSMAScreen> {
                   mentorClass.category == 'Fisika' &&
                   mentorClass.isAvailable == true))
               .toList();
-
-          if (mentorsWithLanguageCategory.isEmpty) {
-            return Center(child: Text("No available mentors"));
+ if (mentorsWithLanguageCategory.isEmpty) {
+            return WidgetMentorIsNotEmpety();
           }
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(

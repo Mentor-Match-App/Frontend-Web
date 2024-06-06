@@ -16,11 +16,11 @@ class FontFamily {
   );
   TextStyle regularText = GoogleFonts.poppins(
     fontWeight: FontWeight.w300,
-    fontSize: 12,
+    fontSize: 14,
     color: ColorStyle().textColors,
   );
   TextStyle boldText = GoogleFonts.poppins(
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w400,
     fontSize: 12,
     color: ColorStyle().textColors,
   );

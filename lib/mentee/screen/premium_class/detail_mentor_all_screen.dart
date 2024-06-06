@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:my_flutter_app/mentee/model/mentor_model.dart';
 import 'package:my_flutter_app/mentee/screen/premium_class/detail_class_mentor_all_screen.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/navbaruser.dart';
 import 'package:my_flutter_app/widget/profileavatar.dart';
@@ -328,37 +329,42 @@ class _DetailMentorAllScreenState extends State<DetailMentorAllScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: widget.classes != null &&
-                              widget.classes!.isNotEmpty
-                          ? Column(
-                              children: widget.classes!.map((kelas) {
-                                int getApprovedTransactionCount(
-                                    ClassAll kelas) {
-                                  int count = kelas.transactions
-                                          ?.where((t) =>
-                                              t.paymentStatus == "Approved")
-                                          .length ??
-                                      0;
+                      child:  widget.classes != null &&
+                                widget.classes!.isNotEmpty
+                            ? Column(
+                                children: widget.classes!
+                                    .where((kelas) => kelas.isAvailable == true)
+                                    .map((kelas) {
+                                  int getApprovedTransactionCount(
+                                      ClassAll kelas) {
+                                    int count = kelas.transactions
+                                            ?.where((t) =>
+                                                t.paymentStatus == "Approved")
+                                            .length ??
+                                        0;
+                                    return count;
+                                  }
 
-                                  return count;
-                                }
+                                  int getPendingTransactionCount(
+                                      ClassAll kelas) {
+                                    int count = kelas.transactions
+                                            ?.where((t) =>
+                                                t.paymentStatus == "Pending")
+                                            .length ??
+                                        0;
+                                    return count;
+                                  }
 
-                                int getPendingTransactionCount(ClassAll kelas) {
-                                  int count = kelas.transactions
-                                          ?.where((t) =>
-                                              t.paymentStatus == "Pending")
-                                          .length ??
-                                      0;
+                                  int availableSlots = kelas.maxParticipants! -
+                                      getApprovedTransactionCount(kelas);
 
-                                  return count;
-                                }
-
-                                Color buttonColor = getApprovedTransactionCount(
-                                                kelas) +
-                                            getPendingTransactionCount(kelas) ==
-                                        kelas.maxParticipants
-                                    ? Colors.grey
-                                    : ColorStyle().primaryColors;
+                                  Color buttonColor =
+                                      getApprovedTransactionCount(kelas) +
+                                                  getPendingTransactionCount(
+                                                      kelas) ==
+                                              kelas.maxParticipants
+                                          ? Colors.grey
+                                          : ColorStyle().primaryColors;
 
                                 return Container(
                                   width: 600,

@@ -5,7 +5,7 @@ import 'package:my_flutter_app/admin/service/community_service.dart';
 import 'package:my_flutter_app/widget/community_widget.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 class ComunityScreen extends StatefulWidget {
   const ComunityScreen({Key? key}) : super(key: key);
 

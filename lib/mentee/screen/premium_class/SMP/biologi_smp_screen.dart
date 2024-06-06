@@ -36,6 +36,9 @@ class _BiologiSMPScreenState extends State<BiologiSMPScreen> {
                   mentorClass.category == 'Biologi' &&
                   mentorClass.isAvailable == true))
               .toList();
+               if (mentorsWithLanguageCategory.isEmpty) {
+            return WidgetMentorIsNotEmpety();
+          }
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 crossAxisSpacing: 10,

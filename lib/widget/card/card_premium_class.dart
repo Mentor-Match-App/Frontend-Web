@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_flutter_app/mentee/screen/premium_class/detail_class_mentor_all_screen.dart';
 import 'package:my_flutter_app/style/text.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 class CardPremiumClassOptions extends StatefulWidget {
   final String image;
 

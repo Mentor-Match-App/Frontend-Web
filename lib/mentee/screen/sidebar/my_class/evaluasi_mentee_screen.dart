@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/mentee/model/my_class_model.dart';
+import 'package:my_flutter_app/mentee/screen/notificationmentee_page.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 class EvaluasiMenteeScreen extends StatefulWidget {
   final List<EvaluationMyClass> evaluasi;
 
@@ -47,12 +48,12 @@ class _EvaluasiMenteeScreenState extends State<EvaluasiMenteeScreen> {
             ),
             IconButton(
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => NotificationMenteeScreen(),
-                //   ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NotificationMenteePage(),
+                  ),
+                );
               },
               icon: Icon(
                 Icons.notifications_none_outlined,
@@ -62,10 +63,16 @@ class _EvaluasiMenteeScreenState extends State<EvaluasiMenteeScreen> {
           ],
         ),
       ),
-      body: ListView.builder(
+      body: widget.evaluasi.isEmpty
+          ? Center(
+              child: Text("Evaluation is currently empty",
+                  style: FontFamily().regularText),
+            ) :
+      ListView.builder(
         itemCount: widget.evaluasi.length,
         itemBuilder: (context, index) {
           var evaluation = widget.evaluasi[index];
+       
 
           return Padding(
             padding: const EdgeInsets.only(left: 24.0, right: 24.0),

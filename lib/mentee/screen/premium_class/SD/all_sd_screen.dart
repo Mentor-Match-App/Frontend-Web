@@ -38,10 +38,9 @@ class _AllSDScreenState extends State<AllSDScreen> {
                 .any((classMentor) => classMentor.isAvailable == true);
           }).toList();
 
-          if (mentors.isEmpty) {
-            return Center(child: Text(" Mentor masi tidak tersedia"));
+           if (mentors.isEmpty) {
+            return WidgetMentorIsNotEmpety();
           }
-
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 crossAxisSpacing: 10,

@@ -37,7 +37,9 @@ class _AllSMPScreenState extends State<AllSMPScreen> {
             return mentor.mentorClass!
                 .any((classMentor) => classMentor.isAvailable == true);
           }).toList();
-
+ if (mentors.isEmpty) {
+            return WidgetMentorIsNotEmpety();
+          }
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 crossAxisSpacing: 10,

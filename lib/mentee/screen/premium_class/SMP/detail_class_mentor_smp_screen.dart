@@ -9,7 +9,7 @@ import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
 import 'package:my_flutter_app/style/text.dart';
 import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-
+import 'package:my_flutter_app/style/fontStyle.dart';
 class DetailClassMentorSMP extends StatefulWidget {
   final String locationMentoring;
   final String addressMentoring;
