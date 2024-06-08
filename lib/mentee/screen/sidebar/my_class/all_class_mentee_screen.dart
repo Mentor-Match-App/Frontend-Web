@@ -1,13 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/mentee/model/my_class_model.dart';
-import 'package:my_flutter_app/mentee/screen/session/detail_mentor_session_screen.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/my_class/detail_my_class_mentee_screen.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/my_class/payment_error_mentee_screen.dart';
+import 'package:my_flutter_app/mentee/screen/sidebar/my_class/payment_expired_mentee_screen.dart';
+import 'package:my_flutter_app/mentee/screen/sidebar/my_class/payment_pending_mentee_screen.dart';
 import 'package:my_flutter_app/mentee/service/my_class_service.dart';
-import 'package:my_flutter_app/widget/button.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
 
 class AllClassMenteeScreen extends StatefulWidget {
   @override
@@ -27,8 +29,6 @@ class _AllClassMenteeScreenState extends State<AllClassMenteeScreen> {
     bool isClassScheduled =
         now.isBefore(startDate) && transaction.paymentStatus == "Approved";
     bool isClassFinished = now.isAfter(endDate);
-
-    /// buat kelas rejected ketika paymente status rejected
 
     /// Prioritize Rejected status
     if (transaction.paymentStatus == "Rejected") {
@@ -66,7 +66,7 @@ class _AllClassMenteeScreenState extends State<AllClassMenteeScreen> {
         title,
         style: FontFamily().boldText.copyWith(
               color: color,
-              fontSize: 14,
+              fontSize: 12,
             ),
       ),
     );
@@ -87,7 +87,9 @@ class _AllClassMenteeScreenState extends State<AllClassMenteeScreen> {
       future: _userData,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return Container(
+              height: MediaQuery.of(context).size.height / 2.0,
+              child: Center(child: CircularProgressIndicator()));
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
@@ -100,7 +102,7 @@ class _AllClassMenteeScreenState extends State<AllClassMenteeScreen> {
                   height: MediaQuery.of(context).size.height / 2,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Center(child: Text('you dont have any class')),
+                    child: Center(child: Text('Kamu belum memiliki kelas')),
                   )),
             );
           }
@@ -114,6 +116,7 @@ class _AllClassMenteeScreenState extends State<AllClassMenteeScreen> {
                   child: GestureDetector(
                     onTap: () {
                       if (statusButton == 0) {
+                        // Rejected
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -124,6 +127,28 @@ class _AllClassMenteeScreenState extends State<AllClassMenteeScreen> {
                               uniqueId: data.uniqueCode ?? 0,
                               mentorname: classData.mentor!.name ?? '',
                             ),
+                          ),
+                        );
+                      } else if (statusButton == 3) {
+                        // Pending
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PaymentPendingScreenMentee(
+                              classname: classData.name ?? '',
+                              rejectReason: data.rejectReason.toString(),
+                              price: classData.price ?? 0,
+                              uniqueId: data.uniqueCode ?? 0,
+                              mentorname: classData.mentor!.name ?? '',
+                            ),
+                          ),
+                        );
+                      } else if (statusButton == 5) {
+                        // Expired
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PaymentExpiredScreenMentee(),
                           ),
                         );
                       } else {
@@ -161,12 +186,9 @@ class _AllClassMenteeScreenState extends State<AllClassMenteeScreen> {
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(
-                                0.12), // Mengatur opasitas warna shadow lebih tinggi
-                            blurRadius:
-                                6, // Meningkatkan blur radius untuk shadow yang lebih luas
-                            offset: const Offset(0,
-                                2), // Mengubah offset untuk shadow yang lebih jelas
+                            color: Colors.black.withOpacity(0.12),
+                            blurRadius: 6,
+                            offset: const Offset(0, 2),
                           ),
                         ],
                         color: ColorStyle().whiteColors,
@@ -199,8 +221,14 @@ class _AllClassMenteeScreenState extends State<AllClassMenteeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 ClipOval(
-                                  child: Image.network(
-                                    classData.mentor!.photoUrl.toString(),
+                                  child: CachedNetworkImage(
+                                    placeholder: (context, url) => Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        Icon(Icons.error),
+                                    imageUrl:
+                                        classData.mentor!.photoUrl.toString(),
                                     fit: BoxFit.cover,
                                     width: 98,
                                     height: 98,
@@ -216,14 +244,23 @@ class _AllClassMenteeScreenState extends State<AllClassMenteeScreen> {
                                         classData.name ?? '',
                                         style: FontFamily().boldText.copyWith(
                                             fontSize: 14,
-                                            color: ColorStyle().primaryColors),
+                                            color: ColorStyle().blackColors),
                                       ),
                                       const SizedBox(height: 12),
-                                      Text('Mentor : ${classData.mentor!.name}',
-                                          style: FontFamily().regularText),
                                       Text(
-                                          'Durasi : ${classData.durationInDays} Hari',
-                                          style: FontFamily().regularText),
+                                        'Mentor : ${classData.mentor!.name}',
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: ColorStyle().disableColors),
+                                      ),
+                                      Text(
+                                        'Durasi : ${classData.durationInDays} Hari',
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: ColorStyle().disableColors),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -240,7 +277,16 @@ class _AllClassMenteeScreenState extends State<AllClassMenteeScreen> {
             ),
           );
         } else {
-          return const Text('Kamu belum memiliki kelas saat ini');
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(child: Text('Kamu belum memiliki kelas')),
+                )),
+          );
         }
       },
     );

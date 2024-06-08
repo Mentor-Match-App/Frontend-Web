@@ -56,7 +56,7 @@ class _AllSessionScreenState extends State<AllSessionScreen> {
                 mainAxisSpacing: 10,
                 mainAxisExtent: 350,
                 maxCrossAxisExtent: 250),
-            itemCount: mentors.length,
+            itemCount: activeMentors.length,
             itemBuilder: (context, index) {
               final mentor = activeMentors[index];
               final mentorId = mentor.id ?? "";

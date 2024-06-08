@@ -61,6 +61,9 @@ class _LoginScreenState extends State<LoginScreen> {
             print('FCM Token: $fcmToken');
           }
 
+          // Minta izin notifikasi
+          await FCMService.requestNotificationPermissions();
+
           // Tentukan navigasi berdasarkan userType
           String? userType = userData['userType'];
           if (userType == null) {

@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/mentee/screen/premium_class/detail_class_mentor_all_screen.dart';
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/detail_my_class_mentor_screen.dart';
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/edit_class_rejected.dart';
 import 'package:my_flutter_app/mentor/model/my_class_mentor_model.dart';
 import 'package:my_flutter_app/mentor/service/myClassCreate_Mentor_service.dart';
-import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
+import 'package:my_flutter_app/widget/menucategory.dart';
+
 class AllClassMentorScreen extends StatefulWidget {
   AllClassMentorScreen({Key? key}) : super(key: key);
 
   @override
-  State<AllClassMentorScreen> createState() =>
-      _AllClassMentorScreenState();
+  State<AllClassMentorScreen> createState() => _AllClassMentorScreenState();
 }
 
-class _AllClassMentorScreenState
-    extends State<AllClassMentorScreen> {
+class _AllClassMentorScreenState extends State<AllClassMentorScreen> {
   late Future<MyClassMentorMondel> classData;
   int _getPriority(AllClass userClass) {
     DateTime now = DateTime.now();
@@ -136,12 +134,14 @@ class _AllClassMentorScreenState
       future: classData,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return Container(
+              height: MediaQuery.of(context).size.height / 2.0,
+              child: Center(child: CircularProgressIndicator()));
         } else if (snapshot.hasError) {
           return Text("Error: ${snapshot.error}");
         } else if (snapshot.hasData && snapshot.data!.user?.userClass != null) {
           var userClass = snapshot.data!.user!.userClass!;
-           if (userClass.isEmpty) {
+          if (userClass.isEmpty) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
@@ -149,8 +149,7 @@ class _AllClassMentorScreenState
                   height: MediaQuery.of(context).size.height / 2,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-
-                    child: Center(child: Text('you dont have any class')),
+                    child: Center(child: Text('Kamu belum memiliki kelas')),
                   )),
             );
           }
@@ -279,7 +278,16 @@ class _AllClassMentorScreenState
             ),
           );
         } else {
-          return Center(child: Text('No data'));
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(child: Text('Kamu belum memiliki kelas')),
+                )),
+          );
         }
       },
     );

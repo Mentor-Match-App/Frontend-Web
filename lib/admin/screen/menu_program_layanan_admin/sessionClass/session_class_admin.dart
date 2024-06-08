@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -95,8 +96,13 @@ class _SessionAdminListScreenState extends State<SessionAdminListScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(
-                                    child: Image.network(
-                                  session.mentor?.photoUrl ?? '',
+                                    child: CachedNetworkImage(
+                                  placeholder: (context, url) => Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
+                                  imageUrl: session.mentor?.photoUrl ?? '',
                                   fit: BoxFit.cover,
                                 )),
                                 const SizedBox(
@@ -248,7 +254,9 @@ class _SessionAdminListScreenState extends State<SessionAdminListScreen> {
                                               });
                                             },
                                             style: ElevatedButton.styleFrom(
-                                              foregroundColor: Colors.white, backgroundColor: ColorStyle().primaryColors,
+                                              foregroundColor: Colors.white,
+                                              backgroundColor:
+                                                  ColorStyle().primaryColors,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(10),

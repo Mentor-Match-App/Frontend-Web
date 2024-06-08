@@ -1,15 +1,13 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/akses_materi_my_class_mentor.dart';
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/evaluasi/evaluasi_mentor_screen.dart';
 import 'package:my_flutter_app/mentor/model/my_class_mentor_model.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/style/text.dart';
 import 'package:my_flutter_app/widget/category_card.dart';
 import 'package:my_flutter_app/widget/flushsBar_widget.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
-
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailMyClassMentorScreen extends StatefulWidget {
@@ -89,20 +87,6 @@ class _DetailMyClassMentorScreenState extends State<DetailMyClassMentorScreen> {
             style: FontFamily()
                 .titleText
                 .copyWith(color: ColorStyle().primaryColors),
-          ),
-          IconButton(
-            onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => NotificationMentorScreen(),
-              //   ),
-              // );
-            },
-            icon: Icon(
-              Icons.notifications_none_outlined,
-              color: ColorStyle().secondaryColors,
-            ),
           ),
         ],
       )),

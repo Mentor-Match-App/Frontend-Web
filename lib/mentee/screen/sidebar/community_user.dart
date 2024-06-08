@@ -37,7 +37,9 @@ class _CommunityScreenState extends State<CommunityScreen> {
         future: _communityModelsFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Container(
+                height: MediaQuery.of(context).size.height / 2.0,
+                child: Center(child: CircularProgressIndicator()));
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error.toString()}'));
           } else if (snapshot.hasData &&

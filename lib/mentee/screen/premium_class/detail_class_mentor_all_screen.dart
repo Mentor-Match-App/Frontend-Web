@@ -64,6 +64,8 @@ class DetailClassMentorAll extends StatefulWidget {
 }
 
 class _DetailClassMentorAllState extends State<DetailClassMentorAll> {
+  bool _isLoading = false;
+
   int getApprovedTransactionCount() {
     return widget.transaction
             ?.where((t) => t.paymentStatus == "Approved")
@@ -424,114 +426,135 @@ class _DetailClassMentorAllState extends State<DetailClassMentorAll> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          contentPadding: EdgeInsets.symmetric(
-              horizontal: 24, vertical: 20), // Atur padding konten
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          backgroundColor: ColorStyle().whiteColors,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+          return Stack(
             children: [
-              Text("Booking Class", style: FontFamily().titleText),
-              SizedBox(width: 20),
-              IconButton(
-                onPressed: () => Navigator.of(context).pop(),
-                icon: Icon(
-                  Icons.close_rounded,
-                  color: ColorStyle().errorColors,
+              AlertDialog(
+                contentPadding: EdgeInsets.symmetric(
+                    horizontal: 24, vertical: 20), // Atur padding konten
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
                 ),
-              )
-            ],
-          ),
-          content: Container(
-            width: 400, // Atur lebar konten sesuai kebutuhan
-            child: Column(
-              mainAxisSize: MainAxisSize
-                  .min, // Gunakan mainAxisSize.min agar widget Column mengikuti lebar konten
-              children: [
-                Text(
-                  "Apakah kamu yakin ingin memesan kelas ini? Langkah ini akan mengamankan tempatmu, pastikan untuk memeriksa kembali detail kelas sebelum mengonfirmasi",
-                  textAlign: TextAlign.center,
-                  style: FontFamily().regularText.copyWith(
-                        fontSize: 14,
-                      ),
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                backgroundColor: ColorStyle().whiteColors,
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SmallOutlinedButton(
-                      style: FontFamily().regularText.copyWith(
-                          color: ColorStyle().primaryColors, fontSize: 16),
-                      height: 48,
-                      width: 150,
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      title: "Cancel",
-                    ),
-                    SmallElevatedButtonTag(
-                      style: FontFamily().regularText.copyWith(
-                          color: ColorStyle().whiteColors, fontSize: 16),
-                      height: 48,
-                      width: 150,
-                      onPressed: () async {
-                        try {
-                          // Initialize UserPreferences if not already done.
-                          await UserPreferences.init();
-
-                          // Retrieve the user ID from SharedPreferences
-                          String? userId = UserPreferences.getUserId();
-
-                          if (userId != null) {
-                            BookingResultClass result =
-                                await bookClass(widget.classId!, userId);
-
-                            if (result.isSuccess) {
-                              int? uniqueCode = result
-                                  .uniqueCode; // Here you get the uniqueCode
-
-                              Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                  builder: (context) => DetailBookingClass(
-                                    durasi: widget.classduration,
-                                    nama_kelas: widget.classname,
-                                    nama_mentor: widget.mentorName,
-                                    price: widget.price,
-                                    uniqueCode: uniqueCode!,
-                                  ),
-                                ),
-                                (route) => false,
-                              );
-                            } else {
-                              // tampilkan messege erro dalam bentuk pop up
-                              showTopSnackBar(context, result.message);
-                            }
-                          } else {
-                            // If userId is not found, show an error
-                            throw Exception(
-                                "Anda belum login, silahkan login terlebih dahulu");
-                          }
-                        } catch (e) {
-                          // Show a SnackBar if an exception occurs
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text("Error: ${e.toString()}"),
-                              backgroundColor: ColorStyle().errorColors,
-                            ),
-                          );
-                        }
-                      },
-                      title: "Booking",
+                    Text("Booking Class", style: FontFamily().titleText),
+                    SizedBox(width: 20),
+                    IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: Icon(
+                        Icons.close_rounded,
+                        color: ColorStyle().errorColors,
+                      ),
                     )
                   ],
                 ),
-              ],
-            ),
-          ),
-        );
+                content: Container(
+                  width: 400, // Atur lebar konten sesuai kebutuhan
+                  child: Column(
+                    mainAxisSize: MainAxisSize
+                        .min, // Gunakan mainAxisSize.min agar widget Column mengikuti lebar konten
+                    children: [
+                      Text(
+                        "Apakah kamu yakin ingin memesan kelas ini? Langkah ini akan mengamankan tempatmu, pastikan untuk memeriksa kembali detail kelas sebelum mengonfirmasi",
+                        textAlign: TextAlign.center,
+                        style: FontFamily().regularText.copyWith(
+                              fontSize: 14,
+                            ),
+                      ),
+                      SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          SmallOutlinedButton(
+                            style: FontFamily().regularText.copyWith(
+                                color: ColorStyle().primaryColors,
+                                fontSize: 16),
+                            height: 48,
+                            width: 150,
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            title: "Cancel",
+                          ),
+                          SmallElevatedButtonTag(
+                            style: FontFamily().regularText.copyWith(
+                                color: ColorStyle().whiteColors, fontSize: 16),
+                            height: 48,
+                            width: 150,
+                            onPressed: () async {
+                              setState(() {
+                                _isLoading = true;
+                              });
+                              try {
+                                await UserPreferences.init();
+
+                                // Retrieve the user ID from SharedPreferences
+                                String? userId = UserPreferences.getUserId();
+
+                                if (userId != null) {
+                                  BookingResultClass result =
+                                      await bookClass(widget.classId!, userId);
+
+                                  setState(() {
+                                    _isLoading = false;
+                                  });
+                                  if (result.isSuccess) {
+                                    int? uniqueCode = result
+                                        .uniqueCode; // Here you get the uniqueCode
+
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            DetailBookingClass(
+                                          durasi: widget.classduration,
+                                          nama_kelas: widget.classname,
+                                          nama_mentor: widget.mentorName,
+                                          price: widget.price,
+                                          uniqueCode: uniqueCode!,
+                                        ),
+                                      ),
+                                      (route) => false,
+                                    );
+                                  } else {
+                                    // tampilkan messege erro dalam bentuk pop up
+                                    showTopSnackBar(context, result.message);
+                                  }
+                                } else {
+                                  // If userId is not found, show an error
+                                  throw Exception(
+                                      "Anda belum login, silahkan login terlebih dahulu");
+                                }
+                              } catch (e) {
+                                // Show a SnackBar if an exception occurs
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text("Error: ${e.toString()}"),
+                                    backgroundColor: ColorStyle().errorColors,
+                                  ),
+                                );
+                              }
+                            },
+                            title: "Booking",
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              if (_isLoading)
+                Container(
+                  color: Colors.black.withOpacity(0.5),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+            ],
+          );
+        });
       },
     );
   }
@@ -601,8 +624,6 @@ class SmallElevatedButtonTag extends StatelessWidget {
   }
 }
 
-/////otline Button////////
-
 class SmallOutlinedButton extends StatelessWidget {
   final Function()? onPressed;
   final double height;
@@ -647,7 +668,6 @@ class SmallOutlinedButton extends StatelessWidget {
     );
   }
 }
-
 
 class CustomMoneyText extends StatelessWidget {
   final int amount; // Nilai angka dari database

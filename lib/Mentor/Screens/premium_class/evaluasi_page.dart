@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_flutter_app/mentor/Screens/premium_class/detailpremiumclassmentor.dart';
 import 'package:my_flutter_app/widget/custombutton.dart';
 import 'package:my_flutter_app/widget/form.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -93,12 +92,12 @@ class _EvaluasiMentorPageState extends State<EvaluasiMentorPage> {
                 alignment: Alignment.centerLeft,
                 child: TextButton.icon(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PremiumClassMentorDetailPage(),
-                      ),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => PremiumClassMentorDetailPage(),
+                    //   ),
+                    // );
                   },
                   icon: Icon(
                     Icons.arrow_back_ios_new_rounded,

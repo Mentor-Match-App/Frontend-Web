@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_class_mentor_screen.dart';
-
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_premium_class_mentor.dart';
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_session_mentor.dart';
-import 'package:my_flutter_app/mentor/Screens/notificationmentor_page.dart';
-import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
+import 'package:my_flutter_app/widget/menucategory.dart';
+
 class MyClassMentorListScreen extends StatefulWidget {
   const MyClassMentorListScreen({Key? key}) : super(key: key);
 
@@ -15,7 +14,7 @@ class MyClassMentorListScreen extends StatefulWidget {
 }
 
 class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
-  bool isAllClassActive = true; 
+  bool isAllClassActive = true;
   bool isMyClassActive = false;
   bool isSessionActive = false; // Renamed for consistency
   void changeClass(String menu) {
@@ -135,7 +134,7 @@ class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
                     ? MySessionCreate()
                     : isMyClassActive
                         ? MyClassMentorScreen()
-                        :   AllClassMentorScreen()
+                        : AllClassMentorScreen()
           ],
         )
       ],

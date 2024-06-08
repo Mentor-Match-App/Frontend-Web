@@ -1,20 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_flutter_app/mentee/screen/homepage_mentee.dart';
-import 'package:my_flutter_app/mentee/screen/landing_page.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
-import 'package:my_flutter_app/mentee/screen/notificationmentee_page.dart';
 import 'package:my_flutter_app/mentee/screen/premium_class/premiumclass_page.dart';
 import 'package:my_flutter_app/mentee/screen/profile/mentee_profile_screen.dart';
 import 'package:my_flutter_app/mentee/screen/session/session_screen.dart';
-import 'package:my_flutter_app/mentor/Screens/communitymentor_page.dart';
-import 'package:my_flutter_app/mentor/Screens/homepage_mentor.dart';
-import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_class_mentor_sidebar.dart';
-import 'package:my_flutter_app/mentor/Screens/notificationmentor_page.dart';
-import 'package:my_flutter_app/mentor/screens/profile/mentor_profile_screen.dart';
-import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
 import 'package:my_flutter_app/widget/logo_button.dart';
-import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomDropdown extends StatefulWidget {
@@ -158,20 +148,6 @@ class _NavbarWidgetMenteeState extends State<NavbarWidgetMentee> {
             children: [
               CustomDropdown(),
               const SizedBox(width: 20),
-              IconButton(
-                icon: Icon(
-                  Icons.notifications_outlined,
-                  color: Colors.black,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => NotificationMenteePage()),
-                  );
-                },
-              ),
-              const SizedBox(width: 20),
               Row(
                 children: [
                   GestureDetector(
@@ -205,146 +181,17 @@ class _NavbarWidgetMenteeState extends State<NavbarWidgetMentee> {
     Color? color,
   ) {
     return ClipOval(
-      child: Image.network(
-        imageUrl,
+      child: CachedNetworkImage(
+        placeholder: (context, url) => Center(
+          child: CircularProgressIndicator(),
+        ),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+        imageUrl: imageUrl,
         height: height,
         width: width,
         fit: BoxFit.cover,
         color: color,
         colorBlendMode: color != null ? BlendMode.modulate : null,
-        errorBuilder: (context, error, stackTrace) {
-          return Container(
-            height: height,
-            width: width,
-            color: Colors.grey,
-          );
-        },
-      ),
-    );
-  }
-}
-
-class NavbarWidgetMentor extends StatefulWidget {
-  const NavbarWidgetMentor({Key? key}) : super(key: key);
-
-  @override
-  State<NavbarWidgetMentor> createState() => _NavbarWidgetMentorState();
-}
-
-class _NavbarWidgetMentorState extends State<NavbarWidgetMentor> {
-  String _photoUrl = "";
-  String _name = "";
-  String _namedepan = "";
-
-  Future<void> _loadProfile() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      /// photourl
-      _photoUrl = prefs.getString('photoUrl') ?? "";
-      //name
-      _name = prefs.getString('name') ?? "";
-      _namedepan = _name.split(' ')[0]; // Ambil bagian pertama (nama depan)
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _loadProfile();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ButtonLogoMentorMatch(),
-          Row(
-            children: [
-              // TextButton.icon(
-              //   onPressed: () {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //           builder: (context) => CommunityMentorPage()),
-              //     );
-              //   },
-              //   icon: Icon(Icons.people_outline_outlined, color: Colors.black),
-              //   label: Text(
-              //     'Community',
-              //     style: GoogleFonts.poppins(fontSize: 16, color: Colors.black),
-              //   ),
-              // ),
-              // TextButton.icon(
-              //   onPressed: () {
-              //     Navigator.pushAndRemoveUntil(
-              //         context,
-              //         MaterialPageRoute(
-              //             builder: (context) => MentorHomePage(
-              //                   key:
-              //                       UniqueKey(), // Jika diperlukan, Anda dapat memberikan kunci unik untuk memastikan widget yang dirender adalah baru
-              //                   selectedMenu:
-              //                       'My Class', // Tetapkan nilai _selectedMenu ke 'My Class'
-              //                 )),
-              //         (route) => false);
-              //   },
-              //   icon: Icon(Icons.book_outlined, color: Colors.black),
-              //   label: Text(
-              //     'My Class',
-              //     style: GoogleFonts.poppins(fontSize: 16, color: Colors.black),
-              //   ),
-              // ),
-              IconButton(
-                icon: Icon(Icons.notifications_outlined, color: Colors.black),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => NotificationMentorPage()),
-                  );
-                },
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ProfileMentorScreen(),
-                    ),
-                    (route) => false,
-                  );
-                },
-                child: ClipOval(
-                  child: Image.network(
-                    _photoUrl,
-                    height: 40,
-                    width: 40,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      height: 40,
-                      width: 40,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                child: SizedBox(
-                  child: Text(
-                    "Hallo, \n$_namedepan",
-                    style: FontFamily().boldText.copyWith(
-                          color: ColorStyle().blackColors,
-                        ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }

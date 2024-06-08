@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/mentee/screen/premium_class/detail_class_mentor_all_screen.dart';
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/evaluasi/list_evaluasi_mentor_screen.dart';
-import 'package:my_flutter_app/mentor/Screens/notificationmentor_page.dart';
 import 'package:my_flutter_app/mentor/model/my_class_mentor_model.dart';
 import 'package:my_flutter_app/mentor/service/send_feedback_evaluation.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/style/text.dart';
 import 'package:my_flutter_app/widget/flushsBar_widget.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
+
 class DetailEvaluastionMenteeMentorScreen extends StatefulWidget {
   final List<FeedbackMyClassMentor> feedbacks;
   final String menteeName;
@@ -139,18 +139,6 @@ class _DetailEvaluastionMenteeMentorScreenState
             style: FontFamily()
                 .titleText
                 .copyWith(color: ColorStyle().primaryColors),
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => NotificationMentorPage()));
-            },
-            icon: Icon(
-              Icons.notifications_none_outlined,
-              color: ColorStyle().secondaryColors,
-            ),
           ),
         ],
       )),

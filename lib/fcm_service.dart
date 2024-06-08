@@ -60,6 +60,25 @@ class FCMService {
     }
   }
 
+  static Future<void> requestNotificationPermissions() async {
+    NotificationSettings settings =
+        await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+      provisional: false,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print('User granted permission');
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      print('User granted provisional permission');
+    } else {
+      print('User declined or has not accepted permission');
+    }
+  }
+
   static Future<void> _handleForegroundMessage(RemoteMessage message) async {
     RemoteNotification? notification = message.notification;
     if (notification != null) {

@@ -1,21 +1,21 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_flutter_app/mentee/model/mentor_model.dart';
 import 'package:my_flutter_app/mentee/model/my_class_model.dart';
+import 'package:my_flutter_app/mentee/model/session_model.dart';
 import 'package:my_flutter_app/mentee/screen/premium_class/detail_class_mentor_all_screen.dart';
 import 'package:my_flutter_app/mentee/screen/premium_class/detail_mentor_all_screen.dart';
 import 'package:my_flutter_app/mentee/screen/session/detail_mentor_session_screen.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/my_class/detail_my_class_mentee_screen.dart';
 import 'package:my_flutter_app/mentee/service/my_class_service.dart';
 import 'package:my_flutter_app/mentee/service/session_mentor_service.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/card_mentor.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
-import 'package:my_flutter_app/mentee/model/session_model.dart';
 
-import '../model/session_model.dart';
 import '../service/mentor_service.dart';
 
 class SearchPageMenteeWeb extends StatefulWidget {
@@ -24,7 +24,7 @@ class SearchPageMenteeWeb extends StatefulWidget {
 }
 
 class _SearchPageMenteeWebState extends State<SearchPageMenteeWeb> {
- final TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   final Dio _dio = Dio();
   bool isSearching = false;
 
@@ -248,7 +248,6 @@ class _SearchPageMenteeWebState extends State<SearchPageMenteeWeb> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -285,8 +284,7 @@ class _SearchPageMenteeWebState extends State<SearchPageMenteeWeb> {
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: 
-              ListView(
+              child: ListView(
                 children: [
                   if (_filteredClasses.isNotEmpty)
                     isSearching
@@ -322,8 +320,18 @@ class _SearchPageMenteeWebState extends State<SearchPageMenteeWeb> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 ClipOval(
-                                                  child: Image.network(
-                                                    clasdata.mentor!.photoUrl ??
+                                                  child: CachedNetworkImage(
+                                                    placeholder:
+                                                        (context, url) =>
+                                                            Center(
+                                                      child:
+                                                          CircularProgressIndicator(),
+                                                    ),
+                                                    errorWidget:
+                                                        (context, url, error) =>
+                                                            Icon(Icons.error),
+                                                    imageUrl: clasdata
+                                                            .mentor!.photoUrl ??
                                                         '',
                                                     fit: BoxFit.cover,
                                                     width: 98,
@@ -493,9 +501,17 @@ class _SearchPageMenteeWebState extends State<SearchPageMenteeWeb> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               ClipOval(
-                                                child: Image.network(
-                                                  participant.session!.mentor!
-                                                          .photoUrl ??
+                                                child: CachedNetworkImage(
+                                                  placeholder: (context, url) =>
+                                                      Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  ),
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          Icon(Icons.error),
+                                                  imageUrl: participant.session!
+                                                          .mentor!.photoUrl ??
                                                       '',
                                                   fit: BoxFit.cover,
                                                   width: 98,
@@ -555,8 +571,9 @@ class _SearchPageMenteeWebState extends State<SearchPageMenteeWeb> {
                                                 ),
                                                 child: TextButton.icon(
                                                   style: TextButton.styleFrom(
-                                                    foregroundColor: ColorStyle()
-                                                        .whiteColors,
+                                                    foregroundColor:
+                                                        ColorStyle()
+                                                            .whiteColors,
                                                   ),
                                                   onPressed: () {
                                                     final zommLink =

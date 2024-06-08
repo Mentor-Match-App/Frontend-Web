@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/Mentor/service/myClassCreate_Mentor_service.dart';
-import 'package:my_flutter_app/mentee/screen/premium_class/detail_class_mentor_all_screen.dart';
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/detail_my_class_mentor_screen.dart';
 import 'package:my_flutter_app/mentor/model/my_class_mentor_model.dart';
-import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
+import 'package:my_flutter_app/widget/menucategory.dart';
+
 enum ClassStatus { active, inactive, scheduled }
 
 class MyClassMentorScreen extends StatefulWidget {
@@ -24,6 +24,7 @@ class _MyClassMentorScreenState extends State<MyClassMentorScreen> {
     classData = ListClassMentor().fetchClassData();
   }
 
+  // Method to determine the class status based on dates and transactions
   ClassStatus getClassStatus(AllClass classData) {
     DateTime now = DateTime.now();
     DateTime? startDate = classData.startDate != null
@@ -32,30 +33,43 @@ class _MyClassMentorScreenState extends State<MyClassMentorScreen> {
     DateTime? endDate =
         classData.endDate != null ? DateTime.parse(classData.endDate!) : null;
 
-    // Memeriksa apakah ada transaksi yang disetujui sebelum tanggal mulai
+    // Check if there is any approved transaction before the start date
     bool hasApprovedTransactionBeforeStart = classData.transactions?.any(
             (transaction) =>
                 transaction.paymentStatus == "Approved" &&
                 (startDate == null || now.isBefore(startDate))) ??
         false;
 
+    print("Class Name: ${classData.name}");
+    print("Start Date: $startDate");
+    print("End Date: $endDate");
+    print(
+        "Approved Transactions Before Start: $hasApprovedTransactionBeforeStart");
+
     if (startDate != null && endDate != null) {
       if (now.isAfter(startDate) && now.isBefore(endDate)) {
+        print("Status: Active");
         return ClassStatus.active;
       } else if (hasApprovedTransactionBeforeStart) {
-        // Kondisi untuk transaksi disetujui tetapi kelas belum dimulai
+        // Condition for approved transactions but class hasn't started
+        print("Status: Scheduled (Approved transactions but hasn't started)");
         return ClassStatus.scheduled;
       } else if (now.isBefore(startDate)) {
-        return ClassStatus.scheduled;
+        print(
+            "Status: Inactive (Before Start Date and No Approved Transactions)");
+        return ClassStatus.inactive;
       } else if (now.isAfter(endDate)) {
+        print("Status: Inactive");
         return ClassStatus.inactive;
       }
     } else if (hasApprovedTransactionBeforeStart) {
-      // Jika tanggal tidak diatur dengan benar, tetapi ada transaksi yang disetujui
+      // If dates are not set correctly but there are approved transactions
+      print("Status: Scheduled (Dates not set but approved transactions)");
       return ClassStatus.scheduled;
     }
 
-    // Jika tidak ada tanggal yang diatur atau kondisi lainnya tidak terpenuhi
+    // Default to inactive if no other condition is met
+    print("Status: Inactive");
     return ClassStatus.inactive;
   }
 
@@ -65,24 +79,35 @@ class _MyClassMentorScreenState extends State<MyClassMentorScreen> {
       future: classData,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return Container(
+              height: MediaQuery.of(context).size.height / 2.0,
+              child: Center(child: CircularProgressIndicator()));
         } else if (snapshot.hasError) {
           return Text("Error: ${snapshot.error}");
         } else if (snapshot.hasData && snapshot.data!.user?.userClass != null) {
-          
           var userClass = snapshot.data!.user!.userClass!;
-           if (userClass.isEmpty) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height / 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(child: Text('you dont have any class')),
-                  )),
+          var filteredClasses = userClass.where((classData) {
+            var status = getClassStatus(classData);
+            return status == ClassStatus.scheduled ||
+                status == ClassStatus.active;
+          }).toList();
+
+          if (filteredClasses.length == 0) {
+            return SizedBox(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height / 2.0,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Text('Kamu belum memiliki kelas saat ini'),
+                ),
+              ),
             );
           }
+
+          print("Filtered Classes Length: ${filteredClasses.length}");
+          print(
+              "Filtered Classes: ${filteredClasses.map((e) => e.name).toList()}");
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(12.0),
@@ -207,7 +232,16 @@ class _MyClassMentorScreenState extends State<MyClassMentorScreen> {
             ),
           );
         } else {
-          return Center(child: Text('Kamu belum memiliki kelas saat ini'));
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(child: Text('Kamu belum memiliki kelas')),
+                )),
+          );
         }
       },
     );

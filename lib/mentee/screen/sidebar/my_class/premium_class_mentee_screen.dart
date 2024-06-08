@@ -1,6 +1,6 @@
-import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/mentee/model/my_class_model.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/my_class/detail_my_class_mentee_screen.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/my_class/payment_error_mentee_screen.dart';
@@ -8,7 +8,6 @@ import 'package:my_flutter_app/mentee/service/my_class_service.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
 
 class PremiumClassMenteeScreen extends StatefulWidget {
   @override
@@ -65,7 +64,10 @@ class _PremiumClassMenteeScreenState extends State<PremiumClassMenteeScreen> {
       alignment: Alignment.centerRight,
       child: Text(
         title,
-        style: FontFamily().buttonText,
+        style: FontFamily().boldText.copyWith(
+              color: color,
+              fontSize: 12,
+            ),
       ),
     );
   }
@@ -91,8 +93,6 @@ class _PremiumClassMenteeScreenState extends State<PremiumClassMenteeScreen> {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
           final List<TransactionMyClass> classBooking = snapshot.data!;
-
-          /// APABILA TIDAK ADA KELAS YANG MUNCUL MAKA TAMPILKAN TEXT "Kamu belum memiliki kelas saat ini"
           if (classBooking.isEmpty) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
@@ -101,7 +101,7 @@ class _PremiumClassMenteeScreenState extends State<PremiumClassMenteeScreen> {
                   height: MediaQuery.of(context).size.height / 2,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Center(child: Text('you dont have any class')),
+                    child: Center(child: Text('Kamu belum memiliki kelas')),
                   )),
             );
           }
@@ -191,16 +191,16 @@ class _PremiumClassMenteeScreenState extends State<PremiumClassMenteeScreen> {
                                 children: [
                                   ClipOval(
                                     child: CachedNetworkImage(
-                                      imageUrl:
-                                          classData.mentor!.photoUrl.toString(),
-                                      fit: BoxFit.cover,
-                                      width: 98,
-                                      height: 98,
                                       placeholder: (context, url) => Center(
                                         child: CircularProgressIndicator(),
                                       ),
                                       errorWidget: (context, url, error) =>
                                           Icon(Icons.error),
+                                      imageUrl:
+                                          classData.mentor!.photoUrl.toString(),
+                                      fit: BoxFit.cover,
+                                      width: 98,
+                                      height: 98,
                                     ),
                                   ),
                                   const SizedBox(width: 10),
@@ -213,16 +213,25 @@ class _PremiumClassMenteeScreenState extends State<PremiumClassMenteeScreen> {
                                           classData.name ?? '',
                                           style: FontFamily().boldText.copyWith(
                                               fontSize: 14,
-                                              color:
-                                                  ColorStyle().primaryColors),
+                                              color: ColorStyle().blackColors),
                                         ),
                                         const SizedBox(height: 12),
                                         Text(
-                                            'Mentor : ${classData.mentor!.name}',
-                                            style: FontFamily().regularText),
+                                          'Mentor : ${classData.mentor!.name}',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400,
+                                              color:
+                                                  ColorStyle().disableColors),
+                                        ),
                                         Text(
-                                            'Durasi : ${classData.durationInDays} Hari',
-                                            style: FontFamily().regularText),
+                                          'Durasi : ${classData.durationInDays} Hari',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400,
+                                              color:
+                                                  ColorStyle().disableColors),
+                                        )
                                       ],
                                     ),
                                   ),
@@ -240,14 +249,16 @@ class _PremiumClassMenteeScreenState extends State<PremiumClassMenteeScreen> {
             ),
           );
         } else {
-          return SizedBox(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height / 2.0,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child:
-                    Center(child: Text('Kamu belum memiliki kelas saat ini')),
-              ));
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(child: Text('Kamu belum memiliki kelas')),
+                )),
+          );
         }
       },
     );

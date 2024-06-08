@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
@@ -55,8 +56,12 @@ class _CardItemMentorState extends State<CardItemMentor> {
                       right: 26,
                       bottom: 16,
                     ),
-                    child: Image.network(
-                      widget.imagePath,
+                    child: CachedNetworkImage(
+                      placeholder: (context, url) => Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                      imageUrl: widget.imagePath,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -110,8 +115,8 @@ class _CardItemMentorState extends State<CardItemMentor> {
                 ),
                 // Tombol hanya ditampilkan sekali di bagian bawah
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0, vertical: 4.0),
                   child: SmallElevatedButtonWidget(
                     onPressed: widget.onPressesd,
                     text: 'Available',

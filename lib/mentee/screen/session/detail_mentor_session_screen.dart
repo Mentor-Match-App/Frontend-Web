@@ -6,13 +6,13 @@ import 'package:my_flutter_app/mentee/model/session_model.dart';
 import 'package:my_flutter_app/mentee/screen/session/detail_booking_session_screen.dart';
 import 'package:my_flutter_app/mentee/service/bookSessionService/bookSesion.dart';
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/navbaruser.dart';
 import 'package:my_flutter_app/widget/profileavatar.dart';
 import 'package:my_flutter_app/widget/reviewwidget.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';import 'package:my_flutter_app/style/fontStyle.dart';
 
 class DetailMentorSessionScreen extends StatefulWidget {
   final List<SessionElement>? session;
@@ -36,6 +36,8 @@ class DetailMentorSessionScreen extends StatefulWidget {
 }
 
 class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
+  bool _isLoading = false;
+
   _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
@@ -722,7 +724,6 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
   void _showDialog(BuildContext context, String sessionId) {
     final mentorDetail = widget.detailmentor;
 
-
     DateTime? parsedJadwal;
     if (mentorDetail.session != null && mentorDetail.session!.isNotEmpty) {
       parsedJadwal = DateTime.parse(mentorDetail.session!.first.dateTime!);
@@ -738,113 +739,137 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
         : "No scheduled session";
 
     showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          contentPadding: EdgeInsets.symmetric(
-              horizontal: 24, vertical: 20), // Atur padding konten
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          backgroundColor: ColorStyle().whiteColors,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Booking Class", style: FontFamily().titleText),
-              SizedBox(width: 20),
-              IconButton(
-                onPressed: () => Navigator.of(context).pop(),
-                icon: Icon(
-                  Icons.close_rounded,
-                  color: ColorStyle().errorColors,
-                ),
-              )
-            ],
-          ),
-          content: Container(
-            width: 400,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "Apakah kamu yakin untuk memesan session ini, Kamu dapat memesan session ini secara gratis",
-                  textAlign: TextAlign.center,
-                  style: FontFamily().regularText.copyWith(
-                        fontSize: 14,
-                      ),
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    SmallOutlinedButton(
-                      style: FontFamily().regularText.copyWith(
-                          color: ColorStyle().primaryColors, fontSize: 16),
-                      height: 48,
-                      width: 150,
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      title: "Cancel",
+        context: context,
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return Stack(
+                children: [
+                  AlertDialog(
+                    contentPadding: EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 20), // Atur padding konten
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    SizedBox(
-                      child: 
-                      
-                      SmallElevatedButton2(
-                        style: FontFamily().regularText.copyWith(
-                            color: ColorStyle().whiteColors, fontSize: 16),
-                        height: 48,
-                        width: 150,
-                        onPressed: () async {
-                          try {
-                            String? userId = await UserPreferences.getUserId();
-                            if (userId != null) {
-                              var result = await bookSession(sessionId, userId);
-                              if (result.isSuccess) {
-                                // ignore: use_build_context_synchronously
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          DetailBookingSession(
-                                            nama_mentor: widget
-                                                .detailmentor.name
-                                                .toString(),
-                                            nama_session: widget
-                                                .detailmentor.session!
-                                                .map((session) => session.title)
-                                                .join(", "),
-                                            jadwal_session: formattedJadwal +
-                                                " " +
-                                                formattedStartTime +
-                                                " - " +
-                                                formattedEndTime,
-                                          )),
-                                  (Route<dynamic> route) => false,
-                                );
-                              } else {
-                                // Jika booking gagal, tampilkan pesan error
-                                throw Exception(result.message);
-                              }
-                            } else {
-                              throw Exception(
-                                  "Anda belum login, silahkan login terlebih dahulu.");
-                            }
-                          } catch (e) {
-                            showTopSnackBar(context, e.toString());
-                          }
-                        },
-                        title: "Booking",
+                    backgroundColor: ColorStyle().whiteColors,
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Booking Class", style: FontFamily().titleText),
+                        SizedBox(width: 20),
+                        IconButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          icon: Icon(
+                            Icons.close_rounded,
+                            color: ColorStyle().errorColors,
+                          ),
+                        )
+                      ],
+                    ),
+                    content: Container(
+                      width: 400,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "Apakah kamu yakin untuk memesan session ini, Kamu dapat memesan session ini secara gratis",
+                            textAlign: TextAlign.center,
+                            style: FontFamily().regularText.copyWith(
+                                  fontSize: 14,
+                                ),
+                          ),
+                          SizedBox(height: 20),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              SmallOutlinedButton(
+                                style: FontFamily().regularText.copyWith(
+                                    color: ColorStyle().primaryColors,
+                                    fontSize: 16),
+                                height: 48,
+                                width: 150,
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                title: "Cancel",
+                              ),
+                              SizedBox(
+                                child: SmallElevatedButton2(
+                                  style: FontFamily().regularText.copyWith(
+                                      color: ColorStyle().whiteColors,
+                                      fontSize: 16),
+                                  height: 48,
+                                  width: 150,
+                                  onPressed: () async {
+                                    setState(() {
+                                      _isLoading = true;
+                                    });
+                                    try {
+                                      String? userId =
+                                          await UserPreferences.getUserId();
+                                      if (userId != null) {
+                                        var result = await bookSession(
+                                            sessionId, userId);
+                                        setState(() {
+                                          _isLoading = false;
+                                        });
+                                        if (result.isSuccess) {
+                                          // ignore: use_build_context_synchronously
+                                          Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DetailBookingSession(
+                                                      nama_mentor: widget
+                                                          .detailmentor.name
+                                                          .toString(),
+                                                      nama_session: widget
+                                                          .detailmentor.session!
+                                                          .map((session) =>
+                                                              session.title)
+                                                          .join(", "),
+                                                      jadwal_session:
+                                                          formattedJadwal +
+                                                              " " +
+                                                              formattedStartTime +
+                                                              " - " +
+                                                              formattedEndTime,
+                                                    )),
+                                            (Route<dynamic> route) => false,
+                                          );
+                                        } else {
+                                          // Jika booking gagal, tampilkan pesan error
+                                          throw Exception(result.message);
+                                        }
+                                      } else {
+                                        throw Exception(
+                                            "Anda belum login, silahkan login terlebih dahulu.");
+                                      }
+                                    } catch (e) {
+                                      showTopSnackBar(context, e.toString());
+                                    }
+                                  },
+                                  title: "Booking",
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
                       ),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
+                    ),
+                  ),
+                  if (_isLoading)
+                    Container(
+                      color: Colors.black.withOpacity(0.5),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                ],
+              );
+            },
+          );
+        });
   }
 
   void showTopSnackBar(BuildContext context, String message) {

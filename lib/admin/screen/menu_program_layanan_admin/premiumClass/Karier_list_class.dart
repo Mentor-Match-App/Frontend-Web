@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_flutter_app/admin/model/list_class_model.dart';
@@ -15,7 +16,7 @@ class KarierListPremiumClassAdminScreenState extends StatefulWidget {
 
 class _KarierListPremiumClassAdminScreenStateState
     extends State<KarierListPremiumClassAdminScreenState> {
-late Future<List<Class>> _listClassesFuture;
+  late Future<List<Class>> _listClassesFuture;
   @override
   void initState() {
     super.initState();
@@ -32,7 +33,7 @@ late Future<List<Class>> _listClassesFuture;
               ),
         ),
       ),
-       body: FutureBuilder<List<Class>>(
+      body: FutureBuilder<List<Class>>(
         future: _listClassesFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -64,8 +65,13 @@ late Future<List<Class>> _listClassesFuture;
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                  child: Image.network(
-                                classData.mentor?.photoUrl ?? '',
+                                  child: CachedNetworkImage(
+                                placeholder: (context, url) => Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                                imageUrl: classData.mentor?.photoUrl ?? '',
                                 width: 100,
                                 height: 100,
                               )),

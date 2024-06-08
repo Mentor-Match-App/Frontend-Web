@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 
@@ -37,8 +38,12 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
           ),
         ),
         child: ClipOval(
-          child: Image.network(
-            widget.imageUrl!,
+          child: CachedNetworkImage(
+            placeholder: (context, url) => Center(
+              child: CircularProgressIndicator(),
+            ),
+            errorWidget: (context, url, error) => Icon(Icons.error),
+            imageUrl: widget.imageUrl!,
             fit: BoxFit.cover,
             width: 120,
             height: 120,

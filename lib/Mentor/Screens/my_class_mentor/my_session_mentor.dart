@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-// import 'package:my_flutter_app/Mentor/model/my_class_mentor_model.dart';
-import 'package:my_flutter_app/mentee/screen/premium_class/detail_class_mentor_all_screen.dart';
 import 'package:my_flutter_app/mentor/model/my_class_mentor_model.dart';
 import 'package:my_flutter_app/mentor/service/myClassCreate_Mentor_service.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
+
 class MySessionCreate extends StatefulWidget {
   MySessionCreate({Key? key}) : super(key: key);
 
@@ -88,7 +87,8 @@ class _MySessionCreateState extends State<MySessionCreate> {
         child: Text(
           title,
           style: FontFamily().boldText.copyWith(
-                color: color, fontSize: 16,
+                color: color,
+                fontSize: 16,
               ),
         ));
   }
@@ -104,7 +104,6 @@ class _MySessionCreateState extends State<MySessionCreate> {
       value.sort((a, b) {
         return _getPriority(a).compareTo(_getPriority(b));
       });
-      setState(() {}); // Atur ulang state setelah sorting dilakukan
     });
   }
 
@@ -115,12 +114,14 @@ class _MySessionCreateState extends State<MySessionCreate> {
           _sessionsFuture, // Asumsi ini adalah Future yang Anda panggil untuk mendapatkan data
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return Container(
+              height: MediaQuery.of(context).size.height / 2.0,
+              child: Center(child: CircularProgressIndicator()));
         } else if (snapshot.hasError) {
           return Text("Error: ${snapshot.error}");
         } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
           // Menggunakan SingleChildScrollView dan Column untuk menampilkan data
-           if (snapshot.data!.isEmpty) {
+          if (snapshot.data!.isEmpty) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
@@ -247,8 +248,16 @@ class _MySessionCreateState extends State<MySessionCreate> {
             ),
           );
         } else {
-          return Center(
-            child: Text("Tidak ada session", style: FontFamily().boldText),
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                      child: Text('Kamu belum memiliki session saat ini')),
+                )),
           );
         }
       },

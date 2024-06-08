@@ -1,11 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/mentee/provider/review_mentor_provider.dart';
 import 'package:my_flutter_app/mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/premium_class/detail_class_mentor_all_screen.dart';
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:provider/provider.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
+
 class ReviewMentorScreen extends StatefulWidget {
   final String mentorId;
   final String mentorPhoto;
@@ -58,8 +60,13 @@ class _ReviewMentorScreenState extends State<ReviewMentorScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           ClipOval(
-                            child: Image.network(
-                              widget.mentorPhoto.toString(),
+                            child: CachedNetworkImage(
+                              placeholder: (context, url) => Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                              imageUrl: widget.mentorPhoto.toString(),
                               fit: BoxFit.cover,
                               width: 140,
                               height: 140,

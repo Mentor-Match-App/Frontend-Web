@@ -1,14 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/mentor/screens/register_mentor/verification_page.dart';
 import 'package:my_flutter_app/mentor/service/register_mentor_service.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/style/text.dart';
 import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/flushsBar_widget.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
 
 class RegisterMentorScreen extends StatefulWidget {
   const RegisterMentorScreen({Key? key}) : super(key: key);
@@ -256,8 +257,13 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                           ),
                         ),
                         child: ClipOval(
-                          child: Image.network(
-                            _photoUrl,
+                          child: CachedNetworkImage(
+                            placeholder: (context, url) => Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                            imageUrl: _photoUrl,
                             fit: BoxFit.cover,
                             width: 120,
                             height: 120,

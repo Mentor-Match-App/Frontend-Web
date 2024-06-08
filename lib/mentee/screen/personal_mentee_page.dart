@@ -1,7 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_flutter_app/widget/form.dart';
 import 'package:my_flutter_app/widget/custombutton.dart';
+import 'package:my_flutter_app/widget/form.dart';
 
 class MenteeProfilePage extends StatefulWidget {
   const MenteeProfilePage({Key? key}) : super(key: key);
@@ -47,8 +48,12 @@ class _MenteeProfilePageState extends State<MenteeProfilePage> {
                     color: Colors.white,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(150.0),
-                      child: Image.network(
-                        'https://picsum.photos/250?image=9',
+                      child: CachedNetworkImage(
+                        placeholder: (context, url) => Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        imageUrl: 'https://picsum.photos/250?image=9',
                         fit: BoxFit.cover,
                       ),
                     ),

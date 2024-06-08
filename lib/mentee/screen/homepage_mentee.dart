@@ -1,35 +1,69 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_flutter_app/mentee/screen/notification_mentee_screen.dart';
+import 'package:my_flutter_app/mentee/screen/profile/mentee_profile_screen.dart';
 import 'package:my_flutter_app/mentee/screen/search_page_myclass_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/community_user.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/dashboard_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/my_class/my_class_mentee_sidebar.dart';
+import 'package:my_flutter_app/mentor/service/notification_service.dart';
 import 'package:my_flutter_app/widget/footer.dart';
+import 'package:my_flutter_app/widget/logo_button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/navbaruser.dart';
 import 'package:my_flutter_app/widget/sidebar_mentee.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MenteeHomePage extends StatefulWidget {
   final String selectedMenu;
-  const MenteeHomePage({Key? key, this.selectedMenu = 'Dashboard'});
+  final String subMenu; // New parameter for sub-menu selection
 
+  const MenteeHomePage({
+    Key? key,
+    this.selectedMenu = 'Dashboard',
+    this.subMenu = '',
+  }) : super(key: key);
   @override
   State<MenteeHomePage> createState() => _MenteeHomePageState();
 }
 
 class _MenteeHomePageState extends State<MenteeHomePage> {
+  String _photoUrl = "";
   double _size = 200.0;
-  String _selectedMenu = 'Dasboard';
+  String _selectedMenu = 'Dashboard';
+  int _unreadNotificationsCount = 0;
 
-  // void _handleMenuSelected(String menu) {
-  //   setState(() {
-  //     _selectedMenu = menu;
-  //   });
-  // }
+  final NotificationService _notificationService = NotificationService();
+
+  Future<void> _fetchUnreadNotificationsCount() async {
+    try {
+      final notifications =
+          await _notificationService.fetchNotificationsForCurrentUser();
+      final unreadCount =
+          notifications.where((notification) => !notification.isRead!).length;
+      setState(() {
+        _unreadNotificationsCount = unreadCount;
+      });
+    } catch (e) {
+      print(e); // Handle error appropriately
+    }
+  }
+
+  Future<void> _loadProfile() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      /// photourl
+      _photoUrl = prefs.getString('photoUrl') ?? "";
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    _loadProfile();
+    _fetchUnreadNotificationsCount();
+
     _selectedMenu = widget.selectedMenu;
   }
 
@@ -39,7 +73,92 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
       backgroundColor: ColorStyle().whiteColors,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0),
-        child: NavbarWidgetMentee(),
+        child: Container(
+          color: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  ButtonLogoMenteeMatch(),
+                  const SizedBox(width: 20),
+                ],
+              ),
+              Row(
+                children: [
+                  CustomDropdown(),
+                  const SizedBox(width: 20),
+                  Stack(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NotificationMenteeScreen(),
+                            ),
+                          ).then((_) {
+                            _fetchUnreadNotificationsCount(); // Fetch the unread count when returning to this screen
+                          });
+                        },
+                        icon: Icon(
+                          Icons.notifications_none_outlined,
+                          size: 30,
+                        ),
+                        color: ColorStyle().secondaryColors,
+                      ),
+                      if (_unreadNotificationsCount > 0)
+                        Positioned(
+                          right: 11,
+                          top: 11,
+                          child: Container(
+                            padding: EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            constraints: BoxConstraints(
+                              minWidth: 14,
+                              minHeight: 14,
+                            ),
+                            child: Text(
+                              '$_unreadNotificationsCount',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 8,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(width: 20),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProfileMenteeScreen()),
+                          );
+                        },
+                        child: _buildCircularImage(
+                          _photoUrl,
+                          40,
+                          40,
+                          null,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -78,10 +197,34 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
     );
   }
 
+  Widget _buildCircularImage(
+    String imageUrl,
+    double height,
+    double width,
+    Color? color,
+  ) {
+    return ClipOval(
+      child: CachedNetworkImage(
+        placeholder: (context, url) => Center(
+          child: CircularProgressIndicator(),
+        ),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+        imageUrl: imageUrl,
+        height: height,
+        width: width,
+        fit: BoxFit.cover,
+        color: color,
+        colorBlendMode: color != null ? BlendMode.modulate : null,
+      ),
+    );
+  }
+
   Widget _getSelectedScreen() {
     switch (_selectedMenu) {
       case 'Class':
-        return MyClassMentee();
+        return MyClassMentee(
+          initialSubMenu: widget.subMenu, // Pass the sub-menu parameter
+        );
       case 'Community':
         return CommunityScreen();
       default:

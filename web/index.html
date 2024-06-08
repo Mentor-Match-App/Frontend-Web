@@ -35,6 +35,14 @@
 
 		<title>frontend_web</title>
 		<script>
+			// Unregister existing Service Workers
+			if ('serviceWorker' in navigator) {
+				navigator.serviceWorker.getRegistrations().then((registrations) => {
+					for (let registration of registrations) {
+						registration.unregister();
+					}
+				});
+			}
 			if ('serviceWorker' in navigator) {
 				navigator.serviceWorker
 					.register('/firebase-messaging-sw.js')
@@ -47,8 +55,10 @@
 						// Now you can safely subscribe to push notifications
 					})
 					.catch((err) => {
-						console.log('Service Worker registration failed:', err);
+						console.error('Service Worker registration failed:', err);
 					});
+			} else {
+				console.error('Service Worker not supported in this browser.');
 			}
 		</script>
 		<link rel="manifest" href="manifest.json" />

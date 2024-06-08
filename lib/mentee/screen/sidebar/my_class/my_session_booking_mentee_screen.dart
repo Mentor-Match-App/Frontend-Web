@@ -1,10 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:my_flutter_app/mentee/model/my_class_model.dart';
-import 'package:my_flutter_app/mentee/screen/premium_class/detail_class_mentor_all_screen.dart';
 import 'package:my_flutter_app/mentee/service/my_class_service.dart';
-import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
+import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MySessionBooking extends StatefulWidget {
@@ -59,13 +60,12 @@ class _MySessionBookingState extends State<MySessionBooking> {
   createStatusButton(String title, Color color) {
     return Align(
       alignment: Alignment.centerRight,
-      child: SmallElevatedButtonTag(
-        color: color,
-        onPressed: () {}, // Tentukan tindakan yang diinginkan
-        height: 28,
-        width: 124,
-        title: title,
-        style: FontFamily().buttonText,
+      child: Text(
+        title,
+        style: FontFamily().boldText.copyWith(
+              color: color,
+              fontSize: 12,
+            ),
       ),
     );
   }
@@ -86,12 +86,14 @@ class _MySessionBookingState extends State<MySessionBooking> {
       future: _userData,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return Container(
+              height: MediaQuery.of(context).size.height / 2.0,
+              child: Center(child: CircularProgressIndicator()));
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
           final List<ParticipantMyClass> participants = snapshot.data!;
-           if (participants.isEmpty) {
+          if (participants.isEmpty) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
@@ -99,7 +101,7 @@ class _MySessionBookingState extends State<MySessionBooking> {
                   height: MediaQuery.of(context).size.height / 2,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Center(child: Text('you dont have any session')),
+                    child: Center(child: Text('Kamu belum memiliki session')),
                   )),
             );
           }
@@ -126,12 +128,9 @@ class _MySessionBookingState extends State<MySessionBooking> {
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(
-                              0.12), // Mengatur opasitas warna shadow lebih tinggi
-                          blurRadius:
-                              6, // Meningkatkan blur radius untuk shadow yang lebih luas
-                          offset: const Offset(0,
-                              2), // Mengubah offset untuk shadow yang lebih jelas
+                          color: Colors.black.withOpacity(0.12),
+                          blurRadius: 6,
+                          offset: const Offset(0, 2),
                         ),
                       ],
                       color: ColorStyle().whiteColors,
@@ -154,8 +153,13 @@ class _MySessionBookingState extends State<MySessionBooking> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ClipOval(
-                                child: Image.network(
-                                  session.mentor!.photoUrl.toString(),
+                                child: CachedNetworkImage(
+                                  placeholder: (context, url) => Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
+                                  imageUrl: session.mentor!.photoUrl.toString(),
                                   fit: BoxFit.cover,
                                   width: 98,
                                   height: 98,
@@ -172,20 +176,29 @@ class _MySessionBookingState extends State<MySessionBooking> {
                                       session.title ?? '',
                                       style: FontFamily().boldText.copyWith(
                                           fontSize: 14,
-                                          color: ColorStyle().primaryColors),
+                                          color: ColorStyle().blackColors),
                                     ),
                                     const SizedBox(height: 12),
                                     Text(
                                       'Mentor : ${session.mentor!.name}',
-                                      style: FontFamily().regularText,
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: ColorStyle().disableColors),
                                     ),
                                     Text(
                                       'Jadwal : ${formattedJadwal}',
-                                      style: FontFamily().regularText,
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: ColorStyle().disableColors),
                                     ),
                                     Text(
                                       'Jam : ${formattedStartTime} - ${formattedEndTime}',
-                                      style: FontFamily().regularText,
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: ColorStyle().disableColors),
                                     ),
                                   ],
                                 ),
@@ -235,7 +248,16 @@ class _MySessionBookingState extends State<MySessionBooking> {
             ),
           );
         } else {
-          return const Text('Kamu belum memiliki session saat ini');
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(child: Text('Kamu belum memiliki session')),
+                )),
+          );
         }
       },
     );

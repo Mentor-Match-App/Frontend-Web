@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/mentee/screen/premium_class/detail_class_mentor_all_screen.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/evaluasi/send_feedback_evaluasi.dart';
-import 'package:my_flutter_app/mentor/Screens/notificationmentor_page.dart';
 import 'package:my_flutter_app/mentor/model/my_class_mentor_model.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/style/text.dart';
 import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/flushsBar_widget.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/text_field.dart';
-
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../service/sent_evaluasi_service.dart';
@@ -50,7 +48,6 @@ class _EvaluasiMentorScreenState extends State<EvaluasiMentorScreen> {
 
     super.dispose();
   }
-  
 
   void _sendEvaluation() async {
     await Future.delayed(Duration(seconds: 1));
@@ -122,20 +119,6 @@ class _EvaluasiMentorScreenState extends State<EvaluasiMentorScreen> {
             style: FontFamily()
                 .titleText
                 .copyWith(color: ColorStyle().primaryColors),
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => NotificationMentorPage(),
-                ),
-              );
-            },
-            icon: Icon(
-              Icons.notifications_none_outlined,
-              color: ColorStyle().secondaryColors,
-            ),
           ),
         ],
       )),

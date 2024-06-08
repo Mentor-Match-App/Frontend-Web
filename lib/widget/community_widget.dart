@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
+
 class CardCommunity extends StatefulWidget {
   final String title;
   final String imagePath;
@@ -36,8 +38,12 @@ class _CardCommunityState extends State<CardCommunity> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.network(
-                widget.imagePath,
+              CachedNetworkImage(
+                placeholder: (context, url) => Center(
+                  child: CircularProgressIndicator(),
+                ),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+                imageUrl: widget.imagePath,
                 height: 150,
                 width: 150,
                 fit: BoxFit.cover,
