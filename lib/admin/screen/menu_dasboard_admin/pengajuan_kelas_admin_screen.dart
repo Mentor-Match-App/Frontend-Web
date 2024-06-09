@@ -160,7 +160,7 @@ class _PengajuanKelasAdminScreenState extends State<PengajuanKelasAdminScreen> {
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                labelText: 'Search',
+                labelText: 'Search by class name',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),

@@ -16,18 +16,41 @@ class _TabelVerifikasiPembayaranState extends State<TabelVerifikasiPembayaran> {
   final UnverifiedTransactionService _unverifiedTransactionService =
       UnverifiedTransactionService();
   List<Transaction> _transactions = [];
-
+  List<Transaction> _filteredTransactions = [];
+  TextEditingController _searchController = TextEditingController();
   TextEditingController rejectReasonController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _fetchTransactions();
+    _searchController.addListener(_searchQuery);
+  }
+
+  void _searchQuery() {
+    String query = _searchController.text.toLowerCase();
+    setState(() {
+      _filteredTransactions = _transactions.where((transaction) {
+        return transaction.user!.name!.toLowerCase().contains(query) ||
+                transaction.transactionClass!.name!
+                    .toLowerCase()
+                    .contains(query) ||
+                transaction.transactionClass!.educationLevel!
+                    .toLowerCase()
+                    .contains(query) ||
+                transaction.transactionClass!.mentor!.name!
+                    .toLowerCase()
+                    .contains(query)
+
+            /// sudah akhiri
+            ;
+      }).toList();
+    });
   }
 
   @override
   void dispose() {
-    rejectReasonController.dispose();
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -38,6 +61,7 @@ class _TabelVerifikasiPembayaranState extends State<TabelVerifikasiPembayaran> {
           await _unverifiedTransactionService.fetchUnverifiedTransactions();
       setState(() {
         _transactions = transactions;
+        _filteredTransactions = transactions; // Initialize filtered list
       });
     } catch (e) {
       // Handle or log error
@@ -181,15 +205,61 @@ class _TabelVerifikasiPembayaranState extends State<TabelVerifikasiPembayaran> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Data Pembayaran Premium Class'),
+          title: Text(
+            'Data Pembayaran Premium Class',
+            style: FontFamily()
+                .boldText
+                .copyWith(fontSize: 20)
+                .copyWith(color: ColorStyle().primaryColors),
+          ),
         ),
         body: _transactions.isEmpty
             ? Center(
-                child: Center(
-                    child: Text('Tidak ada data transaksi yang tersedia.')),
+                child: Text('Tidak ada data transaksi yang tersedia.'),
               )
             : ListView(
-                children: [_createDataTable()],
+                children: [
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(24.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Search',
+                              style:
+                                  FontFamily().boldText.copyWith(fontSize: 16),
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            SizedBox(
+                              //lebarnya mengkiuti lebarnya layar
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              height: 60,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextField(
+                                  controller: _searchController,
+                                  decoration: InputDecoration(
+                                    labelText:
+                                        'Search by name, class, level, mentor....',
+                                    prefixIcon: const Icon(Icons.search),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      _createDataTable(),
+                    ],
+                  )
+                ],
               ),
       ),
     );
@@ -286,7 +356,7 @@ class _TabelVerifikasiPembayaranState extends State<TabelVerifikasiPembayaran> {
 
   // Dynamically create rows based on the fetched transactions
   List<DataRow> _createRows() {
-    return _transactions.map((transaction) {
+    return _filteredTransactions.map((transaction) {
       return DataRow(cells: [
         DataCell(Text(
           transaction.user?.name ?? '',
