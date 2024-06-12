@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_class_mentor_screen.dart';
-import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_premium_class_mentor.dart';
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/my_session_mentor.dart';
+import 'package:my_flutter_app/mentor/screens/my_class_mentor/class_submission_mentor.dart';
+import 'package:my_flutter_app/mentor/screens/my_class_mentor/premium_class_mentor.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 
@@ -14,25 +14,23 @@ class MyClassMentorListScreen extends StatefulWidget {
 }
 
 class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
-  bool isAllClassActive = true;
-  bool isMyClassActive = false;
+  bool isClassSubmissionActive = true;
+  bool isPremiumClassActive = false;
   bool isSessionActive = false; // Renamed for consistency
   void changeClass(String menu) {
     setState(() {
       if (menu == "Premium Class") {
-        isMyClassActive = true;
+        isClassSubmissionActive = false;
+        isPremiumClassActive = true;
         isSessionActive = false;
-        isAllClassActive = false;
       } else if (menu == "My Session") {
-        // Corrected the condition
-        isMyClassActive = false;
+        isClassSubmissionActive = false;
+        isPremiumClassActive = false;
         isSessionActive = true;
-        isAllClassActive = false;
       } else {
-        menu == "All Class";
-        isAllClassActive = true;
-        isMyClassActive = false;
-
+        menu = "Class Submission";
+        isClassSubmissionActive = true;
+        isPremiumClassActive = false;
         isSessionActive = false;
       }
     });
@@ -55,7 +53,7 @@ class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
                   border: Border(
                     bottom: BorderSide(
                       width: 2,
-                      color: isAllClassActive
+                      color: isClassSubmissionActive
                           ? ColorStyle().secondaryColors
                           : Colors.transparent,
                     ),
@@ -63,11 +61,11 @@ class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
                 ),
                 child: TextButton(
                     onPressed: () {
-                      changeClass("All Class");
+                      changeClass("Class Submission");
                     },
-                    child: Text("All Class",
+                    child: Text("Class Submission",
                         style: FontFamily().boldText.copyWith(
-                            color: isAllClassActive
+                            color: isClassSubmissionActive
                                 ? ColorStyle().blackColors
                                 : ColorStyle().disableColors))),
               ),
@@ -78,7 +76,7 @@ class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
                   border: Border(
                     bottom: BorderSide(
                       width: 2,
-                      color: isMyClassActive
+                      color: isPremiumClassActive
                           ? ColorStyle().secondaryColors
                           : Colors.transparent,
                     ),
@@ -91,7 +89,7 @@ class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
                   child: Text(
                     "Premium Class",
                     style: FontFamily().boldText.copyWith(
-                        color: isMyClassActive
+                        color: isPremiumClassActive
                             ? ColorStyle().blackColors
                             : ColorStyle().disableColors),
                   ),
@@ -128,13 +126,13 @@ class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
         ),
         Column(
           children: [
-            isAllClassActive
-                ? AllClassMentorScreen()
+            isClassSubmissionActive
+                ? ClassSubmissionMentorScreen()
                 : isSessionActive
                     ? MySessionCreate()
-                    : isMyClassActive
-                        ? MyClassMentorScreen()
-                        : AllClassMentorScreen()
+                    : isPremiumClassActive
+                        ? PremiumClassMentorScreen()
+                        : ClassSubmissionMentorScreen()
           ],
         )
       ],

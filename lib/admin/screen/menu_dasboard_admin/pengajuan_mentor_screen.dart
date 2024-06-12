@@ -68,7 +68,9 @@ class _PengajuanMentorAdminScreenState
           future: _unverifiedMentorsFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return SizedBox(
+                  height: MediaQuery.of(context).size.height / 2.0,
+                  child: Center(child: CircularProgressIndicator()));
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error.toString()}'));
             } else if (snapshot.hasData) {
@@ -137,19 +139,13 @@ class _PengajuanMentorAdminScreenState
                 }).toList(),
               ));
             } else {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: ColorStyle().tertiaryColors,
-                    ),
-                    width: 800,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(child: Text('Tidak ada pengajuan mentor')),
-                    )),
-              );
+              return SizedBox(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height / 2.0,
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Center(child: Text('Tidak ada pengajuan mentor')),
+                  ));
             }
           },
         ),

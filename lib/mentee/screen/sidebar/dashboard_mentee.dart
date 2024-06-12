@@ -54,6 +54,7 @@ class _DashboardMenteeState extends State<DashboardMentee> {
             return SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

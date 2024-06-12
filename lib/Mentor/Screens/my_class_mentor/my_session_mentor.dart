@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:my_flutter_app/mentor/model/my_class_mentor_model.dart';
 import 'package:my_flutter_app/mentor/service/myClassCreate_Mentor_service.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
+import 'package:my_flutter_app/widget/flushsBar_widget.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -226,8 +227,14 @@ class _MySessionCreateState extends State<MySessionCreate> {
                                       foregroundColor: ColorStyle().whiteColors,
                                     ),
                                     onPressed: () {
-                                      final zommLink = session.zoomLink ?? '';
-                                      _launchURL(zommLink);
+                                      final zoomLink = session.zoomLink ?? '';
+
+                                      if (zoomLink.isEmpty) {
+                                        showTopSnackBar(context,
+                                            'Zoom link belum tersedia');
+                                      } else {
+                                        _launchURL(zoomLink);
+                                      }
                                     },
                                     icon: Icon(Icons.link),
                                     label: Text('Join Session',

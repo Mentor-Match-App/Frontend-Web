@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:my_flutter_app/mentee/model/category_Karier_model.dart';
-
 import 'package:my_flutter_app/mentee/screen/premium_class/Karier/detail_class_mentor_karier_screen.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
-
+import 'package:my_flutter_app/widget/flushsBar_widget.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/navbaruser.dart';
 import 'package:my_flutter_app/widget/profileavatar.dart';
@@ -445,60 +444,76 @@ class _DetailMentorKarierScreenState extends State<DetailMentorKarierScreen> {
                                                             10.0),
                                                   ),
                                                 ),
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          DetailClassMentorKarier(
-                                                        addressMentoring:
-                                                            kelas.address ?? "",
-                                                        locationMentoring:
-                                                            kelas.location ??
-                                                                "",
-                                                        mentorName: widget.name,
-                                                        transaction: kelas
-                                                                .transactions ??
-                                                            [],
-                                                        mentorData:
-                                                            widget.mentor,
-                                                        classId: kelas.id,
-                                                        classname: kelas.name ??
-                                                            'No Class Name',
-                                                        classprice:
-                                                            kelas.price ?? 0,
-                                                        classduration: kelas
-                                                                .durationInDays ??
-                                                            0,
-                                                        maxParticipants: kelas
-                                                                .maxParticipants ??
-                                                            0,
-                                                        endDate: DateTime.parse(
-                                                            kelas.endDate ??
-                                                                ''),
-                                                        startDate:
-                                                            DateTime.parse(kelas
-                                                                    .startDate ??
-                                                                ''),
-                                                        schedule:
-                                                            kelas.schedule ??
-                                                                'No Schedule',
-                                                        classDescription: kelas
-                                                                .description ??
-                                                            'No Description',
-                                                        targetLearning: kelas
-                                                            .targetLearning,
-                                                        terms: kelas.terms,
-                                                        durationInDays: kelas
-                                                            .durationInDays,
-                                                        price: kelas.price ?? 0,
-                                                        location:
-                                                            kelas.location,
-                                                        address: kelas.address,
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
+                                                onPressed: availableSlots > 0
+                                                    ? () {
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                DetailClassMentorKarier(
+                                                              addressMentoring:
+                                                                  kelas.address ??
+                                                                      "",
+                                                              locationMentoring:
+                                                                  kelas.location ??
+                                                                      "",
+                                                              mentorName:
+                                                                  widget.name,
+                                                              transaction: kelas
+                                                                      .transactions ??
+                                                                  [],
+                                                              mentorData:
+                                                                  widget.mentor,
+                                                              classId: kelas.id,
+                                                              classname: kelas
+                                                                      .name ??
+                                                                  'No Class Name',
+                                                              classprice:
+                                                                  kelas.price ??
+                                                                      0,
+                                                              classduration:
+                                                                  kelas.durationInDays ??
+                                                                      0,
+                                                              maxParticipants:
+                                                                  kelas.maxParticipants ??
+                                                                      0,
+                                                              endDate: DateTime
+                                                                  .parse(kelas
+                                                                          .endDate ??
+                                                                      ''),
+                                                              startDate: DateTime
+                                                                  .parse(kelas
+                                                                          .startDate ??
+                                                                      ''),
+                                                              schedule: kelas
+                                                                      .schedule ??
+                                                                  'No Schedule',
+                                                              classDescription:
+                                                                  kelas.description ??
+                                                                      'No Description',
+                                                              targetLearning: kelas
+                                                                  .targetLearning,
+                                                              terms:
+                                                                  kelas.terms,
+                                                              durationInDays: kelas
+                                                                  .durationInDays,
+                                                              price:
+                                                                  kelas.price ??
+                                                                      0,
+                                                              location: kelas
+                                                                  .location,
+                                                              address:
+                                                                  kelas.address,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }
+                                                    : () {
+                                                        showTopSnackBar(context,
+                                                            'Maaf, slot kelas ini sudah penuh',
+                                                            leftBarIndicatorColor:
+                                                                Colors.red);
+                                                      },
                                                 child: Text(
                                                   "Lihat Detail",
                                                   style: TextStyle(

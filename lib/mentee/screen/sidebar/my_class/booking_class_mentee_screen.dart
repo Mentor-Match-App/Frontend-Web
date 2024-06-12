@@ -11,47 +11,35 @@ import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class AllClassMenteeScreen extends StatefulWidget {
+class BookingClassMenteeScreen extends StatefulWidget {
   @override
-  _AllClassMenteeScreenState createState() => _AllClassMenteeScreenState();
+  _BookingClassMenteeScreenState createState() =>
+      _BookingClassMenteeScreenState();
 }
 
-class _AllClassMenteeScreenState extends State<AllClassMenteeScreen> {
+class _BookingClassMenteeScreenState extends State<BookingClassMenteeScreen> {
   Future<List<TransactionMyClass>>? _userData;
-  int getClassStatusPriority(TransactionMyClass transaction) {
-    // Gunakan logika yang sama untuk menentukan status
-    DateTime now = DateTime.now();
-    DateTime startDate =
-        DateTime.parse(transaction.transactionClass?.startDate ?? '');
-    DateTime endDate =
-        DateTime.parse(transaction.transactionClass?.endDate ?? '');
-    bool isClassActive = now.isAfter(startDate) && now.isBefore(endDate);
-    bool isClassScheduled =
-        now.isBefore(startDate) && transaction.paymentStatus == "Approved";
-    bool isClassFinished = now.isAfter(endDate);
 
-    /// Prioritize Rejected status
+  int getClassStatusPriority(TransactionMyClass transaction) {
     if (transaction.paymentStatus == "Rejected") {
       return 0; // Highest priority
-    } else if (isClassActive) {
-      return 1;
-    } else if (isClassScheduled) {
-      return 2;
     } else if (transaction.paymentStatus == "Pending") {
-      return 3;
-    } else if (isClassFinished) {
-      return 4;
+      return 1;
     } else if (transaction.paymentStatus == "Expired") {
-      return 5;
+      return 2;
     }
-
-    return 6; // For other or unknown statuses
+    return 3;
   }
 
   @override
   void initState() {
     super.initState();
     _userData = BookingService().fetchUserTransactions().then((transactions) {
+      transactions = transactions.where((transaction) {
+        return transaction.paymentStatus == "Rejected" ||
+            transaction.paymentStatus == "Pending" ||
+            transaction.paymentStatus == "Expired";
+      }).toList();
       transactions.sort((a, b) =>
           getClassStatusPriority(a).compareTo(getClassStatusPriority(b)));
       return transactions;
@@ -87,9 +75,9 @@ class _AllClassMenteeScreenState extends State<AllClassMenteeScreen> {
       future: _userData,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container(
+          return SizedBox(
               height: MediaQuery.of(context).size.height / 2.0,
-              child: Center(child: CircularProgressIndicator()));
+              child: Center(child: const CircularProgressIndicator()));
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
@@ -97,12 +85,13 @@ class _AllClassMenteeScreenState extends State<AllClassMenteeScreen> {
           if (classBooking.isEmpty) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Container(
+              child: SizedBox(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height / 2,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Center(child: Text('Kamu belum memiliki kelas')),
+                    child:
+                        const Center(child: Text('Kamu belum memiliki kelas')),
                   )),
             );
           }
@@ -129,7 +118,7 @@ class _AllClassMenteeScreenState extends State<AllClassMenteeScreen> {
                             ),
                           ),
                         );
-                      } else if (statusButton == 3) {
+                      } else if (statusButton == 1) {
                         // Pending
                         Navigator.push(
                           context,
@@ -143,7 +132,7 @@ class _AllClassMenteeScreenState extends State<AllClassMenteeScreen> {
                             ),
                           ),
                         );
-                      } else if (statusButton == 5) {
+                      } else if (statusButton == 2) {
                         // Expired
                         Navigator.push(
                           context,
@@ -202,17 +191,8 @@ class _AllClassMenteeScreenState extends State<AllClassMenteeScreen> {
                                   "Rejected", ColorStyle().errorColors)
                             else if (statusButton == 1)
                               createStatusButton(
-                                  "Active", ColorStyle().succesColors)
-                            else if (statusButton == 2)
-                              createStatusButton(
-                                  "Scheduled", ColorStyle().secondaryColors)
-                            else if (statusButton == 3)
-                              createStatusButton(
                                   "Pending", ColorStyle().pendingColors)
-                            else if (statusButton == 4)
-                              createStatusButton(
-                                  "Finished", ColorStyle().disableColors)
-                            else if (statusButton == 5)
+                            else if (statusButton == 2)
                               createStatusButton(
                                   "Expired", ColorStyle().blackColors),
                             SizedBox(height: 10),
@@ -279,11 +259,11 @@ class _AllClassMenteeScreenState extends State<AllClassMenteeScreen> {
         } else {
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Container(
+            child: SizedBox(
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height / 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Center(child: Text('Kamu belum memiliki kelas')),
                 )),
           );

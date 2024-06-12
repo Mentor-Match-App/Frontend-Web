@@ -4,12 +4,13 @@ import 'package:my_flutter_app/mentee/model/my_class_model.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/my_class/evaluasi_mentee_screen.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/my_class/list_materi_class_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/my_class/review_mentor_screen.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/style/text.dart';
 import 'package:my_flutter_app/widget/category_card.dart';
 import 'package:my_flutter_app/widget/flushsBar_widget.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
+
 class DetailMyClassMenteeScreen extends StatefulWidget {
   final DateTime endDate;
   final DateTime startDate;
@@ -150,7 +151,7 @@ class _DetailMyClassMenteeScreenState extends State<DetailMyClassMenteeScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TittleTextField(title: 'Jumlah Mentee dikelas'),
+                    TittleTextField(title: 'Kapasitas Kelas'),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Text(
@@ -319,14 +320,22 @@ class _DetailMyClassMenteeScreenState extends State<DetailMyClassMenteeScreen> {
                           title: "Meeting",
                           icon: 'assets/Handoff/icon/MyClass/meeting_icon.png',
                           onTap: () {
-                            if (widget.linkZoom == null ||
-                                widget.linkZoom!.isEmpty) {
+                            if (widget.classData.address != null ||
+                                widget.classData.address!.isNotEmpty) {
                               showTopSnackBar(
-                                  context, "Link Zoom belum tersedia",
+                                  context, "Kelas ini dilakukan secara offline",
                                   leftBarIndicatorColor:
                                       ColorStyle().errorColors);
                             } else {
-                              _launchURL(widget.linkZoom!);
+                              if (widget.linkZoom == null ||
+                                  widget.linkZoom!.isEmpty) {
+                                showTopSnackBar(
+                                    context, "Link Zoom belum tersedia",
+                                    leftBarIndicatorColor:
+                                        ColorStyle().errorColors);
+                              } else {
+                                _launchURL(widget.linkZoom!);
+                              }
                             }
                           },
                         ),

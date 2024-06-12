@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/mentee/model/my_class_model.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/my_class/detail_my_class_mentee_screen.dart';
-import 'package:my_flutter_app/mentee/screen/sidebar/my_class/payment_error_mentee_screen.dart';
 import 'package:my_flutter_app/mentee/service/my_class_service.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
@@ -29,21 +28,15 @@ class _PremiumClassMenteeScreenState extends State<PremiumClassMenteeScreen> {
         now.isBefore(startDate) && transaction.paymentStatus == "Approved";
     bool isClassFinished = now.isAfter(endDate);
 
-    if (transaction.paymentStatus == "Rejected") {
-      return 0; // Highest priority
-    } else if (isClassActive) {
+    if (isClassActive) {
       return 1;
     } else if (isClassScheduled) {
       return 2;
-    } else if (transaction.paymentStatus == "Pending") {
-      return 3;
     } else if (isClassFinished) {
-      return 4;
-    } else if (transaction.paymentStatus == "Expired") {
-      return 5;
+      return 3;
     }
 
-    return 6; // For other or unknown statuses
+    return 4;
   }
 
   @override
@@ -52,10 +45,9 @@ class _PremiumClassMenteeScreenState extends State<PremiumClassMenteeScreen> {
     _userData = BookingService().fetchUserTransactions().then((transactions) {
       transactions.sort((a, b) =>
           getClassStatusPriority(a).compareTo(getClassStatusPriority(b)));
-      return transactions.where((transaction) {
-        int priority = getClassStatusPriority(transaction);
-        return priority == 1 || priority == 2; // Only active and scheduled
-      }).toList();
+      return transactions
+          .where((transaction) => getClassStatusPriority(transaction) != 4)
+          .toList();
     });
   }
 
@@ -101,151 +93,130 @@ class _PremiumClassMenteeScreenState extends State<PremiumClassMenteeScreen> {
                   height: MediaQuery.of(context).size.height / 2,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Center(child: Text('Kamu belum memiliki kelas')),
+                    child: Center(
+                        child: Text('Kamu belum memiliki kelas saat ini')),
                   )),
             );
           }
           return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 16.0, right: 16.0, top: 16.0, bottom: 4.0),
-              child: Column(
-                children: classBooking.map((data) {
-                  int statusButton = getClassStatusPriority(data);
-                  final classData = data.transactionClass!;
-                  return GestureDetector(
+            child: Column(
+              children: classBooking.map((data) {
+                int statusButton = getClassStatusPriority(data);
+                final classData = data.transactionClass!;
+                return Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: GestureDetector(
                     onTap: () {
-                      if (statusButton == 0) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PaymentErrorScreenMentee(
-                              mentorname: classData.mentor!.name ?? '',
-                              classname: classData.name ?? '',
-                              rejectReason: data.rejectReason.toString(),
-                              price: classData.price ?? 0,
-                              uniqueId: data.uniqueCode ?? 0,
-                            ),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailMyClassMenteeScreen(
+                            learningMaterial: classData.learningMaterial ?? [],
+                            endDate: DateTime.parse(classData.endDate ?? ''),
+                            startDate:
+                                DateTime.parse(classData.startDate ?? ''),
+                            targetLearning: classData.targetLearning ?? [],
+                            maxParticipants: classData.maxParticipants ?? 0,
+                            schedule: classData.schedule ?? '',
+                            mentorId: classData.mentorId ?? '',
+                            mentorPhoto: classData.mentor!.photoUrl ?? '',
+                            classData: classData,
+                            descriptionKelas: classData.description.toString(),
+                            terms: classData.terms ?? [],
+                            evaluasi: classData.evaluations ?? [],
+                            linkEvaluasi: classData.zoomLink ?? '',
+                            mentorName: classData.mentor!.name ?? '',
+                            linkZoom: classData.zoomLink ?? '',
+                            namaKelas: classData.name ?? '',
+                            periode: classData.durationInDays ?? 0,
                           ),
-                        );
-                      } else {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DetailMyClassMenteeScreen(
-                              learningMaterial:
-                                  classData.learningMaterial ?? [],
-                              endDate: DateTime.parse(classData.endDate ?? ''),
-                              startDate:
-                                  DateTime.parse(classData.startDate ?? ''),
-                              targetLearning: classData.targetLearning ?? [],
-                              maxParticipants: classData.maxParticipants ?? 0,
-                              schedule: classData.schedule ?? '',
-                              mentorId: classData.mentorId ?? '',
-                              mentorPhoto: classData.mentor!.photoUrl ?? '',
-                              classData: classData,
-                              descriptionKelas:
-                                  classData.description.toString(),
-                              terms: classData.terms ?? [],
-                              evaluasi: classData.evaluations ?? [],
-                              linkEvaluasi: classData.zoomLink ?? '',
-                              mentorName: classData.mentor!.name ?? '',
-                              linkZoom: classData.zoomLink ?? '',
-                              namaKelas: classData.name ?? '',
-                              periode: classData.durationInDays ?? 0,
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(
-                                  0.12), // Mengatur opasitas warna shadow lebih tinggi
-                              blurRadius:
-                                  6, // Meningkatkan blur radius untuk shadow yang lebih luas
-                              offset: const Offset(0,
-                                  2), // Mengubah offset untuk shadow yang lebih jelas
-                            ),
-                          ],
-                          color: ColorStyle().whiteColors,
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Column(
-                            children: [
-                              if (statusButton == 1)
-                                createStatusButton(
-                                    "Active", ColorStyle().succesColors)
-                              else if (statusButton == 2)
-                                createStatusButton(
-                                    "Scheduled", ColorStyle().secondaryColors),
-                              SizedBox(height: 10),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ClipOval(
-                                    child: CachedNetworkImage(
-                                      placeholder: (context, url) => Center(
-                                        child: CircularProgressIndicator(),
-                                      ),
-                                      errorWidget: (context, url, error) =>
-                                          Icon(Icons.error),
-                                      imageUrl:
-                                          classData.mentor!.photoUrl.toString(),
-                                      fit: BoxFit.cover,
-                                      width: 98,
-                                      height: 98,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          classData.name ?? '',
-                                          style: FontFamily().boldText.copyWith(
-                                              fontSize: 14,
-                                              color: ColorStyle().blackColors),
-                                        ),
-                                        const SizedBox(height: 12),
-                                        Text(
-                                          'Mentor : ${classData.mentor!.name}',
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400,
-                                              color:
-                                                  ColorStyle().disableColors),
-                                        ),
-                                        Text(
-                                          'Durasi : ${classData.durationInDays} Hari',
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400,
-                                              color:
-                                                  ColorStyle().disableColors),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 8),
-                            ],
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.12),
+                            blurRadius: 6,
+                            offset: const Offset(0, 2),
                           ),
+                        ],
+                        color: ColorStyle().whiteColors,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          children: [
+                            if (statusButton == 1)
+                              createStatusButton(
+                                  "Active", ColorStyle().succesColors)
+                            else if (statusButton == 2)
+                              createStatusButton(
+                                  "Scheduled", ColorStyle().secondaryColors)
+                            else if (statusButton == 3)
+                              createStatusButton(
+                                  "Finished", ColorStyle().disableColors),
+                            SizedBox(height: 10),
+                            SizedBox(height: 10),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ClipOval(
+                                  child: CachedNetworkImage(
+                                    placeholder: (context, url) => Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        Icon(Icons.error),
+                                    imageUrl:
+                                        classData.mentor!.photoUrl.toString(),
+                                    fit: BoxFit.cover,
+                                    width: 98,
+                                    height: 98,
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        classData.name ?? '',
+                                        style: FontFamily().boldText.copyWith(
+                                            fontSize: 14,
+                                            color: ColorStyle().blackColors),
+                                      ),
+                                      const SizedBox(height: 12),
+                                      Text(
+                                        'Mentor : ${classData.mentor!.name}',
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: ColorStyle().disableColors),
+                                      ),
+                                      Text(
+                                        'Durasi : ${classData.durationInDays} Hari',
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: ColorStyle().disableColors),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                          ],
                         ),
                       ),
                     ),
-                  );
-                }).toList(),
-              ),
+                  ),
+                );
+              }).toList(),
             ),
           );
         } else {
@@ -254,9 +225,10 @@ class _PremiumClassMenteeScreenState extends State<PremiumClassMenteeScreen> {
             child: Container(
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height / 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(child: Text('Kamu belum memiliki kelas')),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child:
+                      Center(child: Text('Kamu belum memiliki kelas saat ini')),
                 )),
           );
         }

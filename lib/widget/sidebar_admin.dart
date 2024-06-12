@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_flutter_app/login/login_screen.dart';
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
@@ -84,6 +85,8 @@ class _SideBarAdminState extends State<SideBarAdmin> {
   }
 
   _buildLogoutButton() {
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextButton.icon(
@@ -100,6 +103,7 @@ class _SideBarAdminState extends State<SideBarAdmin> {
                 onConfirm: () async {
                   // Tulis logika logout Anda di sini
                   // Misalnya, membersihkan shared preferences dan navigasi ke halaman login
+                  await _googleSignIn.signOut();
                   await UserPreferences.clearPreferences();
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => LoginScreen()),

@@ -8,23 +8,38 @@ import 'package:my_flutter_app/widget/menucategory.dart';
 
 class TabelVerifikasiPembayaran extends StatefulWidget {
   @override
-  _TabelVerifikasiPembayaranState createState() =>
-      _TabelVerifikasiPembayaranState();
+  _TabelVerifikasiPembayaranState createState() {
+    return _TabelVerifikasiPembayaranState();
+  }
 }
 
 class _TabelVerifikasiPembayaranState extends State<TabelVerifikasiPembayaran> {
-  final UnverifiedTransactionService _unverifiedTransactionService =
-      UnverifiedTransactionService();
+  final TextEditingController _searchController = TextEditingController();
+  TextEditingController rejectReasonController = TextEditingController();
   List<Transaction> _transactions = [];
   List<Transaction> _filteredTransactions = [];
-  TextEditingController _searchController = TextEditingController();
-  TextEditingController rejectReasonController = TextEditingController();
+  late Future<List<Transaction>> _transactionsFuture;
 
   @override
   void initState() {
     super.initState();
-    _fetchTransactions();
+    _transactionsFuture = UnverifiedTransactionService()
+        .fetchUnverifiedTransactions()
+        .then((transactions) {
+      setState(() {
+        _transactions = transactions;
+        _filteredTransactions = transactions;
+      });
+      return transactions;
+    });
     _searchController.addListener(_searchQuery);
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    rejectReasonController.dispose();
+    super.dispose();
   }
 
   void _searchQuery() {
@@ -32,41 +47,15 @@ class _TabelVerifikasiPembayaranState extends State<TabelVerifikasiPembayaran> {
     setState(() {
       _filteredTransactions = _transactions.where((transaction) {
         return transaction.user!.name!.toLowerCase().contains(query) ||
-                transaction.transactionClass!.name!
-                    .toLowerCase()
-                    .contains(query) ||
-                transaction.transactionClass!.educationLevel!
-                    .toLowerCase()
-                    .contains(query) ||
-                transaction.transactionClass!.mentor!.name!
-                    .toLowerCase()
-                    .contains(query)
-
-            /// sudah akhiri
-            ;
+            transaction.transactionClass!.name!.toLowerCase().contains(query) ||
+            transaction.transactionClass!.educationLevel!
+                .toLowerCase()
+                .contains(query) ||
+            transaction.transactionClass!.mentor!.name!
+                .toLowerCase()
+                .contains(query);
       }).toList();
     });
-  }
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
-
-  // Fetch transactions from the service
-  void _fetchTransactions() async {
-    try {
-      List<Transaction> transactions =
-          await _unverifiedTransactionService.fetchUnverifiedTransactions();
-      setState(() {
-        _transactions = transactions;
-        _filteredTransactions = transactions; // Initialize filtered list
-      });
-    } catch (e) {
-      // Handle or log error
-      print("Error fetching transactions: $e");
-    }
   }
 
   void _showRejectDialog(String transactionId) {
@@ -126,7 +115,7 @@ class _TabelVerifikasiPembayaranState extends State<TabelVerifikasiPembayaran> {
                         padding: EdgeInsets.all(8.0),
                         child: TextField(
                           controller: rejectReasonController,
-                          maxLines: 5, // Set number of lines to make it "large"
+                          maxLines: 5,
                           decoration: InputDecoration(
                             hintText:
                                 "Isi alasan penolakan transaksi disini...",
@@ -134,7 +123,7 @@ class _TabelVerifikasiPembayaranState extends State<TabelVerifikasiPembayaran> {
                                   color: ColorStyle().disableColors,
                                   fontSize: 12,
                                 ),
-                            border: InputBorder.none, // Remove default border
+                            border: InputBorder.none,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -147,12 +136,24 @@ class _TabelVerifikasiPembayaranState extends State<TabelVerifikasiPembayaran> {
                     child: RegularElevatedButtonWidget(
                       text: "Kirim",
                       onPressed: () async {
-                        Navigator.of(context).pop(); // Close the dialog
-                        await _unverifiedTransactionService.rejectTransaction(
+                        Navigator.of(context).pop();
+                        await UnverifiedTransactionService().rejectTransaction(
                           transactionId,
                           rejectReasonController.text,
                         );
-                        _fetchTransactions(); // Refresh transactions list
+
+                        setState(() {
+                          rejectReasonController.clear();
+                          _transactionsFuture = UnverifiedTransactionService()
+                              .fetchUnverifiedTransactions()
+                              .then((transactions) {
+                            setState(() {
+                              _transactions = transactions;
+                              _filteredTransactions = transactions;
+                            });
+                            return transactions;
+                          });
+                        });
                       },
                     ),
                   ),
@@ -178,20 +179,31 @@ class _TabelVerifikasiPembayaranState extends State<TabelVerifikasiPembayaran> {
             TextButton(
               child: Text('Batal'),
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop();
               },
             ),
             TextButton(
               child: Text(isVerify ? 'Verifikasi' : 'Tolak'),
               onPressed: () async {
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop();
                 if (isVerify) {
-                  await _unverifiedTransactionService
+                  await UnverifiedTransactionService()
                       .verifyTransaction(transactionId);
                 } else {
                   _showRejectDialog(transactionId);
                 }
-                _fetchTransactions(); // Refresh the transactions list
+                // Refresh the data
+                setState(() {
+                  _transactionsFuture = UnverifiedTransactionService()
+                      .fetchUnverifiedTransactions()
+                      .then((transactions) {
+                    setState(() {
+                      _transactions = transactions;
+                      _filteredTransactions = transactions;
+                    });
+                    return transactions;
+                  });
+                });
               },
             ),
           ],
@@ -213,11 +225,22 @@ class _TabelVerifikasiPembayaranState extends State<TabelVerifikasiPembayaran> {
                 .copyWith(color: ColorStyle().primaryColors),
           ),
         ),
-        body: _transactions.isEmpty
-            ? Center(
-                child: Text('Tidak ada data transaksi yang tersedia.'),
-              )
-            : ListView(
+        body: FutureBuilder<List<Transaction>>(
+          future: _transactionsFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return SizedBox(
+                  height: MediaQuery.of(context).size.height / 2.0,
+                  child: const Center(child: CircularProgressIndicator()));
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error.toString()}'));
+            } else if (_transactions.isEmpty) {
+              return SizedBox(
+                  height: MediaQuery.of(context).size.height / 2.0,
+                  child: const Center(
+                      child: Text('Tidak ada data transaksi yang tersedia.')));
+            } else {
+              return ListView(
                 children: [
                   Column(
                     children: [
@@ -235,7 +258,6 @@ class _TabelVerifikasiPembayaranState extends State<TabelVerifikasiPembayaran> {
                               width: 20,
                             ),
                             SizedBox(
-                              //lebarnya mengkiuti lebarnya layar
                               width: MediaQuery.of(context).size.width * 0.9,
                               height: 60,
                               child: Padding(
@@ -260,7 +282,10 @@ class _TabelVerifikasiPembayaranState extends State<TabelVerifikasiPembayaran> {
                     ],
                   )
                 ],
-              ),
+              );
+            }
+          },
+        ),
       ),
     );
   }
@@ -354,57 +379,62 @@ class _TabelVerifikasiPembayaranState extends State<TabelVerifikasiPembayaran> {
     ];
   }
 
-  // Dynamically create rows based on the fetched transactions
   List<DataRow> _createRows() {
-    return _filteredTransactions.map((transaction) {
-      return DataRow(cells: [
-        DataCell(Text(
-          transaction.user?.name ?? '',
-          style: TextStyle(fontSize: 10), // Set font size to 10
-        )),
-        DataCell(Text(
-          transaction.transactionClass?.educationLevel ?? '',
-          style: TextStyle(fontSize: 10), // Set font size to 10
-        )),
-        DataCell(Text(
-          transaction.transactionClass?.category ?? '',
-          style: TextStyle(fontSize: 10), // Set font size to 10
-        )),
-        DataCell(Text(
-          transaction.transactionClass?.name ?? '',
-          style: TextStyle(fontSize: 10), // Set font size to 10
-        )),
-        DataCell(Text(
-          transaction.transactionClass?.mentor?.name ?? '',
-          style: TextStyle(fontSize: 10), // Set font size to 10
-        )),
-        DataCell(Text(
-          transaction.uniqueCode.toString(),
-          style: TextStyle(fontSize: 10), // Set font size to 10
-        )),
-        DataCell(Text(
-          DateFormat('dd MMMM yyyy')
-              .format(DateTime.parse(transaction.createdAt ?? '')),
-          style: TextStyle(fontSize: 10), // Set font size to 10
-        )),
-        DataCell(Row(
-          children: [
-            SmallOutlineButtonWidget(
-              text: "Tolak",
-              onPressed: () {
-                // Show the reject dialog
-                _showRejectDialog(
-                    transaction.id.toString()); // Pass the transaction ID
-              },
-            ),
-            SmallElevatedButtonWidget(
-              text: "Verifikasi",
-              onPressed: () => _showConfirmationDialog(
-                  transaction.id.toString(), true), // true for verification
-            ),
-          ],
-        )),
-      ]);
-    }).toList();
+    return _filteredTransactions
+        .map((transaction) => DataRow(cells: [
+              DataCell(
+                Text(transaction.user!.name!,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 10)),
+              ),
+              DataCell(
+                Text(transaction.transactionClass!.educationLevel!,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 10)),
+              ),
+              DataCell(
+                Text(transaction.transactionClass!.category!,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 10)),
+              ),
+              DataCell(
+                Text(transaction.transactionClass!.name!,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 10)),
+              ),
+              DataCell(
+                Text(transaction.transactionClass!.mentor!.name!,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 10)),
+              ),
+              DataCell(Text(
+                transaction.uniqueCode.toString(),
+                style: TextStyle(fontSize: 10), // Set font size to 10
+              )),
+              DataCell(Text(
+                DateFormat('dd MMMM yyyy')
+                    .format(DateTime.parse(transaction.createdAt ?? '')),
+                style: TextStyle(fontSize: 10), // Set font size to 10
+              )),
+              DataCell(Row(
+                children: [
+                  SmallOutlineButtonWidget(
+                    text: "Tolak",
+                    onPressed: () {
+                      // Show the reject dialog
+                      _showRejectDialog(
+                          transaction.id.toString()); // Pass the transaction ID
+                    },
+                  ),
+                  SmallElevatedButtonWidget(
+                    text: "Verifikasi",
+                    onPressed: () => _showConfirmationDialog(
+                        transaction.id.toString(),
+                        true), // true for verification
+                  ),
+                ],
+              )),
+            ]))
+        .toList();
   }
 }

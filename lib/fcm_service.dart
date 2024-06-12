@@ -36,8 +36,38 @@ class FCMService {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
     if (kIsWeb) {
-      await FirebaseMessaging.instance.requestPermission();
+      try {
+        await messaging.deleteToken();
+      } catch (e) {
+        print('Error deleting token: $e');
+      }
 
+      await messaging.requestPermission();
+
+      FirebaseMessaging.onMessage.listen(_handleForegroundMessage);
+      FirebaseMessaging.onMessageOpenedApp.listen(_handleMessageOpenedApp);
+      FirebaseMessaging.onBackgroundMessage(
+          _firebaseMessagingBackgroundHandler);
+
+      String? token = await messaging.getToken();
+      print('FCM Token: $token');
+      final prefs = await SharedPreferences.getInstance();
+      String? userId = prefs.getString('userId');
+      if (userId != null && token != null) {
+        await sendTokenToServer(token, userId);
+      }
+
+      // Handle onTokenRefresh
+      if (!kIsWeb) {
+        messaging.onTokenRefresh.listen((newToken) async {
+          print('New FCM Token: $newToken');
+          if (userId != null) {
+            await sendTokenToServer(newToken, userId);
+          }
+        });
+      }
+    } else {
+      await requestNotificationPermissions();
       FirebaseMessaging.onMessage.listen(_handleForegroundMessage);
       FirebaseMessaging.onMessageOpenedApp.listen(_handleMessageOpenedApp);
       FirebaseMessaging.onBackgroundMessage(

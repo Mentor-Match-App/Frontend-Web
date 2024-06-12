@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/mentee/model/my_class_model.dart';
 import 'package:my_flutter_app/mentee/screen/notification_mentee_screen.dart';
+import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -15,6 +16,23 @@ class EvaluasiMenteeScreen extends StatefulWidget {
 }
 
 class _EvaluasiMenteeScreenState extends State<EvaluasiMenteeScreen> {
+  String?
+      currentMenteeId; // Variable to store currentMenteeId, initialized as null
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentMenteeId(); // Call method to get currentMenteeId
+  }
+
+  void getCurrentMenteeId() async {
+    await UserPreferences.init();
+    String? id = UserPreferences.getUserId(); // Get userId from UserPreferences
+    setState(() {
+      currentMenteeId = id;
+    });
+  }
+
   _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
@@ -25,17 +43,40 @@ class _EvaluasiMenteeScreenState extends State<EvaluasiMenteeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Sort the evaluations based on whether they have feedback
-    widget.evaluasi.sort((a, b) {
-      bool hasFeedbackA = a.feedbacks != null && a.feedbacks!.isNotEmpty;
-      bool hasFeedbackB = b.feedbacks != null && b.feedbacks!.isNotEmpty;
+    if (currentMenteeId == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Evaluasi",
+            style: FontFamily().titleText.copyWith(
+                  color: ColorStyle().primaryColors,
+                ),
+          ),
+        ),
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    // Filter evaluations based on currentMenteeId in feedbacks
+    final menteeEvaluations = widget.evaluasi.where((evaluation) {
+      // Include all evaluations
+      return true;
+    }).toList();
+
+    // Sort the filtered evaluations based on whether they have feedback
+    menteeEvaluations.sort((a, b) {
+      bool hasFeedbackA = a.feedbacks != null &&
+          a.feedbacks!.any((feedback) => feedback.menteeId == currentMenteeId);
+      bool hasFeedbackB = b.feedbacks != null &&
+          b.feedbacks!.any((feedback) => feedback.menteeId == currentMenteeId);
       return hasFeedbackA == hasFeedbackB
           ? 0
           : hasFeedbackA
               ? -1
               : 1;
     });
-
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -64,15 +105,20 @@ class _EvaluasiMenteeScreenState extends State<EvaluasiMenteeScreen> {
           ],
         ),
       ),
-      body: widget.evaluasi.isEmpty
+      body: menteeEvaluations.isEmpty
           ? Center(
               child: Text("Evaluation is currently empty",
                   style: FontFamily().regularText),
             )
           : ListView.builder(
-              itemCount: widget.evaluasi.length,
+              itemCount: menteeEvaluations.length,
               itemBuilder: (context, index) {
-                var evaluation = widget.evaluasi[index];
+                var evaluation = menteeEvaluations[index];
+
+                // Filter feedbacks to only include those from the current mentee
+                final currentMenteeFeedbacks = evaluation.feedbacks!
+                    .where((feedback) => feedback.menteeId == currentMenteeId)
+                    .toList();
 
                 return Padding(
                   padding: const EdgeInsets.only(left: 24.0, right: 24.0),
@@ -119,10 +165,10 @@ class _EvaluasiMenteeScreenState extends State<EvaluasiMenteeScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children:
-                                              evaluation.feedbacks != null &&
-                                                      evaluation
-                                                          .feedbacks!.isNotEmpty
-                                                  ? evaluation.feedbacks!
+                                              currentMenteeFeedbacks != null &&
+                                                      currentMenteeFeedbacks
+                                                          .isNotEmpty
+                                                  ? currentMenteeFeedbacks
                                                       .map((feedback) => Text(
                                                             "result : ${feedback.result}",
                                                             style: FontFamily()
@@ -151,8 +197,7 @@ class _EvaluasiMenteeScreenState extends State<EvaluasiMenteeScreen> {
                                     ],
                                   ),
                                   const SizedBox(height: 4),
-                                  ...(evaluation.feedbacks != null &&
-                                          evaluation.feedbacks!.isNotEmpty)
+                                  ...(currentMenteeFeedbacks.isNotEmpty
                                       ? [
                                           Padding(
                                             padding: const EdgeInsets.only(
@@ -160,7 +205,7 @@ class _EvaluasiMenteeScreenState extends State<EvaluasiMenteeScreen> {
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
-                                              children: evaluation.feedbacks!
+                                              children: currentMenteeFeedbacks
                                                   .map(
                                                     (feedback) => Column(
                                                       crossAxisAlignment:
@@ -217,7 +262,7 @@ class _EvaluasiMenteeScreenState extends State<EvaluasiMenteeScreen> {
                                               ],
                                             ),
                                           ),
-                                        ],
+                                        ]),
                                 ],
                               ),
                             ),
@@ -225,8 +270,7 @@ class _EvaluasiMenteeScreenState extends State<EvaluasiMenteeScreen> {
                         ),
                         Align(
                           alignment: Alignment.bottomRight,
-                          child: evaluation.feedbacks != null &&
-                                  evaluation.feedbacks!.isNotEmpty
+                          child: currentMenteeFeedbacks.isNotEmpty
                               ? SizedBox(
                                   height: 40,
                                   width: 160,

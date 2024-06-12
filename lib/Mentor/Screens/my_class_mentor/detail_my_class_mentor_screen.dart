@@ -149,7 +149,7 @@ class _DetailMyClassMentorScreenState extends State<DetailMyClassMentorScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TittleTextField(title: 'Jumlah Mentee dikelas'),
+                    TittleTextField(title: 'Kapasitas Kelas'),
                     Padding(
                       padding: const EdgeInsets.only(top: 2.0),
                       child: Text(
@@ -328,14 +328,14 @@ class _DetailMyClassMentorScreenState extends State<DetailMyClassMentorScreen> {
                           title: "Meeting",
                           icon: 'assets/Handoff/icon/MyClass/meeting_icon.png',
                           onTap: () {
-                            if (widget.linkZoom == null ||
-                                widget.linkZoom!.isEmpty) {
+                            if (widget.addressMentoring != null ||
+                                widget.addressMentoring!.isEmpty) {
                               showTopSnackBar(
-                                  context, "Link Zoom belum tersedia",
+                                  context, "Kelas ini dilakukan secara offline",
                                   leftBarIndicatorColor:
                                       ColorStyle().errorColors);
                             } else {
-                              _launchURL(widget.linkZoom!);
+                              _launchURL(widget.linkZoom);
                             }
                           },
                         ),
@@ -371,7 +371,6 @@ class _DetailMyClassMentorScreenState extends State<DetailMyClassMentorScreen> {
                                 builder: (context) => EvaluasiMentorScreen(
                                   feedbacks: widget.feedbacks,
                                   classId: widget.classid,
-                                  learningMaterial: widget.learningMaterial,
                                   transactions: widget.transactions,
                                   evaluasi: widget.evaluation,
                                 ),

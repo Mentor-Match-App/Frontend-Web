@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/mentee/screen/sidebar/my_class/all_class_mentee_screen.dart';
+import 'package:my_flutter_app/mentee/screen/sidebar/my_class/booking_class_mentee_screen.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/my_class/my_session_booking_mentee_screen.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/my_class/premium_class_mentee_screen.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
@@ -17,44 +17,24 @@ class MyClassMentee extends StatefulWidget {
 }
 
 class _MyClassMenteeState extends State<MyClassMentee> {
-  bool isAllClassActive = true;
-  bool isSessionActive = false;
+  bool isBookingClassActive = true;
   bool isPremiumClassActive = false;
-
-  @override
-  void initState() {
-    super.initState();
-    // Set initial active tab based on the initialSubMenu parameter
-    if (widget.initialSubMenu == "Session") {
-      isAllClassActive = false;
-      isSessionActive = true;
-      isPremiumClassActive = false;
-    } else if (widget.initialSubMenu == "Premium Class") {
-      isAllClassActive = false;
-      isSessionActive = false;
-      isPremiumClassActive = true;
-    } else {
-      isAllClassActive = true;
-      isSessionActive = false;
-      isPremiumClassActive = false;
-    }
-  }
+  bool isSessionActive = false;
 
   void changeClass(String menu) {
     setState(() {
-      if (menu == "All Class") {
-        isAllClassActive = true;
+      if (menu == "Booking Class") {
+        isBookingClassActive = true;
+        isPremiumClassActive = false;
         isSessionActive = false;
-        isPremiumClassActive = false;
-      } else if (menu == "Session") {
-        // Corrected the condition
-        isAllClassActive = false;
-        isSessionActive = true;
-        isPremiumClassActive = false;
       } else if (menu == "Premium Class") {
-        isAllClassActive = false;
-        isSessionActive = false;
+        isBookingClassActive = false;
         isPremiumClassActive = true;
+        isSessionActive = false;
+      } else if (menu == "Session") {
+        isBookingClassActive = false;
+        isPremiumClassActive = false;
+        isSessionActive = true;
       }
     });
   }
@@ -75,7 +55,7 @@ class _MyClassMenteeState extends State<MyClassMentee> {
                   color: Colors.white, // Mengatur background putih
                   border: Border(
                     bottom: BorderSide(
-                      color: isAllClassActive
+                      color: isBookingClassActive
                           ? ColorStyle()
                               .secondaryColors // Warna border ketika aktif
                           : Colors.transparent,
@@ -90,7 +70,7 @@ class _MyClassMenteeState extends State<MyClassMentee> {
                   child: Text(
                     "All Class",
                     style: FontFamily().boldText.copyWith(
-                          color: isAllClassActive
+                          color: isBookingClassActive
                               ? ColorStyle().blackColors
                               : ColorStyle().disableColors,
                         ),
@@ -161,13 +141,13 @@ class _MyClassMenteeState extends State<MyClassMentee> {
           ),
           Column(
             children: [
-              isAllClassActive
-                  ? AllClassMenteeScreen()
+              isBookingClassActive
+                  ? BookingClassMenteeScreen()
                   : isPremiumClassActive
                       ? PremiumClassMenteeScreen()
                       : isSessionActive
                           ? MySessionBooking()
-                          : AllClassMenteeScreen()
+                          : BookingClassMenteeScreen()
             ],
           )
         ],

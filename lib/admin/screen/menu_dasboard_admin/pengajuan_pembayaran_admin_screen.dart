@@ -38,7 +38,9 @@ class _PengajuanPembayaraAdminScreenStateState
                     _unverifiedTransactionService.fetchUnverifiedTransactions(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Text("Loading...");
+                    return SizedBox(
+                        height: MediaQuery.of(context).size.height / 2.0,
+                        child: Center(child: CircularProgressIndicator()));
                   } else if (snapshot.hasError) {
                     return Text("Error: ${snapshot.error}");
                   } else if (snapshot.hasData) {
@@ -64,7 +66,8 @@ class _PengajuanPembayaraAdminScreenStateState
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white, backgroundColor: ColorStyle().primaryColors,
+                    foregroundColor: Colors.white,
+                    backgroundColor: ColorStyle().primaryColors,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),

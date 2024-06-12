@@ -6,6 +6,7 @@ import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/style/text.dart';
 import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class VerifikasiMentorScreen extends StatefulWidget {
   final Mentor mentorDetail;
@@ -18,6 +19,14 @@ class VerifikasiMentorScreen extends StatefulWidget {
 
 class _VerifikasiMentorScreenState extends State<VerifikasiMentorScreen> {
   TextEditingController rejectReasonController = TextEditingController();
+
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Tidak dapat membuka $url';
+    }
+  }
 
   Future<void> verifyMentor() async {
     String mentorId =
@@ -264,16 +273,31 @@ class _VerifikasiMentorScreenState extends State<VerifikasiMentorScreen> {
                   color: ColorStyle().secondaryColors,
                   textAlign: TextAlign.start,
                 ),
-                ContainerField(
-                  text: mentorDetail.linkedin ?? "",
+                InkWell(
+                  onTap: () {
+                    _launchURL(mentorDetail.linkedin ?? "");
+                  },
+                  child: ContainerField(
+                    text: mentorDetail.linkedin ?? "",
+                    isLink: true, // Tandai sebagai link untuk gaya khusus
+                  ),
                 ),
                 TittleTextField(
                   title: 'Portofolio & CV',
                   color: ColorStyle().secondaryColors,
                   textAlign: TextAlign.start,
                 ),
-                ContainerField(
-                  text: mentorDetail.portofolio ?? "-",
+                // ContainerField(
+                //   text: mentorDetail.portofolio ?? "-",
+                // ),
+                InkWell(
+                  onTap: () {
+                    _launchURL(mentorDetail.portofolio ?? "");
+                  },
+                  child: ContainerField(
+                    text: mentorDetail.portofolio ?? "",
+                    isLink: true,
+                  ),
                 ),
                 TittleTextField(
                   title: 'About',
@@ -338,9 +362,14 @@ class _VerifikasiMentorScreenState extends State<VerifikasiMentorScreen> {
 
 class ContainerField extends StatelessWidget {
   final String text;
+  final TextStyle? textStyle;
+  final bool isLink;
+
   ContainerField({
     super.key,
     required this.text,
+    this.textStyle,
+    this.isLink = false,
   });
 
   @override
@@ -358,10 +387,16 @@ class ContainerField extends StatelessWidget {
             ),
             child: Text(
               text,
-              style: FontFamily().regularText.copyWith(
-                    fontSize: 16,
-                    color: ColorStyle().disableColors,
-                  ),
+              style: isLink
+                  ? FontFamily().regularText.copyWith(
+                        fontSize: 16,
+                        color: ColorStyle().disableColors,
+                        decoration: TextDecoration.underline,
+                      )
+                  : FontFamily().regularText.copyWith(
+                        fontSize: 16,
+                        color: ColorStyle().disableColors,
+                      ),
             ),
           ),
         ],

@@ -6,14 +6,15 @@ import 'package:my_flutter_app/mentor/service/myClassCreate_Mentor_service.dart'
 import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 
-class AllClassMentorScreen extends StatefulWidget {
-  AllClassMentorScreen({Key? key}) : super(key: key);
+class PremiumClassMentorScreen extends StatefulWidget {
+  PremiumClassMentorScreen({Key? key}) : super(key: key);
 
   @override
-  State<AllClassMentorScreen> createState() => _AllClassMentorScreenState();
+  State<PremiumClassMentorScreen> createState() =>
+      _PremiumClassMentorScreenState();
 }
 
-class _AllClassMentorScreenState extends State<AllClassMentorScreen> {
+class _PremiumClassMentorScreenState extends State<PremiumClassMentorScreen> {
   late Future<MyClassMentorMondel> classData;
   int _getPriority(AllClass userClass) {
     DateTime now = DateTime.now();
@@ -45,14 +46,11 @@ class _AllClassMentorScreenState extends State<AllClassMentorScreen> {
     String buttonText = "Available";
     bool isRejected = userClass.rejectReason != null;
 
-    // Tentukan warna tombol dan teks berdasarkan kondisi status kelas
-
     if (isAvailable && totalApprovedAndPendingCount < maxParticipants) {
       buttonColor = ColorStyle().secondaryColors;
       buttonText = "Available";
     } else if (!isAvailable && !isVerified && !isActive && isRejected) {
-      // Kondisi untuk "Rejected"
-      buttonColor = ColorStyle().errorColors; // Warna untuk status "Rejected"
+      buttonColor = ColorStyle().errorColors;
       buttonText = "Rejected";
       //kondisi pending
     } else if (!isAvailable &&
@@ -75,16 +73,14 @@ class _AllClassMentorScreenState extends State<AllClassMentorScreen> {
       buttonColor = ColorStyle().blackColors;
       buttonText = "Expired";
     } else {
-      // Penanganan default jika ada, untuk kasus yang tidak tertangani oleh kondisi di atas
-      buttonColor = ColorStyle().primaryColors; // Asumsi warna default
-      buttonText = "Unavailable"; // Teks default
+      buttonColor = ColorStyle().primaryColors;
+      buttonText = "Unavailable";
     }
-    // Kembalikan prioritas yang dihitung
+
     return _calculatePriority(buttonText);
   }
 
   int _calculatePriority(String buttonText) {
-    // Lakukan perhitungan prioritas berdasarkan teks tombol
     switch (buttonText) {
       case "Rejected":
         return 1;
@@ -98,8 +94,8 @@ class _AllClassMentorScreenState extends State<AllClassMentorScreen> {
         return 5;
       case "Expired":
         return 6;
-      case "Unavailable":
-        return 7;
+      // case "Unavailable":
+      //   return 7;
       default:
         return 8;
     }
@@ -110,17 +106,14 @@ class _AllClassMentorScreenState extends State<AllClassMentorScreen> {
         alignment: Alignment.centerRight,
         child: Text(
           title,
-          style: FontFamily().boldText.copyWith(color: color, fontSize: 16),
+          style: FontFamily().boldText.copyWith(color: color, fontSize: 14),
         ));
   }
 
   @override
   void initState() {
     super.initState();
-    // Initialize the future without passing userId
     classData = ListClassMentor().fetchClassData();
-
-    /// mebuat sort sesuai dengan prioritas status
     classData.then((value) {
       value.user?.userClass?.sort((a, b) {
         return _getPriority(a).compareTo(_getPriority(b));
@@ -139,25 +132,42 @@ class _AllClassMentorScreenState extends State<AllClassMentorScreen> {
               child: Center(child: CircularProgressIndicator()));
         } else if (snapshot.hasError) {
           return Text("Error: ${snapshot.error}");
-        } else if (snapshot.hasData && snapshot.data!.user?.userClass != null) {
-          var userClass = snapshot.data!.user!.userClass!;
-          if (userClass.isEmpty) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height / 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(child: Text('Kamu belum memiliki kelas')),
-                  )),
+        } else if (snapshot.hasData) {
+          var userClass = snapshot.data!.user?.userClass;
+          if (userClass == null || userClass.isEmpty) {
+            return SizedBox(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height / 2.0,
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child:
+                    Center(child: Text('Kamu belum memiliki kelas saat ini')),
+              ),
             );
           }
+          var filteredClasses = userClass.where((data) {
+            int priority = _getPriority(data);
+            return priority != 1 &&
+                priority != 2; // Exclude "Rejected" and "Pending"
+          }).toList();
+
+          if (filteredClasses.isEmpty) {
+            return SizedBox(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height / 2.0,
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child:
+                    Center(child: Text('Kamu belum memiliki kelas saat ini')),
+              ),
+            );
+          }
+
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
-                children: userClass.map((data) {
+                children: filteredClasses.map((data) {
                   int approvedTransactionsCount = data.transactions
                           ?.where((transaction) =>
                               transaction.paymentStatus == "Approved")
@@ -242,9 +252,9 @@ class _AllClassMentorScreenState extends State<AllClassMentorScreen> {
                               if (statusButton == 6)
                                 createStatusButton(
                                     "Expired", ColorStyle().blackColors),
-                              if (statusButton == 7)
-                                createStatusButton(
-                                    "Unavailable", ColorStyle().primaryColors),
+                              // if (statusButton == 7)
+                              //   createStatusButton(
+                              //       "Unavailable", ColorStyle().primaryColors),
                               if (statusButton == 8)
                                 createStatusButton(
                                     "Available", ColorStyle().secondaryColors),
@@ -280,11 +290,11 @@ class _AllClassMentorScreenState extends State<AllClassMentorScreen> {
         } else {
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Container(
+            child: SizedBox(
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height / 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Center(child: Text('Kamu belum memiliki kelas')),
                 )),
           );

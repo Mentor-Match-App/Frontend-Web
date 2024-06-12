@@ -1,14 +1,15 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/mentee/screen/premium_class/detail_class_mentor_all_screen.dart';
 import 'package:my_flutter_app/mentor/model/my_class_mentor_model.dart';
+import 'package:my_flutter_app/mentor/service/myClassCreate_Mentor_service.dart';
 import 'package:my_flutter_app/mentor/service/sent_materi_service.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/style/text.dart';
 import 'package:my_flutter_app/widget/flushsBar_widget.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/text_field.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
+
 class MyMateriMentor extends StatefulWidget {
   final String classId;
   final List<LearningMaterialMentor> learningMaterial;
@@ -21,11 +22,22 @@ class MyMateriMentor extends StatefulWidget {
 }
 
 class _MyMateriMentorState extends State<MyMateriMentor> {
+  List<String> learningMaterial = [];
+  late Future<MyClassMentorMondel> _futureClassData;
+
+  @override
+  void initState() {
+    super.initState();
+    _futureClassData = ListClassMentor().fetchClassData();
+  }
+
   final TextEditingController _materiPembelajaranController =
       TextEditingController();
   final TextEditingController _linkMateriPembelajaranController =
       TextEditingController();
-  bool _isLoading = false; // Menambahkan flag untuk loading state
+
+  bool _isLoading = false;
+
   _launchURL(String url) async {
     // ignore: deprecated_member_use
     if (await canLaunch(url)) {
@@ -36,11 +48,6 @@ class _MyMateriMentorState extends State<MyMateriMentor> {
     }
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
-
   @override
   void dispose() {
     _materiPembelajaranController.dispose();
@@ -49,7 +56,6 @@ class _MyMateriMentorState extends State<MyMateriMentor> {
     super.dispose();
   }
 
-  /// sent materi //
   // Fungsi untuk mengirim materi pembelajaran
   Future<void> _sendMaterial() async {
     String title = _materiPembelajaranController.text;
@@ -87,12 +93,6 @@ class _MyMateriMentorState extends State<MyMateriMentor> {
             leftBarIndicatorColor: ColorStyle().errorColors);
       }
 
-      // Tambahkan materi yang baru saja dikirim ke daftar materi yang ditampilkan
-      setState(() {
-        widget.learningMaterial
-            .add(LearningMaterialMentor(title: title, link: link));
-      });
-
       // Bersihkan field setelah pengiriman berhasil
       _materiPembelajaranController.clear();
       _linkMateriPembelajaranController.clear();
@@ -103,6 +103,11 @@ class _MyMateriMentorState extends State<MyMateriMentor> {
     } finally {
       setState(() {
         _isLoading = false; // Proses selesai, hilangkan indikator loading
+      });
+
+      // Refresh data kelas setelah pengiriman materi selesai
+      setState(() {
+        _futureClassData = ListClassMentor().fetchClassData();
       });
     }
   }
@@ -119,26 +124,48 @@ class _MyMateriMentorState extends State<MyMateriMentor> {
               ),
         ),
       ),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverToBoxAdapter(
-            child: _buildFormSection(),
-          ),
-          SliverGrid(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 3 / 3.5,
-              crossAxisSpacing: 2,
-              mainAxisSpacing: 2,
-            ),
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return _buildGridItem(index);
-              },
-              childCount: widget.learningMaterial.length,
-            ),
-          ),
-        ],
+      body: FutureBuilder<MyClassMentorMondel>(
+        future: _futureClassData,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Text("Error: ${snapshot.error}");
+          } else if (snapshot.hasData &&
+              snapshot.data!.user?.userClass != null) {
+            var userClass = snapshot.data!.user!.userClass!;
+
+            final classData = userClass.firstWhere(
+              (userClass) => userClass.id == widget.classId,
+              orElse: () => AllClass(),
+            );
+            return CustomScrollView(
+              slivers: <Widget>[
+                SliverToBoxAdapter(
+                  child: _buildFormSection(),
+                ),
+                SliverGrid(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 5,
+                    childAspectRatio: 3 / 3.5,
+                    crossAxisSpacing: 2,
+                    mainAxisSpacing: 2,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      return _buildGridItem(index, classData);
+                    },
+                    childCount: classData.learningMaterial!.length,
+                  ),
+                ),
+              ],
+            );
+          } else {
+            return Center(
+              child: Text("Data kelas tidak ditemukan"),
+            );
+          }
+        },
       ),
     );
   }
@@ -172,15 +199,15 @@ class _MyMateriMentorState extends State<MyMateriMentor> {
             ),
             TextFieldWidget(
               controller: _materiPembelajaranController,
-              hintText: "nama topik materi evaluasi",
+              hintText: "nama topik materi pembelajaran",
             ),
             TittleTextField(
-              title: "Link Evaluasi",
+              title: "Link Materi Pembelajaran",
               color: ColorStyle().secondaryColors,
             ),
             TextFieldWidget(
               controller: _linkMateriPembelajaranController,
-              hintText: "masukkan link evaluasi",
+              hintText: "masukkan link materi pembelajaran",
             ),
             SizedBox(height: 12),
             Align(
@@ -218,14 +245,11 @@ class _MyMateriMentorState extends State<MyMateriMentor> {
     );
   }
 
-  Widget _buildGridItem(int materialIndex) {
-    // Kode untuk membangun tiap item di grid
-    final material = widget.learningMaterial[materialIndex];
+  Widget _buildGridItem(int materialIndex, AllClass classData) {
+    final material = classData.learningMaterial![materialIndex];
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        height: 200,
-        width: 200,
         decoration: BoxDecoration(
           color: ColorStyle().tertiaryColors,
           boxShadow: [
@@ -242,11 +266,6 @@ class _MyMateriMentorState extends State<MyMateriMentor> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text("Materi ${materialIndex + 1}",
-                    style: FontFamily().boldText),
-              ),
               const SizedBox(
                 height: 8,
               ),
@@ -254,8 +273,7 @@ class _MyMateriMentorState extends State<MyMateriMentor> {
               const SizedBox(
                 height: 8,
               ),
-              Text(widget.learningMaterial[materialIndex].title ?? '',
-                  style: FontFamily().regularText),
+              Text(material.title ?? '', style: FontFamily().regularText),
               const SizedBox(
                 height: 8,
               ),
@@ -265,8 +283,7 @@ class _MyMateriMentorState extends State<MyMateriMentor> {
                       ColorStyle().secondaryColors),
                 ),
                 onPressed: () {
-                  final linkEvaluasi =
-                      widget.learningMaterial[materialIndex].link ?? '';
+                  final linkEvaluasi = material.link ?? '';
                   _launchURL(linkEvaluasi);
                 },
                 child: Text(

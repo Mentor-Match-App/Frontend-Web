@@ -284,7 +284,7 @@ void submitSession() async {
                           onPressed: () {
                             submitSession();
                           },
-                          title: "Kirim",
+                          title: "Buat Session",
                         ),
                 ),
               ],
