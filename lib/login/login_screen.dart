@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -21,6 +20,18 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _isLoggingIn = false;
+  GoogleSignInAccount? _currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    GoogleSignIn().onCurrentUserChanged.listen((GoogleSignInAccount? account) {
+      setState(() {
+        _currentUser = account;
+      });
+    });
+    GoogleSignIn().signInSilently();
+  }
 
   Future<void> signInWithGoogle() async {
     setState(() {
@@ -43,31 +54,18 @@ class _LoginScreenState extends State<LoginScreen> {
         final User? user = userCredential.user;
 
         if (user != null) {
-          // Mengambil ID token dari Firebase Auth
           String? idToken = await user.getIdToken();
           print('ID Token: $idToken');
 
-          // Membuat instance AuthService dan memanggil loginUser
           AuthService authService = AuthService();
           await authService.loginUser(idToken!);
 
-          // Cek data yang disimpan di SharedPreferences
           Map<String, String?> userData = await AuthService.getUserData();
 
-          // Mengambil token FCM dan mengirimkannya ke server
-          String? fcmToken = await FirebaseMessaging.instance.getToken();
-          if (fcmToken != null && userData['userId'] != null) {
-            await sendTokenToServer(fcmToken, userData['userId']!);
-            print('FCM Token: $fcmToken');
-          }
+          await FCMService.initialize();
 
-          // Minta izin notifikasi
-          await FCMService.requestNotificationPermissions();
-
-          // Tentukan navigasi berdasarkan userType
           String? userType = userData['userType'];
           if (userType == null) {
-            // Jika userType belum ada atau null, navigasi ke ChooseRoleScreen
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => ChooseRoleScreen()));
           } else {
@@ -109,93 +107,94 @@ class _LoginScreenState extends State<LoginScreen> {
         preferredSize: Size.fromHeight(80.0),
         child: NavbarWidget(),
       ),
-      body: Stack(children: [
-        Center(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 150, vertical: 100),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Daftar untuk memulai Mentorship',
-                              style: TextStyle(
-                                  fontSize: 40, fontWeight: FontWeight.normal),
-                            ),
-                            SizedBox(height: 28),
-                            Text(
-                              'Mari lanjutkan langkah untuk dunia pendidikan yang lebih baik dengan sesio mentoring bersama mentor-mentor ahli yang dapat membantu kamu dalam mencapai target dan tujuan.',
-                              style: TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.w200),
-                            ),
-                            SizedBox(height: 50), // Add space
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 0),
-                              child: ElevatedButton(
-                                onPressed: _isLoggingIn
-                                    ? null
-                                    : () async {
-                                        await signInWithGoogle();
-                                      },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xFFE78839),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 125,
-                                      vertical:
-                                          35), // Increase horizontal padding
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8)),
+      body: Stack(
+        children: [
+          Center(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 150, vertical: 100),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Daftar untuk memulai Mentorship',
+                                style: TextStyle(
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                              SizedBox(height: 28),
+                              Text(
+                                'Mari lanjutkan langkah untuk dunia pendidikan yang lebih baik dengan sesio mentoring bersama mentor-mentor ahli yang dapat membantu kamu dalam mencapai target dan tujuan.',
+                                style: TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.w200),
+                              ),
+                              SizedBox(height: 50),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 0),
+                                child: ElevatedButton(
+                                  onPressed: _isLoggingIn
+                                      ? null
+                                      : () async {
+                                          await signInWithGoogle();
+                                        },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color(0xFFE78839),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 125, vertical: 35),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                    ),
                                   ),
-                                ),
-                                child: Text(
-                                  'Login with Google',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 16,
-                                    color: Colors.white,
+                                  child: Text(
+                                    'Login with Google',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(height: 5), // Add space
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 80),
-                      Expanded(
-                        child: DecoratedBox(
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                          ),
-                          child: SizedBox(
-                            width: 42.12,
-                            child: Image.asset(
-                              'Handoff/ilustrator/login.png',
-                              fit: BoxFit.fill,
-                            ),
+                              SizedBox(height: 5),
+                            ],
                           ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 80),
+                        Expanded(
+                          child: DecoratedBox(
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                            ),
+                            child: SizedBox(
+                              width: 42.12,
+                              child: Image.asset(
+                                'Handoff/ilustrator/login.png',
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        if (_isLoggingIn)
-          Center(
-            child: CircularProgressIndicator(),
-          ),
-      ]),
+          if (_isLoggingIn)
+            Center(
+              child: CircularProgressIndicator(),
+            ),
+        ],
+      ),
     );
   }
 }

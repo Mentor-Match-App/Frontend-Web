@@ -65,6 +65,7 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
     _fetchUnreadNotificationsCount();
 
     _selectedMenu = widget.selectedMenu;
+    
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_flutter_app/login/login_screen.dart';
@@ -104,6 +105,7 @@ class _SideBarAdminState extends State<SideBarAdmin> {
                   // Tulis logika logout Anda di sini
                   // Misalnya, membersihkan shared preferences dan navigasi ke halaman login
                   await _googleSignIn.signOut();
+                  await FirebaseAuth.instance.signOut();
                   await UserPreferences.clearPreferences();
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => LoginScreen()),
