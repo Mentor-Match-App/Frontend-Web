@@ -133,7 +133,7 @@ class _SMAScreenState extends State<SMAScreen> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
-        child: NavbarWidgetMentee(),
+        child: NavbarWidgetSMA(),
       ),
       body: ListView(
         children: [
@@ -210,7 +210,7 @@ class _SMAScreenState extends State<SMAScreen> {
                           _handleMenuSelected('Kimia');
                         },
                         title: "Kimia",
-                        img: 'assets/Handoff/icon/categoryIcon/SMA/Kimia.png',
+                        img: 'assets/Handoff/icon/categoryIcon/SMA/kimia.png',
                       ),
                       CategoriCardWidget(
                         isActive: isTechActive,
@@ -268,5 +268,4 @@ class _SMAScreenState extends State<SMAScreen> {
   }
 }
 
-class MathSMAScreen {
-}
+class MathSMAScreen {}

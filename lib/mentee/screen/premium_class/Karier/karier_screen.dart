@@ -134,7 +134,7 @@ class _KarierScreenState extends State<KarierScreen> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
-        child: NavbarWidgetMentee(),
+        child: NavbarWidgetKarier(),
       ),
       body: ListView(
         children: [
@@ -233,7 +233,7 @@ class _KarierScreenState extends State<KarierScreen> {
                         },
                         title: "Security\nEngineer",
                         img:
-                            'assets/Handoff/icon/categoryIcon/Karier/security_engineer.png',
+                            'assets/Handoff/icon/categoryIcon/Karier/Security_Engineer.png',
                       ),
                     ],
                   ),

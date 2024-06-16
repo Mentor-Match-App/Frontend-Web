@@ -143,7 +143,7 @@ class _KuliahScreenState extends State<KuliahScreen> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
-        child: NavbarWidgetMentee(),
+        child: NavbarWidgetKuliah(),
       ),
       body: ListView(
         children: [

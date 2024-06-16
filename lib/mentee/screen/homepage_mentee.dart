@@ -65,7 +65,6 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
     _fetchUnreadNotificationsCount();
 
     _selectedMenu = widget.selectedMenu;
-    
   }
 
   @override
@@ -88,7 +87,9 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
               ),
               Row(
                 children: [
-                  CustomDropdown(),
+                  CustomDropdown(
+                    title: 'Program dan Layanan',
+                  ),
                   const SizedBox(width: 20),
                   Stack(
                     children: [

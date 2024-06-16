@@ -16,12 +16,11 @@ class PremiumClassMentorScreen extends StatefulWidget {
 
 class _PremiumClassMentorScreenState extends State<PremiumClassMentorScreen> {
   late Future<MyClassMentorMondel> classData;
+
   int _getPriority(AllClass userClass) {
     DateTime now = DateTime.now();
-    DateTime startDate = DateTime.parse(
-        userClass.startDate.toString()); // Asumsi startDate tidak null
-    DateTime endDate = DateTime.parse(
-        userClass.endDate.toString()); // Asumsi endDate tidak null
+    DateTime startDate = DateTime.parse(userClass.startDate.toString());
+    DateTime endDate = DateTime.parse(userClass.endDate.toString());
 
     int getAvailableSlotCount(AllClass userClass) {
       int approvedCount = userClass.transactions
@@ -38,43 +37,27 @@ class _PremiumClassMentorScreenState extends State<PremiumClassMentorScreen> {
 
     int totalApprovedAndPendingCount = getAvailableSlotCount(userClass);
 
-    bool isVerified = userClass.isVerified!;
     bool isActive = userClass.isActive!;
     bool isAvailable = userClass.isAvailable!;
+    bool isVerified = userClass.isVerified!;
     int maxParticipants = userClass.maxParticipants!;
-    Color buttonColor = ColorStyle().primaryColors;
-    String buttonText = "Available";
-    bool isRejected = userClass.rejectReason != null;
+    String buttonText = "Unavailable";
 
-    if (isAvailable && totalApprovedAndPendingCount < maxParticipants) {
-      buttonColor = ColorStyle().secondaryColors;
-      buttonText = "Available";
-    } else if (!isAvailable && !isVerified && !isActive && isRejected) {
-      buttonColor = ColorStyle().errorColors;
-      buttonText = "Rejected";
-      //kondisi pending
-    } else if (!isAvailable &&
-        !isVerified &&
-        !isActive &&
+    if (isVerified &&
+        isAvailable &&
+        totalApprovedAndPendingCount < maxParticipants &&
         now.isBefore(startDate)) {
-      buttonColor = ColorStyle().pendingColors;
-      buttonText = "Pending";
+      buttonText = "Scheduled";
     } else if (totalApprovedAndPendingCount >= maxParticipants && !isActive) {
-      buttonColor = ColorStyle().fullbookedColors;
       buttonText = "Full";
-      // ketika startDate = now , dan now <+ endDate
     } else if (isActive) {
-      buttonColor = ColorStyle().succesColors;
       buttonText = "Active";
     } else if (totalApprovedAndPendingCount > 0 && now.isAfter(endDate)) {
-      buttonColor = ColorStyle().disableColors;
-      buttonText = "Completed";
-    } else if (totalApprovedAndPendingCount == 0 && now.isAfter(startDate)) {
-      buttonColor = ColorStyle().blackColors;
+      buttonText = "Finished";
+    } else if (isVerified &&
+        totalApprovedAndPendingCount == 0 &&
+        now.isAfter(startDate)) {
       buttonText = "Expired";
-    } else {
-      buttonColor = ColorStyle().primaryColors;
-      buttonText = "Unavailable";
     }
 
     return _calculatePriority(buttonText);
@@ -82,22 +65,18 @@ class _PremiumClassMentorScreenState extends State<PremiumClassMentorScreen> {
 
   int _calculatePriority(String buttonText) {
     switch (buttonText) {
-      case "Rejected":
+      case "Active":
         return 1;
-      case "Pending":
+      case "Scheduled":
         return 2;
       case "Full":
         return 3;
-      case "Active":
+      case "Finished":
         return 4;
-      case "Completed":
-        return 5;
       case "Expired":
-        return 6;
-      // case "Unavailable":
-      //   return 7;
+        return 5;
       default:
-        return 8;
+        return 6;
     }
   }
 
@@ -114,11 +93,6 @@ class _PremiumClassMentorScreenState extends State<PremiumClassMentorScreen> {
   void initState() {
     super.initState();
     classData = ListClassMentor().fetchClassData();
-    classData.then((value) {
-      value.user?.userClass?.sort((a, b) {
-        return _getPriority(a).compareTo(_getPriority(b));
-      });
-    });
   }
 
   @override
@@ -147,9 +121,12 @@ class _PremiumClassMentorScreenState extends State<PremiumClassMentorScreen> {
           }
           var filteredClasses = userClass.where((data) {
             int priority = _getPriority(data);
-            return priority != 1 &&
-                priority != 2; // Exclude "Rejected" and "Pending"
+            return priority != 6; // Exclude "Unavailable"
           }).toList();
+
+          // Sorting the filteredClasses by priority
+          filteredClasses
+              .sort((a, b) => _getPriority(a).compareTo(_getPriority(b)));
 
           if (filteredClasses.isEmpty) {
             return SizedBox(
@@ -236,28 +213,19 @@ class _PremiumClassMentorScreenState extends State<PremiumClassMentorScreen> {
                             children: [
                               if (statusButton == 1)
                                 createStatusButton(
-                                    "Rejected", ColorStyle().errorColors),
+                                    "Active", ColorStyle().succesColors),
                               if (statusButton == 2)
                                 createStatusButton(
-                                    "Pending", ColorStyle().pendingColors),
+                                    "Scheduled", ColorStyle().secondaryColors),
                               if (statusButton == 3)
                                 createStatusButton(
                                     "Full", ColorStyle().fullbookedColors),
                               if (statusButton == 4)
                                 createStatusButton(
-                                    "Active", ColorStyle().succesColors),
+                                    "Finished", ColorStyle().disableColors),
                               if (statusButton == 5)
                                 createStatusButton(
-                                    "Completed", ColorStyle().disableColors),
-                              if (statusButton == 6)
-                                createStatusButton(
-                                    "Expired", ColorStyle().blackColors),
-                              // if (statusButton == 7)
-                              //   createStatusButton(
-                              //       "Unavailable", ColorStyle().primaryColors),
-                              if (statusButton == 8)
-                                createStatusButton(
-                                    "Available", ColorStyle().secondaryColors),
+                                    "Expired", ColorStyle().errorColors),
                               SizedBox(height: 12),
                               Text(
                                   //nama kelas
@@ -267,7 +235,7 @@ class _PremiumClassMentorScreenState extends State<PremiumClassMentorScreen> {
                                       )),
                               SizedBox(height: 12),
                               Text(
-                                'Jumlah mentee terdaftar : ${approvedTransactionsCount}',
+                                'Jumlah mentee terdaftar : $approvedTransactionsCount',
                                 style: FontFamily().regularText,
                               ),
                               const SizedBox(height: 12),

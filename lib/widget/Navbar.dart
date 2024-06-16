@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/login/login_screen.dart';
+import 'package:my_flutter_app/widget/navbaruser.dart';
 
 class NavbarWidget extends StatelessWidget {
   const NavbarWidget({Key? key}) : super(key: key);
@@ -28,35 +29,10 @@ class NavbarWidget extends StatelessWidget {
           ),
           Row(
             children: [
-              NavBarItem(title: 'Program dan layanan', onPressed: () {}),
-              NavBarItem(title: 'Mentor', onPressed: () {}),
-              const SizedBox(width: 20),
-              OutlinedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const LoginScreen()),
-                  );
-                },
-                style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Colors.orange),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 25,
-                      vertical: 15), // Increase horizontal padding
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
-                  ),
-                ),
-                child: Text(
-                  'Masuk',
-                  style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    color: Colors.orange,
-                  ),
-                ),
+              CustomDropdown(
+                title: 'Program dan Layanan',
               ),
-              const SizedBox(width: 20), // Add space between buttons
+              const SizedBox(width: 20),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -75,7 +51,7 @@ class NavbarWidget extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'Daftar',
+                  'Login',
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     color: Colors.white,

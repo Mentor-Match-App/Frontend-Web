@@ -66,7 +66,7 @@ class _SDScreenState extends State<SDScreen> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
-        child: NavbarWidgetMentee(),
+        child: NavbarWidgetSD(),
       ),
       body: ListView(
         children: [
@@ -152,7 +152,6 @@ class _SDScreenState extends State<SDScreen> {
                                         : AllSDScreen()
                   ],
                 ),
-              
               ],
             ),
           ),

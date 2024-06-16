@@ -11,7 +11,6 @@ import 'package:my_flutter_app/mentee/screen/session/quality_assurance_session_s
 import 'package:my_flutter_app/mentee/screen/session/security_engineer_session_screen.dart';
 import 'package:my_flutter_app/widget/category_card.dart';
 import 'package:my_flutter_app/widget/navbaruser.dart';
-import 'package:my_flutter_app/widget/searchbar.dart';
 
 class SessionScreen extends StatefulWidget {
   SessionScreen({Key? key}) : super(key: key);
@@ -135,7 +134,7 @@ class _SessionScreenState extends State<SessionScreen> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
-        child: NavbarWidgetMentee(),
+        child: NavbarWidgetSession(),
       ),
       body: ListView(
         children: [
@@ -145,7 +144,7 @@ class _SessionScreenState extends State<SessionScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-              const SearchBarMentee(),
+                const SearchBarMentee(),
                 SizedBox(
                   height: 20,
                 ),
@@ -231,7 +230,7 @@ class _SessionScreenState extends State<SessionScreen> {
                         },
                         title: "Security\nEngineer",
                         img:
-                            'assets/Handoff/icon/categoryIcon/Karier/security_engineer.png',
+                            'assets/Handoff/icon/categoryIcon/Karier/Security_Engineer.png',
                       ),
                     ],
                   ),

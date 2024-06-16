@@ -19,52 +19,21 @@ class _ClassSubmissionMentorScreenState
   late Future<MyClassMentorMondel> classData;
   int _getPriority(AllClass userClass) {
     DateTime now = DateTime.now();
-    DateTime startDate = DateTime.parse(
-        userClass.startDate.toString()); // Asumsi startDate tidak null
-    DateTime endDate = DateTime.parse(
-        userClass.endDate.toString()); // Asumsi endDate tidak null
-
-    int getAvailableSlotCount(AllClass userClass) {
-      int approvedCount = userClass.transactions
-              ?.where((t) => t.paymentStatus == "Approved")
-              .length ??
-          0;
-      int pendingCount = userClass.transactions
-              ?.where((t) => t.paymentStatus == "Pending")
-              .length ??
-          0;
-      int totalApprovedAndPendingCount = approvedCount + pendingCount;
-      return totalApprovedAndPendingCount;
-    }
-
-    int totalApprovedAndPendingCount = getAvailableSlotCount(userClass);
+    DateTime startDate = DateTime.parse(userClass.startDate.toString());
 
     bool isVerified = userClass.isVerified!;
     bool isActive = userClass.isActive!;
     bool isAvailable = userClass.isAvailable!;
-    int maxParticipants = userClass.maxParticipants!;
-    String buttonText = "Unavailable";
     bool isRejected = userClass.rejectReason != null;
+    String buttonText = "Unavailable";
 
-    // Tentukan warna tombol dan teks berdasarkan kondisi status kelas
-
-    if (isAvailable && totalApprovedAndPendingCount < maxParticipants) {
-      buttonText = "Available";
-    } else if (!isAvailable && !isVerified && !isActive && isRejected) {
+    if (!isAvailable && !isVerified && !isActive && isRejected) {
       buttonText = "Rejected";
     } else if (!isAvailable &&
         !isVerified &&
         !isActive &&
         now.isBefore(startDate)) {
       buttonText = "Pending";
-    } else if (totalApprovedAndPendingCount >= maxParticipants && !isActive) {
-      buttonText = "Full";
-    } else if (isActive) {
-      buttonText = "Active";
-    } else if (totalApprovedAndPendingCount > 0 && now.isAfter(endDate)) {
-      buttonText = "Completed";
-    } else if (totalApprovedAndPendingCount == 0 && now.isAfter(startDate)) {
-      buttonText = "Expired";
     }
 
     return _calculatePriority(buttonText);
@@ -77,7 +46,7 @@ class _ClassSubmissionMentorScreenState
       case "Pending":
         return 2;
       default:
-        return 8; // Not of interest for our filtered list
+        return 3;
     }
   }
 
@@ -93,10 +62,9 @@ class _ClassSubmissionMentorScreenState
   @override
   void initState() {
     super.initState();
-    // Initialize the future without passing userId
+
     classData = ListClassMentor().fetchClassData();
 
-    /// Filter only pending and rejected classes
     classData.then((value) {
       value.user?.userClass?.retainWhere((userClass) {
         int priority = _getPriority(userClass);
@@ -111,9 +79,9 @@ class _ClassSubmissionMentorScreenState
       future: classData,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container(
+          return SizedBox(
               height: MediaQuery.of(context).size.height / 2.0,
-              child: Center(child: CircularProgressIndicator()));
+              child: const Center(child: CircularProgressIndicator()));
         } else if (snapshot.hasError) {
           return Text("Error: ${snapshot.error}");
         } else if (snapshot.hasData && snapshot.data!.user?.userClass != null) {
@@ -124,8 +92,8 @@ class _ClassSubmissionMentorScreenState
               child: SizedBox(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height / 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Center(child: Text('Kamu belum memiliki kelas')),
                   )),
             );
@@ -207,12 +175,12 @@ class _ClassSubmissionMentorScreenState
                               if (statusButton == 2)
                                 createStatusButton(
                                     "Pending", ColorStyle().pendingColors),
-                              SizedBox(height: 12),
+                              const SizedBox(height: 12),
                               Text(data.name ?? '',
                                   style: FontFamily().titleText.copyWith(
                                         color: ColorStyle().primaryColors,
                                       )),
-                              SizedBox(height: 12),
+                              const SizedBox(height: 12),
                               Text(
                                 'Jumlah mentee terdaftar : ${approvedTransactionsCount}',
                                 style: FontFamily().regularText,
