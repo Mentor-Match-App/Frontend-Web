@@ -235,7 +235,7 @@ class _DetailMentorKuliahScreenState extends State<DetailMentorKuliahScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset(
-                              'Handoff/icon/social-icons/linkedin.png',
+                              'assets/Handoff/icon/social-icons/linkedin.png',
                               width: 20.0,
                               height: 20.0,
                               color: Colors.white,

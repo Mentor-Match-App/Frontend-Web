@@ -126,7 +126,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Phone : 1234567',
+                            'Phone : 0667865324',
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.normal,
@@ -134,7 +134,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                           ),
                           SizedBox(height: 25),
                           Text(
-                            'Email : what@gmail.com',
+                            'Email : mentormatch@gmail.com',
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.normal,
@@ -142,7 +142,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                           ),
                           SizedBox(height: 25),
                           Text(
-                            'Location : 123, Jekardah',
+                            'Location : Jakarta, Indonesia',
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.normal,
@@ -166,19 +166,19 @@ class _FooterWidgetState extends State<FooterWidget> {
                     Row(
                       children: [
                         Image.asset(
-                          'Handoff/icon/social-icons/behance.png',
+                          'assets/Handoff/icon/social-icons/behance.png',
                           height: 24,
                           width: 24,
                         ),
                         SizedBox(width: 25),
                         Image.asset(
-                          'Handoff/icon/social-icons/instagram.png',
+                          'assets/Handoff/icon/social-icons/instagram.png',
                           height: 24,
                           width: 24,
                         ),
                         SizedBox(width: 25),
                         Image.asset(
-                          'Handoff/icon/social-icons/linkedin.png',
+                          'assets/Handoff/icon/social-icons/linkedin.png',
                           height: 24,
                           width: 24,
                         ),
@@ -188,13 +188,13 @@ class _FooterWidgetState extends State<FooterWidget> {
                     Row(
                       children: [
                         Image.asset(
-                          'Handoff/icon/social-icons/whatsapp.png',
+                          'assets/Handoff/icon/social-icons/whatsapp.png',
                           height: 24,
                           width: 24,
                         ),
                         SizedBox(width: 25),
                         Image.asset(
-                          'Handoff/icon/social-icons/twitter.png',
+                          'assets/Handoff/icon/social-icons/twitter.png',
                           height: 24,
                           width: 24,
                         ),

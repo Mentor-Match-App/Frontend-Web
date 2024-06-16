@@ -86,7 +86,7 @@ class _PaymentExpiredScreenMenteeState
                     width: 500,
                     height: 500,
                     child: Image.asset(
-                      'Handoff/ilustrator/payment-gagal.png',
+                      'assets/Handoff/ilustrator/payment-gagal.png',
                       fit: BoxFit.fill,
                     ),
                   ),

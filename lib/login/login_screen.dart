@@ -1,14 +1,16 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_flutter_app/admin/screen/dasboard_admin_screen.dart';
-import 'package:my_flutter_app/fcm_service.dart';
 import 'package:my_flutter_app/login/choose_role_screen.dart';
 import 'package:my_flutter_app/login/login_service.dart';
 import 'package:my_flutter_app/mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/mentor/Screens/homepage_mentor.dart';
 import 'package:my_flutter_app/mentor/screens/register_mentor/verification_page.dart';
+import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/navbar.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -20,17 +22,14 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _isLoggingIn = false;
-  GoogleSignInAccount? _currentUser;
 
   @override
   void initState() {
     super.initState();
-    GoogleSignIn().onCurrentUserChanged.listen((GoogleSignInAccount? account) {
-      setState(() {
-        _currentUser = account;
-      });
-    });
-    GoogleSignIn().signInSilently();
+    // GoogleSignIn().onCurrentUserChanged.listen((GoogleSignInAccount? account) {
+    //   setState(() {});
+    // });
+    // GoogleSignIn().signInSilently();
   }
 
   Future<void> signInWithGoogle() async {
@@ -62,19 +61,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
           Map<String, String?> userData = await AuthService.getUserData();
 
-          await FCMService.initialize();
-
           String? userType = userData['userType'];
           if (userType == null) {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => ChooseRoleScreen()));
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => const ChooseRoleScreen()));
           } else {
             if (userType == "Mentee") {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => MenteeHomePage()));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => const MenteeHomePage()));
             } else if (userType == "Mentor") {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => MentorHomePage()));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => const MentorHomePage()));
             } else if (userType == "Admin") {
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => DashboardAdminScreen()));
@@ -103,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: Size.fromHeight(80.0),
         child: NavbarWidget(),
       ),
@@ -126,19 +123,22 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               Text(
                                 'Daftar untuk memulai Mentorship',
-                                style: TextStyle(
-                                    fontSize: 40,
-                                    fontWeight: FontWeight.normal),
+                                style: GoogleFonts.poppins(
+                                    fontSize: 40, fontWeight: FontWeight.w500),
                               ),
-                              SizedBox(height: 28),
+                              const SizedBox(height: 28),
                               Text(
                                 'Mari lanjutkan langkah untuk dunia pendidikan yang lebih baik dengan sesio mentoring bersama mentor-mentor ahli yang dapat membantu kamu dalam mencapai target dan tujuan.',
-                                style: TextStyle(
-                                    fontSize: 24, fontWeight: FontWeight.w200),
+                                style: GoogleFonts.poppins(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w300,
+                                  color: ColorStyle().disableColors,
+                                ),
                               ),
-                              SizedBox(height: 50),
+                              const SizedBox(height: 50),
                               Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 0),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 0),
                                 child: ElevatedButton(
                                   onPressed: _isLoggingIn
                                       ? null
@@ -146,10 +146,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                           await signInWithGoogle();
                                         },
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0xFFE78839),
-                                    padding: EdgeInsets.symmetric(
+                                    backgroundColor: const Color(0xFFE78839),
+                                    padding: const EdgeInsets.symmetric(
                                         horizontal: 125, vertical: 35),
-                                    shape: RoundedRectangleBorder(
+                                    shape: const RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(8)),
                                     ),
@@ -163,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 5),
+                              const SizedBox(height: 5),
                             ],
                           ),
                         ),
@@ -176,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: SizedBox(
                               width: 42.12,
                               child: Image.asset(
-                                'Handoff/ilustrator/login.png',
+                                'assets/Handoff/ilustrator/login.png',
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -190,7 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           if (_isLoggingIn)
-            Center(
+            const Center(
               child: CircularProgressIndicator(),
             ),
         ],

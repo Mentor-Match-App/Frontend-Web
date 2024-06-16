@@ -190,6 +190,7 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
                   ),
                 ],
               ),
+              SizedBox(height: 100),
               FooterWidget()
             ],
           ),

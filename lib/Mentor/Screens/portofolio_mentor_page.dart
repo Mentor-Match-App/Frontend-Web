@@ -22,7 +22,7 @@ class _MentorPortofolioPageState extends State<MentorPortofolioPage> {
             children: [
               const SizedBox(width: 20),
               Image.asset(
-                'Handoff/logo/LogoWeb.png',
+                'assets/Handoff/logo/LogoWeb.png',
                 height: 150,
                 width: 150,
               ),
@@ -94,7 +94,7 @@ class _MentorPortofolioPageState extends State<MentorPortofolioPage> {
                 child: Container(
                   color: Colors.white,
                   child: Image.asset(
-                    'Handoff/ilustrator/mentor_in_zoom.png',
+                    'assets/Handoff/ilustrator/mentor_in_zoom.png',
                     fit: BoxFit.cover, // Adjust the BoxFit property as needed
                   ),
                 ),

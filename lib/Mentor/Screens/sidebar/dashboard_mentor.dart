@@ -74,7 +74,7 @@ class _DashboardMentorState extends State<DashboardMentor> {
                 child: SizedBox(
                   width: 400,
                   child: Image.asset(
-                    'Handoff/community.png',
+                    'assets/Handoff/community.png',
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -95,7 +95,7 @@ class _DashboardMentorState extends State<DashboardMentor> {
                 child: SizedBox(
                   width: 400,
                   child: Image.asset(
-                    'Handoff/community.png',
+                    'assets/Handoff/community.png',
                     fit: BoxFit.fill,
                   ),
                 ),

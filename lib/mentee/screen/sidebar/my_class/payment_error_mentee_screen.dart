@@ -104,7 +104,7 @@ class _PaymentErrorScreenMenteeState extends State<PaymentErrorScreenMentee> {
                             width: 620,
                             height: 400,
                             child: Image.asset(
-                              'Handoff/ilustrator/payment-gagal.png',
+                              'assets/Handoff/ilustrator/payment-gagal.png',
                               fit: BoxFit.fill,
                             ),
                           ),

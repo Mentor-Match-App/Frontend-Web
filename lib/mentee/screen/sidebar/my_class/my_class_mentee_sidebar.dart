@@ -65,10 +65,10 @@ class _MyClassMenteeState extends State<MyClassMentee> {
                 ),
                 child: TextButton(
                   onPressed: () {
-                    changeClass("All Class");
+                    changeClass("Booking Class");
                   },
                   child: Text(
-                    "All Class",
+                    "Booking Class",
                     style: FontFamily().boldText.copyWith(
                           color: isBookingClassActive
                               ? ColorStyle().blackColors

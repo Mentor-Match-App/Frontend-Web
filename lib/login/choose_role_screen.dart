@@ -6,6 +6,7 @@ import 'package:my_flutter_app/mentor/Screens/register_mentor/persetujuan_mentor
 import 'package:my_flutter_app/mentor/screens/register_mentor/register_form.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
+
 class ChooseRoleScreen extends StatefulWidget {
   const ChooseRoleScreen({super.key});
 
@@ -29,7 +30,7 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
               children: [
                 const SizedBox(width: 20),
                 Image.asset(
-                  'Handoff/logo/LogoWeb.png',
+                  'assets/Handoff/logo/LogoWeb.png',
                   height: 150,
                   width: 150,
                 ),
@@ -94,7 +95,7 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
                             child: Column(
                               children: [
                                 Image.asset(
-                                  'Handoff/ilustrator/mentor_role.png',
+                                  'assets/Handoff/ilustrator/mentor_role.png',
                                   width: 265,
                                   height: 265,
                                   fit: BoxFit.fill,
@@ -131,37 +132,37 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
                         width: 250,
                         height: 60,
                         child: ElevatedButton(
-                            style: ButtonStyle(
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
+                          style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        ColorStyle().primaryColors)),
-                            onPressed: () async {
-                              // Assuming you have an instance of AuthService
-                              // await chooseRoleService.chooseRole("Mentor");
+                              ),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  ColorStyle().primaryColors)),
+                          onPressed: () async {
+                            // Assuming you have an instance of AuthService
+                            // await chooseRoleService.chooseRole("Mentor");
 
-                              if (mounted) {
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                       PersetujuanMentorScreen(),
-                                  ),
-                                  (route) => false,
-                                );
-                              }
-                            },
-                            child: Text(
-                              'As a Mentor',
-                              style: FontFamily().buttonText.copyWith(
-                                    fontSize: 14,
-                                  ),
-                            ),),
+                            if (mounted) {
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      PersetujuanMentorScreen(),
+                                ),
+                                (route) => false,
+                              );
+                            }
+                          },
+                          child: Text(
+                            'As a Mentor',
+                            style: FontFamily().buttonText.copyWith(
+                                  fontSize: 14,
+                                ),
+                          ),
+                        ),
                       )
                     ],
                   ),
@@ -189,7 +190,7 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
                             child: Column(
                               children: [
                                 Image.asset(
-                                  'Handoff/ilustrator/mentee_role.png',
+                                  'assets/Handoff/ilustrator/mentee_role.png',
                                   width: 265,
                                   height: 265,
                                   fit: BoxFit.fill,

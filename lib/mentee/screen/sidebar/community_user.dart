@@ -95,7 +95,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                           child: SizedBox(
                             width: 400,
                             child: Image.asset(
-                              'Handoff/community.png',
+                              'assets/Handoff/community.png',
                               fit: BoxFit.fill,
                             ),
                           ),

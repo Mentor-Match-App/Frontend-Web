@@ -141,7 +141,7 @@ class _EvaluasiMenteeEmptyPageState extends State<EvaluasiMenteeEmptyPage> {
                               child: Column(
                                 children: [
                                   Image.asset(
-                                    'Handoff/ilustrator/learn_by_online.png',
+                                    'assets/Handoff/ilustrator/learn_by_online.png',
                                     width: 500,
                                     fit: BoxFit.fill,
                                   ),

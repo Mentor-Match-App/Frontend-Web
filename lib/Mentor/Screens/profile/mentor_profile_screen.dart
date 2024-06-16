@@ -9,6 +9,7 @@ import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/profileavatar.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
+
 class ProfileMentorScreen extends StatefulWidget {
   ProfileMentorScreen({Key? key}) : super(key: key);
 
@@ -311,7 +312,7 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Image.asset(
-                                    'Handoff/icon/social-icons/linkedin.png',
+                                    'assets/Handoff/icon/social-icons/linkedin.png',
                                     width: 20.0,
                                     height: 20.0,
                                     color: Colors.white,

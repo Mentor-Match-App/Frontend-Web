@@ -18,7 +18,7 @@ class NavbarWidget extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 child: Image.asset(
-                  'Handoff/logo/LogoWeb.png',
+                  'assets/Handoff/logo/LogoWeb.png',
                   height: 150,
                   width: 150,
                 ),

@@ -19,7 +19,7 @@ class _MentorConfirmationPageState extends State<MentorConfirmationPage> {
             children: [
               const SizedBox(width: 20),
               Image.asset(
-                'Handoff/logo/LogoWeb.png',
+                'assets/Handoff/logo/LogoWeb.png',
                 height: 150,
                 width: 150,
               ),
@@ -39,7 +39,7 @@ class _MentorConfirmationPageState extends State<MentorConfirmationPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'Handoff/ilustrator/verification.png',
+                  'assets/Handoff/ilustrator/verification.png',
                   height: 300,
                   width: 300,
                   fit: BoxFit.cover,

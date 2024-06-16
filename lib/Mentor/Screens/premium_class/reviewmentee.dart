@@ -39,7 +39,7 @@ class ReviewMenteeDialog extends StatelessWidget {
                 ),
               ),
               Image.asset(
-                'Handoff/ilustrator/question.png', // Replace with your image path
+                'assets/Handoff/ilustrator/question.png', // Replace with your image path
                 height: 500,
                 width: 500,
                 fit: BoxFit.contain,

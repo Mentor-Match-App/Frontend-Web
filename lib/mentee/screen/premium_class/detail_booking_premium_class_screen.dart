@@ -29,15 +29,15 @@ class DetailBookingClass extends StatefulWidget {
 }
 
 String formatCurrency(int amount) {
-  final formatter = NumberFormat.currency(
-      locale: 'id_ID', symbol: 'Rp. ', decimalDigits: 0);
+  final formatter =
+      NumberFormat.currency(locale: 'id_ID', symbol: 'Rp. ', decimalDigits: 0);
   return '${formatter.format(amount)},00';
 }
 
 class _DetailBookingClassState extends State<DetailBookingClass> {
   @override
   Widget build(BuildContext context) {
-      int totalAmount = widget.price + widget.uniqueCode;
+    int totalAmount = widget.price + widget.uniqueCode;
     return Scaffold(
       backgroundColor: ColorStyle().whiteColors,
       appBar: AppBar(),
@@ -88,7 +88,7 @@ class _DetailBookingClassState extends State<DetailBookingClass> {
                           child: SizedBox(
                             width: 42.12,
                             child: Image.asset(
-                              'Handoff/payment.png',
+                              'assets/Handoff/payment.png',
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -138,7 +138,7 @@ class _DetailBookingClassState extends State<DetailBookingClass> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Text(
-                                             formatCurrency(totalAmount),
+                                              formatCurrency(totalAmount),
                                               style: FontFamily()
                                                   .boldText
                                                   .copyWith(

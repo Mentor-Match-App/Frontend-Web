@@ -74,7 +74,7 @@ class _DetailBookingSessionState extends State<DetailBookingSession> {
                           child: SizedBox(
                             width: 42.12,
                             child: Image.asset(
-                              'Handoff/payment.png',
+                              'assets/Handoff/payment.png',
                               fit: BoxFit.fill,
                             ),
                           ),

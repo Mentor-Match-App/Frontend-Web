@@ -76,12 +76,12 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
-    - assets/social-icons/
     - assets/Handoff/
     - assets/Handoff/logo/
     - assets/Handoff/communityLogo/
     - assets/Handoff/ilustrator/
     - assets/Handoff/icon/adminIcon/
+    - assets/Handoff/icon/social-icons/
     - assets/Handoff/icon/categoryIcon/Karier/
     - assets/Handoff/icon/categoryIcon/Kuliah/
     - assets/Handoff/icon/categoryIcon/SMA/

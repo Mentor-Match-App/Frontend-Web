@@ -234,7 +234,7 @@ class _DetailMentorSDScreenState extends State<DetailMentorSDScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset(
-                              'Handoff/icon/social-icons/linkedin.png',
+                              'assets/Handoff/icon/social-icons/linkedin.png',
                               width: 20.0,
                               height: 20.0,
                               color: Colors.white,

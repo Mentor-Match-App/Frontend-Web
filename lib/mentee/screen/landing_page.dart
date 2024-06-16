@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/widget/footer.dart';
+import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/navbar.dart';
 
 class LandingPage extends StatelessWidget {
@@ -8,7 +10,7 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: Size.fromHeight(80.0),
         child: NavbarWidget(),
       ),
@@ -22,20 +24,23 @@ class LandingPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Selamat datang di Aplikasi MentorMatch',
-                          style: TextStyle(
-                              fontSize: 40, fontWeight: FontWeight.normal),
+                          style: GoogleFonts.poppins(
+                              fontSize: 40, fontWeight: FontWeight.w500),
                         ),
-                        SizedBox(height: 28),
+                        const SizedBox(height: 28),
                         Text(
-                          'Mari lanjutkan langkah untuk dunia pendidikan yang lebih baik dengan sesio mentoring bersama mentor-mentor ahli yang dapat membantu kamu dalam mencapai target dan tujuan.',
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.w200),
+                          'Mari lanjutkan langkah untuk dunia pendidikan yang lebih baik. Ikuti sesi mentoring bersama para mentor ahli yang siap membantu kamu mencapai target dan tujuanmu.',
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w300,
+                            color: ColorStyle().disableColors,
+                          ),
                         ),
                       ],
                     ),
@@ -43,13 +48,11 @@ class LandingPage extends StatelessWidget {
                   const SizedBox(width: 80),
                   Expanded(
                     child: DecoratedBox(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                      ),
+                      decoration: const BoxDecoration(color: Colors.white),
                       child: SizedBox(
                         width: 202.12,
                         child: Image.asset(
-                          'Handoff/ilustrator/first_screen.png',
+                          'assets/Handoff/ilustrator/first_screen.png',
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -58,201 +61,118 @@ class LandingPage extends StatelessWidget {
                 ],
               ),
             ),
-            Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 150, vertical: 100),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 150, vertical: 100),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Premium Class Program',
+                    style: GoogleFonts.poppins(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
+                        color: ColorStyle().textColors),
+                  ),
+                  const SizedBox(height: 45),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Premium Class Program',
-                        style: TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey),
+                      for (int i = 0; i < 3; i++)
+                        Card(
+                          color: const Color(0xFFF9F1F0),
+                          child: Container(
+                            height: 400,
+                            width: 300,
+                            child: Column(
+                              children: [
+                                Image.asset(
+                                  'assets/Handoff/ilustrator/Premiumclassverified.png',
+                                  fit: BoxFit.fill,
+                                ),
+                                ListTile(
+                                  title: Text(
+                                    'Mentor Terpercaya & Terverifikasi baik',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  subtitle: Text(
+                                    'Menyediakan mentor yang berpengalaman dan terverifikasi mampu memberikan bimbingan yang baik dibidang nya',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w200),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 150, vertical: 50),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Session Gratis',
+                    style: GoogleFonts.poppins(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 45),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: DecoratedBox(
+                          decoration: const BoxDecoration(color: Colors.white),
+                          child: SizedBox(
+                            width: 902.12,
+                            child: Image.asset(
+                              'assets/Handoff/ilustrator/Sessiongratisteacher.png',
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
                       ),
-                      const SizedBox(height: 65),
-                      Container(
-                        padding: const EdgeInsets.only(left: 60, right: 60),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      const SizedBox(width: 45),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Card(
-                              color: Color(0xFFF9F1F0),
-                              child: Container(
-                                height: 400,
-                                width: 300,
-                                child: Column(
-                                  children: [
-                                    Image.asset(
-                                      'Handoff/ilustrator/Premiumclassverified.png',
-                                      fit: BoxFit.fill,
-                                    ),
-                                    const ListTile(
-                                      title: Text(
-                                        'Mentor Terpercaya & Terverifikasi baik',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      subtitle: Text(
-                                        'Menyediakan mentor yang berpengalaman dan terverifikasi mampu memberikan bimbingan yang baik dibidang nya',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w200),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            Text(
+                              'Nikmati Session Gratis dengan\npara mentor berpengalaman',
+                              textAlign: TextAlign.right,
+                              style: GoogleFonts.poppins(
+                                  fontSize: 24, fontWeight: FontWeight.w500),
                             ),
-                            Card(
-                              color: Color(0xFFF9F1F0),
-                              child: Container(
-                                height: 400,
-                                width: 300,
-                                child: Column(
-                                  children: [
-                                    Image.asset(
-                                      'Handoff/ilustrator/Premiumclassverified.png',
-                                      fit: BoxFit.fill,
-                                    ),
-                                    const ListTile(
-                                      title: Text(
-                                        'Mentor Terpercaya & Terverifikasi baik',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      subtitle: Text(
-                                        'Menyediakan mentor yang berpengalaman dan terverifikasi mampu memberikan bimbingan yang baik dibidang nya',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w200),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Card(
-                              color: Color(0xFFF9F1F0),
-                              child: Container(
-                                height: 400,
-                                width: 300,
-                                child: Column(
-                                  children: [
-                                    Image.asset(
-                                      'Handoff/ilustrator/Premiumclassverified.png',
-                                      fit: BoxFit.fill,
-                                    ),
-                                    const ListTile(
-                                      title: Text(
-                                        'Mentor Terpercaya & Terverifikasi baik',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      subtitle: Text(
-                                        'Menyediakan mentor yang berpengalaman dan terverifikasi mampu memberikan bimbingan yang baik dibidang nya',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w200),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            const SizedBox(height: 28),
+                            Text(
+                              'Bergabunglah dalam sesi gratis di MentorMatch dan rasakan pengalaman pembelajaran yang akan membawa Anda keluar dari zona nyaman. Sesi ini dirancang untuk memberi Anda gambaran nyata tentang potensi dan keuntungan belajar bersama mentor ahli.',
+                              textAlign: TextAlign.right,
+                              style: GoogleFonts.poppins(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w300,
+                                  color: ColorStyle().disableColors),
                             ),
                           ],
                         ),
                       ),
                     ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            Column(
-              children: [
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 150, vertical: 50),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Row(
-                          children: [
-                            Text(
-                              'Session Gratis',
-                              style: TextStyle(
-                                  fontSize: 40,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 45),
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: DecoratedBox(
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                  ),
-                                  child: SizedBox(
-                                    width: 902.12,
-                                    child: Image.asset(
-                                      'Handoff/ilustrator/Sessiongratisteacher.png',
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 45),
-                              const Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      'Nikmati Session Gratis dengan\n para mentor berpengalaman',
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                          fontSize: 35,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                    SizedBox(height: 28),
-                                    Text(
-                                      'Bergabunglah dalam session gratis di MentorMatch dan rasakan pengalaman pembelajaran yang membawa\n Anda Keluar dari Zona nyaman. Sesi ini dirancang untuk memberi Anda gambaran nyata tentang potensi dan keuntungan belajar dengan mentor ahli.',
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w200),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                FooterWidget(),
-              ],
-            ),
+            FooterWidget(),
           ],
         ),
       ),

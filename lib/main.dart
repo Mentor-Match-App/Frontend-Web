@@ -3,8 +3,8 @@ import "package:flutter/material.dart";
 import 'package:my_flutter_app/Mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/admin/screen/dasboard_admin_screen.dart';
 import 'package:my_flutter_app/firebase_options.dart';
-import 'package:my_flutter_app/login/login_screen.dart';
 import 'package:my_flutter_app/mentee/provider/review_mentor_provider.dart';
+import 'package:my_flutter_app/mentee/screen/landing_page.dart';
 import 'package:my_flutter_app/mentor/Screens/homepage_mentor.dart';
 import 'package:my_flutter_app/mentor/Screens/register_mentor/verification_page.dart';
 import 'package:my_flutter_app/mentor/provider/create_class_provider.dart';
@@ -37,14 +37,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget homeScreen = LoginScreen();
+    Widget homeScreen = const LandingPage();
     if (isLoggedIn) {
       switch (userType) {
         case 'Mentee':
-          homeScreen = MenteeHomePage();
+          homeScreen = const MenteeHomePage();
           break;
         case 'Mentor':
-          homeScreen = MentorHomePage();
+          homeScreen = const MentorHomePage();
           break;
         case 'Admin':
           homeScreen = DashboardAdminScreen();
@@ -66,7 +66,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Mentor Match',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          primaryColor: Colors.white,
+          scaffoldBackgroundColor: Colors.white,
           useMaterial3: true,
         ),
         //   home: Scaffold(
