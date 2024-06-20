@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:my_flutter_app/login/login_screen.dart';
+import 'package:my_flutter_app/mentee/screen/landing_page.dart';
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/show_dialog_widget.dart';
@@ -11,7 +11,7 @@ class SideBarMentee extends StatefulWidget {
   final void Function(String) onMenuSelected;
   final String selectedMenu;
 
-  SideBarMentee({
+  const SideBarMentee({
     required Key key,
     required this.size,
     required this.onMenuSelected,
@@ -93,7 +93,7 @@ class _SideBarMenteeState extends State<SideBarMentee> {
                   // ignore: use_build_context_synchronously
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
-                        builder: (context) => const LoginScreen()),
+                        builder: (context) => const LandingPage()),
                     (Route<dynamic> route) => false,
                   );
                 },

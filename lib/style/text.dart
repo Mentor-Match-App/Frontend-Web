@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
+
 class TittleTextField extends StatelessWidget {
   final String? title;
   final Color? color;
@@ -10,16 +10,13 @@ class TittleTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Text(
-        title!,
-        style: FontFamily().titleText.copyWith(
-              fontSize: 18,
-              color: color,
-            ),
-        textAlign: textAlign,
-      ),
+    return Text(
+      title!,
+      style: FontFamily().titleText.copyWith(
+            fontSize: 18,
+            color: color,
+          ),
+      textAlign: textAlign,
     );
   }
 }

@@ -68,7 +68,7 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
 
     return Scaffold(
       backgroundColor: ColorStyle().whiteColors,
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: NavbarWidgetMentee(),
       ),
@@ -80,7 +80,7 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
           ),
           Container(
             width: double.maxFinite,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
                   Color(0xFFf8f0f0), // #F8F0F0
@@ -105,7 +105,7 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                     imageUrl: mentorDetail.photoUrl,
                     radius: 80,
                   ),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -119,18 +119,18 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                             color: Colors.black, // Text color adjusted
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Row(
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.work_outline_outlined,
                                   size: 20,
-                                  color: const Color(0xffE78938),
+                                  color: Color(0xffE78938),
                                 ),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 Text(
                                   mentorDetail.experiences
                                           ?.firstWhere(
@@ -139,27 +139,27 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                               orElse: () => Experience())
                                           .jobTitle ??
                                       '',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 16,
                                   ),
                                 ),
                               ],
                             ),
-                            SizedBox(width: 20),
+                            const SizedBox(width: 20),
                             Expanded(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.location_on_outlined,
                                     size: 20,
-                                    color: const Color(0xffE78938),
+                                    color: Color(0xffE78938),
                                   ),
-                                  SizedBox(width: 5),
+                                  const SizedBox(width: 5),
                                   Text(
                                     mentorDetail.location ?? "",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 18,
                                     ),
@@ -169,15 +169,15 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.home_work_outlined,
                               size: 20,
-                              color: const Color(0xffE78938),
+                              color: Color(0xffE78938),
                             ),
-                            SizedBox(width: 4),
+                            const SizedBox(width: 4),
                             Text(
                               mentorDetail.experiences
                                       ?.firstWhere(
@@ -186,7 +186,7 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                           orElse: () => Experience())
                                       .company ??
                                   '',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16,
                               ),
@@ -208,7 +208,7 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
               Container(
                 color: Colors.white,
                 width: MediaQuery.of(context).size.width / 2,
-                padding: EdgeInsets.all(55.0),
+                padding: const EdgeInsets.all(55.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -217,25 +217,25 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         fontSize: 18,
-                        color: Color(0xffE78938),
+                        color: const Color(0xffE78938),
                       ),
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     Text(
                       mentorDetail.about ?? "",
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 16,
                         color: Color(0xff313030),
                       ),
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     SizedBox(
                       width: 200,
                       child: TextButton(
                         style: TextButton.styleFrom(
-                          backgroundColor: Color(0xffE78938), // Primary color
-                          padding: EdgeInsets.symmetric(
+                          backgroundColor: const Color(0xffE78938), // Primary color
+                          padding: const EdgeInsets.symmetric(
                             vertical: 20.0,
                             horizontal: 34.0,
                           ),
@@ -256,8 +256,8 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                               height: 20.0,
                               color: Colors.white,
                             ),
-                            SizedBox(width: 8.0),
-                            Text(
+                            const SizedBox(width: 8.0),
+                            const Text(
                               "Linkedin",
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
@@ -269,16 +269,16 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Text(
                       "Skill",
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         fontSize: 18,
-                        color: Color(0xffE78938),
+                        color: const Color(0xffE78938),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     SingleChildScrollView(
@@ -290,16 +290,16 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                             .toList(),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Text(
                       "Experience",
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         fontSize: 18,
-                        color: Color(0xffE78938),
+                        color: const Color(0xffE78938),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Column(
                       children: mentorDetail.experiences?.map((experience) {
                             return ExperienceWidget(
@@ -307,18 +307,18 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                               company: experience.company ?? 'No Company',
                             );
                           }).toList() ??
-                          [Text('No experiences')],
+                          [const Text('No experiences')],
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Text(
                       "Review",
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         fontSize: 20,
-                        color: Color(0xffE78938),
+                        color: const Color(0xffE78938),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     // list of ReviewWidget
                     buildReviewWidgets(),
                   ],
@@ -327,7 +327,7 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
               Container(
                 color: Colors.white,
                 width: MediaQuery.of(context).size.width / 2,
-                padding: EdgeInsets.all(55),
+                padding: const EdgeInsets.all(55),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -338,17 +338,14 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                         style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w500,
                           fontSize: 18,
-                          color: Color(0xffE78938),
+                          color: const Color(0xffE78938),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 40,
                     ),
                     Container(
                       color: Colors.white,
                       width: MediaQuery.of(context).size.width / 2,
-                      padding: EdgeInsets.all(55),
+                      padding: const EdgeInsets.all(55),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -358,11 +355,16 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                     mentorDetail.session!.isNotEmpty
                                 ? ListView.builder(
                                     shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemCount: mentorDetail.session!.length,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    itemCount: mentorDetail.session!
+                                        .where((element) =>
+                                            element.isActive == true)
+                                        .length,
                                     itemBuilder: (context, index) {
-                                      final session =
-                                          mentorDetail.session![index];
+                                      final session = mentorDetail.session!
+                                          .where((element) =>
+                                              element.isActive == true)
+                                          .elementAt(index);
 
                                       String formattedJadwal =
                                           DateFormat('dd MMM yyyy').format(
@@ -389,11 +391,11 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                                     ColorStyle().tertiaryColors,
                                                 blurRadius: 4,
                                                 spreadRadius: 4,
-                                                offset: Offset(0, 4),
+                                                offset: const Offset(0, 4),
                                               ),
                                             ],
                                             color: Colors.white,
-                                            borderRadius: BorderRadius.all(
+                                            borderRadius: const BorderRadius.all(
                                                 Radius.circular(5)),
                                           ),
                                           child: Padding(
@@ -409,11 +411,11 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      Icon(
+                                                      const Icon(
                                                         Icons.tag,
                                                         size: 40,
                                                       ),
-                                                      SizedBox(width: 10),
+                                                      const SizedBox(width: 10),
                                                       Flexible(
                                                         child: Column(
                                                           mainAxisAlignment:
@@ -431,11 +433,11 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                                                     FontWeight
                                                                         .w500,
                                                                 fontSize: 14,
-                                                                color: Color(
+                                                                color: const Color(
                                                                     0xffE78938),
                                                               ),
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                                 height: 10),
                                                             Text(
                                                               session.title ??
@@ -457,7 +459,7 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                                       ),
                                                     ],
                                                   ),
-                                                  SizedBox(height: 30),
+                                                  const SizedBox(height: 30),
                                                   // Tambah bagian ini untuk waktu, lokasi, dan slot yang tersedia
                                                   Row(
                                                     mainAxisAlignment:
@@ -466,11 +468,11 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      Icon(
+                                                      const Icon(
                                                         Icons.access_time,
                                                         size: 40,
                                                       ),
-                                                      SizedBox(
+                                                      const SizedBox(
                                                         width: 10,
                                                       ),
                                                       Flexible(
@@ -490,19 +492,15 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                                                     FontWeight
                                                                         .w500,
                                                                 fontSize: 14,
-                                                                color: Color(
+                                                                color: const Color(
                                                                     0xffE78938),
                                                               ),
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 10,
                                                             ),
                                                             Text(
-                                                              formattedJadwal +
-                                                                  " " +
-                                                                  formattedStartTime +
-                                                                  " - " +
-                                                                  formattedEndTime,
+                                                              "$formattedJadwal $formattedStartTime - $formattedEndTime",
                                                               overflow:
                                                                   TextOverflow
                                                                       .visible,
@@ -521,7 +519,7 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                                     ],
                                                   ),
 
-                                                  SizedBox(height: 30),
+                                                  const SizedBox(height: 30),
                                                   Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
@@ -529,11 +527,11 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      Icon(
+                                                      const Icon(
                                                         Icons.location_on,
                                                         size: 40,
                                                       ),
-                                                      SizedBox(
+                                                      const SizedBox(
                                                         width: 10,
                                                       ),
                                                       Flexible(
@@ -553,11 +551,11 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                                                     FontWeight
                                                                         .w500,
                                                                 fontSize: 14,
-                                                                color: Color(
+                                                                color: const Color(
                                                                     0xffE78938),
                                                               ),
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 10,
                                                             ),
                                                             Text(
@@ -580,7 +578,7 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                                     ],
                                                   ),
 
-                                                  SizedBox(height: 30),
+                                                  const SizedBox(height: 30),
                                                   Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
@@ -588,11 +586,11 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      Icon(
+                                                      const Icon(
                                                         Icons.person_add_alt_1,
                                                         size: 40,
                                                       ),
-                                                      SizedBox(
+                                                      const SizedBox(
                                                         width: 10,
                                                       ),
                                                       Flexible(
@@ -612,11 +610,11 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                                                     FontWeight
                                                                         .w500,
                                                                 fontSize: 14,
-                                                                color: Color(
+                                                                color: const Color(
                                                                     0xffE78938),
                                                               ),
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 10,
                                                             ),
                                                             Text(
@@ -635,7 +633,7 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                                                 fontSize: 14,
                                                               ),
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                                 height: 40),
                                                             Align(
                                                               alignment:
@@ -649,10 +647,10 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                                                   style: TextButton
                                                                       .styleFrom(
                                                                     backgroundColor:
-                                                                        Color(
+                                                                        const Color(
                                                                             0xffE78938), // Primary color
                                                                     padding:
-                                                                        EdgeInsets
+                                                                        const EdgeInsets
                                                                             .symmetric(
                                                                       vertical:
                                                                           20.0,
@@ -674,7 +672,7 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                                                             .id
                                                                             .toString());
                                                                   },
-                                                                  child: Text(
+                                                                  child: const Text(
                                                                     "Booking Session",
                                                                     style:
                                                                         TextStyle(
@@ -724,15 +722,21 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
   void _showDialog(BuildContext context, String sessionId) {
     final mentorDetail = widget.detailmentor;
 
+    // Cari sesi yang sesuai dengan sessionId yang diklik
+    final selectedSession = mentorDetail.session?.firstWhere(
+      (session) => session.id == sessionId,
+      orElse: () => SessionElement(),
+    );
+
     DateTime? parsedJadwal;
-    if (mentorDetail.session != null && mentorDetail.session!.isNotEmpty) {
-      parsedJadwal = DateTime.parse(mentorDetail.session!.first.dateTime!);
+    if (selectedSession != null) {
+      parsedJadwal = DateTime.parse(selectedSession.dateTime!);
     }
     final DateFormat formatOutput = DateFormat("HH:mm");
-    final String formattedStartTime = formatOutput
-        .format(DateTime.parse(mentorDetail.session!.first.startTime!));
-    final String formattedEndTime = formatOutput
-        .format(DateTime.parse(mentorDetail.session!.first.endTime!));
+    final String formattedStartTime =
+        formatOutput.format(DateTime.parse(selectedSession!.startTime!));
+    final String formattedEndTime =
+        formatOutput.format(DateTime.parse(selectedSession.endTime!));
 
     String formattedJadwal = parsedJadwal != null
         ? DateFormat('dd MMMM yyyy').format(parsedJadwal)
@@ -746,7 +750,7 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
               return Stack(
                 children: [
                   AlertDialog(
-                    contentPadding: EdgeInsets.symmetric(
+                    contentPadding: const EdgeInsets.symmetric(
                         horizontal: 24, vertical: 20), // Atur padding konten
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -755,8 +759,8 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Booking Class", style: FontFamily().titleText),
-                        SizedBox(width: 20),
+                        Text("Booking Session", style: FontFamily().titleText),
+                        const SizedBox(width: 20),
                         IconButton(
                           onPressed: () => Navigator.of(context).pop(),
                           icon: Icon(
@@ -778,7 +782,7 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                   fontSize: 14,
                                 ),
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -823,17 +827,11 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                                       nama_mentor: widget
                                                           .detailmentor.name
                                                           .toString(),
-                                                      nama_session: widget
-                                                          .detailmentor.session!
-                                                          .map((session) =>
-                                                              session.title)
-                                                          .join(", "),
+                                                      nama_session:
+                                                          selectedSession.title
+                                                              .toString(),
                                                       jadwal_session:
-                                                          formattedJadwal +
-                                                              " " +
-                                                              formattedStartTime +
-                                                              " - " +
-                                                              formattedEndTime,
+                                                          "$formattedJadwal $formattedStartTime - $formattedEndTime",
                                                     )),
                                             (Route<dynamic> route) => false,
                                           );
@@ -861,7 +859,7 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                   if (_isLoading)
                     Container(
                       color: Colors.black.withOpacity(0.5),
-                      child: Center(
+                      child: const Center(
                         child: CircularProgressIndicator(),
                       ),
                     ),
@@ -881,9 +879,9 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
         size: 28.0,
         color: ColorStyle().whiteColors,
       ),
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
       leftBarIndicatorColor: ColorStyle().errorColors,
-      margin: EdgeInsets.all(8),
+      margin: const EdgeInsets.all(8),
       borderRadius: BorderRadius.circular(8),
       flushbarPosition: FlushbarPosition.TOP, // Menampilkan di bagian atas
     ).show(context);
@@ -962,7 +960,7 @@ class ExperienceWidget extends StatelessWidget {
         children: [
           Icon(Icons.work_outline_outlined,
               size: 20, color: ColorStyle().primaryColors),
-          SizedBox(width: 8), // Sesuaikan sesuai dengan kebutuhan Anda
+          const SizedBox(width: 8), // Sesuaikan sesuai dengan kebutuhan Anda
           Column(
             crossAxisAlignment:
                 CrossAxisAlignment.start, // Atur sesuai kebutuhan

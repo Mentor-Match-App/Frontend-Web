@@ -268,7 +268,7 @@ class _SearchPageMenteeWebState extends State<SearchPageMenteeWeb> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: TextField(
                     obscureText: false,
                     controller: _searchController,

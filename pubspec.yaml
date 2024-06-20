@@ -78,6 +78,7 @@ flutter:
     - assets/
     - assets/Handoff/
     - assets/Handoff/logo/
+    - assets/Handoff/education_level/
     - assets/Handoff/communityLogo/
     - assets/Handoff/ilustrator/
     - assets/Handoff/icon/adminIcon/

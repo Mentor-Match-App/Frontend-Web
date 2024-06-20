@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 // ignore: depend_on_referenced_packages
@@ -7,6 +6,7 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:my_flutter_app/mentor/Screens/create_class_and_session/create_class/contoh_premium_class.dart';
 import 'package:my_flutter_app/mentor/Screens/create_class_and_session/create_class/succes_create_class.dart';
 import 'package:my_flutter_app/mentor/provider/create_class_provider.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/style/text.dart';
 import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
@@ -148,9 +148,11 @@ class _FormCreatePremiumClassScreenState
         return MultiSelectDialog(
           items: days.map((day) => MultiSelectItem(day, day)).toList(),
           initialValue: selectedDays,
-          onConfirm: (values) {
-            // Ini adalah callback yang dipanggil dengan nilai yang dipilih pengguna
-          },
+          onConfirm: (values) {},
+          backgroundColor: ColorStyle().whiteColors,
+          selectedColor: ColorStyle().secondaryColors,
+          unselectedColor: ColorStyle().primaryColors,
+          // warna icon
         );
       },
     );
@@ -247,10 +249,10 @@ class _FormCreatePremiumClassScreenState
 
       /// ketika isSubmitted true maka akan diarahkan ke halaman succes create class kalau gagal maka tampilkan error message final errorMessage = createClassProvider.getErrorMessage//
       if (isSubmitted) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SuccesCreateClassScreen()),
-        );
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => SuccesCreateClassScreen()),
+            (route) => false);
       }
       //// jika gagal maka tampilkan error message ///
     } catch (error) {
@@ -667,8 +669,8 @@ class _FormCreatePremiumClassScreenState
                   alignment: Alignment.centerRight,
                   child: _isLoading
                       ? CircularProgressIndicator(
-                          color: ColorStyle().secondaryColors
-                        ) // Tampilkan CircularProgressIndicator jika isLoading true
+                          color: ColorStyle()
+                              .secondaryColors) // Tampilkan CircularProgressIndicator jika isLoading true
                       : ElevatedButtonWidget(
                           onPressed: () => onSubmit(context),
                           title: "Kirim Pengajuan",

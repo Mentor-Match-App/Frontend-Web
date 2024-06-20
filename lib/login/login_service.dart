@@ -24,7 +24,7 @@ class AuthService {
         final name = response.data['user']['name'];
         final email = response.data['user']['email'];
         final photoUrl = response.data['user']['photoUrl'];
-        final userType = response.data['user']['userType'];
+        final userType = response.data['user']['userType'] ?? '';
 
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('userId', userId);

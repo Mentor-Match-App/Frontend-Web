@@ -39,17 +39,17 @@ class _DashboardMenteeState extends State<DashboardMentee> {
         future: _futureData,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(
+            return SizedBox(
                 height: MediaQuery.of(context).size.height / 2.0,
-                child: Center(child: CircularProgressIndicator()));
+                child: const Center(child: CircularProgressIndicator()));
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error.toString()}'));
           } else if (!snapshot.hasData) {
             return const Center(child: Text('Tidak ada data'));
           } else {
-            // mentor session yang di tampilkan hanya yang isActive == true
-            var mentorSessionData = snapshot.data![0] as Session;
-            var mentorClassData = snapshot.data![1] as MentorClassModel;
+
+            var mentorSessionData = snapshot.data![0] as Session; // mentor session yang di tampilkan hanya yang isActive == true
+            var mentorClassData = snapshot.data![1] as MentorClassModel; // mentor class yang di tampilkan hanya yang isAvailable == true
 
             return SingleChildScrollView(
               child: Column(

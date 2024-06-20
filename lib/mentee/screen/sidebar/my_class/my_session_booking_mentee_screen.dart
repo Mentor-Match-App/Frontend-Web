@@ -159,7 +159,10 @@ class _MySessionBookingState extends State<MySessionBooking> {
                                     child: CircularProgressIndicator(),
                                   ),
                                   errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
+                                      Image.asset(
+                                    'assets/blank_profile.jpg',
+                                    fit: BoxFit.cover,
+                                  ),
                                   imageUrl: session.mentor!.photoUrl.toString(),
                                   fit: BoxFit.cover,
                                   width: 98,

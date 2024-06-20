@@ -17,7 +17,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class MentorHomePage extends StatefulWidget {
   final String selectedMenu;
-  const MentorHomePage({Key? key, this.selectedMenu = 'Dashboard'});
+  final String subMenu; // New parameter for sub-menu selection
+
+  const MentorHomePage({
+    Key? key,
+    this.selectedMenu = 'Dashboard',
+    this.subMenu = '', // Default value for sub-menu selection
+  }) : super(key: key);
 
   @override
   State<MentorHomePage> createState() => _MentorHomePageState();
@@ -142,7 +148,10 @@ class _MentorHomePageState extends State<MentorHomePage> {
                         placeholder: (context, url) => Center(
                           child: CircularProgressIndicator(),
                         ),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        errorWidget: (context, url, error) => Image.asset(
+                          'assets/blank_profile.jpg',
+                          fit: BoxFit.cover,
+                        ),
                         imageUrl: _photoUrl,
                         height: 40,
                         width: 40,
@@ -210,7 +219,9 @@ class _MentorHomePageState extends State<MentorHomePage> {
   Widget _getSelectedScreen() {
     switch (_selectedMenu) {
       case 'Class':
-        return MyClassMentorListScreen();
+        return MyClassMentorListScreen(
+          initialSubMenu: widget.subMenu,
+        );
       case 'Community':
         return CommunityScreen();
       default:
@@ -219,10 +230,17 @@ class _MentorHomePageState extends State<MentorHomePage> {
   }
 }
 
-class SearchBarMentor extends StatelessWidget {
+class SearchBarMentor extends StatefulWidget {
   const SearchBarMentor({
     Key? key,
   }) : super(key: key);
+
+  @override
+  _SearchBarMentorState createState() => _SearchBarMentorState();
+}
+
+class _SearchBarMentorState extends State<SearchBarMentor> {
+  bool isHovered = false;
 
   @override
   Widget build(BuildContext context) {
@@ -242,35 +260,54 @@ class SearchBarMentor extends StatelessWidget {
           const SizedBox(
             width: 60,
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SearchPageMentorweb()),
-              );
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Container(
-                width: 800,
-                height: 40,
-                decoration: BoxDecoration(
-                  border: Border.all(color: ColorStyle().tertiaryColors),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: TextField(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SearchPageMentorweb()),
-                    );
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SearchPageMentorweb()),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: MouseRegion(
+                  onEnter: (event) {
+                    setState(() {
+                      isHovered = true;
+                    });
                   },
-                  obscureText: false,
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    labelText: 'Search by mentee name, class, or class name',
-                    prefixIcon: Icon(Icons.search),
+                  onExit: (event) {
+                    setState(() {
+                      isHovered = false;
+                    });
+                  },
+                  child: Container(
+                    width: 800,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: ColorStyle().tertiaryColors),
+                      borderRadius: BorderRadius.circular(8),
+                      color: isHovered ? Colors.grey[200] : Colors.white,
+                    ),
+                    child: AbsorbPointer(
+                      child: TextField(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SearchPageMentorweb()),
+                          );
+                        },
+                        obscureText: false,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          labelText:
+                              'Search by mentee name, class, or class name',
+                          prefixIcon: Icon(Icons.search),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),

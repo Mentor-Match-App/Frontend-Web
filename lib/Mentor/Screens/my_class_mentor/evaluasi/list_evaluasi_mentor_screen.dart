@@ -62,7 +62,9 @@ class _ListEvaluasiMenteeState extends State<ListEvaluasiMentee> {
             return Text("Error: ${snapshot.error}");
           } else if (snapshot.hasData &&
               snapshot.data!.user?.userClass != null) {
-            var userClass = snapshot.data!.user!.userClass!;
+            var userClass = snapshot.data!.user!.userClass!
+                .where((userClass) => userClass.id == widget.classId)
+                .toList();
 
             return ListView.builder(
               itemCount: userClass.length,
@@ -186,8 +188,9 @@ class _ListEvaluasiMenteeState extends State<ListEvaluasiMentee> {
                                                 child: Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
-                                                  children: feedbacksForCurrentMentee
-                                                      .map((feedback) {
+                                                  children:
+                                                      feedbacksForCurrentMentee
+                                                          .map((feedback) {
                                                     return Column(
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment

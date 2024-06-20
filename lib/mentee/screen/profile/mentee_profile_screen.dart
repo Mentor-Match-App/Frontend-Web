@@ -3,10 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/Mentee/screen/profile/edit_profile_mentee_screen.dart';
 import 'package:my_flutter_app/Mentee/service/profile_service.dart';
 import 'package:my_flutter_app/mentee/model/profile_model.dart';
+import 'package:my_flutter_app/mentee/screen/notification_mentee_screen.dart';
+import 'package:my_flutter_app/mentor/service/notification_service.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
+import 'package:my_flutter_app/widget/logo_button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/profileavatar.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
 
 class ProfileMenteeScreen extends StatefulWidget {
   ProfileMenteeScreen({Key? key}) : super(key: key);
@@ -16,6 +19,24 @@ class ProfileMenteeScreen extends StatefulWidget {
 }
 
 class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
+  int _unreadNotificationsCount = 0;
+
+  final NotificationService _notificationService = NotificationService();
+
+  Future<void> _fetchUnreadNotificationsCount() async {
+    try {
+      final notifications =
+          await _notificationService.fetchNotificationsForCurrentUser();
+      final unreadCount =
+          notifications.where((notification) => !notification.isRead!).length;
+      setState(() {
+        _unreadNotificationsCount = unreadCount;
+      });
+    } catch (e) {
+      print(e); // Handle error appropriately
+    }
+  }
+
   _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
@@ -28,6 +49,7 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
   void initState() {
     super.initState();
     _loadData();
+    _fetchUnreadNotificationsCount();
   }
 
   void _loadData() async {
@@ -89,19 +111,52 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset('assets/Handoff/logo/LogoMobile.png'),
-            IconButton(
-              onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => NotificationMenteeScreen(),
-                //   ),
-                // );
-              },
-              icon: Icon(Icons.notifications_none_outlined),
-              color: ColorStyle().secondaryColors,
-            )
+            ButtonLogoMenteeMatch(),
+            Stack(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NotificationMenteeScreen(),
+                      ),
+                    ).then((_) {
+                      _fetchUnreadNotificationsCount(); // Fetch the unread count when returning to this screen
+                    });
+                  },
+                  icon: Icon(
+                    Icons.notifications_none_outlined,
+                    size: 30,
+                  ),
+                  color: ColorStyle().secondaryColors,
+                ),
+                if (_unreadNotificationsCount > 0)
+                  Positioned(
+                    right: 11,
+                    top: 11,
+                    child: Container(
+                      padding: EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      constraints: BoxConstraints(
+                        minWidth: 14,
+                        minHeight: 14,
+                      ),
+                      child: Text(
+                        '$_unreadNotificationsCount',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 8,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ],
         ),
       ),
@@ -362,7 +417,9 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
                           SizedBox(height: 20),
                           Column(
                             children: mentee?.user!.experiences
-                                    ?.map((experience) {
+                                    ?.where((experience) =>
+                                        experience.isCurrentJob == false)
+                                    .map((experience) {
                                   return ExperienceWidget(
                                     role: experience.jobTitle ?? 'No Job Title',
                                     company: experience.company ?? 'No Company',

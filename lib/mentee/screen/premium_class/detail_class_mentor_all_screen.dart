@@ -93,243 +93,60 @@ class _DetailClassMentorAllState extends State<DetailClassMentorAll> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(40.0),
-        child: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TittleTextField(title: widget.classname),
-                        Text(
-                          '(Bersertifikat)',
-                          style: FontFamily().boldText.copyWith(
-                                color: ColorStyle().disableColors,
-                                fontSize: 18,
-                              ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 12.0),
-                          child: Text(
-                            widget.classDescription,
-                            style: FontFamily().regularText.copyWith(
-                                fontSize: 14,
-                                color: ColorStyle().disableColors,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TittleTextField(title: 'Module Pembelajaran '),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: (widget.targetLearning != null &&
-                                    widget.targetLearning!.isNotEmpty)
-                                ? widget.targetLearning!.map<Widget>((term) {
-                                    return Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text('\u2022 ',
-                                            style: TextStyle(
-                                                /* Your bullet point style */)),
-                                        Expanded(
-                                          child: Text(
-                                            term,
-                                            style: FontFamily()
-                                                .regularText
-                                                .copyWith(
-                                                    fontSize: 14,
-                                                    color: ColorStyle()
-                                                        .disableColors,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  }).toList()
-                                : [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8.0),
-                                      child: Text(
-                                        "Tidak ada module",
-                                        style: FontFamily()
-                                            .regularText
-                                            .copyWith(
-                                                fontSize: 14,
-                                                color:
-                                                    ColorStyle().disableColors,
-                                                fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
-                                  ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TittleTextField(title: 'Periode Kelas '),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 2.0),
-                          child: Text(
-                            // buat seperti ini 30 Hari ( 24 Februari - 24 Maret 2024)
-                            '${widget.durationInDays} Hari ($formattedStartDate - $formattedEndDate)',
-
-                            style: FontFamily().regularText.copyWith(
-                                fontSize: 14,
-                                color: ColorStyle().disableColors,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TittleTextField(title: 'Harga Kelas'),
-                        Padding(
-                            padding: const EdgeInsets.only(top: 2.0),
-                            child:
-                                // Text(
-                                //   'Rp${widget.price},00',
-                                //   style: FontFamily().regularText.copyWith(
-                                //       fontSize: 14,
-                                //       color: ColorStyle().disableColors,
-                                //       fontWeight: FontWeight.w500),
-                                // ),
-                                CustomMoneyText(
-                              amount: widget.price,
-                            ))
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TittleTextField(title: 'Kapasitas Kelas'),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 2.0),
-                          child: Text(
-                            '${widget.maxParticipants} Orang',
-                            style: FontFamily().regularText.copyWith(
-                                fontSize: 14,
-                                color: ColorStyle().disableColors,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TittleTextField(title: 'Sisa Slot Mentee'),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 2.0),
-                          child: Text(
-                            '$availableSlots Orang',
-                            style: FontFamily().regularText.copyWith(
-                                fontSize: 14,
-                                color: ColorStyle().disableColors,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TittleTextField(title: 'Hari Kelas'),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 2.0),
-                          child: Text(
-                            '${widget.schedule} ',
-                            style: FontFamily().regularText.copyWith(
-                                fontSize: 14,
-                                color: ColorStyle().disableColors,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TittleTextField(title: 'Lokasi Kelas'),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 2.0),
-                          child: Text(
-                            widget.locationMentoring,
-                            style: FontFamily().regularText.copyWith(
-                                fontSize: 14,
-                                color: ColorStyle().disableColors,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Text(
-                          "Lokasi : ${widget.address == null || widget.address!.isEmpty ? "Meeting Zoom" : widget.address}",
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+                left: 52.0, right: 52.0, top: 20, bottom: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TittleTextField(title: widget.classname),
+                      Text(
+                        '(Bersertifikat)',
+                        style: FontFamily().boldText.copyWith(
+                              color: ColorStyle().disableColors,
+                              fontSize: 18,
+                            ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 12.0),
+                        child: Text(
+                          widget.classDescription,
                           style: FontFamily().regularText.copyWith(
                               fontSize: 14,
                               color: ColorStyle().disableColors,
                               fontWeight: FontWeight.w500),
-                        )
-                      ],
-                    ),
+                        ),
+                      )
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TittleTextField(title: 'Syarat & Ketentuan Kelas'),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: widget.terms?.map<Widget>((term) {
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TittleTextField(title: 'Module Pembelajaran '),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: (widget.targetLearning != null &&
+                                  widget.targetLearning!.isNotEmpty)
+                              ? widget.targetLearning!.map<Widget>((term) {
                                   return Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       const Text('\u2022 ',
                                           style: TextStyle(
-                                              // Anda dapat menyesuaikan style dari bullet point di sini jika diperlukan
-                                              )),
+                                              /* Your bullet point style */)),
                                       Expanded(
                                         child: Text(
                                           term,
@@ -344,80 +161,259 @@ class _DetailClassMentorAllState extends State<DetailClassMentorAll> {
                                       ),
                                     ],
                                   );
-                                }).toList() ??
-                                [
-                                  Text(
-                                    "No target learning available",
-                                    style: FontFamily().regularText.copyWith(
-                                        fontSize: 14,
-                                        color: ColorStyle().disableColors,
-                                        fontWeight: FontWeight.w500),
-                                  )
+                                }).toList()
+                              : [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0),
+                                    child: Text(
+                                      "Tidak ada module",
+                                      style: FontFamily().regularText.copyWith(
+                                          fontSize: 14,
+                                          color: ColorStyle().disableColors,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
                                 ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TittleTextField(title: 'Periode Kelas '),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2.0),
+                        child: Text(
+                          // buat seperti ini 30 Hari ( 24 Februari - 24 Maret 2024)
+                          '${widget.durationInDays} Hari ($formattedStartDate - $formattedEndDate)',
+
+                          style: FontFamily().regularText.copyWith(
+                              fontSize: 14,
+                              color: ColorStyle().disableColors,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TittleTextField(title: 'Harga Kelas'),
+                      Padding(
+                          padding: const EdgeInsets.only(top: 2.0),
+                          child:
+                              // Text(
+                              //   'Rp${widget.price},00',
+                              //   style: FontFamily().regularText.copyWith(
+                              //       fontSize: 14,
+                              //       color: ColorStyle().disableColors,
+                              //       fontWeight: FontWeight.w500),
+                              // ),
+                              CustomMoneyText(
+                            amount: widget.price,
+                          ))
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TittleTextField(title: 'Kapasitas Kelas'),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2.0),
+                        child: Text(
+                          '${widget.maxParticipants} Orang',
+                          style: FontFamily().regularText.copyWith(
+                              fontSize: 14,
+                              color: ColorStyle().disableColors,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TittleTextField(title: 'Sisa Slot Mentee'),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2.0),
+                        child: Text(
+                          '$availableSlots Orang',
+                          style: FontFamily().regularText.copyWith(
+                              fontSize: 14,
+                              color: ColorStyle().disableColors,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TittleTextField(title: 'Hari Kelas'),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2.0),
+                        child: Text(
+                          '${widget.schedule} ',
+                          style: FontFamily().regularText.copyWith(
+                              fontSize: 14,
+                              color: ColorStyle().disableColors,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TittleTextField(title: 'Lokasi Kelas'),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2.0),
+                        child: Text(
+                          widget.locationMentoring,
+                          style: FontFamily().regularText.copyWith(
+                              fontSize: 14,
+                              color: ColorStyle().disableColors,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      Text(
+                        "Lokasi : ${widget.address == null || widget.address!.isEmpty ? "Meeting Zoom" : widget.address}",
+                        style: FontFamily().regularText.copyWith(
+                            fontSize: 14,
+                            color: ColorStyle().disableColors,
+                            fontWeight: FontWeight.w500),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TittleTextField(title: 'Syarat & Ketentuan Kelas'),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: widget.terms?.map<Widget>((term) {
+                                return Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text('\u2022 ',
+                                        style: TextStyle(
+                                            // Anda dapat menyesuaikan style dari bullet point di sini jika diperlukan
+                                            )),
+                                    Expanded(
+                                      child: Text(
+                                        term,
+                                        style: FontFamily()
+                                            .regularText
+                                            .copyWith(
+                                                fontSize: 14,
+                                                color:
+                                                    ColorStyle().disableColors,
+                                                fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }).toList() ??
+                              [
+                                Text(
+                                  "No target learning available",
+                                  style: FontFamily().regularText.copyWith(
+                                      fontSize: 14,
+                                      color: ColorStyle().disableColors,
+                                      fontWeight: FontWeight.w500),
+                                )
+                              ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TittleTextField(title: 'Syarat Wajib Kelas'),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('\u2022'),
+                          const SizedBox(
+                            width: 6,
                           ),
-                        ),
-                      ],
-                    ),
+                          Expanded(
+                            child: Text(
+                              'Setiap selesai materi atau chapter, mentee wajib mengerjakan evaluais yang bisa diakases dalam platform berupa link evaluasi yang nantinya akan di review dan diberikan feedback oleh mentor',
+                              style: FontFamily().regularText.copyWith(
+                                  fontSize: 14,
+                                  color: ColorStyle().disableColors,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('\u2022'),
+                          const SizedBox(
+                            width: 6,
+                          ),
+                          Expanded(
+                            child: Text(
+                              'Mentee hanya dapat melakukan bimbingan atau mentoring selama periode kelas berlangsung. Apabila periode kelas selesai mentee tidak dapat melakukan mentoring kepada mentor.',
+                              style: FontFamily().regularText.copyWith(
+                                  fontSize: 14,
+                                  color: ColorStyle().disableColors,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TittleTextField(title: 'Syarat Wajib Kelas'),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('\u2022'),
-                            const SizedBox(
-                              width: 6,
-                            ),
-                            Expanded(
-                              child: Text(
-                                'Setiap selesai materi atau chapter, mentee wajib mengerjakan evaluais yang bisa diakases dalam platform berupa link evaluasi yang nantinya akan di review dan diberikan feedback oleh mentor',
-                                style: FontFamily().regularText.copyWith(
-                                    fontSize: 14,
-                                    color: ColorStyle().disableColors,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('\u2022'),
-                            const SizedBox(
-                              width: 6,
-                            ),
-                            Expanded(
-                              child: Text(
-                                'Mentee hanya dapat melakukan bimbingan atau mentoring selama periode kelas berlangsung. Apabila periode kelas selesai mentee tidak dapat melakukan mentoring kepada mentor.',
-                                style: FontFamily().regularText.copyWith(
-                                    fontSize: 14,
-                                    color: ColorStyle().disableColors,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButtonWidget2(
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: ElevatedButtonWidget(
                     onPressed: () {
                       _showDialog(context);
                     },
                     title: 'Pesan kelas',
                   ),
-                ],
-              ),
-            )
-          ],
-        ),
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

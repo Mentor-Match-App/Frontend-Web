@@ -8,6 +8,7 @@ import 'package:my_flutter_app/mentee/screen/sidebar/community_user.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/dashboard_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/my_class/my_class_mentee_sidebar.dart';
 import 'package:my_flutter_app/mentor/service/notification_service.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/footer.dart';
 import 'package:my_flutter_app/widget/logo_button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
@@ -20,17 +21,19 @@ class MenteeHomePage extends StatefulWidget {
   final String subMenu; // New parameter for sub-menu selection
 
   const MenteeHomePage({
-    Key? key,
+    super.key,
     this.selectedMenu = 'Dashboard',
     this.subMenu = '',
-  }) : super(key: key);
+  });
   @override
   State<MenteeHomePage> createState() => _MenteeHomePageState();
 }
 
 class _MenteeHomePageState extends State<MenteeHomePage> {
+  String _name = "";
+  String _namedepan = "";
   String _photoUrl = "";
-  double _size = 200.0;
+  final double _size = 200.0;
   String _selectedMenu = 'Dashboard';
   int _unreadNotificationsCount = 0;
 
@@ -54,6 +57,8 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       /// photourl
+      _name = prefs.getString('name') ?? "";
+      _namedepan = _name.split(' ')[0]; // Ambil bagian pertama (nama depan)
       _photoUrl = prefs.getString('photoUrl') ?? "";
     });
   }
@@ -141,10 +146,13 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
+                          Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ProfileMenteeScreen()),
+                                builder: (context) => ProfileMenteeScreen()
+                                // ProfileMentorScreen(),
+                                ),
+                            (route) => false,
                           );
                         },
                         child: _buildCircularImage(
@@ -152,6 +160,17 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
                           40,
                           40,
                           null,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                        child: SizedBox(
+                          child: Text(
+                            "Hallo, \n$_namedepan",
+                            style: FontFamily().boldText.copyWith(
+                                  color: ColorStyle().blackColors,
+                                ),
+                          ),
                         ),
                       ),
                     ],
@@ -211,7 +230,11 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
         placeholder: (context, url) => Center(
           child: CircularProgressIndicator(),
         ),
-        errorWidget: (context, url, error) => Icon(Icons.error),
+        // error eiget use image from assets
+        errorWidget: (context, url, error) => Image.asset(
+          'assets/blank_profile.jpg',
+          fit: BoxFit.cover,
+        ),
         imageUrl: imageUrl,
         height: height,
         width: width,
@@ -236,10 +259,17 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
   }
 }
 
-class SearchBarMentee extends StatelessWidget {
+class SearchBarMentee extends StatefulWidget {
   const SearchBarMentee({
     super.key,
   });
+
+  @override
+  State<SearchBarMentee> createState() => _SearchBarMenteeState();
+}
+
+class _SearchBarMenteeState extends State<SearchBarMentee> {
+  bool isHovered = false;
 
   @override
   Widget build(BuildContext context) {
@@ -272,26 +302,45 @@ class SearchBarMentee extends StatelessWidget {
                       builder: (context) => SearchPageMenteeWeb()),
                 );
               },
-              child: Container(
-                height: 40,
-                decoration: BoxDecoration(
-                  border: Border.all(color: ColorStyle().tertiaryColors),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: TextField(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SearchPageMenteeWeb(),
-                      ),
-                    );
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: MouseRegion(
+                  onEnter: (event) {
+                    setState(() {
+                      isHovered = true;
+                    });
                   },
-                  obscureText: false,
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    labelText: 'Search by mentor name, class name',
-                    prefixIcon: Icon(Icons.search),
+                  onExit: (event) {
+                    setState(() {
+                      isHovered = false;
+                    });
+                  },
+                  child: Container(
+                    width: 800,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: ColorStyle().tertiaryColors),
+                      borderRadius: BorderRadius.circular(8),
+                      color: isHovered ? Colors.grey[200] : Colors.white,
+                    ),
+                    child: AbsorbPointer(
+                      child: TextField(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SearchPageMenteeWeb()),
+                          );
+                        },
+                        obscureText: false,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          labelText:
+                              'Search by mentee name, class, or class name',
+                          prefixIcon: Icon(Icons.search),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/mentor/Screens/homepage_mentor.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
 
 class SuccesCreateSessionScreen extends StatefulWidget {
   SuccesCreateSessionScreen({Key? key}) : super(key: key);
@@ -37,17 +37,22 @@ class _SuccesCreateSessionScreenState extends State<SuccesCreateSessionScreen> {
                   "Selamat, session kamu baru saja berhasil kamu buat, silahkan liat menu Myclass untuk melihat list session yang kamu punya",
                   style: FontFamily().regularText,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 ElevatedButtonWidget(
-                  title: 'Kembali ke Beranda',
+                  title: 'Lihat Session',
                   onPressed: () {
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MentorHomePage()),
-                        (route) => false);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MentorHomePage(
+                          selectedMenu: "Class",
+                          subMenu:
+                              "My Session", // New parameter to indicate sub-menu selection
+                        ),
+                      ),
+                    );
                   },
                 )
               ],

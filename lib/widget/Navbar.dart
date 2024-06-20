@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/login/login_screen.dart';
-import 'package:my_flutter_app/widget/navbaruser.dart';
 
 class NavbarWidget extends StatelessWidget {
   const NavbarWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return 
+    Container(
       color: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Row(
@@ -29,9 +29,6 @@ class NavbarWidget extends StatelessWidget {
           ),
           Row(
             children: [
-              CustomDropdown(
-                title: 'Program dan Layanan',
-              ),
               const SizedBox(width: 20),
               ElevatedButton(
                 onPressed: () {

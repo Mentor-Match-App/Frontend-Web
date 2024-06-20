@@ -407,11 +407,14 @@ class _DetailClassMentorSMAState extends State<DetailClassMentorSMA> {
                   SizedBox(
                     height: 20,
                   ),
-                  ElevatedButtonWidget(
-                    onPressed: () {
-                      _showDialog(context);
-                    },
-                    title: 'Pesan kelas',
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: ElevatedButtonWidget(
+                      onPressed: () {
+                        _showDialog(context);
+                      },
+                      title: 'Pesan kelas',
+                    ),
                   ),
                 ],
               ),

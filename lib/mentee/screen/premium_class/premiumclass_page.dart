@@ -37,6 +37,7 @@ class PremiumClassPage extends StatelessWidget {
                       children: [
                         buildCategoryWidget(
                           'SD',
+                          'assets/Handoff/education_level/SD.png',
                           Color(0xFF0A1737),
                           'Lihat',
                           () {
@@ -49,6 +50,7 @@ class PremiumClassPage extends StatelessWidget {
                         ),
                         buildCategoryWidget(
                           'SMP',
+                          'assets/Handoff/education_level/SMP.png',
                           Color(0xFF0A1737),
                           'Lihat',
                           () {
@@ -61,6 +63,7 @@ class PremiumClassPage extends StatelessWidget {
                         ),
                         buildCategoryWidget(
                           'SMA',
+                          'assets/Handoff/education_level/SMA.png',
                           Color(0xFF0A1737),
                           'Lihat',
                           () {
@@ -73,6 +76,7 @@ class PremiumClassPage extends StatelessWidget {
                         ),
                         buildCategoryWidget(
                           'Kuliah',
+                          'assets/Handoff/education_level/KULIAH.png',
                           Color(0xFF0A1737),
                           'Lihat',
                           () {
@@ -85,6 +89,7 @@ class PremiumClassPage extends StatelessWidget {
                         ),
                         buildCategoryWidget(
                           'Karier',
+                          'assets/Handoff/education_level/KARIER.png',
                           Color(0xFF0A1737),
                           'Lihat',
                           () {
@@ -111,6 +116,7 @@ class PremiumClassPage extends StatelessWidget {
 
 Widget buildCategoryWidget(
   String title,
+  String imagePath,
   Color bgColor,
   String buttonText,
   VoidCallback onPressed, // Added parameter for onPressed callback
@@ -167,21 +173,8 @@ Widget buildCategoryWidget(
         Container(
           width: 250.0,
           height: 250.0,
-          decoration: BoxDecoration(
-            color: bgColor,
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Center(
-            child: Text(
-              title,
-              style: GoogleFonts.poppins(
-                textStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: 60.0,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-            ),
+          child: Image.asset(
+            imagePath,
           ),
         ),
         title == 'SD' || title == 'SMA' || title == 'Karier'

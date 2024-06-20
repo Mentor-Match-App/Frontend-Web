@@ -35,7 +35,7 @@ class _ContohPremiumClassState extends State<ContohPremiumClass> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Persetujuan Premium Class',
+          'Contoh Panduan Pembuatan Premium Class',
           style: FontFamily()
               .boldText
               .copyWith(color: ColorStyle().primaryColors, fontSize: 16),

@@ -366,165 +366,176 @@ class _DetailMentorSMPScreenState extends State<DetailMentorSMPScreen> {
                                     ? Colors.grey
                                     : ColorStyle().primaryColors;
 
-                                return Container(
-                                  width: 600,
-                                  height: 250,
-                                  decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: ColorStyle().tertiaryColors,
-                                          blurRadius: 4,
-                                          spreadRadius: 4,
-                                          offset:
-                                              Offset(0, 4), // Shadow position
-                                        ),
-                                      ],
-                                      color: Colors.white,
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    width: 600,
+                                    height: 250,
+                                    decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: ColorStyle().tertiaryColors,
+                                            blurRadius: 4,
+                                            spreadRadius: 4,
+                                            offset:
+                                                Offset(0, 4), // Shadow position
+                                          ),
+                                        ],
+                                        color: Colors.white,
 
-                                      // border radius
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(5))),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            // "UI/UX Research and Design I",
-                                            kelas.name ?? "",
-                                            style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 20,
-                                              color: Color(0xffE78938),
+                                        // border radius
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              // "UI/UX Research and Design I",
+                                              kelas.name ?? "",
+                                              style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 20,
+                                                color: Color(0xffE78938),
+                                              ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            "${DateFormat('dd MMMM').format(DateTime.parse(kelas.startDate!))} - ${DateFormat('dd MMMM yyyy').format(DateTime.parse(kelas.endDate!))}",
-                                            style: FontFamily()
-                                                .regularText
-                                                .copyWith(fontSize: 14),
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(kelas.description ?? "",
-                                              maxLines: 3,
-                                              overflow: TextOverflow.ellipsis,
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              "${DateFormat('dd MMMM').format(DateTime.parse(kelas.startDate!))} - ${DateFormat('dd MMMM yyyy').format(DateTime.parse(kelas.endDate!))}",
                                               style: FontFamily()
                                                   .regularText
-                                                  .copyWith(
-                                                      fontSize: 14,
-                                                      color: ColorStyle()
-                                                          .disableColors)),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Align(
-                                            alignment: Alignment.bottomRight,
-                                            child: SizedBox(
-                                              width: 150,
-                                              child: TextButton(
-                                                style: TextButton.styleFrom(
-                                                  backgroundColor: Color(
-                                                      0xffE78938), // Primary color
-                                                  padding: EdgeInsets.symmetric(
-                                                    vertical: 20.0,
-                                                    horizontal: 34.0,
+                                                  .copyWith(fontSize: 14),
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(kelas.description ?? "",
+                                                maxLines: 3,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: FontFamily()
+                                                    .regularText
+                                                    .copyWith(
+                                                        fontSize: 14,
+                                                        color: ColorStyle()
+                                                            .disableColors)),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Align(
+                                              alignment: Alignment.bottomRight,
+                                              child: SizedBox(
+                                                width: 150,
+                                                child: TextButton(
+                                                  style: TextButton.styleFrom(
+                                                    backgroundColor: Color(
+                                                        0xffE78938), // Primary color
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                      vertical: 20.0,
+                                                      horizontal: 34.0,
+                                                    ),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
                                                   ),
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                  ),
-                                                ),
-                                                onPressed: availableSlots > 0
-                                                    ? () {
-                                                        Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                DetailClassMentorSMP(
-                                                              addressMentoring:
-                                                                  kelas.address ??
-                                                                      "",
-                                                              locationMentoring:
-                                                                  kelas.location ??
-                                                                      "",
-                                                              mentorName:
-                                                                  widget.name,
-                                                              transaction: kelas
-                                                                      .transactions ??
-                                                                  [],
-                                                              mentorData:
-                                                                  widget.mentor,
-                                                              classId: kelas.id,
-                                                              classname: kelas
-                                                                      .name ??
-                                                                  'No Class Name',
-                                                              classprice:
-                                                                  kelas.price ??
-                                                                      0,
-                                                              classduration:
-                                                                  kelas.durationInDays ??
-                                                                      0,
-                                                              maxParticipants:
-                                                                  kelas.maxParticipants ??
-                                                                      0,
-                                                              endDate: DateTime
-                                                                  .parse(kelas
-                                                                          .endDate ??
-                                                                      ''),
-                                                              startDate: DateTime
-                                                                  .parse(kelas
-                                                                          .startDate ??
-                                                                      ''),
-                                                              schedule: kelas
-                                                                      .schedule ??
-                                                                  'No Schedule',
-                                                              classDescription:
-                                                                  kelas.description ??
-                                                                      'No Description',
-                                                              targetLearning: kelas
-                                                                  .targetLearning,
-                                                              terms:
-                                                                  kelas.terms,
-                                                              durationInDays: kelas
-                                                                  .durationInDays,
-                                                              price:
-                                                                  kelas.price ??
-                                                                      0,
-                                                              location: kelas
-                                                                  .location,
-                                                              address:
-                                                                  kelas.address,
+                                                  onPressed: availableSlots > 0
+                                                      ? () {
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  DetailClassMentorSMP(
+                                                                addressMentoring:
+                                                                    kelas.address ??
+                                                                        "",
+                                                                locationMentoring:
+                                                                    kelas.location ??
+                                                                        "",
+                                                                mentorName:
+                                                                    widget.name,
+                                                                transaction:
+                                                                    kelas.transactions ??
+                                                                        [],
+                                                                mentorData:
+                                                                    widget
+                                                                        .mentor,
+                                                                classId:
+                                                                    kelas.id,
+                                                                classname: kelas
+                                                                        .name ??
+                                                                    'No Class Name',
+                                                                classprice:
+                                                                    kelas.price ??
+                                                                        0,
+                                                                classduration:
+                                                                    kelas.durationInDays ??
+                                                                        0,
+                                                                maxParticipants:
+                                                                    kelas.maxParticipants ??
+                                                                        0,
+                                                                endDate: DateTime
+                                                                    .parse(kelas
+                                                                            .endDate ??
+                                                                        ''),
+                                                                startDate: DateTime
+                                                                    .parse(kelas
+                                                                            .startDate ??
+                                                                        ''),
+                                                                schedule: kelas
+                                                                        .schedule ??
+                                                                    'No Schedule',
+                                                                classDescription:
+                                                                    kelas.description ??
+                                                                        'No Description',
+                                                                targetLearning:
+                                                                    kelas
+                                                                        .targetLearning,
+                                                                terms:
+                                                                    kelas.terms,
+                                                                durationInDays:
+                                                                    kelas
+                                                                        .durationInDays,
+                                                                price: kelas
+                                                                        .price ??
+                                                                    0,
+                                                                location: kelas
+                                                                    .location,
+                                                                address: kelas
+                                                                    .address,
+                                                              ),
                                                             ),
-                                                          ),
-                                                        );
-                                                      }
-                                                    : () {
-                                                        showTopSnackBar(context,
-                                                            'Maaf, slot kelas ini sudah penuh',
-                                                            leftBarIndicatorColor:
-                                                                Colors.red);
-                                                      },
-                                                child: Text(
-                                                  "Lihat Detail",
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 14,
-                                                    color: Colors.white,
+                                                          );
+                                                        }
+                                                      : () {
+                                                          showTopSnackBar(
+                                                              context,
+                                                              'Maaf, slot kelas ini sudah penuh',
+                                                              leftBarIndicatorColor:
+                                                                  Colors.red);
+                                                        },
+                                                  child: Text(
+                                                    "Lihat Detail",
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 14,
+                                                      color: Colors.white,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ]),
+                                          ]),
+                                    ),
                                   ),
                                 );
                               }).toList(),

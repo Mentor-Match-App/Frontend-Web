@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/widget/menucategory.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
+import 'package:my_flutter_app/widget/menucategory.dart';
+
 class TextFieldWidget extends StatefulWidget {
   final bool? readOnly;
   final void Function()? ontap;
@@ -35,18 +37,24 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   Widget build(BuildContext context) {
     return Form(
       key: widget.formKey,
-      child: SizedBox(
-        height: 40,
+      child: Container(
+        constraints: BoxConstraints(minHeight: 40), // Set a minimum height
         child: TextFormField(
-          autovalidateMode:
-              AutovalidateMode.onUserInteraction, // Set autovalidateMode
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: widget.validator,
           readOnly: widget.readOnly ?? false,
           controller: widget.controller,
-          enabled: widget.enabled, // gunakan properti enabled
+          enabled: widget.enabled,
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.w300,
+            fontSize: 14,
+            color: ColorStyle().textColors,
+          ),
           decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(
-                vertical: 8.0, horizontal: 12.0), // Add padding
+              vertical: 8.0,
+              horizontal: 12.0,
+            ),
             filled: true,
             fillColor: ColorStyle().tertiaryColors,
             border: OutlineInputBorder(
@@ -60,7 +68,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             ),
           ),
           onTap: widget.ontap,
-          maxLines: null, // Allow multiple lines
+          maxLines: null,
           textAlignVertical: TextAlignVertical.center,
         ),
       ),

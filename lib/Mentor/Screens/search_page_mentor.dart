@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:my_flutter_app/mentee/screen/premium_class/detail_class_mentor_all_screen.dart';
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/detail_my_class_mentor_screen.dart';
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/edit_class_rejected.dart';
 import 'package:my_flutter_app/mentor/service/myClassCreate_Mentor_service.dart';
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
 import 'package:my_flutter_app/style/baseURl.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
+
 import '../model/my_class_mentor_model.dart';
 
 class SearchPageMentorweb extends StatefulWidget {
@@ -332,7 +332,7 @@ class _SearchPageMentorwebState extends State<SearchPageMentorweb> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: TextField(
                     obscureText: false,
                     controller: _searchController,
@@ -352,7 +352,7 @@ class _SearchPageMentorwebState extends State<SearchPageMentorweb> {
                     ? ListView(
                         children: [
                           if (_filteredClasses.isNotEmpty) ...[
-                             Row(
+                            Row(
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(
@@ -361,7 +361,7 @@ class _SearchPageMentorwebState extends State<SearchPageMentorweb> {
                                       right: 8.0,
                                       bottom: 8.0),
                                   child: Text(
-                                  'Kelas Premium',
+                                    'Kelas Premium',
                                     style: FontFamily().boldText.copyWith(
                                           fontSize: 16,
                                           color: ColorStyle().primaryColors,

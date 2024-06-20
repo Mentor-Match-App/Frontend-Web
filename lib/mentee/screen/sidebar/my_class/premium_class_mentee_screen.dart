@@ -169,7 +169,10 @@ class _PremiumClassMenteeScreenState extends State<PremiumClassMenteeScreen> {
                                       child: CircularProgressIndicator(),
                                     ),
                                     errorWidget: (context, url, error) =>
-                                        Icon(Icons.error),
+                                        Image.asset(
+                                      'assets/blank_profile.jpg',
+                                      fit: BoxFit.cover,
+                                    ),
                                     imageUrl:
                                         classData.mentor!.photoUrl.toString(),
                                     fit: BoxFit.cover,

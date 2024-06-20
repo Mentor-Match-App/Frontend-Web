@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/mentee/screen/premium_class/detail_class_mentor_all_screen.dart';
-import 'package:my_flutter_app/mentor/Screens/my_class_mentor/evaluasi/send_feedback_evaluasi.dart';
 import 'package:my_flutter_app/mentor/model/my_class_mentor_model.dart';
+import 'package:my_flutter_app/mentor/screens/my_class_mentor/evaluasi/send_feedback_evaluasi.dart';
 import 'package:my_flutter_app/mentor/service/myClassCreate_Mentor_service.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/style/text.dart';
@@ -347,7 +347,7 @@ class _EvaluasiMentorScreenState extends State<EvaluasiMentorScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            DetailEvaluastionMenteeMentorScreen(
+                                            DetailEvaluasiMenteeMentorScreen(
                                           feedbacks: widget.feedbacks,
                                           learningMaterial:
                                               classData.learningMaterial!,

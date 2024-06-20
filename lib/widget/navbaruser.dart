@@ -330,7 +330,10 @@ class _NavbarWidgetMenteeState extends State<NavbarWidgetMentee> {
         placeholder: (context, url) => Center(
           child: CircularProgressIndicator(),
         ),
-        errorWidget: (context, url, error) => Icon(Icons.error),
+        errorWidget: (context, url, error) => Image.asset(
+          'assets/blank_profile.jpg',
+          fit: BoxFit.cover,
+        ),
         imageUrl: imageUrl,
         height: height,
         width: width,
@@ -425,7 +428,10 @@ class _NavbarWidgetPremiumClassState extends State<NavbarWidgetPremiumClass> {
         placeholder: (context, url) => Center(
           child: CircularProgressIndicator(),
         ),
-        errorWidget: (context, url, error) => Icon(Icons.error),
+        errorWidget: (context, url, error) => Image.asset(
+          'assets/blank_profile.jpg',
+          fit: BoxFit.cover,
+        ),
         imageUrl: imageUrl,
         height: height,
         width: width,
@@ -519,7 +525,10 @@ class _NavbarWidgetSessionState extends State<NavbarWidgetSession> {
         placeholder: (context, url) => Center(
           child: CircularProgressIndicator(),
         ),
-        errorWidget: (context, url, error) => Icon(Icons.error),
+        errorWidget: (context, url, error) => Image.asset(
+          'assets/blank_profile.jpg',
+          fit: BoxFit.cover,
+        ),
         imageUrl: imageUrl,
         height: height,
         width: width,
@@ -613,7 +622,10 @@ class _NavbarWidgetSDState extends State<NavbarWidgetSD> {
         placeholder: (context, url) => Center(
           child: CircularProgressIndicator(),
         ),
-        errorWidget: (context, url, error) => Icon(Icons.error),
+        errorWidget: (context, url, error) => Image.asset(
+          'assets/blank_profile.jpg',
+          fit: BoxFit.cover,
+        ),
         imageUrl: imageUrl,
         height: height,
         width: width,
@@ -707,7 +719,10 @@ class _NavbarWidgetSMPState extends State<NavbarWidgetSMP> {
         placeholder: (context, url) => Center(
           child: CircularProgressIndicator(),
         ),
-        errorWidget: (context, url, error) => Icon(Icons.error),
+        errorWidget: (context, url, error) => Image.asset(
+          'assets/blank_profile.jpg',
+          fit: BoxFit.cover,
+        ),
         imageUrl: imageUrl,
         height: height,
         width: width,
@@ -801,7 +816,10 @@ class _NavbarWidgetSMAState extends State<NavbarWidgetSMA> {
         placeholder: (context, url) => Center(
           child: CircularProgressIndicator(),
         ),
-        errorWidget: (context, url, error) => Icon(Icons.error),
+        errorWidget: (context, url, error) => Image.asset(
+          'assets/blank_profile.jpg',
+          fit: BoxFit.cover,
+        ),
         imageUrl: imageUrl,
         height: height,
         width: width,
@@ -895,7 +913,10 @@ class _NavbarWidgetKuliahState extends State<NavbarWidgetKuliah> {
         placeholder: (context, url) => Center(
           child: CircularProgressIndicator(),
         ),
-        errorWidget: (context, url, error) => Icon(Icons.error),
+        errorWidget: (context, url, error) => Image.asset(
+          'assets/blank_profile.jpg',
+          fit: BoxFit.cover,
+        ),
         imageUrl: imageUrl,
         height: height,
         width: width,
@@ -989,7 +1010,10 @@ class _NavbarWidgetKarierState extends State<NavbarWidgetKarier> {
         placeholder: (context, url) => Center(
           child: CircularProgressIndicator(),
         ),
-        errorWidget: (context, url, error) => Icon(Icons.error),
+        errorWidget: (context, url, error) => Image.asset(
+          'assets/blank_profile.jpg',
+          fit: BoxFit.cover,
+        ),
         imageUrl: imageUrl,
         height: height,
         width: width,

@@ -101,7 +101,10 @@ class _SessionAdminListScreenState extends State<SessionAdminListScreen> {
                                     child: CircularProgressIndicator(),
                                   ),
                                   errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
+                                      Image.asset(
+                                    'assets/blank_profile.jpg',
+                                    fit: BoxFit.cover,
+                                  ),
                                   imageUrl: session.mentor?.photoUrl ?? '',
                                   fit: BoxFit.cover,
                                 )),

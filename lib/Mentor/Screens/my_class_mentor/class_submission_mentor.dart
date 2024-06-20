@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/mentor/Screens/my_class_mentor/detail_my_class_mentor_screen.dart';
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/edit_class_rejected.dart';
 import 'package:my_flutter_app/mentor/model/my_class_mentor_model.dart';
+import 'package:my_flutter_app/mentor/screens/my_class_mentor/pending_class_mentor_screen.dart';
 import 'package:my_flutter_app/mentor/service/myClassCreate_Mentor_service.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
@@ -127,7 +127,7 @@ class _ClassSubmissionMentorScreenState
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DetailMyClassMentorScreen(
+                              builder: (context) => PendingClassMentorScreen(
                                 feedbacks: data.feedbacks ?? [],
                                 addressMentoring:
                                     data.address ?? 'Meeting Zoom',

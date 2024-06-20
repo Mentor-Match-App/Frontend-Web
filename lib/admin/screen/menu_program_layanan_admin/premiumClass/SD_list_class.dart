@@ -69,7 +69,10 @@ class _SDListPremiumClassAdminScreenStateState
                                   child: CircularProgressIndicator(),
                                 ),
                                 errorWidget: (context, url, error) =>
-                                    Icon(Icons.error),
+                                    Image.asset(
+                                  'assets/blank_profile.jpg',
+                                  fit: BoxFit.cover,
+                                ),
                                 imageUrl: classData.mentor?.photoUrl ?? '',
                                 width: 100,
                                 height: 100,

@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/mentee/screen/premium_class/detail_class_mentor_all_screen.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/style/text.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
+
 class CardPremiumClassOptions extends StatefulWidget {
   final String image;
 
@@ -42,7 +42,7 @@ class _CardPremiumClassOptionsState extends State<CardPremiumClassOptions> {
               const SizedBox(width: 10),
               Expanded(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(widget.description!, style: FontFamily().regularText),

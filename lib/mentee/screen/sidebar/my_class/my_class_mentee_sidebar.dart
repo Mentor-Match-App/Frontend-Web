@@ -10,7 +10,7 @@ class MyClassMentee extends StatefulWidget {
 
   const MyClassMentee({
     Key? key,
-    this.initialSubMenu = 'All Class',
+    this.initialSubMenu = 'Booking Class',
   }) : super(key: key);
   @override
   State<MyClassMentee> createState() => _MyClassMenteeState();
@@ -20,6 +20,13 @@ class _MyClassMenteeState extends State<MyClassMentee> {
   bool isBookingClassActive = true;
   bool isPremiumClassActive = false;
   bool isSessionActive = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Set initial sub-menu based on the initialSubMenu parameter
+    changeClass(widget.initialSubMenu);
+  }
 
   void changeClass(String menu) {
     setState(() {

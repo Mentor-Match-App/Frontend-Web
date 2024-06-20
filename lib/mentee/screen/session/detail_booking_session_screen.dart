@@ -61,7 +61,7 @@ class _DetailBookingSessionState extends State<DetailBookingSession> {
                           color: ColorStyle().disableColors, fontSize: 14),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
@@ -88,14 +88,14 @@ class _DetailBookingSessionState extends State<DetailBookingSession> {
                                   color: ColorStyle().tertiaryColors,
                                   blurRadius: 4,
                                   spreadRadius: 4,
-                                  offset: Offset(0, 4), // Shadow position
+                                  offset: const Offset(0, 4), // Shadow position
                                 ),
                               ],
                               color: Colors.white,
 
                               // border radius
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(5))),
+                                  const BorderRadius.all(Radius.circular(5))),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -120,7 +120,7 @@ class _DetailBookingSessionState extends State<DetailBookingSession> {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 30,
                                     ),
                                     Row(
@@ -144,7 +144,7 @@ class _DetailBookingSessionState extends State<DetailBookingSession> {
                                                     ),
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                             width:
                                                 10), // Spasi antara teks "Nama Kelas" dan "Nama Session"
                                         Flexible(
@@ -161,7 +161,7 @@ class _DetailBookingSessionState extends State<DetailBookingSession> {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
                                     Row(
@@ -189,7 +189,7 @@ class _DetailBookingSessionState extends State<DetailBookingSession> {
                                                         .disableColors)),
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
                                     Row(
@@ -217,7 +217,7 @@ class _DetailBookingSessionState extends State<DetailBookingSession> {
                                                         .disableColors)),
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
                                     Row(
@@ -256,7 +256,7 @@ class _DetailBookingSessionState extends State<DetailBookingSession> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => MenteeHomePage(
+                                        builder: (context) => const MenteeHomePage(
                                           selectedMenu: "Class",
                                           subMenu:
                                               "Session", // New parameter to indicate sub-menu selection

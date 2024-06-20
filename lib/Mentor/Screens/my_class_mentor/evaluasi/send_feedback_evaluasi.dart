@@ -9,7 +9,7 @@ import 'package:my_flutter_app/widget/flushsBar_widget.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DetailEvaluastionMenteeMentorScreen extends StatefulWidget {
+class DetailEvaluasiMenteeMentorScreen extends StatefulWidget {
   final List<FeedbackMyClassMentor> feedbacks;
   final String menteeName;
   final List<Transaction> transactions;
@@ -17,7 +17,7 @@ class DetailEvaluastionMenteeMentorScreen extends StatefulWidget {
   final List<Evaluation> evaluations;
   final String classId;
   final List<LearningMaterialMentor> learningMaterial;
-  DetailEvaluastionMenteeMentorScreen({
+  DetailEvaluasiMenteeMentorScreen({
     Key? key,
     required this.feedbacks,
     required this.learningMaterial,
@@ -29,12 +29,12 @@ class DetailEvaluastionMenteeMentorScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<DetailEvaluastionMenteeMentorScreen> createState() =>
-      _DetailEvaluastionMenteeMentorScreenState();
+  State<DetailEvaluasiMenteeMentorScreen> createState() =>
+      _DetailEvaluasiMenteeMentorScreenState();
 }
 
-class _DetailEvaluastionMenteeMentorScreenState
-    extends State<DetailEvaluastionMenteeMentorScreen> {
+class _DetailEvaluasiMenteeMentorScreenState
+    extends State<DetailEvaluasiMenteeMentorScreen> {
   List<String> listMateriEvaluasi = [];
   String? selectedMateriFeedback;
   String? selectedEvaluationId;

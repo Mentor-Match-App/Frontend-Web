@@ -1,17 +1,18 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:multi_select_flutter/dialog/mult_select_dialog.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:my_flutter_app/mentor/Screens/create_class_and_session/create_class/contoh_premium_class.dart';
 import 'package:my_flutter_app/mentor/model/my_class_mentor_model.dart';
+import 'package:my_flutter_app/mentor/screens/homepage_mentor.dart';
 import 'package:my_flutter_app/mentor/service/edit_pengajuan_class_service_.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/style/text.dart';
 import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/text_field_dropdown.dart';
 import 'package:my_flutter_app/widget/time_picker_widget.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
+
 import '../../../widget/flushsBar_widget.dart';
 import '../../../widget/text_field.dart';
 
@@ -25,7 +26,6 @@ class EditRejectedClass extends StatefulWidget {
 
 class _EditRejectedClassState extends State<EditRejectedClass> {
   String selectedLocation = 'Offline';
-  /////////////////////// Dropdown Widget ///////////////////////
   String selectedEducationLevel = 'SD';
   List<String> selectedFields = ['bahasa', 'matematika', 'IPA', 'IPS'];
   String selectedField = '';
@@ -73,6 +73,7 @@ class _EditRejectedClassState extends State<EditRejectedClass> {
     ],
   };
 
+  bool _isLoading = false;
   List<String> days = [
     "Senin",
     "Selasa",
@@ -84,7 +85,6 @@ class _EditRejectedClassState extends State<EditRejectedClass> {
   ];
   List<String> selectedDays = [];
 
-  /////////////// fuvtion sent ///////////////////
   TextEditingController scheduleController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController addressController = TextEditingController();
@@ -244,7 +244,10 @@ class _EditRejectedClassState extends State<EditRejectedClass> {
     }
   }
 
-  void updateClass() async {
+  Future<void> updateClass() async {
+    setState(() {
+      _isLoading = true;
+    });
     final service = ClassUpdateService();
     String result = await service.updateClass(
       classId: widget.classData.id.toString(),
@@ -264,384 +267,416 @@ class _EditRejectedClassState extends State<EditRejectedClass> {
       maxParticipants: int.parse(maxParticipantsController.text),
     );
 
+    setState(() {
+      _isLoading = false;
+    });
     // Tampilkan snackbar dengan hasil
     showTopSnackBar(context, result,
         leftBarIndicatorColor: ColorStyle().succesColors);
+    // navigate to home
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+            builder: (context) => const MentorHomePage(
+                  selectedMenu: "Class",
+                )),
+        (route) => false);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Kelas Ditolak',
-          style: FontFamily().boldText.copyWith(
-                fontSize: 16,
-                color: ColorStyle().primaryColors,
-              ),
-        ),
-      ),
-      body: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Maaf, permintaan kelas Anda telah ditolak karena tidak memenuhi syarat. Berikut alasan mengapa kelas yang anda ajukan tidak dapat disetujui silahkan perbaiki dan susun kembali pengajuan kelas dibawah ini :',
-                  style: FontFamily().regularText,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 100,
-                    width: double.infinity,
-                    margin: const EdgeInsets.all(8.0),
-                    padding: const EdgeInsets.all(12.0),
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(4)),
-                      border: Border.all(
-                          color: ColorStyle().tertiaryColors, width: 2),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Rejected :",
-                          style: FontFamily().boldText.copyWith(
-                              fontSize: 14, color: ColorStyle().errorColors),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                       widget.classData.rejectReason.toString(),
-                          style: FontFamily().regularText,
-                        ),
-                      ],
-                    ),
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            title: Text(
+              'Kelas Ditolak',
+              style: FontFamily().boldText.copyWith(
+                    fontSize: 16,
+                    color: ColorStyle().primaryColors,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevetadButtonWithIcon(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ContohPremiumClass(),
-                        ),
-                      );
-                    },
-                    title: "Lihat Contoh Premium Class",
-                  ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                TittleTextField(
-                  title: "Tingkat Pendidikan",
-                  color: ColorStyle().secondaryColors,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: MyDropdownWidget(
-                    initialValue: selectedEducationLevel,
-                    items: ['SD', 'SMP', 'SMA', 'Kuliah', 'Karier'],
-                    onChanged: (value) {
-                      setState(() {
-                        selectedEducationLevel = value.toString();
-                        selectedFields =
-                            fieldOptions[selectedEducationLevel] ?? [];
-                        selectedField =
-                            ''; // Reset selectedField when education level changes
-                      });
-                    },
-                  ),
-                ),
-                TittleTextField(
-                  title: "Bidang & Minat",
-                  color: ColorStyle().secondaryColors,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: MyDropdownWidget(
-                    initialValue: selectedField,
-                    items: selectedFields,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedField = value.toString();
-                      });
-                    },
-                  ),
-                ),
-                TittleTextField(
-                  title: "Nama Kelas",
-                  color: ColorStyle().secondaryColors,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: TextFieldWidget(
-                    controller: nameController,
-                    validator: (value) {
-                      // Periksa apakah field kosong
-                      if (value == null || value.isEmpty) {
-                        return 'Field ini tidak boleh kosong';
-                      }
-
-                      return null;
-                    },
-                  ),
-                ),
-
-                ///// harga ////
-                TittleTextField(
-                  title: "Harga",
-                  color: ColorStyle().secondaryColors,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: TextFieldWidget(
-                    controller: priceController,
-                    validator: validatorCapacity,
-                  ),
-                ),
-
-                ///kapasitas mentee///
-                TittleTextField(
-                  title: "Kapasitas Mentee",
-                  color: ColorStyle().secondaryColors,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: TextFieldWidget(
-                    controller: maxParticipantsController,
-                    validator: validatorCapacity,
-                  ),
-                ),
-
-                //startDate///
-                TittleTextField(
-                  title: "Tanggal Mulai",
-                  color: ColorStyle().secondaryColors,
-                ),
-                DatePickerClassWidget(
-                  onDateSelected: (date) {
-                    startDateController.text =
-                        DateFormat('yyyy-MM-dd').format(date);
-                    calculateDuration();
-                  },
-                  controller: startDateController,
-                ),
-
-                ///endDate///
-                TittleTextField(
-                  title: "Tanggal Selesai",
-                  color: ColorStyle().secondaryColors,
-                ),
-                DatePickerClassWidget(
-                  onDateSelected: (date) {
-                    endDateController.text =
-                        DateFormat('yyyy-MM-dd').format(date);
-                    calculateDuration();
-                  },
-                  controller: endDateController,
-                ),
-                //durations////
-                TittleTextField(
-                  title: "Periode Kegiatan",
-                  color: ColorStyle().secondaryColors,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: TextFieldWidget(
-                    controller: durationInDaysController,
-                    readOnly: true,
-                  ),
-                ),
-                //hari ///
-                TittleTextField(
-                  title: "Jadwal Hari",
-                  color: ColorStyle().secondaryColors,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: TextFieldWidget(
-                    controller: scheduleController,
-                    suffixIcon: const Icon(Icons.arrow_drop_down),
-                    ontap: () => showMultiSelect(context),
-                    validator: (value) {
-                      // Periksa apakah field kosong
-                      if (value == null || value.isEmpty) {
-                        return 'Field ini tidak boleh kosong';
-                      }
-
-                      return null;
-                    },
-                  ),
-                ),
-
-                ////rician kegiatan///
-                TittleTextField(
-                  title: "Rincian Kegiatan",
-                  color: ColorStyle().secondaryColors,
-                ),
-                TextFieldWidgetBig(
-                    title: 'input Rincian Kegiatan',
-                    validator: (value) {
-                      // Periksa apakah field kosong
-                      if (value == null || value.isEmpty) {
-                        return 'Field ini tidak boleh kosong';
-                      }
-
-                      return null;
-                    },
-                    descriptionController: descriptionCobtroller),
-
-                /// Location///
-                TittleTextField(
-                  title: "Lokasi",
-                  color: ColorStyle().secondaryColors,
-                ),
-                Column(
+            ),
+          ),
+          body: ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                      'Maaf, permintaan kelas Anda telah ditolak karena tidak memenuhi syarat. Berikut alasan mengapa kelas yang anda ajukan tidak dapat disetujui silahkan perbaiki dan susun kembali pengajuan kelas dibawah ini :',
+                      style: FontFamily().regularText,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 100,
+                        width: double.infinity,
+                        margin: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(12.0),
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(4)),
+                          border: Border.all(
+                              color: ColorStyle().tertiaryColors, width: 2),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Rejected :",
+                              style: FontFamily().boldText.copyWith(
+                                  fontSize: 14,
+                                  color: ColorStyle().errorColors),
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              widget.classData.rejectReason.toString(),
+                              style: FontFamily().regularText,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevetadButtonWithIcon(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ContohPremiumClass(),
+                            ),
+                          );
+                        },
+                        title: "Lihat Contoh Premium Class",
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    TittleTextField(
+                      title: "Tingkat Pendidikan",
+                      color: ColorStyle().secondaryColors,
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: MyDropdownWidget(
-                        initialValue: selectedLocation,
-                        items: ['Offline', 'Online'],
+                        initialValue: selectedEducationLevel,
+                        items: ['SD', 'SMP', 'SMA', 'Kuliah', 'Karier'],
                         onChanged: (value) {
                           setState(() {
-                            selectedLocation = value.toString();
+                            selectedEducationLevel = value.toString();
+                            selectedFields =
+                                fieldOptions[selectedEducationLevel] ?? [];
+                            selectedField =
+                                ''; // Reset selectedField when education level changes
                           });
                         },
                       ),
                     ),
-                    if (selectedLocation == "Offline") ...[
-                      TittleTextField(
-                        title: "Alamat",
-                        color: ColorStyle().secondaryColors,
+                    TittleTextField(
+                      title: "Bidang & Minat",
+                      color: ColorStyle().secondaryColors,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: MyDropdownWidget(
+                        initialValue: selectedField,
+                        items: selectedFields,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedField = value.toString();
+                          });
+                        },
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: TextFieldWidget(
-                          controller: addressController,
+                    ),
+                    TittleTextField(
+                      title: "Nama Kelas",
+                      color: ColorStyle().secondaryColors,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: TextFieldWidget(
+                        controller: nameController,
+                        validator: (value) {
+                          // Periksa apakah field kosong
+                          if (value == null || value.isEmpty) {
+                            return 'Field ini tidak boleh kosong';
+                          }
+
+                          return null;
+                        },
+                      ),
+                    ),
+
+                    ///// harga ////
+                    TittleTextField(
+                      title: "Harga",
+                      color: ColorStyle().secondaryColors,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: TextFieldWidget(
+                        controller: priceController,
+                        validator: validatorCapacity,
+                      ),
+                    ),
+
+                    ///kapasitas mentee///
+                    TittleTextField(
+                      title: "Kapasitas Mentee",
+                      color: ColorStyle().secondaryColors,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: TextFieldWidget(
+                        controller: maxParticipantsController,
+                        validator: validatorCapacity,
+                      ),
+                    ),
+
+                    //startDate///
+                    TittleTextField(
+                      title: "Tanggal Mulai",
+                      color: ColorStyle().secondaryColors,
+                    ),
+                    DatePickerClassWidget(
+                      onDateSelected: (date) {
+                        startDateController.text =
+                            DateFormat('yyyy-MM-dd').format(date);
+                        calculateDuration();
+                      },
+                      controller: startDateController,
+                    ),
+
+                    ///endDate///
+                    TittleTextField(
+                      title: "Tanggal Selesai",
+                      color: ColorStyle().secondaryColors,
+                    ),
+                    DatePickerClassWidget(
+                      onDateSelected: (date) {
+                        endDateController.text =
+                            DateFormat('yyyy-MM-dd').format(date);
+                        calculateDuration();
+                      },
+                      controller: endDateController,
+                    ),
+                    //durations////
+                    TittleTextField(
+                      title: "Periode Kegiatan",
+                      color: ColorStyle().secondaryColors,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: TextFieldWidget(
+                        controller: durationInDaysController,
+                        readOnly: true,
+                      ),
+                    ),
+                    //hari ///
+                    TittleTextField(
+                      title: "Jadwal Hari",
+                      color: ColorStyle().secondaryColors,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: TextFieldWidget(
+                        controller: scheduleController,
+                        suffixIcon: const Icon(Icons.arrow_drop_down),
+                        ontap: () => showMultiSelect(context),
+                        validator: (value) {
+                          // Periksa apakah field kosong
+                          if (value == null || value.isEmpty) {
+                            return 'Field ini tidak boleh kosong';
+                          }
+
+                          return null;
+                        },
+                      ),
+                    ),
+
+                    ////rician kegiatan///
+                    TittleTextField(
+                      title: "Rincian Kegiatan",
+                      color: ColorStyle().secondaryColors,
+                    ),
+                    TextFieldWidgetBig(
+                        title: 'input Rincian Kegiatan',
+                        validator: (value) {
+                          // Periksa apakah field kosong
+                          if (value == null || value.isEmpty) {
+                            return 'Field ini tidak boleh kosong';
+                          }
+
+                          return null;
+                        },
+                        descriptionController: descriptionCobtroller),
+
+                    /// Location///
+                    TittleTextField(
+                      title: "Lokasi",
+                      color: ColorStyle().secondaryColors,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: MyDropdownWidget(
+                            initialValue: selectedLocation,
+                            items: ['Offline', 'Online'],
+                            onChanged: (value) {
+                              setState(() {
+                                selectedLocation = value.toString();
+                              });
+                            },
+                          ),
+                        ),
+                        if (selectedLocation == "Offline") ...[
+                          TittleTextField(
+                            title: "Alamat",
+                            color: ColorStyle().secondaryColors,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: TextFieldWidget(
+                              controller: addressController,
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+
+                    //// target learning///
+                    TittleTextField(
+                      title: "Target Pembelajaran",
+                      color: ColorStyle().secondaryColors,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            for (int i = 0;
+                                i < targetLearningController.length;
+                                i++)
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 8.0, bottom: 24),
+                                child: TextFieldWidget(
+                                  controller: targetLearningController[i],
+                                  hintText: 'Input Target Pembelajaran',
+                                ),
+                              ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.remove,
+                                      color: ColorStyle().primaryColors,
+                                    ),
+                                    onPressed: () => deleteTextField(
+                                        targetLearningController,
+                                        targetLearningController.length - 1),
+                                  ),
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.add,
+                                      color: ColorStyle().primaryColors,
+                                    ),
+                                    onPressed: () =>
+                                        addTextField(targetLearningController),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
+                    ),
+                    ////syarat ketentuan///
+                    TittleTextField(
+                      title: "Syarat & Ketentuan",
+                      color: ColorStyle().secondaryColors,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            for (int i = 0; i < termsController.length; i++)
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 8.0, bottom: 24),
+                                child: TextFieldWidget(
+                                  controller: termsController[i],
+                                  hintText: 'Input Syarat & Ketentuan',
+                                ),
+                              ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.remove,
+                                      color: ColorStyle().primaryColors,
+                                    ),
+                                    onPressed: () => deleteTextField(
+                                        termsController,
+                                        termsController.length - 1),
+                                  ),
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.add,
+                                      color: ColorStyle().primaryColors,
+                                    ),
+                                    onPressed: () =>
+                                        addTextField(termsController),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButtonWidget(
+                          onPressed: () async {
+                            await updateClass();
+                          },
+                          title: "Kirim Ulang Pengajuan Kelas",
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-
-                //// target learning///
-                TittleTextField(
-                  title: "Target Pembelajaran",
-                  color: ColorStyle().secondaryColors,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        for (int i = 0;
-                            i < targetLearningController.length;
-                            i++)
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(top: 8.0, bottom: 24),
-                            child: TextFieldWidget(
-                              controller: targetLearningController[i],
-                              hintText: 'Input Target Pembelajaran',
-                            ),
-                          ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Row(
-                            children: [
-                              IconButton(
-                                icon: Icon(
-                                  Icons.remove,
-                                  color: ColorStyle().primaryColors,
-                                ),
-                                onPressed: () => deleteTextField(
-                                    targetLearningController,
-                                    targetLearningController.length - 1),
-                              ),
-                              IconButton(
-                                icon: Icon(
-                                  Icons.add,
-                                  color: ColorStyle().primaryColors,
-                                ),
-                                onPressed: () =>
-                                    addTextField(targetLearningController),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                ////syarat ketentuan///
-                TittleTextField(
-                  title: "Syarat & Ketentuan",
-                  color: ColorStyle().secondaryColors,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        for (int i = 0; i < termsController.length; i++)
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(top: 8.0, bottom: 24),
-                            child: TextFieldWidget(
-                              controller: termsController[i],
-                              hintText: 'Input Syarat & Ketentuan',
-                            ),
-                          ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Row(
-                            children: [
-                              IconButton(
-                                icon: Icon(
-                                  Icons.remove,
-                                  color: ColorStyle().primaryColors,
-                                ),
-                                onPressed: () => deleteTextField(
-                                    termsController,
-                                    termsController.length - 1),
-                              ),
-                              IconButton(
-                                icon: Icon(
-                                  Icons.add,
-                                  color: ColorStyle().primaryColors,
-                                ),
-                                onPressed: () => addTextField(termsController),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                ElevatedButtonWidget(
-                  onPressed: () {
-                    updateClass();
-                  },
-                  title: "Kirim Ulang Pengajuan Kelas",
-                ),
-              ],
+              )
+            ],
+          ),
+        ),
+        //  add loading
+        if (_isLoading)
+          Container(
+            color: Colors.black.withOpacity(0.5),
+            child: const Center(
+              child: CircularProgressIndicator(),
             ),
-          )
-        ],
-      ),
+          ),
+      ],
     );
   }
 
@@ -657,6 +692,4 @@ class _EditRejectedClassState extends State<EditRejectedClass> {
     }
     return null;
   }
-
-  
 }

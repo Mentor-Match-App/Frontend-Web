@@ -42,7 +42,10 @@ class _CardCommunityState extends State<CardCommunity> {
                 placeholder: (context, url) => Center(
                   child: CircularProgressIndicator(),
                 ),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+                errorWidget: (context, url, error) => Image.asset(
+                  'assets/blank_profile.jpg',
+                  fit: BoxFit.cover,
+                ),
                 imageUrl: widget.imagePath,
                 height: 150,
                 width: 150,

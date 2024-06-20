@@ -11,7 +11,6 @@ import 'package:my_flutter_app/mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/mentor/Screens/homepage_mentor.dart';
 import 'package:my_flutter_app/mentor/screens/register_mentor/verification_page.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-import 'package:my_flutter_app/widget/navbar.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -62,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Map<String, String?> userData = await AuthService.getUserData();
 
           String? userType = userData['userType'];
-          if (userType == null) {
+          if (userType == null || userType.isEmpty) {
             Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (context) => const ChooseRoleScreen()));
           } else {
@@ -100,9 +99,30 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(
+      appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0),
-        child: NavbarWidget(),
+        child: Container(
+          color: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Image.asset(
+                      'assets/Handoff/logo/LogoWeb.png',
+                      height: 150,
+                      width: 150,
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
       body: Stack(
         children: [

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:my_flutter_app/Mentee/service/profile_service.dart';
 import 'package:my_flutter_app/mentee/screen/profile/mentee_profile_screen.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
-import 'package:my_flutter_app/style/text.dart';
 import 'package:my_flutter_app/widget/button.dart';
 import 'package:my_flutter_app/widget/flushsBar_widget.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
@@ -49,6 +48,7 @@ class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
   final TextEditingController _roleController = TextEditingController();
   final TextEditingController _experienceCompanyController =
       TextEditingController();
+  bool _isLoading = false;
 
   String _email = "";
   String _name = "";
@@ -113,7 +113,7 @@ class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
     }
   }
 
-  void _updateUserProfile() async {
+  Future<void> _updateUserProfile() async {
     skills = _skills.map((skill) => skill['skill']!).toList();
     // Instance of ProfileService
     ProfileService profileService = ProfileService();
@@ -126,7 +126,6 @@ class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
       linkedin: _linkedinController.text,
       experiences: experiences,
     );
-    // Handle post-update actions, like showing a confirmation dialog
   }
 
   @override
@@ -170,38 +169,52 @@ class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Image.asset('assets/Handoff/logo/LogoMobile.png'),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        child: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _profileSection(),
-                SizedBox(
-                  width: 24,
-                ),
-                Expanded(
-                  child: Column(
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            title: Image.asset('assets/Handoff/logo/LogoMobile.png'),
+          ),
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _formFields(),
-                      const SizedBox(height: 40),
-                      Align(
-                          alignment: Alignment.topRight,
-                          child: _saveButton(context)),
-                      const SizedBox(height: 10),
+                      _profileSection(),
+                      SizedBox(
+                        width: 24,
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            _formFields(),
+                            const SizedBox(height: 40),
+                            Align(
+                                alignment: Alignment.topRight,
+                                child: _saveButton(context)),
+                            const SizedBox(height: 10),
+                          ],
+                        ),
+                      )
                     ],
                   ),
-                )
-              ],
+                ],
+              ),
             ),
-          ],
+          ),
         ),
-      ),
+        if (_isLoading)
+          Container(
+            color: Colors.black.withOpacity(0.5),
+            child: const Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
+      ],
     );
   }
 
@@ -220,9 +233,15 @@ class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
     return Column(
       children: [
         _textFieldWithTitle("Email", _emailController, "Your email",
-            enabled: false), // Assuming you have an email controller
+            enabled: false,
+            onChanged: (String value) {},
+            validator:
+                (String? value) {}), // Assuming you have an email controller
         _textFieldWithTitle("Name", _nameController, "Your name",
-            enabled: false), // Assuming you have a name controller
+            enabled: false,
+            onChanged: (String value) {},
+            validator:
+                (String? value) {}), // Assuming you have a name controller
         _textFieldWithTitle(
           "Job",
           _jobController,
@@ -231,6 +250,12 @@ class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
             setState(() {
               job = value;
             });
+          },
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Job cannot be empty";
+            }
+            return null;
           },
         ),
         _textFieldWithTitle(
@@ -241,6 +266,12 @@ class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
             setState(() {
               company = value;
             });
+          },
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Company cannot be empty";
+            }
+            return null;
           },
         ),
         const SizedBox(height: 12),
@@ -253,12 +284,22 @@ class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
           setState(() {
             location = value;
           });
+        }, validator: (value) {
+          if (value!.isEmpty) {
+            return "Location cannot be empty";
+          }
+          return null;
         }),
         _textFieldWithTitle("About", _aboutController, "Enter Your About",
             onChanged: (value) {
           setState(() {
             about = value;
           });
+        }, validator: (value) {
+          if (value!.isEmpty) {
+            return "About cannot be empty";
+          }
+          return null;
         }),
         _textFieldWithTitle(
             "LinkedIn", _linkedinController, "Enter Your LinkedIn URL",
@@ -266,6 +307,11 @@ class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
           setState(() {
             linkedin = value;
           });
+        }, validator: (value) {
+          if (value!.isEmpty) {
+            return "LinkedIn URL cannot be empty";
+          }
+          return null;
         }),
         const SizedBox(height: 12),
         _experienceField(),
@@ -275,18 +321,29 @@ class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
   }
 
   Widget _textFieldWithTitle(
-      String title, TextEditingController controller, String hintText,
-      {bool enabled = true, Function(String)? onChanged}) {
+    String title,
+    TextEditingController controller,
+    String hint, {
+    required ValueChanged<String> onChanged,
+    required FormFieldValidator<String> validator,
+    bool enabled = true,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TittleTextField(title: title, color: ColorStyle().secondaryColors),
-        TextFieldWidget(
-          hintText: hintText,
-          controller: controller,
-          enabled: enabled,
-          onChanged: onChanged, // Add this line
+        Text(
+          title,
+          style: FontFamily().titleTextField,
         ),
+        const SizedBox(height: 8),
+        TextFieldWidget(
+          controller: controller,
+          hintText: hint,
+          onChanged: onChanged,
+          validator: validator,
+          enabled: enabled,
+        ),
+        const SizedBox(height: 12),
       ],
     );
   }
@@ -295,17 +352,40 @@ class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TittleTextField(title: "Skill", color: ColorStyle().secondaryColors),
+        Text(
+          "Skills",
+          style: FontFamily().titleTextField,
+        ),
+        const SizedBox(height: 8),
         TextFieldWidget(
           controller: _skillController,
-          hintText: "Skill",
-          formKey: _formKey,
+          hintText: "Enter Your Skill",
+          validator: (value) {
+            if (value!.isNotEmpty) {
+              return "Press the add button to add the skill";
+            } else if (_skills.isEmpty) {
+              return "You must have at least one skill";
+            }
+            return null;
+          },
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 8),
         Align(
           alignment: Alignment.centerRight,
           child: TextButton.icon(
-            onPressed: _addSkill,
+            onPressed: () {
+              if (_skillController.text.isEmpty) {
+                _formKey.currentState!.validate();
+                showTopSnackBar(context, "Please enter a skill",
+                    leftBarIndicatorColor: Colors.red);
+              } else if (_skills
+                  .any((skill) => skill['skill'] == _skillController.text)) {
+                showTopSnackBar(context, "Skill already added",
+                    leftBarIndicatorColor: Colors.red);
+              } else {
+                _addSkill();
+              }
+            },
             icon: const Icon(Icons.add, size: 16),
             label: Text("Add Skill", style: FontFamily().regularText),
           ),
@@ -318,27 +398,62 @@ class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TittleTextField(
-            title: "Experience", color: ColorStyle().secondaryColors),
+        Text(
+          "Experience",
+          style: FontFamily().titleTextField,
+        ),
+        SizedBox(height: 8),
         TextFieldWidget(
           controller: _roleController,
-          hintText: "Role",
+          hintText: "Enter Your Role",
+          onChanged: (value) {
+            setState(() {});
+          },
+          validator: (value) {
+            // if (value!.isEmpty) {
+            //   return "Role cannot be empty";
+            // }
+            // return null;
+          },
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 8),
         TextFieldWidget(
           controller: _experienceCompanyController,
-          hintText: "Company",
+          hintText: "Enter Your Company",
+          onChanged: (value) {
+            setState(() {
+              // Trigger a state update to check the conditions
+            });
+          },
+          validator: (value) {
+            if (_roleController.text.isNotEmpty &&
+                _experienceCompanyController.text.isEmpty) {
+              return "role and company must be filled together";
+            } else if (_roleController.text.isNotEmpty &&
+                _experienceCompanyController.text.isNotEmpty) {
+              return "add experience using the add experience button";
+            }
+            return null;
+          },
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 8),
         Align(
           alignment: Alignment.centerRight,
           child: TextButton.icon(
-            onPressed: _addExperience,
+            onPressed: () {
+              if (_roleController.text.isEmpty ||
+                  _experienceCompanyController.text.isEmpty) {
+                _formKey.currentState!.validate();
+                showTopSnackBar(context, "Please fill all fields",
+                    leftBarIndicatorColor: Colors.red);
+              } else {
+                _addExperience();
+              }
+            },
             icon: const Icon(Icons.add, size: 16),
             label: Text("Add Experience", style: FontFamily().regularText),
           ),
         ),
-        const SizedBox(height: 12),
       ],
     );
   }
@@ -347,23 +462,25 @@ class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: experiences.map((exp) => _buildExperienceChip(exp)).toList(),
+        children: experiences
+            .map((experience) => _buildExperienceChip(experience))
+            .toList(),
       ),
     );
   }
 
-  Widget _buildExperienceChip(Map<String, String> exp) {
+  Widget _buildExperienceChip(Map<String, String> experience) {
     return Padding(
       padding: const EdgeInsets.only(right: 12, top: 8),
       child: Chip(
         label: Text(
-          exp['role']! + " at " + exp['experienceCompany']!,
+          '${experience['role']} at ${experience['experienceCompany']}',
           style: FontFamily().regularText.copyWith(color: Colors.white),
         ),
         backgroundColor: ColorStyle().primaryColors,
         deleteIcon: const Icon(Icons.close, size: 12),
         onDeleted: () {
-          setState(() => experiences.remove(exp));
+          setState(() => experiences.remove(experience));
         },
       ),
     );
@@ -371,21 +488,69 @@ class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
 
   Widget _saveButton(BuildContext context) {
     return ElevatedButtonWidget(
-      title: "Save",
-      onPressed: () {
-        if (_skills.isEmpty) {
-          showTopSnackBar(context, 'Please add at least one skill',
-              leftBarIndicatorColor: ColorStyle().errorColors);
-        } else if (_formKey.currentState!.validate()) {
-          _formKey.currentState!.save();
-          _updateUserProfile(); // Memanggil _updateUserProfile() tanpa await
+      title: "Simpan",
+      onPressed: () async {
+        setState(() {
+          _isLoading = true;
+        });
+        if (_formKey.currentState!.validate()) {
+          if (_skills.isEmpty) {
+            showTopSnackBar(context, "You must have at least one skill",
+                leftBarIndicatorColor: Colors.red);
+            setState(() {
+              _isLoading = false;
+            });
+            return;
+          }
+          if (experiences.isEmpty) {
+            showTopSnackBar(context, "You must have at least one experience",
+                leftBarIndicatorColor: Colors.red);
+            setState(() {
+              _isLoading = false;
+            });
+            return;
+          }
+
+          // suruh mengklik tombol add experience jika role dan company terisi
+          if (_roleController.text.isNotEmpty ||
+              _experienceCompanyController.text.isNotEmpty) {
+            showTopSnackBar(context,
+                "experiences must be added using add experience button",
+                leftBarIndicatorColor: Colors.red);
+            setState(() {
+              _isLoading = false;
+            });
+            return;
+          }
+
+          // validasi semua field
+          if (_jobController.text.isEmpty ||
+              _companyController.text.isEmpty ||
+              _locationController.text.isEmpty ||
+              _aboutController.text.isEmpty ||
+              _linkedinController.text.isEmpty) {
+            showTopSnackBar(context, "Please fill all required fields",
+                leftBarIndicatorColor: Colors.red);
+            setState(() {
+              _isLoading = false;
+            });
+            return;
+          }
+
+          await _updateUserProfile();
+          setState(() {
+            _isLoading = false;
+          });
           showTopSnackBar(context, 'Profile updated successfully',
               leftBarIndicatorColor: ColorStyle().succesColors);
+
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => ProfileMenteeScreen()),
             (route) => false,
           );
+        } else {
+          showTopSnackBar(context, "Please fill all required fields");
         }
       },
     );

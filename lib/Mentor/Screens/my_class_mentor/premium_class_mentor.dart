@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/detail_my_class_mentor_screen.dart';
-import 'package:my_flutter_app/mentor/Screens/my_class_mentor/edit_class_rejected.dart';
 import 'package:my_flutter_app/mentor/model/my_class_mentor_model.dart';
 import 'package:my_flutter_app/mentor/service/myClassCreate_Mentor_service.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
@@ -156,46 +155,34 @@ class _PremiumClassMentorScreenState extends State<PremiumClassMentorScreen> {
                     padding: const EdgeInsets.all(12.0),
                     child: GestureDetector(
                       onTap: () {
-                        if (statusButton == 1) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EditRejectedClass(
-                                classData: data,
-                              ),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailMyClassMentorScreen(
+                              feedbacks: data.feedbacks ?? [],
+                              addressMentoring: data.address ?? 'Meeting Zoom',
+                              locationMentoring: data.location ?? '',
+                              approvedTransactionsCount:
+                                  approvedTransactionsCount,
+                              transactions: data.transactions ?? [],
+                              evaluation: data.evaluations ?? [],
+                              learningMaterial: data.learningMaterial ?? [],
+                              userClass: data,
+                              aksesLinkZoom: data.zoomLink ?? '',
+                              deskripsiKelas: data.description.toString(),
+                              classid: data.id.toString(),
+                              durationInDays: data.durationInDays ?? 0,
+                              endDate: DateTime.parse(data.endDate ?? ''),
+                              startDate: DateTime.parse(data.startDate ?? ''),
+                              term: data.terms ?? [],
+                              maxParticipants: data.maxParticipants ?? 0,
+                              schedule: data.schedule ?? '',
+                              targetLearning: data.targetLearning ?? [],
+                              linkZoom: data.zoomLink ?? '',
+                              namaKelas: data.name ?? '',
                             ),
-                          );
-                        } else {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DetailMyClassMentorScreen(
-                                feedbacks: data.feedbacks ?? [],
-                                addressMentoring:
-                                    data.address ?? 'Meeting Zoom',
-                                locationMentoring: data.location ?? '',
-                                approvedTransactionsCount:
-                                    approvedTransactionsCount,
-                                transactions: data.transactions ?? [],
-                                evaluation: data.evaluations ?? [],
-                                learningMaterial: data.learningMaterial ?? [],
-                                userClass: data,
-                                aksesLinkZoom: data.zoomLink ?? '',
-                                deskripsiKelas: data.description.toString(),
-                                classid: data.id.toString(),
-                                durationInDays: data.durationInDays ?? 0,
-                                endDate: DateTime.parse(data.endDate ?? ''),
-                                startDate: DateTime.parse(data.startDate ?? ''),
-                                term: data.terms ?? [],
-                                maxParticipants: data.maxParticipants ?? 0,
-                                schedule: data.schedule ?? '',
-                                targetLearning: data.targetLearning ?? [],
-                                linkZoom: data.zoomLink ?? '',
-                                namaKelas: data.name ?? '',
-                              ),
-                            ),
-                          );
-                        }
+                          ),
+                        );
                       },
                       child: Container(
                         decoration: BoxDecoration(

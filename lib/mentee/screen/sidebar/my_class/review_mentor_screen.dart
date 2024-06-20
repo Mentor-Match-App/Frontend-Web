@@ -64,8 +64,10 @@ class _ReviewMentorScreenState extends State<ReviewMentorScreen> {
                               placeholder: (context, url) => Center(
                                 child: CircularProgressIndicator(),
                               ),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
+                              errorWidget: (context, url, error) => Image.asset(
+                                'assets/blank_profile.jpg',
+                                fit: BoxFit.cover,
+                              ),
                               imageUrl: widget.mentorPhoto.toString(),
                               fit: BoxFit.cover,
                               width: 140,

@@ -86,26 +86,6 @@ class _DashboardAdminScreenState extends State<DashboardAdminScreen>
                           _updateSize();
                         },
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Container(
-                          width: 800,
-                          height: 40,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: ColorStyle().tertiaryColors),
-                              borderRadius: BorderRadius.circular(8)),
-                          child: const TextField(
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              labelText: 'Seacrh by name , company, role',
-                              prefixIcon:
-                                  Icon(Icons.search), // Icon pencarian di sini
-                            ),
-                          ),
-                        ),
-                      ),
                       const Spacer(),
                       IconButton(
                         icon: Icon(Icons.notifications_active,

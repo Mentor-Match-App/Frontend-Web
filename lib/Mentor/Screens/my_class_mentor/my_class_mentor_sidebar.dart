@@ -6,7 +6,12 @@ import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 
 class MyClassMentorListScreen extends StatefulWidget {
-  const MyClassMentorListScreen({Key? key}) : super(key: key);
+  final String initialSubMenu; // New parameter for initial sub-menu
+
+  const MyClassMentorListScreen({
+    super.key,
+    this.initialSubMenu = 'Class Submission',
+  });
 
   @override
   State<MyClassMentorListScreen> createState() =>
@@ -14,6 +19,13 @@ class MyClassMentorListScreen extends StatefulWidget {
 }
 
 class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Set initial sub-menu based on the initialSubMenu parameter
+    changeClass(widget.initialSubMenu);
+  }
+
   bool isClassSubmissionActive = true;
   bool isPremiumClassActive = false;
   bool isSessionActive = false; // Renamed for consistency
