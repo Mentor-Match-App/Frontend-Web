@@ -16,7 +16,9 @@ class _SuccesCreateClassScreenState extends State<SuccesCreateClassScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Image.asset('assets/Handoff/logo/LogoMobile.png'),
+      ),
       body: ListView(
         children: [
           Padding(

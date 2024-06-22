@@ -295,6 +295,21 @@ class _EvaluasiMentorScreenState extends State<EvaluasiMentorScreen> {
                               TextFieldWidget(
                                 controller: _linkEvaluasiController,
                                 hintText: "masukkan link evaluasi",
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Field tidak boleh kosong';
+                                  }
+
+                                  const urlPattern =
+                                      r'^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,6}(\/[^\s]*)?$';
+                                  final urlRegExp = RegExp(urlPattern);
+
+                                  if (!urlRegExp.hasMatch(value)) {
+                                    return 'Please enter a valid URL';
+                                  }
+
+                                  return null;
+                                },
                               ),
                               SizedBox(height: 12),
                               Align(
@@ -348,14 +363,9 @@ class _EvaluasiMentorScreenState extends State<EvaluasiMentorScreen> {
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             DetailEvaluasiMenteeMentorScreen(
-                                          feedbacks: widget.feedbacks,
-                                          learningMaterial:
-                                              classData.learningMaterial!,
-                                          transactions: widget.transactions,
                                           classId: widget
                                               .transactions[index].classId
                                               .toString(),
-                                          evaluations: widget.evaluasi,
                                           currentMenteeId: widget
                                               .transactions[index].userId
                                               .toString(),

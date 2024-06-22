@@ -1,3 +1,6 @@
+// ignore_for_file: deprecated_member_use
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/Mentee/screen/profile/edit_profile_mentee_screen.dart';
@@ -12,7 +15,7 @@ import 'package:my_flutter_app/widget/profileavatar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfileMenteeScreen extends StatefulWidget {
-  ProfileMenteeScreen({Key? key}) : super(key: key);
+  const ProfileMenteeScreen({super.key});
 
   @override
   State<ProfileMenteeScreen> createState() => _ProfileMenteeScreenState();
@@ -33,7 +36,9 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
         _unreadNotificationsCount = unreadCount;
       });
     } catch (e) {
-      print(e); // Handle error appropriately
+      if (kDebugMode) {
+        print(e);
+      } // Handle error appropriately
     }
   }
 
@@ -53,7 +58,7 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
   }
 
   void _loadData() async {
-    final profileData = await menteeService.getMenteeProfile();
+    await menteeService.getMenteeProfile();
     setState(() {});
   }
 
@@ -77,7 +82,6 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
               })
           .toList();
 
-      // Navigate to EditProfileMenteeScreen with the converted experiences
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -125,7 +129,7 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
                       _fetchUnreadNotificationsCount(); // Fetch the unread count when returning to this screen
                     });
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.notifications_none_outlined,
                     size: 30,
                   ),
@@ -136,18 +140,18 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
                     right: 11,
                     top: 11,
                     child: Container(
-                      padding: EdgeInsets.all(2),
+                      padding: const EdgeInsets.all(2),
                       decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      constraints: BoxConstraints(
+                      constraints: const BoxConstraints(
                         minWidth: 14,
                         minHeight: 14,
                       ),
                       child: Text(
                         '$_unreadNotificationsCount',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 8,
                         ),
@@ -164,7 +168,7 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
         future: menteeService.getMenteeProfile(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasError) {
@@ -182,7 +186,7 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
                 ),
                 Container(
                   width: double.maxFinite,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
                         Color(0xFFf8f0f0), // #F8F0F0
@@ -207,7 +211,7 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
                           imageUrl: mentee?.user!.photoUrl ?? '',
                           radius: 80,
                         ),
-                        SizedBox(width: 20),
+                        const SizedBox(width: 20),
                         Expanded(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -231,52 +235,58 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
                                     children: [
                                       IconButton(
                                         onPressed: _navigateToEditProfile,
-                                        icon: Icon(Icons.edit),
+                                        icon: const Icon(Icons.edit),
                                       ),
                                     ],
                                   ))
                                 ],
                               ),
-                              SizedBox(height: 20),
+                              const SizedBox(height: 20),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.work_outline_outlined,
                                         size: 20,
-                                        color: const Color(0xffE78938),
+                                        color: Color(0xffE78938),
                                       ),
-                                      SizedBox(width: 5),
-                                      Text(
-                                        mentee?.user!.experiences!
-                                                .firstWhere((element) =>
-                                                    element.isCurrentJob ==
+                                      const SizedBox(width: 5),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: mentee?.user!.experiences
+                                                ?.where((experience) =>
+                                                    experience.isCurrentJob ==
                                                     true)
-                                                .jobTitle ??
-                                            '',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 16,
-                                        ),
-                                      ),
+                                                .map((experience) {
+                                              return Text(
+                                                experience.jobTitle ?? '',
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 16,
+                                                ),
+                                              );
+                                            }).toList() ??
+                                            [const Text('No current job')],
+                                      )
                                     ],
                                   ),
-                                  SizedBox(width: 20),
+                                  const SizedBox(width: 20),
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Icon(
+                                        const Icon(
                                           Icons.location_on_outlined,
                                           size: 20,
-                                          color: const Color(0xffE78938),
+                                          color: Color(0xffE78938),
                                         ),
-                                        SizedBox(width: 5),
+                                        const SizedBox(width: 5),
                                         Text(
                                           mentee?.user!.location ?? '',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 18,
                                           ),
@@ -286,26 +296,32 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 5),
+                              const SizedBox(height: 5),
                               Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.home_work_outlined,
                                     size: 20,
-                                    color: const Color(0xffE78938),
+                                    color: Color(0xffE78938),
                                   ),
-                                  SizedBox(width: 4),
-                                  Text(
-                                    mentee?.user!.experiences!
-                                            .firstWhere((element) =>
-                                                element.isCurrentJob == true)
-                                            .company ??
-                                        '',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 16,
-                                    ),
-                                  ),
+                                  const SizedBox(width: 4),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .start, // Atur sesuai kebutuhan
+                                    children: mentee?.user!.experiences
+                                            ?.where((experience) =>
+                                                experience.isCurrentJob == true)
+                                            .map((experience) {
+                                          return Text(
+                                            experience.company ?? '',
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 16,
+                                            ),
+                                          );
+                                        }).toList() ??
+                                        [const Text('No current job')],
+                                  )
                                 ],
                               ),
                             ],
@@ -315,120 +331,117 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(40.0),
-                  child: Container(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "About",
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18,
-                              color: Color(0xffE78938),
-                            ),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "About",
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                            color: const Color(0xffE78938),
                           ),
-                          SizedBox(height: 12),
-                          Text(
-                            mentee?.user!.about ?? '',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16,
-                              color: Color(0xff313030),
-                            ),
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          mentee?.user!.about ?? '',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
+                            color: Color(0xff313030),
                           ),
-                          SizedBox(height: 12),
-                          SizedBox(
-                            width: 200,
-                            child: TextButton(
-                              style: TextButton.styleFrom(
-                                backgroundColor:
-                                    Color(0xffE78938), // Primary color
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 20.0,
-                                  horizontal: 34.0,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(0.0),
-                                ),
+                        ),
+                        const SizedBox(height: 12),
+                        SizedBox(
+                          width: 200,
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              backgroundColor:
+                                  const Color(0xffE78938), // Primary color
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 20.0,
+                                horizontal: 34.0,
                               ),
-                              onPressed: () {
-                                final linkedlnlink =
-                                    mentee?.user!.linkedin ?? '';
-                                _launchURL(linkedlnlink);
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/Handoff/icon/social-icons/linkedin.png',
-                                    width: 20.0,
-                                    height: 20.0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(0.0),
+                              ),
+                            ),
+                            onPressed: () {
+                              final linkedlnlink = mentee?.user!.linkedin ?? '';
+                              _launchURL(linkedlnlink);
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/Handoff/icon/social-icons/linkedin.png',
+                                  width: 20.0,
+                                  height: 20.0,
+                                  color: Colors.white,
+                                ),
+                                const SizedBox(width: 8.0),
+                                const Text(
+                                  "Linkedin",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
                                     color: Colors.white,
                                   ),
-                                  SizedBox(width: 8.0),
-                                  Text(
-                                    "Linkedin",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
-                          SizedBox(height: 20),
-                          Text(
-                            "Skill",
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18,
-                              color: Color(0xffE78938),
-                            ),
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          "Skill",
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                            color: const Color(0xffE78938),
                           ),
-                          SizedBox(
-                            height: 20,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: mentee?.user!.skills
+                                    ?.map((skill) => SkillCard(skill: skill))
+                                    .toList() ??
+                                [const Text('No skills')],
                           ),
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: mentee?.user!.skills
-                                      ?.map((skill) => SkillCard(skill: skill))
-                                      .toList() ??
-                                  [Text('No skills')],
-                            ),
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          "Experience",
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                            color: const Color(0xffE78938),
                           ),
-                          SizedBox(height: 20),
-                          Text(
-                            "Experience",
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18,
-                              color: Color(0xffE78938),
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Column(
-                            children: mentee?.user!.experiences
-                                    ?.where((experience) =>
-                                        experience.isCurrentJob == false)
-                                    .map((experience) {
-                                  return ExperienceWidget(
-                                    role: experience.jobTitle ?? 'No Job Title',
-                                    company: experience.company ?? 'No Company',
-                                  );
-                                }).toList() ??
-                                [Text('No experiences')],
-                          ),
-                        ]),
-                  ),
+                        ),
+                        const SizedBox(height: 20),
+                        Column(
+                          children: mentee?.user!.experiences
+                                  ?.where((experience) =>
+                                      experience.isCurrentJob == false)
+                                  .map((experience) {
+                                return ExperienceWidget(
+                                  role: experience.jobTitle ?? 'No Job Title',
+                                  company: experience.company ?? 'No Company',
+                                );
+                              }).toList() ??
+                              [const Text('No experiences')],
+                        ),
+                      ]),
                 )
               ],
             );
@@ -441,7 +454,7 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
 
 class SkillCard extends StatelessWidget {
   final String skill;
-  SkillCard({Key? key, required this.skill}) : super(key: key);
+  const SkillCard({super.key, required this.skill});
 
   @override
   Widget build(BuildContext context) {
@@ -474,8 +487,8 @@ class SkillCard extends StatelessWidget {
 class ExperienceWidget extends StatelessWidget {
   final String role;
   final String company;
-  ExperienceWidget({Key? key, required this.role, required this.company})
-      : super(key: key);
+  const ExperienceWidget(
+      {super.key, required this.role, required this.company});
 
   @override
   Widget build(BuildContext context) {
@@ -486,7 +499,7 @@ class ExperienceWidget extends StatelessWidget {
         children: [
           Icon(Icons.work_outline_outlined,
               size: 20, color: ColorStyle().primaryColors),
-          SizedBox(width: 8), // Sesuaikan sesuai dengan kebutuhan Anda
+          const SizedBox(width: 8), // Sesuaikan sesuai dengan kebutuhan Anda
           Column(
             crossAxisAlignment:
                 CrossAxisAlignment.start, // Atur sesuai kebutuhan

@@ -3,8 +3,8 @@ import 'package:my_flutter_app/mentor/Screens/homepage_mentor.dart';
 import 'package:my_flutter_app/mentor/screens/register_mentor/re_register_form.dart';
 import 'package:my_flutter_app/mentor/service/profile_service.dart';
 import 'package:my_flutter_app/preferences/%20preferences_helper.dart';
-import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
+
 class VerificationPage extends StatefulWidget {
   VerificationPage({Key? key}) : super(key: key);
 
@@ -22,7 +22,6 @@ class _VerificationPageState extends State<VerificationPage> {
   void initState() {
     super.initState();
     _loadUserType();
-
   }
 
   void _loadUserType() async {
@@ -37,7 +36,7 @@ class _VerificationPageState extends State<VerificationPage> {
           _userType); // Update the user type in preferences
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => MentorHomePage()),
+        MaterialPageRoute(builder: (context) => const MentorHomePage()),
         (route) => false,
       );
     }
@@ -64,65 +63,77 @@ class _VerificationPageState extends State<VerificationPage> {
               ),
               const SizedBox(height: 8),
               isLoading
-                  ? CircularProgressIndicator()
-                  : _userType == 'Mentor'
+                  ? const CircularProgressIndicator()
+                  : _userType == 'PendingMentor'
                       ? Column(
                           children: [
                             Text(
-                              'Akun Anda telah terverifikasi!',
-                              style: FontFamily().regularText,
-                              textAlign: TextAlign.center,
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MentorHomePage()),
-                                    (route) => false);
-                              },
-                              child: Text('Lanjutkan'),
-                            ),
-                          ],
-                        )
-                      : _userType == 'PendingMentor'
-                          ? Text(
                               'Akun Anda masih dalam proses verifikasi.',
                               style: FontFamily().regularText,
                               textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 8),
+                            ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isLoading = true;
+                                    _loadUserType();
+                                  });
+                                },
+                                child: const Text("Refresh")),
+                          ],
+                        )
+                      : _userType == 'RejectedMentor'
+                          ? Column(
+                              children: [
+                                Text(
+                                  'Akun Anda ditolak.',
+                                  style: FontFamily().regularText,
+                                  textAlign: TextAlign.center,
+                                ),
+                                if (_rejectReason.isNotEmpty)
+                                  Text(
+                                    'Alasan Penolakan: $_rejectReason',
+                                    style: FontFamily().regularText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ReRegisterFormScreen()),
+                                        (route) => false);
+                                  },
+                                  child: const Text('Kirim Ulang Verifikasi'),
+                                ),
+                              ],
                             )
-                          : _userType == 'RejectedMentor'
-                              ? Column(
-                                  children: [
-                                    Text(
-                                      'Akun Anda ditolak.',
-                                      style: FontFamily().regularText,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    if (_rejectReason.isNotEmpty)
-                                      Text(
-                                        'Alasan Penolakan: $_rejectReason',
-                                        style: FontFamily().regularText,
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ReRegisterFormScreen()),
-                                            (route) => false);
-                                      },
-                                      child: Text('Kirim Ulang Verifikasi'),
-                                    ),
-                                  ],
-                                )
-                              : Text(
+                          // : Text(
+                          //     'Status verifikasi tidak diketahui.',
+                          //     style: FontFamily().regularText,
+                          //     textAlign: TextAlign.center,
+                          //   ),
+                          // refresh
+                          : Column(
+                              children: [
+                                Text(
                                   'Status verifikasi tidak diketahui.',
                                   style: FontFamily().regularText,
                                   textAlign: TextAlign.center,
                                 ),
+                                SizedBox(height: 8),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        isLoading = true;
+                                        _loadUserType();
+                                      });
+                                    },
+                                    child: const Text("Refresh")),
+                              ],
+                            ),
             ],
           )
         ],

@@ -228,69 +228,6 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
     }
   }
 
-  // void _updateMentor() async {
-  //   if (_formKey.currentState!.validate()) {
-  //     final profileData = await mentorService.getMentorProfile();
-  //     try {
-  //       if (mounted) {
-  //         await MentorUpdateService().updateMentor(
-  //           accountNumber: profileData.user?.accountName ?? '',
-  //           accountName: profileData.user?.accountNumber ?? '',
-  //           gender: profileData.user?.gender ?? '',
-  //           mentorId: profileData.user?.id ?? '',
-  //           portfolio: profileData.user?.portofolio ?? '',
-  //           job: profileData.user?.experiences
-  //                   ?.firstWhere((element) => element.isCurrentJob == true,
-  //                       orElse: () => ExperienceMentor())
-  //                   .jobTitle ??
-  //               '',
-  //           company: profileData.user?.experiences
-  //                   ?.firstWhere((element) => element.isCurrentJob == true,
-  //                       orElse: () => ExperienceMentor())
-  //                   .company ??
-  //               '',
-  //           location: profileData.user?.location ?? '',
-  //           skills: profileData.user?.skills ?? [],
-  //           about: profileData.user?.about ?? '',
-  //           linkedin: profileData.user?.linkedin ?? '',
-  //           experiences: profileData.user?.experiences
-  //                   ?.map((exp) => {
-  //                         'role': exp.jobTitle ?? '',
-  //                         'experienceCompany': exp.company ?? ''
-  //                       })
-  //                   .toList() ??
-  //               [],
-  //         );
-
-  //         // Tampilkan SnackBar jika pembaruan berhasil
-  //          showTopSnackBar(context, "Registration successful",
-  //       leftBarIndicatorColor: ColorStyle().succesColors,
-  //       content: const Text("Registration successful"));
-
-  //         // Navigasi ke halaman verifikasi
-  //         Navigator.pushAndRemoveUntil(
-  //           context,
-  //           MaterialPageRoute(
-  //             builder: (context) => VerificationPage(),
-  //           ),
-  //           (route) => false,
-  //         );
-  //       }
-  //     } catch (error) {
-  //       // Menampilkan pesan kesalahan jika terjadi kesalahan saat pembaruan profil mentor
-  //       print('Error updating mentor profile: $error');
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(
-  //           content: Text(
-  //             'Failed to update mentor profile. Please try again later.',
-  //           ),
-  //           backgroundColor: Colors.red, // Warna merah untuk pesan kesalahan
-  //         ),
-  //       );
-  //     }
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

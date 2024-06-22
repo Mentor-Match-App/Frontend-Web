@@ -21,7 +21,7 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
     return Scaffold(
       backgroundColor: ColorStyle().whiteColors,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
+        preferredSize: const Size.fromHeight(kToolbarHeight),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -49,23 +49,23 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
               'Choose your Role',
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w400,
-                color: Color(0xff0A1737),
+                color: const Color(0xff0A1737),
                 fontSize: 32,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             Text(
               'Ingin memberi panduan sebagai mentor atau mendapatkan bimbingan sebagai mentee? Sebagai mentor, Anda bisa berbagi pengalaman dan inspirasi. Sebagai mentee, Anda dapat belajar dari yang lebih berpengalaman',
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w300,
-                color: Color(0xff0A1737),
+                color: const Color(0xff0A1737),
                 fontSize: 16,
               ),
               textAlign: TextAlign.left,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
@@ -99,7 +99,7 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
                                   height: 265,
                                   fit: BoxFit.fill,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 Text(
@@ -109,7 +109,7 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 Text(
@@ -124,7 +124,7 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       SizedBox(
@@ -194,7 +194,7 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
                                   height: 265,
                                   fit: BoxFit.fill,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 Text(
@@ -204,7 +204,7 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 Text(
@@ -219,7 +219,7 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       SizedBox(
@@ -238,7 +238,7 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
                                         ColorStyle().primaryColors)),
                             onPressed: () async {
                               // Start the async operation
-                              await chooseRoleService.chooseRole("Mentee");
+                              // await chooseRoleService.chooseRole("Mentee");
 
                               if (mounted) {
                                 Navigator.pushAndRemoveUntil(

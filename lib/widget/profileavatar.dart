@@ -4,9 +4,10 @@ import 'package:my_flutter_app/widget/menucategory.dart';
 
 // ignore: must_be_immutable
 class ProfileAvatar extends StatefulWidget {
-  final String? imageUrl;
+  final String imageUrl;
   double? radius;
-  ProfileAvatar({Key? key, this.imageUrl, this.radius}) : super(key: key);
+  ProfileAvatar({Key? key, required this.imageUrl, this.radius})
+      : super(key: key);
 
   @override
   State<ProfileAvatar> createState() => _ProfileAvatarState();
@@ -45,8 +46,10 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
             errorWidget: (context, url, error) => Image.asset(
               'assets/blank_profile.jpg',
               fit: BoxFit.cover,
+              width: 120,
+              height: 120,
             ),
-            imageUrl: widget.imageUrl!,
+            imageUrl: widget.imageUrl,
             fit: BoxFit.cover,
             width: 120,
             height: 120,

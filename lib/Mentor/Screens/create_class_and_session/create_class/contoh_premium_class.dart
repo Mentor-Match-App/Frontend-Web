@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/card/card_premium_class.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
+
 class ContohPremiumClass extends StatefulWidget {
   ContohPremiumClass({Key? key}) : super(key: key);
 
@@ -16,7 +17,7 @@ class _ContohPremiumClassState extends State<ContohPremiumClass> {
   bool isDropdownOpenedSyarat = false;
   IconData dropdownIcon = Icons.arrow_drop_down_outlined;
 
- void toggleDropdown(String dropdownKey) {
+  void toggleDropdown(String dropdownKey) {
     setState(() {
       if (dropdownKey == "NameClass") {
         isDropdownOpenedNameClass = !isDropdownOpenedNameClass;
@@ -93,7 +94,7 @@ class _ContohPremiumClassState extends State<ContohPremiumClass> {
                 ),
                 CardContohPremiumClassDropDown(
                   widget: Text(
-                    'Kelas UI/UX Research and Design adalah program intensif selama 30 hari yang memperkenalkan dan memperdalam konsep dan keterampilan dalam desain antarmuka pengguna (UI) dan pengalaman pengguna (UX). Dihadiri oleh 5 peserta, kelas ini diselenggarakan secara offline dengan pertemuan setiap Senin, Rabu, dan Jumat selama 3 jam. Setiap minggu, peserta akan mempelajari satu chapter dari materi yang disediakan dalam bentuk modul. Mereka diberi waktu satu minggu untuk menyelesaikan materi sebelum memasuki chapter berikutnya. Evaluasi dilakukan setiap selesai chapter untuk mengukur pemahaman dan kemajuan peserta. Ini memberikan kesempatan bagi peserta untuk mendapatkan umpan balik dan bimbingan tambahan.',
+                    'Kelas UI/UX Research and Design adalah program intensif selama 30 hari yang memperkenalkan dan memperdalam konsep dan keterampilan dalam desain antarmuka pengguna (UI) dan pengalaman pengguna (UX). Dihadiri oleh 5 peserta, kelas ini diselenggarakan secara offline dengan pertemuan setiap Senin, Rabu, dan Jumat selama 3 jam, dari jam 10 pagi sampai jam 1 siang. Setiap minggu, peserta akan mempelajari satu chapter dari materi yang disediakan dalam bentuk modul. Mereka diberi waktu satu minggu untuk menyelesaikan materi sebelum memasuki chapter berikutnya. Evaluasi dilakukan setiap selesai chapter untuk mengukur pemahaman dan kemajuan peserta. Ini memberikan kesempatan bagi peserta untuk mendapatkan umpan balik dan bimbingan tambahan',
                     style: FontFamily().regularText.copyWith(
                           fontSize: 12,
                         ),
@@ -104,7 +105,7 @@ class _ContohPremiumClassState extends State<ContohPremiumClass> {
                       'Rincian Kegiatan merupakan deskripsi kelas ini memberikan gambaran umum tentang program pelatihan UI/UX Research and Design yang akan diselenggarakan, termasuk durasi, kapasitas peserta, jadwal, dan metodologi evaluasi.',
                   subtitle: 'Contoh Rincian Kegiatan',
                   dropdownContent: isDropdownOpenedRincianKegiatan,
-              toggleDropdown: () => toggleDropdown('RincianKegiatan'),
+                  toggleDropdown: () => toggleDropdown('RincianKegiatan'),
                 ),
                 CardContohPremiumClassDropDown(
                   title: 'Target Pembelajaran',
@@ -222,7 +223,7 @@ class _ContohPremiumClassState extends State<ContohPremiumClass> {
                   ),
                   isDropdownOpened: isDropdownOpenedTarget,
                   dropdownContent: isDropdownOpenedTarget,
-                  toggleDropdown: () =>toggleDropdown('Target'),
+                  toggleDropdown: () => toggleDropdown('Target'),
                 ),
                 CardContohPremiumClassDropDown(
                   title: 'Syarat & Ketentuan',
@@ -295,7 +296,7 @@ class _ContohPremiumClassState extends State<ContohPremiumClass> {
                   ),
                   isDropdownOpened: isDropdownOpenedSyarat,
                   dropdownContent: isDropdownOpenedSyarat,
-                  toggleDropdown: () =>toggleDropdown('Syarat'),
+                  toggleDropdown: () => toggleDropdown('Syarat'),
                 ),
               ],
             ),

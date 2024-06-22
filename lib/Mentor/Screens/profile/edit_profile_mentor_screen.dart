@@ -311,6 +311,15 @@ class _EditProfileMentorScreenState extends State<EditProfileMentorScreen> {
           if (value!.isEmpty) {
             return "LinkedIn URL cannot be empty";
           }
+          // Regular expression to validate a URL
+          const urlPattern =
+              r'^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,6}(\/[^\s]*)?$';
+          final urlRegExp = RegExp(urlPattern);
+
+          if (!urlRegExp.hasMatch(value)) {
+            return 'Please enter a valid URL';
+          }
+
           return null;
         }),
         const SizedBox(height: 12),

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/mentee/screen/sidebar/community_user.dart';
@@ -20,10 +21,10 @@ class MentorHomePage extends StatefulWidget {
   final String subMenu; // New parameter for sub-menu selection
 
   const MentorHomePage({
-    Key? key,
+    super.key,
     this.selectedMenu = 'Dashboard',
     this.subMenu = '', // Default value for sub-menu selection
-  }) : super(key: key);
+  });
 
   @override
   State<MentorHomePage> createState() => _MentorHomePageState();
@@ -33,7 +34,7 @@ class _MentorHomePageState extends State<MentorHomePage> {
   String _photoUrl = "";
   String _name = "";
   String _namedepan = "";
-  double _size = 200.0;
+  final double _size = 200.0;
   String _selectedMenu = 'Dashboard';
   final NotificationService _notificationService = NotificationService();
   int _unreadNotificationsCount = 0;
@@ -59,7 +60,9 @@ class _MentorHomePageState extends State<MentorHomePage> {
         _unreadNotificationsCount = unreadCount;
       });
     } catch (e) {
-      print(e); // Handle error appropriately
+      if (kDebugMode) {
+        print(e);
+      } // Handle error appropriately
     }
   }
 
@@ -78,7 +81,7 @@ class _MentorHomePageState extends State<MentorHomePage> {
     return Scaffold(
       backgroundColor: ColorStyle().whiteColors,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80.0),
+        preferredSize: const Size.fromHeight(80.0),
         child: Container(
           color: Colors.white,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -101,7 +104,7 @@ class _MentorHomePageState extends State<MentorHomePage> {
                             _fetchUnreadNotificationsCount(); // Fetch the unread count when returning to this screen
                           });
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.notifications_none_outlined,
                           size: 30,
                         ),
@@ -112,18 +115,18 @@ class _MentorHomePageState extends State<MentorHomePage> {
                           right: 11,
                           top: 11,
                           child: Container(
-                            padding: EdgeInsets.all(2),
+                            padding: const EdgeInsets.all(2),
                             decoration: BoxDecoration(
                               color: Colors.red,
                               borderRadius: BorderRadius.circular(6),
                             ),
-                            constraints: BoxConstraints(
+                            constraints: const BoxConstraints(
                               minWidth: 14,
                               minHeight: 14,
                             ),
                             child: Text(
                               '$_unreadNotificationsCount',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 8,
                               ),
@@ -145,7 +148,7 @@ class _MentorHomePageState extends State<MentorHomePage> {
                     },
                     child: ClipOval(
                       child: CachedNetworkImage(
-                        placeholder: (context, url) => Center(
+                        placeholder: (context, url) => const Center(
                           child: CircularProgressIndicator(),
                         ),
                         errorWidget: (context, url, error) => Image.asset(
@@ -160,7 +163,7 @@ class _MentorHomePageState extends State<MentorHomePage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                     child: SizedBox(
                       child: Text(
                         "Hallo, \n$_namedepan",
@@ -181,7 +184,7 @@ class _MentorHomePageState extends State<MentorHomePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SearchBarMentor(),
+              const SearchBarMentor(),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -205,10 +208,10 @@ class _MentorHomePageState extends State<MentorHomePage> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 100,
               ),
-              FooterWidget()
+              const FooterWidget()
             ],
           ),
         ),
@@ -223,17 +226,17 @@ class _MentorHomePageState extends State<MentorHomePage> {
           initialSubMenu: widget.subMenu,
         );
       case 'Community':
-        return CommunityScreen();
+        return const CommunityScreen();
       default:
-        return DashboardMentor();
+        return const DashboardMentor();
     }
   }
 }
 
 class SearchBarMentor extends StatefulWidget {
   const SearchBarMentor({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _SearchBarMentorState createState() => _SearchBarMentorState();
@@ -253,7 +256,7 @@ class _SearchBarMentorState extends State<SearchBarMentor> {
             "Search",
             style: GoogleFonts.poppins(
               fontWeight: FontWeight.w500,
-              color: Color(0xff0A1737),
+              color: const Color(0xff0A1737),
               fontSize: 16,
             ),
           ),

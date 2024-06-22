@@ -102,7 +102,7 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ProfileAvatar(
-                    imageUrl: mentorDetail.photoUrl,
+                    imageUrl: mentorDetail.photoUrl!,
                     radius: 80,
                   ),
                   const SizedBox(width: 20),
@@ -234,7 +234,8 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                       width: 200,
                       child: TextButton(
                         style: TextButton.styleFrom(
-                          backgroundColor: const Color(0xffE78938), // Primary color
+                          backgroundColor:
+                              const Color(0xffE78938), // Primary color
                           padding: const EdgeInsets.symmetric(
                             vertical: 20.0,
                             horizontal: 34.0,
@@ -355,7 +356,8 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                     mentorDetail.session!.isNotEmpty
                                 ? ListView.builder(
                                     shrinkWrap: true,
-                                    physics: const NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     itemCount: mentorDetail.session!
                                         .where((element) =>
                                             element.isActive == true)
@@ -395,8 +397,9 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                               ),
                                             ],
                                             color: Colors.white,
-                                            borderRadius: const BorderRadius.all(
-                                                Radius.circular(5)),
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(5)),
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(32.0),
@@ -672,7 +675,8 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                                                             .id
                                                                             .toString());
                                                                   },
-                                                                  child: const Text(
+                                                                  child:
+                                                                      const Text(
                                                                     "Booking Session",
                                                                     style:
                                                                         TextStyle(

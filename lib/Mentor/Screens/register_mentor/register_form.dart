@@ -51,7 +51,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
   String accountNumber = "";
   String accountName = "";
   List<String> skills = [];
-  List<Map<String, String>> experience = [];
+  List<Map<String, String>> experiences = [];
   bool isLoading = false;
   @override
   void initState() {
@@ -108,7 +108,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
   void _addExperience() {
     if (_formKey.currentState!.validate()) {
       setState(() {
-        experience.add({
+        experiences.add({
           'role': _roleController.text,
           'experienceCompany': _experienceCompanyController.text
         });
@@ -118,7 +118,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
     }
   }
 
-  void _registerMentor(BuildContext context) async {
+  Future<void> _registerMentor(BuildContext context) async {
     List<String> skills = _skills.map((skill) => skill['skill']!).toList();
 
     // Check if any field is empty
@@ -130,7 +130,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
         _locationController.text.isEmpty ||
         _linkedinController.text.isEmpty ||
         _portofolioController.text.isEmpty ||
-        experience.isEmpty ||
+        experiences.isEmpty ||
         _accountNameController.text.isEmpty ||
         _accountNumberController.text.isEmpty) {
       // Show Snackbar
@@ -159,7 +159,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
         about: _aboutController.text,
         linkedin: _linkedinController.text,
         portofolio: _portofolioController.text,
-        experience: experience,
+        experiences: experiences,
         accountName: _accountNameController.text,
         accountNumber: _accountNumberController.text,
       );
@@ -230,7 +230,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   Row(
@@ -246,8 +246,8 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 0,
                               blurRadius: 7,
-                              offset:
-                                  Offset(0, 3), // changes position of shadow
+                              offset: const Offset(
+                                  0, 3), // changes position of shadow
                             ),
                           ],
                           border: Border.all(
@@ -258,7 +258,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                         ),
                         child: ClipOval(
                           child: CachedNetworkImage(
-                            placeholder: (context, url) => Center(
+                            placeholder: (context, url) => const Center(
                               child: CircularProgressIndicator(),
                             ),
                             errorWidget: (context, url, error) => Image.asset(
@@ -272,7 +272,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 40,
                       ),
                       Expanded(
@@ -281,17 +281,17 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                             _textFieldWithTitle(
                                 "Name", _nameController, "Your name",
                                 enabled: false),
-                            SizedBox(
+                            const SizedBox(
                               height: 12,
                             ),
                             _textFieldWithTitle(
                                 "Email", _emailController, "Your email",
                                 enabled: false),
-                            SizedBox(
+                            const SizedBox(
                               height: 12,
                             ),
                             _genderDropdownField(),
-                            SizedBox(
+                            const SizedBox(
                               height: 12,
                             ),
                             _textFieldWithTitle(
@@ -310,7 +310,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                                 return null;
                               },
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 12,
                             ),
                             _textFieldWithTitle(
@@ -336,7 +336,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   Text(
@@ -344,10 +344,10 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
-                      color: Color(0xffE78938),
+                      color: const Color(0xffE78938),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -375,7 +375,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                           ),
                         ],
                       )),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       Expanded(
@@ -401,12 +401,12 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                       )),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   _skillField(),
                   _skillChips(),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -414,15 +414,15 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
-                      color: Color(0xffE78938),
+                      color: const Color(0xffE78938),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   _experienceField(),
                   _experienceChips(),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -430,10 +430,10 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
-                      color: Color(0xffE78938),
+                      color: const Color(0xffE78938),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   _textFieldWithTitle(
@@ -449,6 +449,15 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                       if (value!.isEmpty) {
                         return 'Please enter linkedin';
                       }
+                      // Regular expression to validate a URL
+                      const urlPattern =
+                          r'^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,6}(\/[^\s]*)?$';
+                      final urlRegExp = RegExp(urlPattern);
+
+                      if (!urlRegExp.hasMatch(value)) {
+                        return 'Please enter a valid URL';
+                      }
+
                       return null;
                     },
                   ),
@@ -465,10 +474,17 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                       if (value!.isEmpty) {
                         return 'Please enter portofolio';
                       }
+                      const urlPattern =
+                          r'^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,6}(\/[^\s]*)?$';
+                      final urlRegExp = RegExp(urlPattern);
+
+                      if (!urlRegExp.hasMatch(value)) {
+                        return 'Please enter a valid URL';
+                      }
                       return null;
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -476,10 +492,10 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
-                      color: Color(0xffE78938),
+                      color: const Color(0xffE78938),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -509,7 +525,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                           ),
                         ],
                       )),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       Expanded(
@@ -537,7 +553,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                       )),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   _applyButton(),
@@ -559,7 +575,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TittleTextField(title: title, color: ColorStyle().secondaryColors),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         TextFieldWidget(
@@ -572,40 +588,6 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
       ],
     );
   }
-
-  // Widget _skillField() {
-  //   return Column(
-  //     children: [
-  //       Row(
-  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //         children: [
-  //           TittleTextField(
-  //               title: "Skill", color: ColorStyle().secondaryColors),
-  //         ],
-  //       ),
-  //       const SizedBox(height: 8),
-  //       TextFieldWidget(
-  //         controller: _skillController,
-  //         hintText: "Skill",
-  //         validator: (value) {
-  //           if (value!.isEmpty) {
-  //             return 'Please enter your skill';
-  //           }
-  //           return null;
-  //         },
-  //       ),
-  //       const SizedBox(height: 12),
-  //       Align(
-  //         alignment: Alignment.centerRight,
-  //         child: TextButton.icon(
-  //           onPressed: _addSkill,
-  //           icon: const Icon(Icons.add, size: 16),
-  //           label: Text("Add Skill", style: FontFamily().regularText),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
 
   Widget _skillField() {
     return Column(
@@ -622,8 +604,10 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
           controller: _skillController,
           hintText: "Skill",
           validator: (value) {
-            if (value!.isEmpty && _skills.isEmpty) {
-              return 'Please enter your skill';
+            if (value!.isNotEmpty) {
+              return "Press the add button to add the skill";
+            } else if (_skills.isEmpty) {
+              return "You must have at least one skill";
             }
             return null;
           },
@@ -678,7 +662,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                 children: [
                   TittleTextField(
                       title: "Role", color: ColorStyle().secondaryColors),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   TextFieldWidget(
@@ -688,7 +672,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
             Expanded(
@@ -697,22 +681,42 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                 children: [
                   TittleTextField(
                       title: "Company", color: ColorStyle().secondaryColors),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   TextFieldWidget(
                     controller: _experienceCompanyController,
                     hintText: "Company",
+                    validator: (value) {
+                      if (_roleController.text.isNotEmpty &&
+                          _experienceCompanyController.text.isEmpty) {
+                        return "role and company must be filled together";
+                      } else if (_roleController.text.isNotEmpty &&
+                          _experienceCompanyController.text.isNotEmpty) {
+                        return "add experience using the add experience button";
+                      }
+                      return null;
+                    },
                   ),
                 ],
               ),
             )
           ],
         ),
+        const SizedBox(height: 12),
         Align(
           alignment: Alignment.centerRight,
           child: TextButton.icon(
-            onPressed: _addExperience,
+            onPressed: () {
+              if (_roleController.text.isEmpty ||
+                  _experienceCompanyController.text.isEmpty) {
+                _formKey.currentState!.validate();
+                showTopSnackBar(context, "Please fill all fields",
+                    leftBarIndicatorColor: Colors.red);
+              } else {
+                _addExperience();
+              }
+            },
             icon: const Icon(Icons.add, size: 16),
             label: Text("Add Experience", style: FontFamily().regularText),
           ),
@@ -725,7 +729,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: experience.map((exp) => _buildExperienceChip(exp)).toList(),
+        children: experiences.map((exp) => _buildExperienceChip(exp)).toList(),
       ),
     );
   }
@@ -735,13 +739,13 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
       padding: const EdgeInsets.only(right: 12, top: 8),
       child: Chip(
         label: Text(
-          exp['role']! + " at " + exp['experienceCompany']!,
+          "${exp['role']!} at ${exp['experienceCompany']!}",
           style: FontFamily().regularText.copyWith(color: Colors.white),
         ),
         backgroundColor: ColorStyle().primaryColors,
         deleteIcon: const Icon(Icons.close, size: 12),
         onDeleted: () {
-          setState(() => experience.remove(exp));
+          setState(() => experiences.remove(exp));
         },
       ),
     );
@@ -764,7 +768,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
               borderSide: BorderSide.none,
             ),
           ),
-          hint: Text("Select Your Gender"),
+          hint: const Text("Select Your Gender"),
           style: FontFamily().regularText.copyWith(
                 color: ColorStyle().disableColors,
               ),
@@ -792,10 +796,10 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
     return Align(
       alignment: Alignment.centerRight,
       child: isLoading
-          ? CircularProgressIndicator()
+          ? const CircularProgressIndicator()
           : ElevatedButtonWidget(
-              onPressed: () {
-                _registerMentor(context);
+              onPressed: () async {
+                await _registerMentor(context);
               },
               title: 'Daftar',
             ),

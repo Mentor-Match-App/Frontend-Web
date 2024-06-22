@@ -3,7 +3,6 @@ import "package:flutter/material.dart";
 import 'package:my_flutter_app/Mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/admin/screen/dasboard_admin_screen.dart';
 import 'package:my_flutter_app/firebase_options.dart';
-import 'package:my_flutter_app/login/choose_role_screen.dart';
 import 'package:my_flutter_app/login/login_screen.dart';
 import 'package:my_flutter_app/mentee/provider/review_mentor_provider.dart';
 import 'package:my_flutter_app/mentee/screen/landing_page.dart';
@@ -55,7 +54,7 @@ class MyApp extends StatelessWidget {
           homeScreen = VerificationPage();
           break;
         case null || '':
-          homeScreen = const ChooseRoleScreen();
+          homeScreen = const LandingPage();
           break;
         default:
           homeScreen = const LoginScreen();
