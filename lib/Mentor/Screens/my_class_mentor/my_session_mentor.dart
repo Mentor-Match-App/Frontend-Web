@@ -19,42 +19,41 @@ class _MySessionCreateState extends State<MySessionCreate> {
 
   int _getPriority(Session userSessions) {
     String buttonText = "Available";
-    // buttonCollor scheduled ketika isActive bernilai true + belum
 
-    if (userSessions.isActive == true) {
+    DateTime startTime = DateTime.parse(userSessions.startTime!);
+    startTime = startTime.toLocal().subtract(const Duration(hours: 7));
+
+    DateTime endTime = DateTime.parse(userSessions.endTime!);
+    endTime = endTime.toLocal().subtract(const Duration(hours: 7));
+
+    if (userSessions.isActive == true &&
+        userSessions.participant!.length < userSessions.maxParticipants! &&
+        DateTime.now().isBefore(startTime) &&
+        DateTime.now().isBefore(endTime)) {
       buttonText = "Scheduled";
-      // buttonCollor full ketika participant.length == maxParticipant + startTime nya belum mulai + isActive bernilai false
-    }
-    if (userSessions.participant!.length == userSessions.maxParticipants &&
-        DateTime.now().isBefore(DateTime.parse(userSessions.startTime!)) &&
-        DateTime.now().isBefore(DateTime.parse(userSessions.endTime!)) &&
+    } else if (userSessions.participant!.length ==
+            userSessions.maxParticipants &&
+        DateTime.now().isBefore(startTime) &&
+        DateTime.now().isBefore(endTime) &&
         userSessions.isActive == true) {
       buttonText = "Full";
-    }
-
-    // buttonCollor active ketika isActive bernilai false + participant.length >= 1 + dan waktunya masih berlangsung
-    if (userSessions.isActive == false &&
-        userSessions.participant!.length >= 1 &&
-        DateTime.now().isBefore(DateTime.parse(userSessions.endTime!))) {
+    } else if (userSessions.isActive == false &&
+        userSessions.participant!.isNotEmpty &&
+        DateTime.now().isBefore(endTime)) {
       buttonText = "Active";
-    }
-    if (userSessions.isActive == false &&
-        userSessions.participant!.length == 0 &&
-        DateTime.now().isAfter(DateTime.parse(userSessions.startTime!))) {
+    } else if (userSessions.isActive == false &&
+        userSessions.participant!.isEmpty &&
+        DateTime.now().isAfter(startTime)) {
       buttonText = "Expired";
-    }
-
-    // buttonCollor finished ketika isActive bernilai false + participant.length >= 1 + sudah lewat endTime
-    else if (userSessions.isActive == false &&
-        userSessions.participant!.length >= 1 &&
-        DateTime.now().isAfter(DateTime.parse(userSessions.endTime!))) {
+    } else if (userSessions.isActive == false &&
+        userSessions.participant!.isNotEmpty &&
+        DateTime.now().isAfter(endTime)) {
       buttonText = "Finished";
     }
 
     return _calculatePriority(buttonText);
   }
 
-// susunannya ad
   int _calculatePriority(String buttonText) {
     if (buttonText == "Active") {
       return 1;
@@ -66,12 +65,10 @@ class _MySessionCreateState extends State<MySessionCreate> {
       return 4;
     } else if (buttonText == "Expired") {
       return 5;
-    } else {
-      return 0;
     }
+    return 0;
   }
 
-  //// link zoom akses///
   _launchURL(String url) async {
     // ignore: deprecated_member_use
     if (await canLaunch(url)) {
@@ -115,9 +112,9 @@ class _MySessionCreateState extends State<MySessionCreate> {
           _sessionsFuture, // Asumsi ini adalah Future yang Anda panggil untuk mendapatkan data
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container(
+          return SizedBox(
               height: MediaQuery.of(context).size.height / 2.0,
-              child: Center(child: CircularProgressIndicator()));
+              child: const Center(child: CircularProgressIndicator()));
         } else if (snapshot.hasError) {
           return Text("Error: ${snapshot.error}");
         } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
@@ -125,11 +122,11 @@ class _MySessionCreateState extends State<MySessionCreate> {
           if (snapshot.data!.isEmpty) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Container(
+              child: SizedBox(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height / 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Center(child: Text('you dont have any session')),
                   )),
             );
@@ -148,15 +145,6 @@ class _MySessionCreateState extends State<MySessionCreate> {
                     formatOutput.format(DateTime.parse(session.startTime!));
                 final String formattedEndTime =
                     formatOutput.format(DateTime.parse(session.endTime!));
-
-                // Konversi waktu UTC ke zona waktu Indonesia (WIB)
-                // final startTimeInWIB =
-                //     DateTime.parse(session.startTime!).add(timeZoneOffset);
-                // final endTimeInWIB =
-                //     DateTime.parse(session.endTime!).add(timeZoneOffset);
-                // final formattedStartTimeWIB =
-                //     formatOutput.format(startTimeInWIB);
-                // final formattedEndTimeWIB = formatOutput.format(endTimeInWIB);
 
                 return Padding(
                   padding: const EdgeInsets.all(12.0),
@@ -236,7 +224,7 @@ class _MySessionCreateState extends State<MySessionCreate> {
                                         _launchURL(zoomLink);
                                       }
                                     },
-                                    icon: Icon(Icons.link),
+                                    icon: const Icon(Icons.link),
                                     label: Text('Join Session',
                                         style: FontFamily()
                                             .regularText
@@ -260,8 +248,8 @@ class _MySessionCreateState extends State<MySessionCreate> {
             child: Container(
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height / 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Center(
                       child: Text('Kamu belum memiliki session saat ini')),
                 )),

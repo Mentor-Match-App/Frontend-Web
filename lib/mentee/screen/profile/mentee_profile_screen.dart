@@ -86,22 +86,22 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
         context,
         MaterialPageRoute(
           builder: (context) => EditProfileMenteeScreen(
-            linkedin: mentee.user!.linkedin ?? '',
-            about: mentee.user!.about ?? '',
-            location: mentee.user!.location ?? '',
-            currentJob: mentee.user!.experiences
-                    ?.firstWhere((element) => element.isCurrentJob == true,
-                        orElse: () => ExperienceMentee())
-                    .jobTitle ??
-                '',
-            currentCompany: mentee.user!.experiences
-                    ?.firstWhere((element) => element.isCurrentJob == true,
-                        orElse: () => ExperienceMentee())
-                    .company ??
-                '',
-            experiences: experiencesMaps,
-            skills: mentee.user!.skills ?? [],
-          ),
+              linkedin: mentee.user!.linkedin ?? '',
+              about: mentee.user!.about ?? '',
+              location: mentee.user!.location ?? '',
+              currentJob: mentee.user!.experiences
+                      ?.firstWhere((element) => element.isCurrentJob == true,
+                          orElse: () => ExperienceMentee())
+                      .jobTitle ??
+                  '',
+              currentCompany: mentee.user!.experiences
+                      ?.firstWhere((element) => element.isCurrentJob == true,
+                          orElse: () => ExperienceMentee())
+                      .company ??
+                  '',
+              experiences: experiencesMaps,
+              skills: mentee.user!.skills ?? [],
+              selectedMenu: 'Profile'),
         ),
       );
     }

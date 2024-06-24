@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/Mentee/service/profile_service.dart';
+import 'package:my_flutter_app/login/choose_role_service.dart';
+import 'package:my_flutter_app/mentee/screen/homepage_mentee.dart';
 import 'package:my_flutter_app/mentee/screen/profile/mentee_profile_screen.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/button.dart';
@@ -17,6 +19,8 @@ class EditProfileMenteeScreen extends StatefulWidget {
   final String currentJob;
   final String currentCompany;
   final List<Map<String, String>> experiences;
+  final String selectedMenu;
+  final String? selectedRole;
 
   const EditProfileMenteeScreen({
     Key? key,
@@ -27,6 +31,8 @@ class EditProfileMenteeScreen extends StatefulWidget {
     required this.currentJob,
     required this.currentCompany,
     required this.experiences,
+    required this.selectedMenu,
+    this.selectedRole,
   }) : super(key: key);
 
   @override
@@ -35,6 +41,8 @@ class EditProfileMenteeScreen extends StatefulWidget {
 }
 
 class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
+  final ChooseRoleService chooseRoleService = ChooseRoleService();
+
   final TextEditingController _skillController = TextEditingController();
   List<Map<String, String>> _skills = [];
   final _formKey = GlobalKey<FormState>();
@@ -544,11 +552,23 @@ class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
           showTopSnackBar(context, 'Profile updated successfully',
               leftBarIndicatorColor: ColorStyle().succesColors);
 
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => ProfileMenteeScreen()),
-            (route) => false,
-          );
+          if (widget.selectedRole == 'Mentee') {
+            await chooseRoleService.chooseRole("Mentee");
+          }
+
+          if (widget.selectedMenu == 'Dashboard') {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => MenteeHomePage()),
+              (route) => false,
+            );
+          } else if (widget.selectedMenu == 'Profile') {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => ProfileMenteeScreen()),
+              (route) => false,
+            );
+          }
         } else {
           showTopSnackBar(context, "Please fill all required fields");
         }

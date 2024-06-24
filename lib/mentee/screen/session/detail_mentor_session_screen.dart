@@ -677,7 +677,7 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
                                                                   },
                                                                   child:
                                                                       const Text(
-                                                                    "Booking Session",
+                                                                    "Pesan Session",
                                                                     style:
                                                                         TextStyle(
                                                                       fontWeight:

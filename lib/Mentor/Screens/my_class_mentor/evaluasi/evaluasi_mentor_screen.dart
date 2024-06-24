@@ -103,6 +103,10 @@ class _EvaluasiMentorScreenState extends State<EvaluasiMentorScreen> {
           leftBarIndicatorColor: ColorStyle().errorColors);
     } finally {
       setState(() => _isLoading = false);
+
+      setState(() {
+        _futureClassData = ListClassMentor().fetchClassData();
+      });
     }
   }
 

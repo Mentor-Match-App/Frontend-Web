@@ -275,7 +275,7 @@ class _SearchPageMenteeWebState extends State<SearchPageMenteeWeb> {
                     onChanged: _filterClasses,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Search by mentor name, class name',
+                      hintText: 'search by mentor name and class name',
                       prefixIcon: Icon(Icons.search),
                     ),
                   ),

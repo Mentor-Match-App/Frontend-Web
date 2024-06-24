@@ -22,7 +22,7 @@ class MentorHomePage extends StatefulWidget {
 
   const MentorHomePage({
     super.key,
-    this.selectedMenu = 'Dashboard',
+    this.selectedMenu = 'Home',
     this.subMenu = '', // Default value for sub-menu selection
   });
 
@@ -35,7 +35,7 @@ class _MentorHomePageState extends State<MentorHomePage> {
   String _name = "";
   String _namedepan = "";
   final double _size = 200.0;
-  String _selectedMenu = 'Dashboard';
+  String _selectedMenu = '';
   final NotificationService _notificationService = NotificationService();
   int _unreadNotificationsCount = 0;
 

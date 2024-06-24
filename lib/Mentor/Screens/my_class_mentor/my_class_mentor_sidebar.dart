@@ -126,7 +126,7 @@ class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
                       onPressed: () {
                         changeClass("My Session");
                       },
-                      child: Text("My Session",
+                      child: Text("Session",
                           style: FontFamily().boldText.copyWith(
                               color: isSessionActive
                                   ? ColorStyle().blackColors

@@ -70,7 +70,14 @@ class _ClassSubmissionMentorScreenState
         int priority = _getPriority(userClass);
         return priority == 1 || priority == 2;
       });
+      value.user?.userClass =
+          _sortClassesByPriority(value.user?.userClass ?? []);
     });
+  }
+
+  List<AllClass> _sortClassesByPriority(List<AllClass> classes) {
+    classes.sort((a, b) => _getPriority(b).compareTo(_getPriority(a)));
+    return classes;
   }
 
   @override

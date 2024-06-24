@@ -253,6 +253,8 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
                                       currentJob: '',
                                       currentCompany: '',
                                       experiences: [],
+                                      selectedMenu: 'Dashboard',
+                                      selectedRole: 'Mentee',
                                     ),
                                   ),
                                   (route) => false,

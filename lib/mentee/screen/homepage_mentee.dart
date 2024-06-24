@@ -22,7 +22,7 @@ class MenteeHomePage extends StatefulWidget {
 
   const MenteeHomePage({
     super.key,
-    this.selectedMenu = 'Dashboard',
+    this.selectedMenu = 'Home',
     this.subMenu = '',
   });
   @override
@@ -34,7 +34,7 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
   String _namedepan = "";
   String _photoUrl = "";
   final double _size = 200.0;
-  String _selectedMenu = 'Dashboard';
+  String _selectedMenu = '';
   int _unreadNotificationsCount = 0;
 
   final NotificationService _notificationService = NotificationService();
@@ -77,7 +77,7 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
     return Scaffold(
       backgroundColor: ColorStyle().whiteColors,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80.0),
+        preferredSize: const Size.fromHeight(80.0),
         child: Container(
           color: Colors.white,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -109,7 +109,7 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
                             _fetchUnreadNotificationsCount(); // Fetch the unread count when returning to this screen
                           });
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.notifications_none_outlined,
                           size: 30,
                         ),
@@ -120,18 +120,18 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
                           right: 11,
                           top: 11,
                           child: Container(
-                            padding: EdgeInsets.all(2),
+                            padding: const EdgeInsets.all(2),
                             decoration: BoxDecoration(
                               color: Colors.red,
                               borderRadius: BorderRadius.circular(6),
                             ),
-                            constraints: BoxConstraints(
+                            constraints: const BoxConstraints(
                               minWidth: 14,
                               minHeight: 14,
                             ),
                             child: Text(
                               '$_unreadNotificationsCount',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 8,
                               ),
@@ -149,7 +149,8 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ProfileMenteeScreen()
+                                builder: (context) =>
+                                    const ProfileMenteeScreen()
                                 // ProfileMentorScreen(),
                                 ),
                             (route) => false,
@@ -163,7 +164,7 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                         child: SizedBox(
                           child: Text(
                             "Hallo, \n$_namedepan",
@@ -210,8 +211,8 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
                   ),
                 ],
               ),
-              SizedBox(height: 100),
-              FooterWidget()
+              const SizedBox(height: 100),
+              const FooterWidget()
             ],
           ),
         ),
@@ -227,7 +228,7 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
   ) {
     return ClipOval(
       child: CachedNetworkImage(
-        placeholder: (context, url) => Center(
+        placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),
         // error eiget use image from assets
@@ -252,9 +253,9 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
           initialSubMenu: widget.subMenu, // Pass the sub-menu parameter
         );
       case 'Community':
-        return CommunityScreen();
+        return const CommunityScreen();
       default:
-        return DashboardMentee();
+        return const DashboardMentee();
     }
   }
 }
@@ -284,7 +285,7 @@ class _SearchBarMenteeState extends State<SearchBarMentee> {
               "Search",
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w500,
-                color: Color(0xff0A1737),
+                color: const Color(0xff0A1737),
                 fontSize: 16,
               ),
             ),
