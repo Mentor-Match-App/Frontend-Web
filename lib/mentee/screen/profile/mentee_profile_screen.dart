@@ -9,6 +9,7 @@ import 'package:my_flutter_app/mentee/model/profile_model.dart';
 import 'package:my_flutter_app/mentee/screen/notification_mentee_screen.dart';
 import 'package:my_flutter_app/mentor/service/notification_service.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
+import 'package:my_flutter_app/widget/flushsBar_widget.dart';
 import 'package:my_flutter_app/widget/logo_button.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/profileavatar.dart';
@@ -372,8 +373,13 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
                               ),
                             ),
                             onPressed: () {
-                              final linkedlnlink = mentee?.user!.linkedin ?? '';
-                              _launchURL(linkedlnlink);
+                              if (mentee?.user!.linkedin == null ||
+                                  mentee?.user!.linkedin == '') {
+                                showTopSnackBar(
+                                    context, 'LinkedIn belum diisi');
+                              } else {
+                                _launchURL(mentee?.user!.linkedin ?? '');
+                              }
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -429,18 +435,32 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        Column(
-                          children: mentee?.user!.experiences
-                                  ?.where((experience) =>
-                                      experience.isCurrentJob == false)
-                                  .map((experience) {
-                                return ExperienceWidget(
-                                  role: experience.jobTitle ?? 'No Job Title',
-                                  company: experience.company ?? 'No Company',
-                                );
-                              }).toList() ??
-                              [const Text('No experiences')],
-                        ),
+                        if (mentee?.user!.experiences
+                                ?.where((experience) =>
+                                    experience.isCurrentJob == false)
+                                .toList()
+                                .isEmpty ??
+                            true)
+                          Text(
+                            'no experiences',
+                            style: FontFamily().regularText.copyWith(
+                                  fontSize: 14,
+                                  color: ColorStyle().disableColors,
+                                ),
+                          )
+                        else
+                          Column(
+                            children: mentee?.user!.experiences
+                                    ?.where((experience) =>
+                                        experience.isCurrentJob == false)
+                                    .map((experience) {
+                                  return ExperienceWidget(
+                                    role: experience.jobTitle ?? 'No Job Title',
+                                    company: experience.company ?? 'No Company',
+                                  );
+                                }).toList() ??
+                                [const Text('No experiences')],
+                          ),
                       ]),
                 )
               ],

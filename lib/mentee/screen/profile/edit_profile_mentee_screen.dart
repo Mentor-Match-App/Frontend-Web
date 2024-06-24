@@ -316,8 +316,14 @@ class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
             linkedin = value;
           });
         }, validator: (value) {
-          if (value!.isEmpty) {
-            return "LinkedIn URL cannot be empty";
+          if (value!.isNotEmpty) {
+            const urlPattern =
+                r'^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,6}(\/[^\s]*)?$';
+            final urlRegExp = RegExp(urlPattern);
+
+            if (!urlRegExp.hasMatch(value!)) {
+              return 'Please enter a valid URL';
+            }
           }
           return null;
         }),
@@ -417,12 +423,6 @@ class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
           onChanged: (value) {
             setState(() {});
           },
-          validator: (value) {
-            // if (value!.isEmpty) {
-            //   return "Role cannot be empty";
-            // }
-            // return null;
-          },
         ),
         SizedBox(height: 8),
         TextFieldWidget(
@@ -510,14 +510,6 @@ class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
             });
             return;
           }
-          if (experiences.isEmpty) {
-            showTopSnackBar(context, "You must have at least one experience",
-                leftBarIndicatorColor: Colors.red);
-            setState(() {
-              _isLoading = false;
-            });
-            return;
-          }
 
           // suruh mengklik tombol add experience jika role dan company terisi
           if (_roleController.text.isNotEmpty ||
@@ -535,8 +527,7 @@ class _EditProfileMenteeScreenState extends State<EditProfileMenteeScreen> {
           if (_jobController.text.isEmpty ||
               _companyController.text.isEmpty ||
               _locationController.text.isEmpty ||
-              _aboutController.text.isEmpty ||
-              _linkedinController.text.isEmpty) {
+              _aboutController.text.isEmpty) {
             showTopSnackBar(context, "Please fill all required fields",
                 leftBarIndicatorColor: Colors.red);
             setState(() {

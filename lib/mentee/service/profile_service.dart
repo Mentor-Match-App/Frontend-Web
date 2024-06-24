@@ -12,8 +12,8 @@ class ProfileService {
     required List<String> skills,
     required String location,
     required String about,
-    required String linkedin,
-    required List<Map<String, String>> experiences,
+    String? linkedin,
+    List<Map<String, String>>? experiences,
   }) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
