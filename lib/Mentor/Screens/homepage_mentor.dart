@@ -209,7 +209,7 @@ class _MentorHomePageState extends State<MentorHomePage> {
                 ],
               ),
               const SizedBox(
-                height: 100,
+                height: 200,
               ),
               const FooterWidget()
             ],

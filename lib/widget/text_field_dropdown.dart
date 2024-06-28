@@ -24,7 +24,8 @@ class MyDropdownWidget extends StatefulWidget {
 
 class _MyDropdownWidgetState extends State<MyDropdownWidget> {
   String? selectedValue;
-    @override
+
+  @override
   void initState() {
     super.initState();
     // Inisialisasi selectedValue dengan initialValue jika disediakan
@@ -44,7 +45,7 @@ class _MyDropdownWidgetState extends State<MyDropdownWidget> {
             borderRadius: BorderRadius.circular(4),
             borderSide: BorderSide.none,
           ),
-          hintText: selectedValue ?? widget.hintText,
+          hintText: widget.hintText,
           hintStyle: FontFamily().regularText.copyWith(
                 color: ColorStyle().disableColors,
               ),
@@ -58,8 +59,7 @@ class _MyDropdownWidgetState extends State<MyDropdownWidget> {
             widget.onChanged!(newValue ?? "");
           }
         },
-        items: ['Select an item', ...widget.items]
-            .map<DropdownMenuItem<String>>((String value) {
+        items: widget.items.map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
             child: Text(
@@ -74,6 +74,8 @@ class _MyDropdownWidgetState extends State<MyDropdownWidget> {
     );
   }
 }
+
+
 
 class MyDropdownWidgetSession extends StatelessWidget {
   final List<String> items;

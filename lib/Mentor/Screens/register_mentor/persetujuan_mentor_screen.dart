@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/mentor/Screens/create_class_and_session/create_class/form_create_class.dart';
 import 'package:my_flutter_app/mentor/Screens/register_mentor/register_form.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/style/text.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
+
 class PersetujuanMentorScreen extends StatefulWidget {
   PersetujuanMentorScreen({Key? key}) : super(key: key);
 
@@ -12,8 +12,7 @@ class PersetujuanMentorScreen extends StatefulWidget {
       _PersetujuanMentorScreenState();
 }
 
-class _PersetujuanMentorScreenState
-    extends State<PersetujuanMentorScreen> {
+class _PersetujuanMentorScreenState extends State<PersetujuanMentorScreen> {
   bool _isSelected = false;
   @override
   Widget build(BuildContext context) {
@@ -118,18 +117,12 @@ class _PersetujuanMentorScreenState
                     ),
                   ],
                 ),
-              
-              
-               
-               
-              
-            
                 const SizedBox(
                   height: 20,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     IconButton(
                       onPressed: () {
@@ -162,14 +155,20 @@ class _PersetujuanMentorScreenState
                 ),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: TextButton(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: ColorStyle().primaryColors,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
                     onPressed: _isSelected
                         ? () {
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
+                            Navigator.of(context)
+                                .pushReplacement(MaterialPageRoute(
                                     builder: (context) =>
                                         // ignore: prefer_const_constructors
-                                         RegisterMentorScreen()));
+                                        RegisterMentorScreen()));
                           }
                         : null, // Tidak mengizinkan klik jika radio button belum dicentang
 
@@ -177,7 +176,7 @@ class _PersetujuanMentorScreenState
                       'Lanjutkan',
                       style: FontFamily().boldText.copyWith(
                             color: _isSelected
-                                ? ColorStyle().primaryColors
+                                ? ColorStyle().whiteColors
                                 : ColorStyle().disableColors,
                             fontSize: 16,
                           ),
@@ -187,7 +186,6 @@ class _PersetujuanMentorScreenState
               ],
             ),
           ),
-         
         ],
       ),
     );

@@ -35,9 +35,9 @@ class _SideBarMenteeState extends State<SideBarMentee> {
           _buildMenuSideBar("Class", Icons.menu_book_sharp),
           _buildMenuSideBar("Community", Icons.workspaces_filled),
 
-          SizedBox(height: 260),
+          // SizedBox(height: 260),
 
-          _buildLogoutButton(),
+          // _buildLogoutButton(),
 
           // Tambahkan item menu lain jika ada
         ],
@@ -85,8 +85,6 @@ class _SideBarMenteeState extends State<SideBarMentee> {
                 content:
                     "Apakah kamu yakin ingin keluar dari aplikasi MentorMatch?",
                 onConfirm: () async {
-                  // Tulis logika logout Anda di sini
-                  // Misalnya, membersihkan shared preferences dan navigasi ke halaman login
                   await _googleSignIn.signOut();
                   await FirebaseAuth.instance.signOut();
                   await UserPreferences.clearPreferences();
@@ -100,13 +98,6 @@ class _SideBarMenteeState extends State<SideBarMentee> {
               );
             },
           );
-          // UserPreferences.clearPreferences();
-          // Navigator.pushReplacement(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => LoginScreen(),
-          //   ),
-          // );
         },
         icon: Icon(Icons.logout, color: ColorStyle().primaryColors),
         label:

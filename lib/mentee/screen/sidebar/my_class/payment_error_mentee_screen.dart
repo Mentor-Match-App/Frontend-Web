@@ -259,7 +259,9 @@ class _PaymentErrorScreenMenteeState extends State<PaymentErrorScreenMentee> {
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: TextButton.icon(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          _launchWhatsApp();
+                                        },
                                         label: Text('Whatsapp',
                                             style: FontFamily()
                                                 .boldText

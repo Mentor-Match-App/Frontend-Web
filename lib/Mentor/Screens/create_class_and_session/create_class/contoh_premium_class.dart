@@ -50,13 +50,13 @@ class _ContohPremiumClassState extends State<ContohPremiumClass> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CardContohPremiumClass(
-                    tittle: 'Tinkat Pendiikan',
+                    tittle: 'Tingkat Pendiikan',
                     desc:
-                        'Tingkat pendidikan dapat kamu isi sesuai dengan level pendidikan kelas yang ingin kamu buat mulai dari SD, SMP, SMA, Kuilah dan Karier'),
+                        'Tingkat pendidikan dapat kamu isi sesuai dengan level pendidikan kelas yang ingin kamu buat mulai dari SD, SMP, SMA, Kuliah dan Karier'),
                 CardContohPremiumClass(
                     tittle: 'Bidang & Minat',
                     desc:
-                        'Isilah bidang dan minat dengan memilih opsi yang sesuai dengan fokus dari kelas yang Anda buat atau bidang lainnya yang relevan dengan konten kelas yang Anda tawarkan.'),
+                        "Bidang dan minat merupakan fokus dari kelas yang Anda buat atau bidang lainnya yang relevan dengan konten kelas yang Anda tawarkan."),
                 CardContohPremiumClassDropDown(
                   widget: Text(
                     'UI/UX Research & Design',

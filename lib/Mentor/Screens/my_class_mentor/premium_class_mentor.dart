@@ -6,7 +6,7 @@ import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 
 class PremiumClassMentorScreen extends StatefulWidget {
-  PremiumClassMentorScreen({Key? key}) : super(key: key);
+  const PremiumClassMentorScreen({super.key});
 
   @override
   State<PremiumClassMentorScreen> createState() =>
@@ -100,7 +100,7 @@ class _PremiumClassMentorScreenState extends State<PremiumClassMentorScreen> {
       future: classData,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container(
+          return SizedBox(
               height: MediaQuery.of(context).size.height / 2.0,
               child: Center(child: CircularProgressIndicator()));
         } else if (snapshot.hasError) {
@@ -113,8 +113,7 @@ class _PremiumClassMentorScreenState extends State<PremiumClassMentorScreen> {
               height: MediaQuery.of(context).size.height / 2.0,
               child: const Padding(
                 padding: EdgeInsets.all(8.0),
-                child:
-                    Center(child: Text('Kamu belum memiliki kelas saat ini')),
+                child: Center(child: Text('Belum ada kelas')),
               ),
             );
           }
@@ -133,8 +132,7 @@ class _PremiumClassMentorScreenState extends State<PremiumClassMentorScreen> {
               height: MediaQuery.of(context).size.height / 2.0,
               child: const Padding(
                 padding: EdgeInsets.all(8.0),
-                child:
-                    Center(child: Text('Kamu belum memiliki kelas saat ini')),
+                child: Center(child: Text('Belum ada kelas')),
               ),
             );
           }
@@ -250,7 +248,7 @@ class _PremiumClassMentorScreenState extends State<PremiumClassMentorScreen> {
                 height: MediaQuery.of(context).size.height / 2,
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Center(child: Text('Kamu belum memiliki kelas')),
+                  child: Center(child: Text('Belum ada kelas')),
                 )),
           );
         }

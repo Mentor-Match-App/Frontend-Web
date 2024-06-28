@@ -12,7 +12,7 @@ import 'package:my_flutter_app/widget/text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterMentorScreen extends StatefulWidget {
-  const RegisterMentorScreen({Key? key}) : super(key: key);
+  const RegisterMentorScreen({super.key});
 
   @override
   State<RegisterMentorScreen> createState() => _RegisterMentorScreenState();
@@ -53,6 +53,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
   List<String> skills = [];
   List<Map<String, String>> experiences = [];
   bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -97,25 +98,21 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
   }
 
   void _addSkill() {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        _skills.add({'skill': _skillController.text});
-        _skillController.clear();
-      });
-    }
+    setState(() {
+      _skills.add({'skill': _skillController.text});
+      _skillController.clear();
+    });
   }
 
   void _addExperience() {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        experiences.add({
-          'role': _roleController.text,
-          'experienceCompany': _experienceCompanyController.text
-        });
-        _roleController.clear();
-        _experienceCompanyController.clear();
+    setState(() {
+      experiences.add({
+        'role': _roleController.text,
+        'experienceCompany': _experienceCompanyController.text
       });
-    }
+      _roleController.clear();
+      _experienceCompanyController.clear();
+    });
   }
 
   Future<void> _registerMentor(BuildContext context) async {
@@ -140,7 +137,6 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
         leftBarIndicatorColor: Colors
             .red, // Atur warna indikator kiri ke merah untuk pesan kesalahan
       );
-      print('Snackbar shown: Semua field harus diisi');
       return;
     }
     setState(() {
@@ -220,13 +216,15 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                         style: FontFamily().titleText.copyWith(fontSize: 24),
                         textAlign: TextAlign.start,
                       ),
+                      const SizedBox(
+                        height: 8,
+                      ),
                       Text(
-                        'Please fill out the form below to apply to become a mentor. We greatly appreciate your\ncontribution in guiding and supporting our community!',
-                        style: FontFamily().titleText.copyWith(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w300,
-                            color: ColorStyle().disableColors),
-                        textAlign: TextAlign.start,
+                        "We're excited that you're interested in becoming a mentor! Please complete the form below to apply. Your contribution is invaluable in guiding and supporting our community.",
+                        style: FontFamily().regularText.copyWith(
+                              fontSize: 14,
+                              color: ColorStyle().disableColors,
+                            ),
                       ),
                     ],
                   ),
@@ -294,29 +292,24 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                             const SizedBox(
                               height: 12,
                             ),
-                            _textFieldWithTitle(
-                              "Location",
-                              _locationController,
-                              "Enter Your Location",
-                              onChanged: (value) {
-                                setState(() {
-                                  company = value;
-                                });
-                              },
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'This field is required';
-                                }
-                                return null;
-                              },
-                            ),
+                            _textFieldWithTitle("Location", _locationController,
+                                "Enter your location", onChanged: (value) {
+                              setState(() {
+                                company = value;
+                              });
+                            }, validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Location is required';
+                              }
+                              return null;
+                            }, maxLines: 1),
                             const SizedBox(
                               height: 12,
                             ),
                             _textFieldWithTitle(
                               "About",
                               _aboutController,
-                              "Enter Your About",
+                              "Tell us something about yourself",
                               onChanged: (value) {
                                 setState(
                                   () {
@@ -326,7 +319,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                               },
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'This field is required';
+                                  return 'About is required';
                                 }
                                 return null;
                               },
@@ -353,52 +346,67 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                   Row(
                     children: [
                       Expanded(
-                          child: Column(
-                        children: [
-                          _textFieldWithTitle(
-                            "Job/Title",
-                            _jobController,
-                            "Enter Your Job/Position",
-                            onChanged: (value) {
-                              setState(
-                                () {
-                                  job = value;
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height:
+                                  120, // Set a fixed height to keep alignment
+                              child: _textFieldWithTitle(
+                                "Job title",
+                                _jobController,
+                                "Enter your current job title",
+                                onChanged: (value) {
+                                  setState(() {
+                                    job = value;
+                                  });
                                 },
-                              );
-                            },
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'This field is required';
-                              }
-                              return null;
-                            },
-                          ),
-                        ],
-                      )),
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Job/Title is required';
+                                  }
+                                  return null;
+                                },
+                                maxLines: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       const SizedBox(
                         width: 20,
                       ),
                       Expanded(
-                          child: Column(
-                        children: [
-                          _textFieldWithTitle(
-                            "Company",
-                            _companyController,
-                            "Enter Your Company",
-                            onChanged: (value) {
-                              setState(() {
-                                company = value;
-                              });
-                            },
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'This field is required';
-                              }
-                              return null;
-                            },
-                          ),
-                        ],
-                      )),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height:
+                                  120, // Set a fixed height to keep alignment
+                              child: _textFieldWithTitle(
+                                "Company",
+                                _companyController,
+                                "Enter your current company",
+                                onChanged: (value) {
+                                  setState(() {
+                                    company = value;
+                                  });
+                                },
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Company is required';
+                                  }
+                                  if (_jobController.text.isEmpty) {
+                                    return '';
+                                  }
+                                  return null;
+                                },
+                                maxLines: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(
@@ -426,7 +434,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                     height: 20,
                   ),
                   Text(
-                    "Portofolio",
+                    "Referensi Karier",
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -439,7 +447,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                   _textFieldWithTitle(
                     "LinkedIn",
                     _linkedinController,
-                    "Enter Your LinkedIn URL",
+                    "Enter your linkedIn URL",
                     onChanged: (value) {
                       setState(() {
                         linkedin = value;
@@ -447,7 +455,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                     },
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Please enter linkedin';
+                        return 'LinkedIn URL is required';
                       }
                       // Regular expression to validate a URL
                       const urlPattern =
@@ -455,16 +463,20 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                       final urlRegExp = RegExp(urlPattern);
 
                       if (!urlRegExp.hasMatch(value)) {
-                        return 'Please enter a valid URL';
+                        return 'Insert link URL: https://www.linkedin.com/in/yourname';
                       }
 
                       return null;
                     },
+                    maxLines: 1,
+                  ),
+                  const SizedBox(
+                    height: 20,
                   ),
                   _textFieldWithTitle(
-                    "portofolio",
+                    "Portofolio",
                     _portofolioController,
-                    "Enter Your portofolio",
+                    "Enter your portofolio URL",
                     onChanged: (value) {
                       setState(() {
                         portofolio = value;
@@ -472,20 +484,21 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                     },
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Please enter portofolio';
+                        return 'Enter your portofolio URL';
                       }
                       const urlPattern =
                           r'^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,6}(\/[^\s]*)?$';
                       final urlRegExp = RegExp(urlPattern);
 
                       if (!urlRegExp.hasMatch(value)) {
-                        return 'Please enter a valid URL';
+                        return 'Insert valid URL Ex: https://www.portofolio.com/yourname';
                       }
                       return null;
                     },
+                    maxLines: 1,
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   Text(
                     "Rekening Bank (BCA)",
@@ -503,25 +516,33 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                       Expanded(
                           child: Column(
                         children: [
-                          _textFieldWithTitle(
-                            "Account Number",
-                            _accountNumberController,
-                            "Enter Your Account Number",
-                            onChanged: (value) {
-                              setState(() {
-                                accountNumber = value;
-                              });
-                            },
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'This field is required';
-                              }
-                              final numericRegex = RegExp(r'^[0-9]+$');
-                              if (!numericRegex.hasMatch(value)) {
-                                return 'Please enter a valid number';
-                              }
-                              return null;
-                            },
+                          SizedBox(
+                            height: 120,
+                            child: _textFieldWithTitle(
+                              "Account Number",
+                              _accountNumberController,
+                              "Enter your account number",
+                              onChanged: (value) {
+                                setState(() {
+                                  accountNumber = value;
+                                });
+                              },
+                              maxLines: 1,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Account number is required';
+                                }
+                                final numericRegex = RegExp(r'^[0-9]+$');
+                                if (!numericRegex.hasMatch(value)) {
+                                  return 'Please enter a valid number';
+                                }
+                                // check space
+                                if (value.contains(' ')) {
+                                  return 'Please enter a valid number';
+                                }
+                                return null;
+                              },
+                            ),
                           ),
                         ],
                       )),
@@ -531,23 +552,25 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                       Expanded(
                           child: Column(
                         children: [
-                          _textFieldWithTitle(
-                            /// harus di isi
-
-                            "Account Name",
-                            _accountNameController,
-                            "Enter Your Account Name",
-                            onChanged: (value) {
-                              setState(() {
-                                accountName = value;
-                              });
-                            },
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'This field is required';
-                              }
-                              return null;
-                            },
+                          SizedBox(
+                            height: 120,
+                            child: _textFieldWithTitle(
+                              "Account Name",
+                              _accountNameController,
+                              "Enter your account name",
+                              onChanged: (value) {
+                                setState(() {
+                                  accountName = value;
+                                });
+                              },
+                              maxLines: 1,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Account Name is required';
+                                }
+                                return null;
+                              },
+                            ),
                           ),
                         ],
                       )),
@@ -570,6 +593,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
       String title, TextEditingController controller, String hintText,
       {bool enabled = true,
       Function(String)? onChanged,
+      int? maxLines,
       String? Function(String?)? validator}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -584,6 +608,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
           enabled: enabled,
           onChanged: onChanged, // Add this line
           validator: validator,
+          maxLines: maxLines,
         ),
       ],
     );
@@ -601,6 +626,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
         ),
         const SizedBox(height: 8),
         TextFieldWidget(
+          maxLines: 1,
           controller: _skillController,
           hintText: "Skill",
           validator: (value) {
@@ -616,7 +642,19 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
         Align(
           alignment: Alignment.centerRight,
           child: TextButton.icon(
-            onPressed: _addSkill,
+            onPressed: () {
+              if (_skillController.text.isEmpty) {
+                _formKey.currentState!.validate();
+                showTopSnackBar(context, "Please enter a skill",
+                    leftBarIndicatorColor: Colors.red);
+              } else if (_skills
+                  .any((skill) => skill['skill'] == _skillController.text)) {
+                showTopSnackBar(context, "Skill already added",
+                    leftBarIndicatorColor: Colors.red);
+              } else {
+                _addSkill();
+              }
+            },
             icon: const Icon(Icons.add, size: 16),
             label: Text("Add Skill", style: FontFamily().regularText),
           ),
@@ -667,7 +705,8 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                   ),
                   TextFieldWidget(
                     controller: _roleController,
-                    hintText: "Role",
+                    hintText: "Enter your experience role",
+                    maxLines: 1,
                   ),
                 ],
               ),
@@ -686,17 +725,8 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
                   ),
                   TextFieldWidget(
                     controller: _experienceCompanyController,
-                    hintText: "Company",
-                    validator: (value) {
-                      if (_roleController.text.isNotEmpty &&
-                          _experienceCompanyController.text.isEmpty) {
-                        return "role and company must be filled together";
-                      } else if (_roleController.text.isNotEmpty &&
-                          _experienceCompanyController.text.isNotEmpty) {
-                        return "add experience using the add experience button";
-                      }
-                      return null;
-                    },
+                    hintText: "Enter your experience company",
+                    maxLines: 1,
                   ),
                 ],
               ),
@@ -711,7 +741,7 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
               if (_roleController.text.isEmpty ||
                   _experienceCompanyController.text.isEmpty) {
                 _formKey.currentState!.validate();
-                showTopSnackBar(context, "Please fill all fields",
+                showTopSnackBar(context, "Role and Company must be filled",
                     leftBarIndicatorColor: Colors.red);
               } else {
                 _addExperience();
@@ -756,8 +786,12 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TittleTextField(
-            title: "What your gender", color: ColorStyle().secondaryColors),
-        const SizedBox(height: 8),
+          title: "Gender",
+          color: ColorStyle().secondaryColors,
+        ),
+        const SizedBox(
+          height: 8,
+        ),
         DropdownButtonFormField<String>(
           value: _selectedGender.isEmpty ? null : _selectedGender,
           decoration: InputDecoration(
@@ -768,11 +802,10 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
               borderSide: BorderSide.none,
             ),
           ),
-          hint: const Text("Select Your Gender"),
+          hint: const Text("Select your gender"),
           style: FontFamily().regularText.copyWith(
                 color: ColorStyle().disableColors,
               ),
-          //  buat waktu dropdown di klik stylenya sama dengan textfield
           onChanged: (String? newValue) {
             setState(() {
               _selectedGender = newValue!;
@@ -787,6 +820,12 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
               child: Text(value),
             );
           }).toList(),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please select your gender';
+            }
+            return null;
+          },
         ),
       ],
     );
@@ -799,7 +838,9 @@ class _RegisterMentorScreenState extends State<RegisterMentorScreen> {
           ? const CircularProgressIndicator()
           : ElevatedButtonWidget(
               onPressed: () async {
-                await _registerMentor(context);
+                if (_formKey.currentState!.validate()) {
+                  await _registerMentor(context);
+                }
               },
               title: 'Daftar',
             ),

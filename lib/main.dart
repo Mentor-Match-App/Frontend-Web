@@ -77,6 +77,7 @@ class MyApp extends StatelessWidget {
         //   home: Scaffold(
         // body: SearchWidgetini(),
         home: homeScreen,
+        // home: const RegisterMentorScreen(),
         //  homeScreen,
       ),
     );

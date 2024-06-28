@@ -14,9 +14,9 @@ import 'package:my_flutter_app/widget/text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ReRegisterFormScreen extends StatefulWidget {
-  ReRegisterFormScreen({
-    Key? key,
-  }) : super(key: key);
+  const ReRegisterFormScreen({
+    super.key,
+  });
 
   @override
   State<ReRegisterFormScreen> createState() => _ReRegisterFormScreenState();
@@ -58,7 +58,6 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
   List<Map<String, String>> experience = [];
   bool isLoading = false;
 
-  /// ambil data profile
   final ProfileService mentorService = ProfileService();
 
   @override
@@ -133,28 +132,24 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
   }
 
   void _addSkill() {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        _skills.add({'skill': _skillController.text});
-        _skillController.clear();
-      });
-    }
+    setState(() {
+      _skills.add({'skill': _skillController.text});
+      _skillController.clear();
+    });
   }
 
   void _addExperience() {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        experience.add({
-          'role': _roleController.text,
-          'experienceCompany': _experienceCompanyController.text
-        });
-        _roleController.clear();
-        _experienceCompanyController.clear();
+    setState(() {
+      experience.add({
+        'role': _roleController.text,
+        'experienceCompany': _experienceCompanyController.text
       });
-    }
+      _roleController.clear();
+      _experienceCompanyController.clear();
+    });
   }
 
-  void _updateMentor() async {
+  Future<void> _updateMentor() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         isLoading = true;
@@ -253,16 +248,15 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
                         textAlign: TextAlign.start,
                       ),
                       Text(
-                        'Please fill out the form below to apply to become a mentor. We greatly appreciate your\ncontribution in guiding and supporting our community!',
-                        style: FontFamily().titleText.copyWith(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w300,
-                            color: ColorStyle().disableColors),
-                        textAlign: TextAlign.start,
+                        "We're excited that you're interested in becoming a mentor! Please complete the form below to apply. Your contribution is invaluable in guiding and supporting our community.",
+                        style: FontFamily().regularText.copyWith(
+                              fontSize: 14,
+                              color: ColorStyle().disableColors,
+                            ),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   Row(
@@ -278,8 +272,8 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 0,
                               blurRadius: 7,
-                              offset:
-                                  Offset(0, 3), // changes position of shadow
+                              offset: const Offset(
+                                  0, 3), // changes position of shadow
                             ),
                           ],
                           border: Border.all(
@@ -290,7 +284,7 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
                         ),
                         child: ClipOval(
                           child: CachedNetworkImage(
-                            placeholder: (context, url) => Center(
+                            placeholder: (context, url) => const Center(
                               child: CircularProgressIndicator(),
                             ),
                             errorWidget: (context, url, error) => Image.asset(
@@ -304,7 +298,7 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 40,
                       ),
                       Expanded(
@@ -313,45 +307,57 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
                             _textFieldWithTitle(
                                 "Name", _nameController, "Your name",
                                 enabled: false),
-                            SizedBox(
+                            const SizedBox(
                               height: 12,
                             ),
                             _textFieldWithTitle(
                                 "Email", _emailController, "Your email",
                                 enabled: false),
-                            SizedBox(
+                            const SizedBox(
                               height: 12,
                             ),
                             _genderDropdownField(),
-                            SizedBox(
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            _textFieldWithTitle("Location", _locationController,
+                                "Enter your location", onChanged: (value) {
+                              setState(() {
+                                company = value;
+                              });
+                            }, validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Location is required';
+                              }
+                              return null;
+                            }, maxLines: 1),
+                            const SizedBox(
                               height: 12,
                             ),
                             _textFieldWithTitle(
-                              "Location",
-                              _locationController,
-                              "Enter Your Location",
+                              "About",
+                              _aboutController,
+                              "Tell us something about yourself",
                               onChanged: (value) {
-                                setState(() {
-                                  company = value;
-                                });
+                                setState(
+                                  () {
+                                    about = value;
+                                  },
+                                );
+                              },
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'About is required';
+                                }
+                                return null;
                               },
                             ),
-                            SizedBox(
-                              height: 12,
-                            ),
-                            _textFieldWithTitle(
-                                "About", _aboutController, "Enter Your About",
-                                onChanged: (value) {
-                              setState(() {
-                                about = value;
-                              });
-                            }),
                           ],
                         ),
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   Text(
@@ -359,55 +365,84 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
-                      color: Color(0xffE78938),
+                      color: const Color(0xffE78938),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
                     children: [
                       Expanded(
-                          child: Column(
-                        children: [
-                          _textFieldWithTitle(
-                            "Job/Title",
-                            _jobController,
-                            "Enter Your Job/Position",
-                            onChanged: (value) {
-                              setState(() {
-                                job = value;
-                              });
-                            },
-                          ),
-                        ],
-                      )),
-                      SizedBox(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height:
+                                  120, // Set a fixed height to keep alignment
+                              child: _textFieldWithTitle(
+                                "Job title",
+                                _jobController,
+                                "Enter your current job title",
+                                onChanged: (value) {
+                                  setState(() {
+                                    job = value;
+                                  });
+                                },
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Job/Title is required';
+                                  }
+                                  return null;
+                                },
+                                maxLines: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
                         width: 20,
                       ),
                       Expanded(
-                          child: Column(
-                        children: [
-                          _textFieldWithTitle(
-                            "Company",
-                            _companyController,
-                            "Enter Your Company",
-                            onChanged: (value) {
-                              setState(() {
-                                company = value;
-                              });
-                            },
-                          ),
-                        ],
-                      )),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height:
+                                  120, // Set a fixed height to keep alignment
+                              child: _textFieldWithTitle(
+                                "Company",
+                                _companyController,
+                                "Enter your current company",
+                                onChanged: (value) {
+                                  setState(() {
+                                    company = value;
+                                  });
+                                },
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Company is required';
+                                  }
+                                  if (_jobController.text.isEmpty) {
+                                    return '';
+                                  }
+                                  return null;
+                                },
+                                maxLines: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   _skillField(),
                   _skillChips(),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -415,41 +450,79 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
-                      color: Color(0xffE78938),
+                      color: const Color(0xffE78938),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   _experienceField(),
                   _experienceChips(),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
-                    "Portofolio",
+                    "Referensi Karier",
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
-                      color: Color(0xffE78938),
+                      color: const Color(0xffE78938),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  _textFieldWithTitle("LinkedIn", _linkedinController,
-                      "Enter Your LinkedIn URL", onChanged: (value) {
-                    setState(() {
-                      linkedin = value;
-                    });
-                  }),
-                  _textFieldWithTitle("portofolio", _portofolioController,
-                      "Enter Your portofolio", onChanged: (value) {
-                    setState(() {
-                      portofolio = value;
-                    });
-                  }),
-                  SizedBox(
+                  _textFieldWithTitle(
+                    "LinkedIn",
+                    _linkedinController,
+                    "Enter your linkedIn URL",
+                    onChanged: (value) {
+                      setState(() {
+                        linkedin = value;
+                      });
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'LinkedIn URL is required';
+                      }
+                      // Regular expression to validate a URL
+                      const urlPattern =
+                          r'^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,6}(\/[^\s]*)?$';
+                      final urlRegExp = RegExp(urlPattern);
+
+                      if (!urlRegExp.hasMatch(value)) {
+                        return 'Insert link URL: https://www.linkedin.com/in/yourname';
+                      }
+
+                      return null;
+                    },
+                    maxLines: 1,
+                  ),
+                  _textFieldWithTitle(
+                    "Portofolio",
+                    _portofolioController,
+                    "Enter your portofolio URL",
+                    onChanged: (value) {
+                      setState(() {
+                        portofolio = value;
+                      });
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter your portofolio URL';
+                      }
+                      const urlPattern =
+                          r'^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,6}(\/[^\s]*)?$';
+                      final urlRegExp = RegExp(urlPattern);
+
+                      if (!urlRegExp.hasMatch(value)) {
+                        return 'Insert valid URL Ex: https://www.portofolio.com/yourname';
+                      }
+                      return null;
+                    },
+                    maxLines: 1,
+                  ),
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -457,10 +530,10 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
-                      color: Color(0xffE78938),
+                      color: const Color(0xffE78938),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -471,16 +544,30 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
                           _textFieldWithTitle(
                             "Account Number",
                             _accountNumberController,
-                            "Enter Your Account Number",
+                            "Enter your account number",
                             onChanged: (value) {
                               setState(() {
                                 accountNumber = value;
                               });
                             },
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Account number is required';
+                              }
+                              final numericRegex = RegExp(r'^[0-9]+$');
+                              if (!numericRegex.hasMatch(value)) {
+                                return 'Please enter a valid number';
+                              }
+                              // check space
+                              if (value.contains(' ')) {
+                                return 'Please enter a valid number';
+                              }
+                              return null;
+                            },
                           ),
                         ],
                       )),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       Expanded(
@@ -495,12 +582,19 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
                                 accountName = value;
                               });
                             },
+                            maxLines: 1,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Account Name is required';
+                              }
+                              return null;
+                            },
                           ),
                         ],
                       )),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   _applyButton(),
@@ -515,12 +609,15 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
 
   Widget _textFieldWithTitle(
       String title, TextEditingController controller, String hintText,
-      {bool enabled = true, Function(String)? onChanged}) {
+      {bool enabled = true,
+      Function(String)? onChanged,
+      int? maxLines,
+      String? Function(String?)? validator}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TittleTextField(title: title, color: ColorStyle().secondaryColors),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         TextFieldWidget(
@@ -528,6 +625,8 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
           controller: controller,
           enabled: enabled,
           onChanged: onChanged, // Add this line
+          validator: validator,
+          maxLines: maxLines,
         ),
       ],
     );
@@ -545,14 +644,35 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
         ),
         const SizedBox(height: 8),
         TextFieldWidget(
+          maxLines: 1,
           controller: _skillController,
           hintText: "Skill",
+          validator: (value) {
+            if (value!.isNotEmpty) {
+              return "Press the add button to add the skill";
+            } else if (_skills.isEmpty) {
+              return "You must have at least one skill";
+            }
+            return null;
+          },
         ),
         const SizedBox(height: 12),
         Align(
           alignment: Alignment.centerRight,
           child: TextButton.icon(
-            onPressed: _addSkill,
+            onPressed: () {
+              if (_skillController.text.isEmpty) {
+                _formKey.currentState!.validate();
+                showTopSnackBar(context, "Please enter a skill",
+                    leftBarIndicatorColor: Colors.red);
+              } else if (_skills
+                  .any((skill) => skill['skill'] == _skillController.text)) {
+                showTopSnackBar(context, "Skill already added",
+                    leftBarIndicatorColor: Colors.red);
+              } else {
+                _addSkill();
+              }
+            },
             icon: const Icon(Icons.add, size: 16),
             label: Text("Add Skill", style: FontFamily().regularText),
           ),
@@ -598,17 +718,18 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
                 children: [
                   TittleTextField(
                       title: "Role", color: ColorStyle().secondaryColors),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   TextFieldWidget(
                     controller: _roleController,
-                    hintText: "Role",
+                    hintText: "Enter your experience role",
+                    maxLines: 1,
                   ),
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
             Expanded(
@@ -617,22 +738,33 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
                 children: [
                   TittleTextField(
                       title: "Company", color: ColorStyle().secondaryColors),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   TextFieldWidget(
                     controller: _experienceCompanyController,
-                    hintText: "Company",
+                    hintText: "Enter your experience company",
+                    maxLines: 1,
                   ),
                 ],
               ),
             )
           ],
         ),
+        const SizedBox(height: 12),
         Align(
           alignment: Alignment.centerRight,
           child: TextButton.icon(
-            onPressed: _addExperience,
+            onPressed: () {
+              if (_roleController.text.isEmpty ||
+                  _experienceCompanyController.text.isEmpty) {
+                _formKey.currentState!.validate();
+                showTopSnackBar(context, "Role and Company must be filled",
+                    leftBarIndicatorColor: Colors.red);
+              } else {
+                _addExperience();
+              }
+            },
             icon: const Icon(Icons.add, size: 16),
             label: Text("Add Experience", style: FontFamily().regularText),
           ),
@@ -672,8 +804,12 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TittleTextField(
-            title: "What your gender", color: ColorStyle().secondaryColors),
-        const SizedBox(height: 8),
+          title: "Gender",
+          color: ColorStyle().secondaryColors,
+        ),
+        const SizedBox(
+          height: 8,
+        ),
         DropdownButtonFormField<String>(
           value: _selectedGender.isEmpty ? null : _selectedGender,
           decoration: InputDecoration(
@@ -684,11 +820,10 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
               borderSide: BorderSide.none,
             ),
           ),
-          hint: Text("Select Your Gender"),
+          hint: const Text("Select your gender"),
           style: FontFamily().regularText.copyWith(
                 color: ColorStyle().disableColors,
               ),
-          //  buat waktu dropdown di klik stylenya sama dengan textfield
           onChanged: (String? newValue) {
             setState(() {
               _selectedGender = newValue!;
@@ -703,6 +838,12 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
               child: Text(value),
             );
           }).toList(),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please select your gender';
+            }
+            return null;
+          },
         ),
       ],
     );
@@ -714,10 +855,10 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
       child: isLoading
           ? const CircularProgressIndicator()
           : ElevatedButtonWidget(
-              onPressed: () {
-                _updateMentor();
+              onPressed: () async {
+                await _updateMentor();
               },
-              title: "Apply",
+              title: "Daftar Ulang",
             ),
     );
   }

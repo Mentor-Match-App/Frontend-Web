@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/mentor/Screens/my_class_mentor/edit_class_rejected.dart';
 import 'package:my_flutter_app/mentor/model/my_class_mentor_model.dart';
+import 'package:my_flutter_app/mentor/screens/create_class_and_session/create_class/persetujuan_create_class_mentor.dart';
 import 'package:my_flutter_app/mentor/screens/my_class_mentor/pending_class_mentor_screen.dart';
 import 'package:my_flutter_app/mentor/service/myClassCreate_Mentor_service.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 
 class ClassSubmissionMentorScreen extends StatefulWidget {
-  ClassSubmissionMentorScreen({Key? key}) : super(key: key);
+  const ClassSubmissionMentorScreen({super.key});
 
   @override
   State<ClassSubmissionMentorScreen> createState() =>
@@ -17,6 +18,7 @@ class ClassSubmissionMentorScreen extends StatefulWidget {
 class _ClassSubmissionMentorScreenState
     extends State<ClassSubmissionMentorScreen> {
   late Future<MyClassMentorMondel> classData;
+
   int _getPriority(AllClass userClass) {
     DateTime now = DateTime.now();
     DateTime startDate = DateTime.parse(userClass.startDate.toString());
@@ -97,12 +99,51 @@ class _ClassSubmissionMentorScreenState
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height / 2,
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Center(child: Text('Kamu belum memiliki kelas')),
-                  )),
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/Handoff/ilustrator/empty.png',
+                        width: 163,
+                        height: 133,
+                      ),
+                      Text(
+                        'Belum ada kelas',
+                        style: FontFamily().boldText.copyWith(
+                              color: ColorStyle().disableColors,
+                            ),
+                      ),
+                      const SizedBox(height: 10),
+                      TextButton.icon(
+                        style: TextButton.styleFrom(
+                          foregroundColor: ColorStyle().primaryColors,
+                          backgroundColor: ColorStyle().primaryColors,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PersetujuanPremiClassMentor(),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.add, color: ColorStyle().whiteColors),
+                        label: Text(
+                          "Buat Kelas",
+                          style: FontFamily()
+                              .boldText
+                              .copyWith(color: ColorStyle().whiteColors),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             );
           }
           return SingleChildScrollView(
@@ -213,12 +254,31 @@ class _ClassSubmissionMentorScreenState
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height / 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(child: Text('Kamu belum memiliki kelas')),
-                )),
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height / 2,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Center(child: Text('Belum ada kelas')),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Navigasi ke halaman pembuatan kelas
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  PersetujuanPremiClassMentor()),
+                        );
+                      },
+                      child: const Text('Buat Kelas'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           );
         }
       },

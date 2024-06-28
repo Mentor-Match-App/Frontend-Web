@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/login/login_screen.dart';
 import 'package:my_flutter_app/mentor/Screens/homepage_mentor.dart';
 import 'package:my_flutter_app/mentor/screens/register_mentor/re_register_form.dart';
 import 'package:my_flutter_app/mentor/service/profile_service.dart';
@@ -72,7 +73,7 @@ class _VerificationPageState extends State<VerificationPage> {
                               style: FontFamily().regularText,
                               textAlign: TextAlign.center,
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             ElevatedButton(
                                 onPressed: () {
                                   setState(() {
@@ -97,25 +98,20 @@ class _VerificationPageState extends State<VerificationPage> {
                                     style: FontFamily().regularText,
                                     textAlign: TextAlign.center,
                                   ),
+                                const SizedBox(height: 8),
                                 ElevatedButton(
                                   onPressed: () {
                                     Navigator.pushAndRemoveUntil(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                ReRegisterFormScreen()),
+                                                const ReRegisterFormScreen()),
                                         (route) => false);
                                   },
                                   child: const Text('Kirim Ulang Verifikasi'),
                                 ),
                               ],
                             )
-                          // : Text(
-                          //     'Status verifikasi tidak diketahui.',
-                          //     style: FontFamily().regularText,
-                          //     textAlign: TextAlign.center,
-                          //   ),
-                          // refresh
                           : Column(
                               children: [
                                 Text(
@@ -123,15 +119,17 @@ class _VerificationPageState extends State<VerificationPage> {
                                   style: FontFamily().regularText,
                                   textAlign: TextAlign.center,
                                 ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 ElevatedButton(
                                     onPressed: () {
-                                      setState(() {
-                                        isLoading = true;
-                                        _loadUserType();
-                                      });
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const LoginScreen()),
+                                          (route) => false);
                                     },
-                                    child: const Text("Refresh")),
+                                    child: const Text("Kembali ke Home")),
                               ],
                             ),
             ],

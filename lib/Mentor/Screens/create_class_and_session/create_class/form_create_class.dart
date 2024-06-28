@@ -357,9 +357,12 @@ class _FormCreatePremiumClassScreenState
                     ],
                   ),
                 ),
-                TittleTextField(
-                  title: "Tingkat Pendidikan",
-                  color: ColorStyle().secondaryColors,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TittleTextField(
+                    title: "Tingkat Pendidikan",
+                    color: ColorStyle().secondaryColors,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
@@ -376,9 +379,12 @@ class _FormCreatePremiumClassScreenState
                     },
                   ),
                 ),
-                TittleTextField(
-                  title: "Bidang & Minat",
-                  color: ColorStyle().secondaryColors,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TittleTextField(
+                    title: "Bidang & Minat",
+                    color: ColorStyle().secondaryColors,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
@@ -394,9 +400,12 @@ class _FormCreatePremiumClassScreenState
 
                 ///nama kelas ///
 
-                TittleTextField(
-                  title: "Nama Kelas",
-                  color: ColorStyle().secondaryColors,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TittleTextField(
+                    title: "Nama Kelas",
+                    color: ColorStyle().secondaryColors,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
@@ -415,9 +424,12 @@ class _FormCreatePremiumClassScreenState
                 ),
 
                 ///// harga ////
-                TittleTextField(
-                  title: "Harga",
-                  color: ColorStyle().secondaryColors,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TittleTextField(
+                    title: "Harga",
+                    color: ColorStyle().secondaryColors,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
@@ -429,9 +441,12 @@ class _FormCreatePremiumClassScreenState
                 ),
 
                 ///kapasitas mentee///
-                TittleTextField(
-                  title: "Kapasitas Mentee",
-                  color: ColorStyle().secondaryColors,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TittleTextField(
+                    title: "Kapasitas Mentee",
+                    color: ColorStyle().secondaryColors,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
@@ -443,9 +458,12 @@ class _FormCreatePremiumClassScreenState
                 ),
 
                 //startDate///
-                TittleTextField(
-                  title: "Tanggal Mulai",
-                  color: ColorStyle().secondaryColors,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TittleTextField(
+                    title: "Tanggal Mulai",
+                    color: ColorStyle().secondaryColors,
+                  ),
                 ),
                 DatePickerClassWidget(
                   onDateSelected: (date) {
@@ -457,9 +475,12 @@ class _FormCreatePremiumClassScreenState
                 ),
 
                 ///endDate///
-                TittleTextField(
-                  title: "Tanggal Selesai",
-                  color: ColorStyle().secondaryColors,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TittleTextField(
+                    title: "Tanggal Selesai",
+                    color: ColorStyle().secondaryColors,
+                  ),
                 ),
                 DatePickerClassWidget(
                   onDateSelected: (date) {
@@ -470,9 +491,12 @@ class _FormCreatePremiumClassScreenState
                   controller: endDateController,
                 ),
                 //durations////
-                TittleTextField(
-                  title: "Periode Kegiatan",
-                  color: ColorStyle().secondaryColors,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TittleTextField(
+                    title: "Periode Kegiatan",
+                    color: ColorStyle().secondaryColors,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
@@ -483,9 +507,12 @@ class _FormCreatePremiumClassScreenState
                   ),
                 ),
                 //hari ///
-                TittleTextField(
-                  title: "Jadwal Hari",
-                  color: ColorStyle().secondaryColors,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TittleTextField(
+                    title: "Jadwal Hari",
+                    color: ColorStyle().secondaryColors,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
@@ -506,9 +533,12 @@ class _FormCreatePremiumClassScreenState
                 ),
 
                 ////rician kegiatan///
-                TittleTextField(
-                  title: "Rincian Kegiatan",
-                  color: ColorStyle().secondaryColors,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TittleTextField(
+                    title: "Rincian Kegiatan",
+                    color: ColorStyle().secondaryColors,
+                  ),
                 ),
                 TextFieldWidgetBig(
                     title: 'Deskripsi Kegiatan',
@@ -523,9 +553,12 @@ class _FormCreatePremiumClassScreenState
                     descriptionController: descriptionCobtroller),
 
                 /// Location///
-                TittleTextField(
-                  title: "Lokasi",
-                  color: ColorStyle().secondaryColors,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TittleTextField(
+                    title: "Lokasi",
+                    color: ColorStyle().secondaryColors,
+                  ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -542,9 +575,12 @@ class _FormCreatePremiumClassScreenState
                       ),
                     ),
                     if (selectedLocation == "Offline") ...[
-                      TittleTextField(
-                        title: "Alamat",
-                        color: ColorStyle().secondaryColors,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TittleTextField(
+                          title: "Alamat",
+                          color: ColorStyle().secondaryColors,
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
@@ -558,9 +594,12 @@ class _FormCreatePremiumClassScreenState
                 ),
 
                 //// target learning///
-                TittleTextField(
-                  title: "Target Pembelajaran",
-                  color: ColorStyle().secondaryColors,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TittleTextField(
+                    title: "Target Pembelajaran",
+                    color: ColorStyle().secondaryColors,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -614,9 +653,12 @@ class _FormCreatePremiumClassScreenState
                   ),
                 ),
                 ////syarat ketentuan///
-                TittleTextField(
-                  title: "Syarat & Ketentuan",
-                  color: ColorStyle().secondaryColors,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TittleTextField(
+                    title: "Syarat & Ketentuan",
+                    color: ColorStyle().secondaryColors,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),

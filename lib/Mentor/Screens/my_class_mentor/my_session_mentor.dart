@@ -127,7 +127,7 @@ class _MySessionCreateState extends State<MySessionCreate> {
                   height: MediaQuery.of(context).size.height / 2,
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: Center(child: Text('you dont have any session')),
+                    child: Center(child: Text('Belum ada session')),
                   )),
             );
           }
@@ -250,8 +250,7 @@ class _MySessionCreateState extends State<MySessionCreate> {
                 height: MediaQuery.of(context).size.height / 2,
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Center(
-                      child: Text('Kamu belum memiliki session saat ini')),
+                  child: Center(child: Text('belum ada session')),
                 )),
           );
         }

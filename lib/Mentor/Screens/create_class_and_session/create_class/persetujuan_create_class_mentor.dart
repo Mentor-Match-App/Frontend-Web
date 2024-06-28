@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/mentor/Screens/create_class_and_session/create_class/form_create_class.dart';
+import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/style/text.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
-import 'package:my_flutter_app/style/fontStyle.dart';
+
 class PersetujuanPremiClassMentor extends StatefulWidget {
   PersetujuanPremiClassMentor({Key? key}) : super(key: key);
 
@@ -132,7 +133,7 @@ class _PersetujuanPremiClassMentorState
                     ),
                   ],
                 ),
-                 Row(
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('\u2022'),
@@ -207,7 +208,7 @@ class _PersetujuanPremiClassMentorState
                     ),
                   ],
                 ),
-                 Row(
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('\u2022'),
@@ -317,7 +318,7 @@ class _PersetujuanPremiClassMentorState
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     IconButton(
                       onPressed: () {
@@ -350,11 +351,17 @@ class _PersetujuanPremiClassMentorState
                 ),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: TextButton(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: ColorStyle().primaryColors,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
                     onPressed: _isSelected
                         ? () {
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
+                            Navigator.of(context)
+                                .pushReplacement(MaterialPageRoute(
                                     builder: (context) =>
                                         // ignore: prefer_const_constructors
                                         FormCreatePremiumClassScreen()));
@@ -365,9 +372,9 @@ class _PersetujuanPremiClassMentorState
                       'Lanjutkan',
                       style: FontFamily().boldText.copyWith(
                             color: _isSelected
-                                ? ColorStyle().primaryColors
+                                ? ColorStyle().whiteColors
                                 : ColorStyle().disableColors,
-                            fontSize: 16,
+                            fontSize: 14,
                           ),
                     ),
                   ),
@@ -375,7 +382,6 @@ class _PersetujuanPremiClassMentorState
               ],
             ),
           ),
-         
         ],
       ),
     );
