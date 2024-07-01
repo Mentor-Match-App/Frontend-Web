@@ -20,14 +20,14 @@ class EvaluasiMentorScreen extends StatefulWidget {
   final List<Evaluation> evaluasi;
   // final List<LearningMaterialMentor> learningMaterial;
 
-  EvaluasiMentorScreen({
-    Key? key,
+  const EvaluasiMentorScreen({
+    super.key,
     required this.feedbacks,
     required this.classId,
     // required this.learningMaterial,
     required this.evaluasi,
     required this.transactions,
-  }) : super(key: key);
+  });
 
   @override
   State<EvaluasiMentorScreen> createState() => _EvaluasiMentorScreenState();
@@ -350,42 +350,58 @@ class _EvaluasiMentorScreenState extends State<EvaluasiMentorScreen> {
                             color: ColorStyle().primaryColors, fontSize: 16),
                       ),
                       Column(
-                        children: List.generate(
-                          widget.transactions
-                              .where((transaction) =>
-                                  transaction.paymentStatus == 'Approved')
-                              .length,
-                          (index) => Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevetadButtonWithIcon(
-                                  title: widget.transactions[index].user!.name!,
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            DetailEvaluasiMenteeMentorScreen(
-                                          classId: widget
-                                              .transactions[index].classId
-                                              .toString(),
-                                          currentMenteeId: widget
-                                              .transactions[index].userId
-                                              .toString(),
-                                          menteeName: widget
-                                              .transactions[index].user!.name
-                                              .toString(),
-                                        ),
+                        children: widget.transactions
+                                .where((transaction) =>
+                                    transaction.paymentStatus == 'Approved')
+                                .isEmpty
+                            ? [
+                                Padding(
+                                  padding: const EdgeInsets.all(24.0),
+                                  child: Center(
+                                    child: Text("Belum ada mentee",
+                                        style: FontFamily().regularText),
+                                  ),
+                                )
+                              ]
+                            : List.generate(
+                                widget.transactions
+                                    .where((transaction) =>
+                                        transaction.paymentStatus == 'Approved')
+                                    .length,
+                                (index) => Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ElevetadButtonWithIcon(
+                                        title: widget
+                                            .transactions[index].user!.name!,
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetailEvaluasiMenteeMentorScreen(
+                                                classId: widget
+                                                    .transactions[index].classId
+                                                    .toString(),
+                                                currentMenteeId: widget
+                                                    .transactions[index].userId
+                                                    .toString(),
+                                                menteeName: widget
+                                                    .transactions[index]
+                                                    .user!
+                                                    .name
+                                                    .toString(),
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       ),
-                                    );
-                                  },
+                                    )
+                                  ],
                                 ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
+                              ),
+                      )
                     ],
                   ),
                 ),

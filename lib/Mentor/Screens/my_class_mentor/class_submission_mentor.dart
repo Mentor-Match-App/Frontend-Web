@@ -108,20 +108,17 @@ class _ClassSubmissionMentorScreenState
                     children: [
                       Image.asset(
                         'assets/Handoff/ilustrator/empty.png',
-                        width: 163,
-                        height: 133,
+                        width: 270,
+                        height: 270,
                       ),
-                      Text(
-                        'Belum ada kelas',
-                        style: FontFamily().boldText.copyWith(
-                              color: ColorStyle().disableColors,
-                            ),
-                      ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 20),
                       TextButton.icon(
                         style: TextButton.styleFrom(
                           foregroundColor: ColorStyle().primaryColors,
                           backgroundColor: ColorStyle().primaryColors,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
                         onPressed: () {
                           Navigator.push(
@@ -261,19 +258,35 @@ class _ClassSubmissionMentorScreenState
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Center(child: Text('Belum ada kelas')),
+                    Image.asset(
+                      'assets/Handoff/ilustrator/empty_submission.png',
+                      width: 270,
+                      height: 270,
+                    ),
                     const SizedBox(height: 20),
-                    ElevatedButton(
+                    TextButton.icon(
+                      style: TextButton.styleFrom(
+                        foregroundColor: ColorStyle().primaryColors,
+                        backgroundColor: ColorStyle().primaryColors,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
                       onPressed: () {
-                        // Navigasi ke halaman pembuatan kelas
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  PersetujuanPremiClassMentor()),
+                            builder: (context) => PersetujuanPremiClassMentor(),
+                          ),
                         );
                       },
-                      child: const Text('Buat Kelas'),
+                      icon: Icon(Icons.add, color: ColorStyle().whiteColors),
+                      label: Text(
+                        "Buat Kelas",
+                        style: FontFamily()
+                            .boldText
+                            .copyWith(color: ColorStyle().whiteColors),
+                      ),
                     ),
                   ],
                 ),

@@ -23,10 +23,13 @@ class _PremiumClassMenteeScreenState extends State<PremiumClassMenteeScreen> {
         DateTime.parse(transaction.transactionClass?.startDate ?? '');
     DateTime endDate =
         DateTime.parse(transaction.transactionClass?.endDate ?? '');
-    bool isClassActive = now.isAfter(startDate) && now.isBefore(endDate);
+    bool isClassActive = now.isAfter(startDate) &&
+        now.isBefore(endDate) &&
+        transaction.paymentStatus == "Approved";
     bool isClassScheduled =
         now.isBefore(startDate) && transaction.paymentStatus == "Approved";
-    bool isClassFinished = now.isAfter(endDate);
+    bool isClassFinished =
+        now.isAfter(endDate) && transaction.paymentStatus == "Approved";
 
     if (isClassActive) {
       return 1;

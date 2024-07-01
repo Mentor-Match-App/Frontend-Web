@@ -35,9 +35,9 @@ class _SideBarMenteeState extends State<SideBarMentee> {
           _buildMenuSideBar("Class", Icons.menu_book_sharp),
           _buildMenuSideBar("Community", Icons.workspaces_filled),
 
-          // SizedBox(height: 260),
+          SizedBox(height: 260),
 
-          // _buildLogoutButton(),
+          _buildLogoutButton(),
 
           // Tambahkan item menu lain jika ada
         ],

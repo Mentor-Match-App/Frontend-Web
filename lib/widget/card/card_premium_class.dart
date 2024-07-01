@@ -157,7 +157,7 @@ class _CardContohPremiumClassDropDownState
                 style: FontFamily().regularText,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
                     widget.subtitle,

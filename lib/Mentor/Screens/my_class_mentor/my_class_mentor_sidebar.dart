@@ -110,25 +110,21 @@ class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
 
     if (userSessions.isActive == true &&
         userSessions.participant!.length < userSessions.maxParticipants! &&
-        DateTime.now().isBefore(startTime) &&
-        DateTime.now().isBefore(endTime)) {
+        DateTime.now().isBefore(startTime)) {
       buttonText = "Scheduled";
     } else if (userSessions.participant!.length ==
             userSessions.maxParticipants &&
-        DateTime.now().isBefore(startTime) &&
-        DateTime.now().isBefore(endTime) &&
-        userSessions.isActive == true) {
+        DateTime.now().isBefore(startTime)) {
       buttonText = "Full";
     } else if (userSessions.isActive == false &&
         userSessions.participant!.isNotEmpty &&
-        DateTime.now().isBefore(endTime)) {
+        DateTime.now().isBefore(endTime) &&
+        DateTime.now().isAfter(startTime)) {
       buttonText = "Active";
-    } else if (userSessions.isActive == false &&
-        userSessions.participant!.isEmpty &&
+    } else if (userSessions.participant!.isEmpty &&
         DateTime.now().isAfter(startTime)) {
       buttonText = "Expired";
-    } else if (userSessions.isActive == false &&
-        userSessions.participant!.isNotEmpty &&
+    } else if (userSessions.participant!.isNotEmpty &&
         DateTime.now().isAfter(endTime)) {
       buttonText = "Finished";
     }
@@ -157,8 +153,14 @@ class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
   void initState() {
     super.initState();
     changeClass(widget.initialSubMenu);
-    classData = ListClassMentor().fetchClassData();
-    sessionData = ListClassMentor().fetchSessionsForCurrentUser();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    setState(() {
+      classData = ListClassMentor().fetchClassData();
+      sessionData = ListClassMentor().fetchSessionsForCurrentUser();
+    });
   }
 
   bool isClassSubmissionActive = true;
@@ -193,9 +195,9 @@ class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
   int _getPremiumClassCount(List<AllClass> classes) {
     return classes
         .where((c) =>
-            _getClassPriority(c) == 2 ||
             _getClassPriority(c) == 3 ||
             _getClassPriority(c) == 4 ||
+            _getClassPriority(c) == 5 ||
             _getClassPriority(c) == 6 ||
             _getClassPriority(c) == 7)
         .length;
@@ -339,7 +341,7 @@ class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
                                     ? const PremiumClassMentorScreen()
                                     : const ClassSubmissionMentorScreen()
                       ],
-                    )
+                    ),
                   ],
                 );
               } else {

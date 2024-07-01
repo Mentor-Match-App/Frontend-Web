@@ -127,12 +127,25 @@ class _PremiumClassMentorScreenState extends State<PremiumClassMentorScreen> {
               .sort((a, b) => _getPriority(a).compareTo(_getPriority(b)));
 
           if (filteredClasses.isEmpty) {
-            return SizedBox(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height / 2.0,
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Center(child: Text('Belum ada kelas')),
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/Handoff/ilustrator/empty.png',
+                        width: 270,
+                        height: 270,
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                ),
               ),
             );
           }

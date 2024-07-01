@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_flutter_app/mentor/model/my_class_mentor_model.dart';
+import 'package:my_flutter_app/mentor/screens/create_class_and_session/create_session/form_create_session.dart';
 import 'package:my_flutter_app/mentor/service/myClassCreate_Mentor_service.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/widget/flushsBar_widget.dart';
@@ -28,25 +29,21 @@ class _MySessionCreateState extends State<MySessionCreate> {
 
     if (userSessions.isActive == true &&
         userSessions.participant!.length < userSessions.maxParticipants! &&
-        DateTime.now().isBefore(startTime) &&
-        DateTime.now().isBefore(endTime)) {
+        DateTime.now().isBefore(startTime)) {
       buttonText = "Scheduled";
     } else if (userSessions.participant!.length ==
             userSessions.maxParticipants &&
-        DateTime.now().isBefore(startTime) &&
-        DateTime.now().isBefore(endTime) &&
-        userSessions.isActive == true) {
+        DateTime.now().isBefore(startTime)) {
       buttonText = "Full";
     } else if (userSessions.isActive == false &&
         userSessions.participant!.isNotEmpty &&
-        DateTime.now().isBefore(endTime)) {
+        DateTime.now().isBefore(endTime) &&
+        DateTime.now().isAfter(startTime)) {
       buttonText = "Active";
-    } else if (userSessions.isActive == false &&
-        userSessions.participant!.isEmpty &&
+    } else if (userSessions.participant!.isEmpty &&
         DateTime.now().isAfter(startTime)) {
       buttonText = "Expired";
-    } else if (userSessions.isActive == false &&
-        userSessions.participant!.isNotEmpty &&
+    } else if (userSessions.participant!.isNotEmpty &&
         DateTime.now().isAfter(endTime)) {
       buttonText = "Finished";
     }
@@ -108,8 +105,7 @@ class _MySessionCreateState extends State<MySessionCreate> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Session>>(
-      future:
-          _sessionsFuture, // Asumsi ini adalah Future yang Anda panggil untuk mendapatkan data
+      future: _sessionsFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return SizedBox(
@@ -123,12 +119,47 @@ class _MySessionCreateState extends State<MySessionCreate> {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height / 2,
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Center(child: Text('Belum ada session')),
-                  )),
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/Handoff/ilustrator/empty_session.png',
+                        width: 270,
+                        height: 270,
+                      ),
+                      const SizedBox(height: 20),
+                      TextButton.icon(
+                        style: TextButton.styleFrom(
+                          foregroundColor: ColorStyle().primaryColors,
+                          backgroundColor: ColorStyle().primaryColors,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FormCreateSessionScreen(),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.add, color: ColorStyle().whiteColors),
+                        label: Text(
+                          "Buat Session",
+                          style: FontFamily()
+                              .boldText
+                              .copyWith(color: ColorStyle().whiteColors),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             );
           }
           return SingleChildScrollView(
@@ -136,7 +167,7 @@ class _MySessionCreateState extends State<MySessionCreate> {
               children: snapshot.data!.map((session) {
                 int statusButton = _getPriority(session);
 
-                DateTime parsedJadwal = DateTime.parse(session.dateTime!);
+                DateTime parsedJadwal = DateTime.parse(session.startTime!);
                 String formattedJadwal =
                     DateFormat('dd MMMM yyyy').format(parsedJadwal);
 
@@ -245,13 +276,48 @@ class _MySessionCreateState extends State<MySessionCreate> {
         } else {
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Container(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height / 2,
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(child: Text('belum ada session')),
-                )),
+            child: SizedBox(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height / 2,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/Handoff/ilustrator/empty_session.png',
+                      width: 270,
+                      height: 270,
+                    ),
+                    const SizedBox(height: 20),
+                    TextButton.icon(
+                      style: TextButton.styleFrom(
+                        foregroundColor: ColorStyle().primaryColors,
+                        backgroundColor: ColorStyle().primaryColors,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FormCreateSessionScreen(),
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.add, color: ColorStyle().whiteColors),
+                      label: Text(
+                        "Buat Session",
+                        style: FontFamily()
+                            .boldText
+                            .copyWith(color: ColorStyle().whiteColors),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           );
         }
       },

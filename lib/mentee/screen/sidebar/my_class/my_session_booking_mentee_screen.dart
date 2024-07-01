@@ -29,9 +29,10 @@ class _MySessionBookingState extends State<MySessionBooking> {
     if (userSessions.isActive == true && startTime.isAfter(DateTime.now())) {
       buttonText = "Scheduled";
     } else if (userSessions.isActive == false &&
-        DateTime.now().isBefore(endTime)) {
+        DateTime.now().isBefore(endTime) &&
+        DateTime.now().isAfter(startTime)) {
       buttonText = "Active";
-    } else if (userSessions.isActive == false ||
+    } else if (userSessions.isActive == false && 
         DateTime.now().isAfter(endTime)) {
       buttonText = "Finished";
     }
@@ -92,9 +93,9 @@ class _MySessionBookingState extends State<MySessionBooking> {
       future: _userData,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container(
+          return SizedBox(
               height: MediaQuery.of(context).size.height / 2.0,
-              child: Center(child: CircularProgressIndicator()));
+              child: const Center(child: CircularProgressIndicator()));
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
@@ -102,11 +103,11 @@ class _MySessionBookingState extends State<MySessionBooking> {
           if (participants.isEmpty) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Container(
+              child: SizedBox(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height / 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Center(child: Text('Kamu belum memiliki session')),
                   )),
             );
@@ -117,7 +118,7 @@ class _MySessionBookingState extends State<MySessionBooking> {
                 final session = participant.session!;
                 int statusButton = _getPriority(session);
 
-                DateTime parsedJadwal = DateTime.parse(session.dateTime!);
+                DateTime parsedJadwal = DateTime.parse(session.startTime!);
                 String formattedJadwal =
                     DateFormat('dd MMMM yyyy').format(parsedJadwal);
 
@@ -160,7 +161,7 @@ class _MySessionBookingState extends State<MySessionBooking> {
                             children: [
                               ClipOval(
                                 child: CachedNetworkImage(
-                                  placeholder: (context, url) => Center(
+                                  placeholder: (context, url) => const Center(
                                     child: CircularProgressIndicator(),
                                   ),
                                   errorWidget: (context, url, error) =>
@@ -243,7 +244,7 @@ class _MySessionBookingState extends State<MySessionBooking> {
                                       _launchURL(zoomLink);
                                     }
                                   },
-                                  icon: Icon(Icons.link),
+                                  icon: const Icon(Icons.link),
                                   label: Text(
                                     'Join Session',
                                     style: FontFamily().regularText.copyWith(
@@ -265,11 +266,11 @@ class _MySessionBookingState extends State<MySessionBooking> {
         } else {
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Container(
+            child: SizedBox(
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height / 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Center(child: Text('Kamu belum memiliki session')),
                 )),
           );

@@ -107,8 +107,10 @@ class _EvaluasiMenteeScreenState extends State<EvaluasiMenteeScreen> {
       ),
       body: menteeEvaluations.isEmpty
           ? Center(
-              child: Text("Evaluation is currently empty",
-                  style: FontFamily().regularText),
+              child: Image.asset(
+                'assets/Handoff/ilustrator/empty_evaluation.png',
+                height: 300,
+              ),
             )
           : ListView.builder(
               itemCount: menteeEvaluations.length,

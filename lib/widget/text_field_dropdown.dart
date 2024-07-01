@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
+import 'package:my_flutter_app/widget/menucategory.dart';
 
 class MyDropdownWidget extends StatefulWidget {
   final String hintText;
@@ -28,7 +28,6 @@ class _MyDropdownWidgetState extends State<MyDropdownWidget> {
   @override
   void initState() {
     super.initState();
-    // Inisialisasi selectedValue dengan initialValue jika disediakan
     selectedValue = widget.initialValue;
   }
 
@@ -74,8 +73,6 @@ class _MyDropdownWidgetState extends State<MyDropdownWidget> {
     );
   }
 }
-
-
 
 class MyDropdownWidgetSession extends StatelessWidget {
   final List<String> items;

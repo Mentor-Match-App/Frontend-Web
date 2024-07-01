@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/mentee/model/my_class_model.dart';
-import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
+import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class MaterMyClass extends StatefulWidget {
+class MateriMyClass extends StatefulWidget {
   final List<LearningMaterialMyClass> learningMaterial;
-  const MaterMyClass({
+  const MateriMyClass({
     Key? key,
     required this.learningMaterial,
   }) : super(key: key);
 
   @override
-  State<MaterMyClass> createState() => _MaterMyClassState();
+  State<MateriMyClass> createState() => _MateriMyClassState();
 }
 
-class _MaterMyClassState extends State<MaterMyClass> {
+class _MateriMyClassState extends State<MateriMyClass> {
   final TextEditingController _materiPembelajaranController =
       TextEditingController();
   final TextEditingController _linkMateriPembelajaranController =
@@ -67,9 +67,9 @@ class _MaterMyClassState extends State<MaterMyClass> {
       )),
       body: widget.learningMaterial.isEmpty
           ? Center(
-              child: Text(
-                "Materials are currently empty",
-                style: FontFamily().regularText,
+              child: Image.asset(
+                'assets/Handoff/ilustrator/empty_learning_material.png',
+                height: 300,
               ),
             )
           : CustomScrollView(
@@ -143,7 +143,7 @@ class _MaterMyClassState extends State<MaterMyClass> {
                   _launchURL(linkEvaluasi);
                 },
                 child: Text(
-                  'Download Materi',
+                  'Lihat Materi',
                   style: FontFamily().buttonText.copyWith(fontSize: 10),
                 ),
               ),

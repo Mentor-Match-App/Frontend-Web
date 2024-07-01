@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
 
 class ColorStyle {
-  Color primaryColors = const Color(0xffE78938); // He
+  Color primaryColors = const Color(0xffE37517); // He
   Color secondaryColors = const Color(0xff0A1737);
   Color tertiaryColors = const Color(0xffF8F1F1);
   Color textColors = const Color(0xff313030);

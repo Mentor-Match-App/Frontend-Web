@@ -14,7 +14,8 @@ class MyMateriMentor extends StatefulWidget {
   final String classId;
   final List<LearningMaterialMentor> learningMaterial;
   const MyMateriMentor(
-      {super.key, required this.classId, required this.learningMaterial});
+      {Key? key, required this.classId, required this.learningMaterial})
+      : super(key: key);
 
   @override
   State<MyMateriMentor> createState() => _MyMateriMentorState();
@@ -55,20 +56,24 @@ class _MyMateriMentorState extends State<MyMateriMentor> {
     super.dispose();
   }
 
+  // Fungsi untuk mengirim materi pembelajaran
   Future<void> _sendMaterial() async {
     String title = _materiPembelajaranController.text;
     String link = _linkMateriPembelajaranController.text;
 
     if (title.isEmpty || link.isEmpty) {
+      // Tampilkan pesan error jika salah satu field kosong
       showTopSnackBar(context, "Field tidak boleh kosong",
           leftBarIndicatorColor: ColorStyle().errorColors);
       return;
     }
 
-    String classId = widget.classId;
+    // Mendapatkan classId dari konteks (Misalnya, dari Navigator arguments atau state lain)
+    String classId =
+        widget.classId; // Asumsikan classId didapatkan dari parameter widget
 
     setState(() {
-      _isLoading = true;
+      _isLoading = true; // Menandai bahwa request sedang diproses
     });
 
     try {
@@ -140,21 +145,16 @@ class _MyMateriMentorState extends State<MyMateriMentor> {
                 SliverToBoxAdapter(
                   child: _buildFormSection(),
                 ),
-                SliverToBoxAdapter(
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            mainAxisExtent: 250,
-                            maxCrossAxisExtent: 250),
-                    itemCount: classData.learningMaterial!.length,
-                    itemBuilder: (context, index) {
-                      return _buildGridItem(index, classData);
-                    },
-                  ),
+                GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      mainAxisExtent: 350,
+                      maxCrossAxisExtent: 250),
+                  itemCount: classData.learningMaterial!.length,
+                  itemBuilder: (context, index) {
+                    return _buildGridItem(index, classData);
+                  },
                 ),
               ],
             );
@@ -261,7 +261,7 @@ class _MyMateriMentorState extends State<MyMateriMentor> {
   Widget _buildGridItem(int materialIndex, AllClass classData) {
     final material = classData.learningMaterial![materialIndex];
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
           color: ColorStyle().tertiaryColors,
@@ -274,30 +274,33 @@ class _MyMateriMentorState extends State<MyMateriMentor> {
           ],
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset('assets/Handoff/icon/MyClass/materi_icon.png'),
-              const SizedBox(height: 8),
-              Text(material.title ?? '', style: FontFamily().regularText),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      ColorStyle().secondaryColors),
+        child: AspectRatio(
+          aspectRatio: 3 / 4, // Adjust the aspect ratio as needed
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                const SizedBox(height: 8),
+                Image.asset('assets/Handoff/icon/MyClass/materi_icon.png'),
+                const SizedBox(height: 8),
+                Text(material.title ?? '', style: FontFamily().regularText),
+                const SizedBox(height: 8),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        ColorStyle().secondaryColors),
+                  ),
+                  onPressed: () {
+                    final linkEvaluasi = material.link ?? '';
+                    _launchURL(linkEvaluasi);
+                  },
+                  child: Text(
+                    'Lihat Materi',
+                    style: FontFamily().buttonText.copyWith(fontSize: 10),
+                  ),
                 ),
-                onPressed: () {
-                  final linkEvaluasi = material.link ?? '';
-                  _launchURL(linkEvaluasi);
-                },
-                child: Text(
-                  'Lihat Materi',
-                  style: FontFamily().buttonText.copyWith(fontSize: 10),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

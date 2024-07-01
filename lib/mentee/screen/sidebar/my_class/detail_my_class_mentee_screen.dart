@@ -349,7 +349,7 @@ class _DetailMyClassMenteeScreenState extends State<DetailMyClassMenteeScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => MaterMyClass(
+                                  builder: (context) => MateriMyClass(
                                     learningMaterial: widget.learningMaterial,
                                   ),
                                 ),

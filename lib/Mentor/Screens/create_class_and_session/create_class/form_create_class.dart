@@ -1,7 +1,6 @@
-// ignore_for_file: use_build_context_synchronously
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-// ignore: depend_on_referenced_packages
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:my_flutter_app/mentor/Screens/create_class_and_session/create_class/contoh_premium_class.dart';
 import 'package:my_flutter_app/mentor/Screens/create_class_and_session/create_class/succes_create_class.dart';
@@ -9,6 +8,7 @@ import 'package:my_flutter_app/mentor/provider/create_class_provider.dart';
 import 'package:my_flutter_app/style/fontStyle.dart';
 import 'package:my_flutter_app/style/text.dart';
 import 'package:my_flutter_app/widget/button.dart';
+import 'package:my_flutter_app/widget/flushsBar_widget.dart';
 import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:my_flutter_app/widget/text_field.dart';
 import 'package:my_flutter_app/widget/text_field_dropdown.dart';
@@ -16,7 +16,7 @@ import 'package:my_flutter_app/widget/time_picker_widget.dart';
 import 'package:provider/provider.dart';
 
 class FormCreatePremiumClassScreen extends StatefulWidget {
-  const FormCreatePremiumClassScreen({Key? key}) : super(key: key);
+  const FormCreatePremiumClassScreen({super.key});
 
   @override
   State<FormCreatePremiumClassScreen> createState() =>
@@ -28,8 +28,8 @@ class _FormCreatePremiumClassScreenState
   bool _isLoading = false;
   String selectedLocation = 'Offline';
   /////////////////////// Dropdown Widget ///////////////////////
-  String selectedEducationLevel = 'SD';
-  List<String> selectedFields = ['bahasa', 'matematika', 'IPA', 'IPS'];
+  String selectedEducationLevel = '';
+  List<String> selectedFields = [];
   String selectedField = '';
   Map<String, List<String>> fieldOptions = {
     'SD': ["Matematika", "Bahasa", "Pengetahuan", "Teknologi"],
@@ -75,18 +75,8 @@ class _FormCreatePremiumClassScreenState
     ],
   };
 
-  List<String> days = [
-    "Senin",
-    "Selasa",
-    "Rabu",
-    "Kamis",
-    "Jumat",
-    "Sabtu",
-    "Minggu"
-  ];
   List<String> selectedDays = [];
 
-  /////////////// fuvtion sent ///////////////////
   TextEditingController scheduleController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController addressController = TextEditingController();
@@ -104,7 +94,6 @@ class _FormCreatePremiumClassScreenState
   TextEditingController endDateController = TextEditingController();
   TextEditingController startDateController = TextEditingController();
 
-  /// delete and add textfield ///
   void deleteTextField(List<TextEditingController> controllers, int index) {
     setState(() {
       // Pastikan untuk memanggil dispose pada controller yang akan dihapus
@@ -120,7 +109,6 @@ class _FormCreatePremiumClassScreenState
     });
   }
 
-//// dispose controller ///
   @override
   void dispose() {
     for (var controller in targetLearningController) {
@@ -137,36 +125,152 @@ class _FormCreatePremiumClassScreenState
     maxParticipantsController.dispose();
     super.dispose();
   }
-///////////////// hari ///
 
-  void showMultiSelect(BuildContext context) async {
-    final List<String>? tempSelectedValues = await showDialog<List<String>>(
+  List<String> getDaysInRange(DateTime start, DateTime end) {
+    List<String> days = [];
+    DateTime currentDate = start;
+
+    while (currentDate.isBefore(end) || currentDate.isAtSameMomentAs(end)) {
+      String day = DateFormat('EEEE').format(currentDate);
+      if (!days.contains(day)) {
+        days.add(day);
+      }
+      currentDate = currentDate.add(const Duration(days: 1));
+    }
+
+    return days;
+  }
+
+  void showMultiSelect(BuildContext context) {
+    if (startDateController.text.isEmpty || endDateController.text.isEmpty) {
+      showTopSnackBar(
+          context, 'Isi tanggal mulai dan tanggal selesai terlebih dahulu',
+          leftBarIndicatorColor: ColorStyle().errorColors);
+
+      return;
+    }
+
+    DateTime startDate =
+        DateFormat('yyyy-MM-dd').parse(startDateController.text);
+    DateTime endDate = DateFormat('yyyy-MM-dd').parse(endDateController.text);
+    List<String> validDays = getDaysInRange(startDate, endDate);
+
+    // Sort validDays in order: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+    List<String> daysOrder = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday'
+    ];
+    validDays.sort((a, b) {
+      return daysOrder.indexOf(a) - daysOrder.indexOf(b);
+    });
+
+    validDays = validDays.map((day) {
+      switch (day) {
+        case 'Monday':
+          return 'Senin';
+        case 'Tuesday':
+          return 'Selasa';
+        case 'Wednesday':
+          return 'Rabu';
+        case 'Thursday':
+          return 'Kamis';
+        case 'Friday':
+          return 'Jumat';
+        case 'Saturday':
+          return 'Sabtu';
+        case 'Sunday':
+          return 'Minggu';
+        default:
+          return day;
+      }
+    }).toList();
+
+    showDialog(
       context: context,
-      builder: (BuildContext context) {
-        // Asumsikan MultiSelectDialog adalah widget dialog yang Anda buat
-        // yang memungkinkan pengguna memilih beberapa item
+      builder: (ctx) {
         return MultiSelectDialog(
-          items: days.map((day) => MultiSelectItem(day, day)).toList(),
-          initialValue: selectedDays,
-          onConfirm: (values) {},
-          backgroundColor: ColorStyle().whiteColors,
-          selectedColor: ColorStyle().secondaryColors,
-          unselectedColor: ColorStyle().primaryColors,
-          // warna icon
+          confirmText: Text(
+            'OK',
+            style: FontFamily().boldText.copyWith(
+                  color: ColorStyle().primaryColors,
+                ),
+          ),
+          cancelText: Text(
+            'CANCEL',
+            style: FontFamily().boldText.copyWith(
+                  color: ColorStyle().primaryColors,
+                ),
+          ),
+          items: validDays
+              .map((day) => MultiSelectItem<String>(day, day))
+              .toList(),
+          initialValue: scheduleController.text.isEmpty
+              ? []
+              : scheduleController.text
+                  .split(', ')
+                  .map((e) => e.trim())
+                  .toList(),
+          onConfirm: (values) {
+            List selectedDays = values.map((day) {
+              switch (day) {
+                case 'Senin':
+                  return 'Monday';
+                case 'Selasa':
+                  return 'Tuesday';
+                case 'Rabu':
+                  return 'Wednesday';
+                case 'Kamis':
+                  return 'Thursday';
+                case 'Jumat':
+                  return 'Friday';
+                case 'Sabtu':
+                  return 'Saturday';
+                case 'Minggu':
+                  return 'Sunday';
+                default:
+                  return day;
+              }
+            }).toList();
+
+            selectedDays.sort((a, b) {
+              return daysOrder.indexOf(a) - daysOrder.indexOf(b);
+            });
+
+            List sortedDays = selectedDays.map((day) {
+              switch (day) {
+                case 'Monday':
+                  return 'Senin';
+                case 'Tuesday':
+                  return 'Selasa';
+                case 'Wednesday':
+                  return 'Rabu';
+                case 'Thursday':
+                  return 'Kamis';
+                case 'Friday':
+                  return 'Jumat';
+                case 'Saturday':
+                  return 'Sabtu';
+                case 'Sunday':
+                  return 'Minggu';
+                default:
+                  return day;
+              }
+            }).toList();
+
+            setState(() {
+              scheduleController.text = sortedDays.join(', ');
+            });
+          },
         );
       },
     );
-
-    // Memberikan nilai default [] jika hasil dialog adalah null
-    final List<String> selectedValues = tempSelectedValues ?? [];
-
-    setState(() {
-      selectedDays = selectedValues;
-      scheduleController.text = selectedDays.join(', ');
-    });
   }
 
-//////////////////// onSubmit ///////////////////////
   void onSubmit(BuildContext context) async {
     try {
       // Set isLoading to true to show loading indicator
@@ -250,13 +354,16 @@ class _FormCreatePremiumClassScreenState
       /// ketika isSubmitted true maka akan diarahkan ke halaman succes create class kalau gagal maka tampilkan error message final errorMessage = createClassProvider.getErrorMessage//
       if (isSubmitted) {
         Navigator.pushAndRemoveUntil(
+            // ignore: use_build_context_synchronously
             context,
             MaterialPageRoute(builder: (context) => SuccesCreateClassScreen()),
             (route) => false);
       }
       //// jika gagal maka tampilkan error message ///
     } catch (error) {
-      print('Error: $error');
+      if (kDebugMode) {
+        print('Error: $error');
+      }
     } finally {
       // Set isLoading to false after submit process finished
       setState(() {
@@ -265,7 +372,6 @@ class _FormCreatePremiumClassScreenState
     }
   }
 
-//// count duration ///
   void calculateDuration() {
     if (startDateController.text.isNotEmpty &&
         endDateController.text.isNotEmpty) {
@@ -367,7 +473,7 @@ class _FormCreatePremiumClassScreenState
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: MyDropdownWidget(
-                    items: ['SD', 'SMP', 'SMA', 'Kuliah', 'Karier'],
+                    items: const ['SD', 'SMP', 'SMA', 'Kuliah', 'Karier'],
                     onChanged: (value) {
                       setState(() {
                         selectedEducationLevel = value.toString();
@@ -388,17 +494,26 @@ class _FormCreatePremiumClassScreenState
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
-                  child: MyDropdownWidget(
-                    items: selectedFields,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedField = value.toString();
-                      });
+                  child: GestureDetector(
+                    onTap: () {
+                      if (selectedEducationLevel.isEmpty) {
+                        showTopSnackBar(
+                          context,
+                          'Silakan pilih tingkat pendidikan terlebih dahulu',
+                          leftBarIndicatorColor: ColorStyle().errorColors,
+                        );
+                      }
                     },
+                    child: MyDropdownWidget(
+                      items: selectedFields,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedField = value.toString();
+                        });
+                      },
+                    ),
                   ),
                 ),
-
-                ///nama kelas ///
 
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -452,7 +567,7 @@ class _FormCreatePremiumClassScreenState
                   padding: const EdgeInsets.only(left: 8.0),
                   child: TextFieldWidget(
                     controller: maxParticipantsController,
-                    hintText: " input kapasitas mentee",
+                    hintText: "input kapasitas mentee",
                     validator: validatorCapacity,
                   ),
                 ),
@@ -518,7 +633,7 @@ class _FormCreatePremiumClassScreenState
                   padding: const EdgeInsets.only(left: 8.0),
                   child: TextFieldWidget(
                     controller: scheduleController,
-                    hintText: " input jadwal hari",
+                    hintText: "input jadwal hari",
                     suffixIcon: const Icon(Icons.arrow_drop_down),
                     ontap: () => showMultiSelect(context),
                     validator: (value) {
@@ -529,16 +644,33 @@ class _FormCreatePremiumClassScreenState
 
                       return null;
                     },
+                    readOnly: true,
                   ),
                 ),
 
-                ////rician kegiatan///
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TittleTextField(
-                    title: "Rincian Kegiatan",
-                    color: ColorStyle().secondaryColors,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TittleTextField(
+                      title: "Rincian Kegiatan",
+                      color: ColorStyle().secondaryColors,
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ContohPremiumClass(),
+                          ),
+                        );
+                      },
+                      icon: Icon(
+                        Icons.help,
+                        color: ColorStyle().secondaryColors,
+                        size: 20,
+                      ),
+                    ),
+                  ],
                 ),
                 TextFieldWidgetBig(
                     title: 'Deskripsi Kegiatan',
@@ -566,7 +698,7 @@ class _FormCreatePremiumClassScreenState
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: MyDropdownWidget(
-                        items: ['Offline', 'Online'],
+                        items: const ['Offline', 'Online'],
                         onChanged: (value) {
                           setState(() {
                             selectedLocation = value.toString();
@@ -594,12 +726,29 @@ class _FormCreatePremiumClassScreenState
                 ),
 
                 //// target learning///
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TittleTextField(
-                    title: "Target Pembelajaran",
-                    color: ColorStyle().secondaryColors,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TittleTextField(
+                      title: "Target Pembelajaran",
+                      color: ColorStyle().secondaryColors,
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ContohPremiumClass(),
+                          ),
+                        );
+                      },
+                      icon: Icon(
+                        Icons.help,
+                        color: ColorStyle().secondaryColors,
+                        size: 20,
+                      ),
+                    ),
+                  ],
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -653,12 +802,29 @@ class _FormCreatePremiumClassScreenState
                   ),
                 ),
                 ////syarat ketentuan///
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TittleTextField(
-                    title: "Syarat & Ketentuan",
-                    color: ColorStyle().secondaryColors,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TittleTextField(
+                      title: "Syarat & Ketentuan",
+                      color: ColorStyle().secondaryColors,
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ContohPremiumClass(),
+                          ),
+                        );
+                      },
+                      icon: Icon(
+                        Icons.help,
+                        color: ColorStyle().secondaryColors,
+                        size: 20,
+                      ),
+                    ),
+                  ],
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),

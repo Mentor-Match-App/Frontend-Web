@@ -12,8 +12,10 @@ import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BookingClassMenteeScreen extends StatefulWidget {
+  const BookingClassMenteeScreen({super.key});
+
   @override
-  _BookingClassMenteeScreenState createState() =>
+  State<BookingClassMenteeScreen> createState() =>
       _BookingClassMenteeScreenState();
 }
 
