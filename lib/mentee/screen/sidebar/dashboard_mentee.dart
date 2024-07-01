@@ -47,9 +47,10 @@ class _DashboardMenteeState extends State<DashboardMentee> {
           } else if (!snapshot.hasData) {
             return const Center(child: Text('Tidak ada data'));
           } else {
-
-            var mentorSessionData = snapshot.data![0] as Session; // mentor session yang di tampilkan hanya yang isActive == true
-            var mentorClassData = snapshot.data![1] as MentorClassModel; // mentor class yang di tampilkan hanya yang isAvailable == true
+            var mentorSessionData = snapshot.data![0]
+                as Session; // mentor session yang di tampilkan hanya yang isActive == true
+            var mentorClassData = snapshot.data![1]
+                as MentorClassModel; // mentor class yang di tampilkan hanya yang isAvailable == true
 
             return SingleChildScrollView(
               child: Column(

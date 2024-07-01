@@ -107,6 +107,8 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
     return Scaffold(
       backgroundColor: ColorStyle().whiteColors,
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -124,7 +126,7 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
                       _fetchUnreadNotificationsCount(); // Fetch the unread count when returning to this screen
                     });
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.notifications_none_outlined,
                     size: 30,
                   ),
@@ -135,18 +137,18 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
                     right: 11,
                     top: 11,
                     child: Container(
-                      padding: EdgeInsets.all(2),
+                      padding: const EdgeInsets.all(2),
                       decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      constraints: BoxConstraints(
+                      constraints: const BoxConstraints(
                         minWidth: 14,
                         minHeight: 14,
                       ),
                       child: Text(
                         '$_unreadNotificationsCount',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 8,
                         ),
@@ -163,7 +165,7 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
         future: mentorService.getMentorProfile(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasError) {
@@ -175,13 +177,15 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
 
             return ListView(
               children: [
-                Container(
-                  height: 60,
-                  color: ColorStyle().tertiaryColors,
+                Image.asset(
+                  'assets/Handoff/ilustrator/backgroud.png',
+                  width: double.maxFinite,
+                  height: 180,
+                  fit: BoxFit.cover,
                 ),
                 Container(
                   width: double.maxFinite,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
                         Color(0xFFf8f0f0), // #F8F0F0
@@ -206,7 +210,7 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
                           imageUrl: mentor?.user!.photoUrl ?? '',
                           radius: 80,
                         ),
-                        SizedBox(width: 20),
+                        const SizedBox(width: 20),
                         Expanded(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -230,24 +234,24 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
                                     children: [
                                       IconButton(
                                         onPressed: _navigateToEditProfile,
-                                        icon: Icon(Icons.edit),
+                                        icon: const Icon(Icons.edit),
                                       ),
                                     ],
                                   ))
                                 ],
                               ),
-                              SizedBox(height: 20),
+                              const SizedBox(height: 20),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.work_outline_outlined,
                                         size: 20,
-                                        color: const Color(0xffE78938),
+                                        color: Color(0xffE78938),
                                       ),
-                                      SizedBox(width: 5),
+                                      const SizedBox(width: 5),
                                       Text(
                                         mentor?.user!.experiences!
                                                 .firstWhere((element) =>
@@ -255,27 +259,27 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
                                                     true)
                                                 .jobTitle ??
                                             '',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontWeight: FontWeight.w400,
                                           fontSize: 16,
                                         ),
                                       ),
                                     ],
                                   ),
-                                  SizedBox(width: 20),
+                                  const SizedBox(width: 20),
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Icon(
+                                        const Icon(
                                           Icons.location_on_outlined,
                                           size: 20,
-                                          color: const Color(0xffE78938),
+                                          color: Color(0xffE78938),
                                         ),
-                                        SizedBox(width: 5),
+                                        const SizedBox(width: 5),
                                         Text(
                                           mentor?.user!.location ?? '',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 18,
                                           ),
@@ -285,22 +289,22 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 5),
+                              const SizedBox(height: 5),
                               Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.home_work_outlined,
                                     size: 20,
-                                    color: const Color(0xffE78938),
+                                    color: Color(0xffE78938),
                                   ),
-                                  SizedBox(width: 4),
+                                  const SizedBox(width: 4),
                                   Text(
                                     mentor?.user!.experiences!
                                             .firstWhere((element) =>
                                                 element.isCurrentJob == true)
                                             .company ??
                                         '',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 16,
                                     ),
@@ -314,7 +318,7 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Padding(
@@ -328,26 +332,26 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
                             style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                               fontSize: 18,
-                              color: Color(0xffE78938),
+                              color: const Color(0xffE78938),
                             ),
                           ),
-                          SizedBox(height: 12),
+                          const SizedBox(height: 12),
                           Text(
                             mentor?.user!.about ?? '',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 16,
                               color: Color(0xff313030),
                             ),
                           ),
-                          SizedBox(height: 12),
+                          const SizedBox(height: 12),
                           SizedBox(
                             width: 200,
                             child: TextButton(
                               style: TextButton.styleFrom(
                                 backgroundColor:
-                                    Color(0xffE78938), // Primary color
-                                padding: EdgeInsets.symmetric(
+                                    const Color(0xffE78938), // Primary color
+                                padding: const EdgeInsets.symmetric(
                                   vertical: 20.0,
                                   horizontal: 34.0,
                                 ),
@@ -369,8 +373,8 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
                                     height: 20.0,
                                     color: Colors.white,
                                   ),
-                                  SizedBox(width: 8.0),
-                                  Text(
+                                  const SizedBox(width: 8.0),
+                                  const Text(
                                     "Linkedin",
                                     style: TextStyle(
                                       fontWeight: FontWeight.w400,
@@ -382,16 +386,16 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Text(
                             "Skill",
                             style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                               fontSize: 18,
-                              color: Color(0xffE78938),
+                              color: const Color(0xffE78938),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           SingleChildScrollView(
@@ -401,19 +405,19 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
                               children: mentor?.user!.skills
                                       ?.map((skill) => SkillCard(skill: skill))
                                       .toList() ??
-                                  [Text('No skills')],
+                                  [const Text('No skills')],
                             ),
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Text(
                             "Experience",
                             style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                               fontSize: 18,
-                              color: Color(0xffE78938),
+                              color: const Color(0xffE78938),
                             ),
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Column(
                             children: mentor?.user!.experiences
                                     ?.where((experience) =>
@@ -424,7 +428,7 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
                                     company: experience.company ?? 'No Company',
                                   );
                                 }).toList() ??
-                                [Text('No experiences')],
+                                [const Text('No experiences')],
                           ),
                         ]),
                   ),
@@ -485,7 +489,7 @@ class ExperienceWidget extends StatelessWidget {
         children: [
           Icon(Icons.work_outline_outlined,
               size: 20, color: ColorStyle().primaryColors),
-          SizedBox(width: 8), // Sesuaikan sesuai dengan kebutuhan Anda
+          const SizedBox(width: 8), // Sesuaikan sesuai dengan kebutuhan Anda
           Column(
             crossAxisAlignment:
                 CrossAxisAlignment.start, // Atur sesuai kebutuhan

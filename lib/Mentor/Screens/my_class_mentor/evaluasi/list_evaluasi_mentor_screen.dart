@@ -66,6 +66,17 @@ class _ListEvaluasiMenteeState extends State<ListEvaluasiMentee> {
                 .where((userClass) => userClass.id == widget.classId)
                 .toList();
 
+            var evaluations = userClass[0].evaluations ?? [];
+
+            if (evaluations.isEmpty) {
+              return Center(
+                child: Image.asset(
+                  'assets/Handoff/ilustrator/empty_evaluation.png',
+                  height: 300,
+                ),
+              );
+            }
+
             return ListView.builder(
               itemCount: userClass.length,
               itemBuilder: (context, index) {

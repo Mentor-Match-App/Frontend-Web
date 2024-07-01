@@ -113,6 +113,8 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
     return Scaffold(
       backgroundColor: ColorStyle().whiteColors,
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -181,9 +183,11 @@ class _ProfileMenteeScreenState extends State<ProfileMenteeScreen> {
 
             return ListView(
               children: [
-                Container(
-                  height: 60,
-                  color: ColorStyle().tertiaryColors,
+                Image.asset(
+                  'assets/Handoff/ilustrator/backgroud.png',
+                  width: double.maxFinite,
+                  height: 180,
+                  fit: BoxFit.cover,
                 ),
                 Container(
                   width: double.maxFinite,

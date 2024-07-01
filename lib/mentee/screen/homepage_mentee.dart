@@ -146,14 +146,13 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushAndRemoveUntil(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
                                     const ProfileMenteeScreen()
                                 // ProfileMentorScreen(),
                                 ),
-                            (route) => false,
                           );
                         },
                         child: _buildCircularImage(

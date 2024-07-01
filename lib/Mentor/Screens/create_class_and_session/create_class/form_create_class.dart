@@ -197,12 +197,14 @@ class _FormCreatePremiumClassScreenState
           confirmText: Text(
             'OK',
             style: FontFamily().boldText.copyWith(
+                  fontSize: 16,
                   color: ColorStyle().primaryColors,
                 ),
           ),
           cancelText: Text(
-            'CANCEL',
+            'Cancel',
             style: FontFamily().boldText.copyWith(
+                  fontSize: 16,
                   color: ColorStyle().primaryColors,
                 ),
           ),
@@ -648,29 +650,32 @@ class _FormCreatePremiumClassScreenState
                   ),
                 ),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TittleTextField(
-                      title: "Rincian Kegiatan",
-                      color: ColorStyle().secondaryColors,
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ContohPremiumClass(),
-                          ),
-                        );
-                      },
-                      icon: Icon(
-                        Icons.help,
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0, top: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TittleTextField(
+                        title: "Rincian Kegiatan",
                         color: ColorStyle().secondaryColors,
-                        size: 20,
                       ),
-                    ),
-                  ],
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ContohPremiumClass(),
+                            ),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.help,
+                          color: ColorStyle().secondaryColors,
+                          size: 20,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 TextFieldWidgetBig(
                     title: 'Deskripsi Kegiatan',
@@ -725,30 +730,32 @@ class _FormCreatePremiumClassScreenState
                   ],
                 ),
 
-                //// target learning///
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TittleTextField(
-                      title: "Target Pembelajaran",
-                      color: ColorStyle().secondaryColors,
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ContohPremiumClass(),
-                          ),
-                        );
-                      },
-                      icon: Icon(
-                        Icons.help,
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0, top: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TittleTextField(
+                        title: "Target Pembelajaran",
                         color: ColorStyle().secondaryColors,
-                        size: 20,
                       ),
-                    ),
-                  ],
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ContohPremiumClass(),
+                            ),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.help,
+                          color: ColorStyle().secondaryColors,
+                          size: 20,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -802,29 +809,32 @@ class _FormCreatePremiumClassScreenState
                   ),
                 ),
                 ////syarat ketentuan///
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TittleTextField(
-                      title: "Syarat & Ketentuan",
-                      color: ColorStyle().secondaryColors,
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ContohPremiumClass(),
-                          ),
-                        );
-                      },
-                      icon: Icon(
-                        Icons.help,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TittleTextField(
+                        title: "Syarat & Ketentuan",
                         color: ColorStyle().secondaryColors,
-                        size: 20,
                       ),
-                    ),
-                  ],
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ContohPremiumClass(),
+                            ),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.help,
+                          color: ColorStyle().secondaryColors,
+                          size: 20,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -872,6 +882,9 @@ class _FormCreatePremiumClassScreenState
                       ],
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: 16,
                 ),
                 Align(
                   alignment: Alignment.centerRight,

@@ -138,12 +138,11 @@ class _MentorHomePageState extends State<MentorHomePage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushAndRemoveUntil(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => ProfileMentorScreen(),
                         ),
-                        (route) => false,
                       );
                     },
                     child: ClipOval(

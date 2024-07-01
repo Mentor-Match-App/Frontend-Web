@@ -251,7 +251,6 @@ class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            width: 160,
                             height: 38,
                             decoration: BoxDecoration(
                               border: Border(
@@ -271,13 +270,12 @@ class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
                                 "Class Submission ( $classSubmissionCount )",
                                 style: FontFamily().boldText.copyWith(
                                     color: isClassSubmissionActive
-                                        ? ColorStyle().blackColors
+                                        ? ColorStyle().secondaryColors
                                         : ColorStyle().disableColors),
                               ),
                             ),
                           ),
                           Container(
-                            width: 160,
                             height: 38,
                             decoration: BoxDecoration(
                               border: Border(
@@ -297,13 +295,12 @@ class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
                                 "Premium Class ( $premiumClassCount )",
                                 style: FontFamily().boldText.copyWith(
                                     color: isPremiumClassActive
-                                        ? ColorStyle().blackColors
+                                        ? ColorStyle().secondaryColors
                                         : ColorStyle().disableColors),
                               ),
                             ),
                           ),
                           Container(
-                            width: 100,
                             height: 38,
                             decoration: BoxDecoration(
                               border: Border(
@@ -323,7 +320,7 @@ class _MyClassMentorListScreenState extends State<MyClassMentorListScreen> {
                                 "Session ( $sessionCount )",
                                 style: FontFamily().boldText.copyWith(
                                     color: isSessionActive
-                                        ? ColorStyle().blackColors
+                                        ? ColorStyle().secondaryColors
                                         : ColorStyle().disableColors),
                               ),
                             ),

@@ -173,6 +173,7 @@ class _DetailMyClassMentorScreenState extends State<DetailMyClassMentorScreen> {
                     )
                   ],
                 ),
+                const SizedBox(height: 12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -230,12 +231,13 @@ class _DetailMyClassMentorScreenState extends State<DetailMyClassMentorScreen> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TittleTextField(title: 'Module Pembelajaran '),
+                    TittleTextField(title: 'Target Pembelajaran'),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(2.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: (widget.targetLearning.isNotEmpty)
@@ -260,7 +262,7 @@ class _DetailMyClassMentorScreenState extends State<DetailMyClassMentorScreen> {
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 8.0),
                                   child: Text(
-                                    "Tidak ada module",
+                                    "Tidak ada target pembelajaran",
                                     style: FontFamily().regularText,
                                   ),
                                 ),
@@ -269,24 +271,28 @@ class _DetailMyClassMentorScreenState extends State<DetailMyClassMentorScreen> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TittleTextField(title: 'Syarat Wajib Kelas'),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('\u2022'),
-                        const SizedBox(
-                          width: 6,
-                        ),
-                        Expanded(
-                          child: Text(
-                            'Setiap selesai materi atau chapter, mentee wajib mengerjakan evaluais yang bisa diakases dalam platform berupa link evaluasi yang nantinya akan di review dan diberikan feedback oleh mentor',
-                            style: FontFamily().regularText,
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('\u2022'),
+                          const SizedBox(
+                            width: 6,
                           ),
-                        ),
-                      ],
+                          Expanded(
+                            child: Text(
+                              'Setiap selesai materi atau chapter, mentee wajib mengerjakan evaluais yang bisa diakases dalam platform berupa link evaluasi yang nantinya akan di review dan diberikan feedback oleh mentor',
+                              style: FontFamily().regularText,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,

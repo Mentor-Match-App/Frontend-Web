@@ -74,9 +74,11 @@ class _DetailMentorSessionScreenState extends State<DetailMentorSessionScreen> {
       ),
       body: ListView(
         children: [
-          Container(
-            height: 60,
-            color: ColorStyle().tertiaryColors,
+          Image.asset(
+            'assets/Handoff/ilustrator/backgroud.png',
+            width: double.maxFinite,
+            height: 180,
+            fit: BoxFit.cover,
           ),
           Container(
             width: double.maxFinite,

@@ -63,19 +63,21 @@ class _DetailMentorAllScreenState extends State<DetailMentorAllScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: NavbarWidgetMentee(),
       ),
       body: ListView(
         children: [
-          Container(
-            height: 60,
-            color: ColorStyle().tertiaryColors,
+          Image.asset(
+            'assets/Handoff/ilustrator/backgroud.png',
+            width: double.maxFinite,
+            height: 180,
+            fit: BoxFit.cover,
           ),
           Container(
             width: double.maxFinite,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
                   Color(0xFFf8f0f0), // #F8F0F0
@@ -100,7 +102,7 @@ class _DetailMentorAllScreenState extends State<DetailMentorAllScreen> {
                     imageUrl: widget.photoUrl,
                     radius: 80,
                   ),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -114,41 +116,41 @@ class _DetailMentorAllScreenState extends State<DetailMentorAllScreen> {
                             color: Colors.black, // Text color adjusted
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Row(
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.work_outline_outlined,
                                   size: 20,
-                                  color: const Color(0xffE78938),
+                                  color: Color(0xffE78938),
                                 ),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 Text(
                                   widget.job,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 16,
                                   ),
                                 ),
                               ],
                             ),
-                            SizedBox(width: 20),
+                            const SizedBox(width: 20),
                             Expanded(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.location_on_outlined,
                                     size: 20,
-                                    color: const Color(0xffE78938),
+                                    color: Color(0xffE78938),
                                   ),
-                                  SizedBox(width: 5),
+                                  const SizedBox(width: 5),
                                   Text(
                                     widget.location,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 18,
                                     ),
@@ -158,18 +160,18 @@ class _DetailMentorAllScreenState extends State<DetailMentorAllScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.home_work_outlined,
                               size: 20,
-                              color: const Color(0xffE78938),
+                              color: Color(0xffE78938),
                             ),
-                            SizedBox(width: 4),
+                            const SizedBox(width: 4),
                             Text(
                               widget.company,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16,
                               ),
@@ -191,7 +193,7 @@ class _DetailMentorAllScreenState extends State<DetailMentorAllScreen> {
               Container(
                 color: Colors.white,
                 width: MediaQuery.of(context).size.width / 2,
-                padding: EdgeInsets.all(55.0),
+                padding: const EdgeInsets.all(55.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -200,25 +202,25 @@ class _DetailMentorAllScreenState extends State<DetailMentorAllScreen> {
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         fontSize: 18,
-                        color: Color(0xffE78938),
+                        color: const Color(0xffE78938),
                       ),
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     Text(
                       widget.about,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 16,
                         color: Color(0xff313030),
                       ),
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     SizedBox(
                       width: 200,
                       child: TextButton(
                         style: TextButton.styleFrom(
-                          backgroundColor: Color(0xffE78938), // Primary color
-                          padding: EdgeInsets.symmetric(
+                          backgroundColor: const Color(0xffE78938), // Primary color
+                          padding: const EdgeInsets.symmetric(
                             vertical: 20.0,
                             horizontal: 34.0,
                           ),
@@ -239,8 +241,8 @@ class _DetailMentorAllScreenState extends State<DetailMentorAllScreen> {
                               height: 20.0,
                               color: Colors.white,
                             ),
-                            SizedBox(width: 8.0),
-                            Text(
+                            const SizedBox(width: 8.0),
+                            const Text(
                               "Linkedin",
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
@@ -252,16 +254,16 @@ class _DetailMentorAllScreenState extends State<DetailMentorAllScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Text(
                       "Skill",
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         fontSize: 18,
-                        color: Color(0xffE78938),
+                        color: const Color(0xffE78938),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     SingleChildScrollView(
@@ -273,16 +275,16 @@ class _DetailMentorAllScreenState extends State<DetailMentorAllScreen> {
                             .toList(),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Text(
                       "Experience",
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         fontSize: 18,
-                        color: Color(0xffE78938),
+                        color: const Color(0xffE78938),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Column(
                       children: widget.mentor.experiences?.map((experience) {
                             return ExperienceWidget(
@@ -290,18 +292,18 @@ class _DetailMentorAllScreenState extends State<DetailMentorAllScreen> {
                               company: experience.company ?? 'No Company',
                             );
                           }).toList() ??
-                          [Text('No experiences')],
+                          [const Text('No experiences')],
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Text(
                       "Review",
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         fontSize: 20,
-                        color: Color(0xffE78938),
+                        color: const Color(0xffE78938),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     // list of ReviewWidget
                     buildReviewWidgets(),
                   ],
@@ -310,7 +312,7 @@ class _DetailMentorAllScreenState extends State<DetailMentorAllScreen> {
               Container(
                 color: Colors.white,
                 width: MediaQuery.of(context).size.width / 2,
-                padding: EdgeInsets.all(55),
+                padding: const EdgeInsets.all(55),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -321,11 +323,11 @@ class _DetailMentorAllScreenState extends State<DetailMentorAllScreen> {
                         style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w500,
                           fontSize: 18,
-                          color: Color(0xffE78938),
+                          color: const Color(0xffE78938),
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     Padding(
@@ -377,14 +379,14 @@ class _DetailMentorAllScreenState extends State<DetailMentorAllScreen> {
                                             blurRadius: 4,
                                             spreadRadius: 4,
                                             offset:
-                                                Offset(0, 4), // Shadow position
+                                                const Offset(0, 4), // Shadow position
                                           ),
                                         ],
                                         color: Colors.white,
-                                  
+
                                         // border radius
-                                        borderRadius:
-                                            BorderRadius.all(Radius.circular(5))),
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(5))),
                                     child: Padding(
                                       padding: const EdgeInsets.all(16.0),
                                       child: Column(
@@ -399,10 +401,10 @@ class _DetailMentorAllScreenState extends State<DetailMentorAllScreen> {
                                               style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.w400,
                                                 fontSize: 20,
-                                                color: Color(0xffE78938),
+                                                color: const Color(0xffE78938),
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 10,
                                             ),
                                             Text(
@@ -411,7 +413,7 @@ class _DetailMentorAllScreenState extends State<DetailMentorAllScreen> {
                                                   .regularText
                                                   .copyWith(fontSize: 14),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 10,
                                             ),
                                             Text(kelas.description ?? "",
@@ -423,7 +425,7 @@ class _DetailMentorAllScreenState extends State<DetailMentorAllScreen> {
                                                         fontSize: 14,
                                                         color: ColorStyle()
                                                             .disableColors)),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 10,
                                             ),
                                             Align(
@@ -432,13 +434,15 @@ class _DetailMentorAllScreenState extends State<DetailMentorAllScreen> {
                                                 width: 150,
                                                 child: TextButton(
                                                   style: TextButton.styleFrom(
-                                                    backgroundColor: Color(
+                                                    backgroundColor: const Color(
                                                         0xffE78938), // Primary color
-                                                    padding: EdgeInsets.symmetric(
+                                                    padding:
+                                                        const EdgeInsets.symmetric(
                                                       vertical: 20.0,
                                                       horizontal: 34.0,
                                                     ),
-                                                    shape: RoundedRectangleBorder(
+                                                    shape:
+                                                        RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               10.0),
@@ -459,12 +463,14 @@ class _DetailMentorAllScreenState extends State<DetailMentorAllScreen> {
                                                                         "",
                                                                 mentorName:
                                                                     widget.name,
-                                                                transaction: kelas
-                                                                        .transactions ??
-                                                                    [],
+                                                                transaction:
+                                                                    kelas.transactions ??
+                                                                        [],
                                                                 mentorData:
-                                                                    widget.mentor,
-                                                                classId: kelas.id,
+                                                                    widget
+                                                                        .mentor,
+                                                                classId:
+                                                                    kelas.id,
                                                                 classname: kelas
                                                                         .name ??
                                                                     'No Class Name',
@@ -491,33 +497,37 @@ class _DetailMentorAllScreenState extends State<DetailMentorAllScreen> {
                                                                 classDescription:
                                                                     kelas.description ??
                                                                         'No Description',
-                                                                targetLearning: kelas
-                                                                    .targetLearning,
+                                                                targetLearning:
+                                                                    kelas
+                                                                        .targetLearning,
                                                                 terms:
                                                                     kelas.terms,
-                                                                durationInDays: kelas
-                                                                    .durationInDays,
-                                                                price:
-                                                                    kelas.price ??
-                                                                        0,
+                                                                durationInDays:
+                                                                    kelas
+                                                                        .durationInDays,
+                                                                price: kelas
+                                                                        .price ??
+                                                                    0,
                                                                 location: kelas
                                                                     .location,
-                                                                address:
-                                                                    kelas.address,
+                                                                address: kelas
+                                                                    .address,
                                                               ),
                                                             ),
                                                           );
                                                         }
                                                       : () {
-                                                          showTopSnackBar(context,
+                                                          showTopSnackBar(
+                                                              context,
                                                               'Maaf, slot kelas ini sudah penuh',
                                                               leftBarIndicatorColor:
                                                                   Colors.red);
                                                         },
-                                                  child: Text(
+                                                  child: const Text(
                                                     "Lihat Detail",
                                                     style: TextStyle(
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       fontSize: 14,
                                                       color: Colors.white,
                                                     ),
@@ -621,7 +631,7 @@ class ExperienceWidget extends StatelessWidget {
         children: [
           Icon(Icons.work_outline_outlined,
               size: 20, color: ColorStyle().primaryColors),
-          SizedBox(width: 8), // Sesuaikan sesuai dengan kebutuhan Anda
+          const SizedBox(width: 8), // Sesuaikan sesuai dengan kebutuhan Anda
           Column(
             crossAxisAlignment:
                 CrossAxisAlignment.start, // Atur sesuai kebutuhan
