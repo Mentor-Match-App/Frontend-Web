@@ -92,6 +92,23 @@ class _PremiumClassMentorScreenState extends State<PremiumClassMentorScreen> {
   void initState() {
     super.initState();
     classData = ListClassMentor().fetchClassData();
+    classData.then((value) {
+      value.user?.userClass?.retainWhere((userClass) {
+        int priority = _getPriority(userClass);
+        return priority == 1 ||
+            priority == 2 ||
+            priority == 3 ||
+            priority == 4 ||
+            priority == 5;
+      });
+      value.user?.userClass =
+          _sortClassesByPriority(value.user?.userClass ?? []);
+    });
+  }
+
+  List<AllClass> _sortClassesByPriority(List<AllClass> classes) {
+    classes.sort((a, b) => _getPriority(b).compareTo(_getPriority(a)));
+    return classes;
   }
 
   @override
@@ -106,27 +123,8 @@ class _PremiumClassMentorScreenState extends State<PremiumClassMentorScreen> {
         } else if (snapshot.hasError) {
           return Text("Error: ${snapshot.error}");
         } else if (snapshot.hasData) {
-          var userClass = snapshot.data!.user?.userClass;
-          if (userClass == null || userClass.isEmpty) {
-            return SizedBox(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height / 2.0,
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Center(child: Text('Belum ada kelas')),
-              ),
-            );
-          }
-          var filteredClasses = userClass.where((data) {
-            int priority = _getPriority(data);
-            return priority != 6; // Exclude "Unavailable"
-          }).toList();
-
-          // Sorting the filteredClasses by priority
-          filteredClasses
-              .sort((a, b) => _getPriority(a).compareTo(_getPriority(b)));
-
-          if (filteredClasses.isEmpty) {
+          var userClass = snapshot.data!.user?.userClass!;
+          if (userClass!.isEmpty) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
@@ -142,7 +140,6 @@ class _PremiumClassMentorScreenState extends State<PremiumClassMentorScreen> {
                         width: 270,
                         height: 270,
                       ),
-                      const SizedBox(height: 20),
                     ],
                   ),
                 ),
@@ -154,7 +151,7 @@ class _PremiumClassMentorScreenState extends State<PremiumClassMentorScreen> {
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
-                children: filteredClasses.map((data) {
+                children: userClass!.map((data) {
                   int approvedTransactionsCount = data.transactions
                           ?.where((transaction) =>
                               transaction.paymentStatus == "Approved")
@@ -257,12 +254,22 @@ class _PremiumClassMentorScreenState extends State<PremiumClassMentorScreen> {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height / 2,
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(child: Text('Belum ada kelas')),
-                )),
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height / 2,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/Handoff/ilustrator/empty.png',
+                      width: 270,
+                      height: 270,
+                    ),
+                  ],
+                ),
+              ),
+            ),
           );
         }
       },

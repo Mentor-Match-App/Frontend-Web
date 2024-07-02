@@ -79,7 +79,7 @@ class _BookingClassMenteeScreenState extends State<BookingClassMenteeScreen> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return SizedBox(
               height: MediaQuery.of(context).size.height / 2.0,
-              child: Center(child: const CircularProgressIndicator()));
+              child: const Center(child: CircularProgressIndicator()));
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
@@ -88,13 +88,22 @@ class _BookingClassMenteeScreenState extends State<BookingClassMenteeScreen> {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height / 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child:
-                        const Center(child: Text('Kamu belum memiliki kelas')),
-                  )),
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/Handoff/ilustrator/empty.png',
+                        width: 270,
+                        height: 270,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             );
           }
           return SingleChildScrollView(
@@ -197,14 +206,14 @@ class _BookingClassMenteeScreenState extends State<BookingClassMenteeScreen> {
                             else if (statusButton == 2)
                               createStatusButton(
                                   "Expired", ColorStyle().blackColors),
-                            SizedBox(height: 10),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 ClipOval(
                                   child: CachedNetworkImage(
-                                    placeholder: (context, url) => Center(
+                                    placeholder: (context, url) => const Center(
                                       child: CircularProgressIndicator(),
                                     ),
                                     errorWidget: (context, url, error) =>
@@ -265,12 +274,22 @@ class _BookingClassMenteeScreenState extends State<BookingClassMenteeScreen> {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height / 2,
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(child: Text('Kamu belum memiliki kelas')),
-                )),
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height / 2,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/Handoff/ilustrator/empty.png',
+                      width: 270,
+                      height: 270,
+                    ),
+                  ],
+                ),
+              ),
+            ),
           );
         }
       },

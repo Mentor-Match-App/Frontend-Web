@@ -149,16 +149,6 @@ class _MyClassMenteeState extends State<MyClassMentee> {
         .length;
   }
 
-  // get all session data
-  List<ParticipantMyClass> _getSessions(List<ParticipantMyClass> sessions) {
-    return sessions
-        .where((s) =>
-            _getSessionPriority(s.session!) == 0 ||
-            _getSessionPriority(s.session!) == 1 ||
-            _getSessionPriority(s.session!) == 2)
-        .toList();
-  }
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<TransactionMyClass>>(
@@ -187,13 +177,6 @@ class _MyClassMenteeState extends State<MyClassMentee> {
               } else if (sessionSnapshot.hasData) {
                 final List<ParticipantMyClass> sessions = sessionSnapshot.data!;
                 final sessionCount = _getSessionCount(sessions);
-                final List<ParticipantMyClass> activeSessions =
-                    _getSessions(sessions);
-
-                // print active sessions name
-                activeSessions.forEach((element) {
-                  print(element.session!.title);
-                });
 
                 return SingleChildScrollView(
                   child: Column(

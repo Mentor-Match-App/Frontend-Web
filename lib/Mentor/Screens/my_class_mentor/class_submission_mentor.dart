@@ -107,7 +107,7 @@ class _ClassSubmissionMentorScreenState
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
-                        'assets/Handoff/ilustrator/empty.png',
+                        'assets/Handoff/ilustrator/empty_submission.png',
                         width: 270,
                         height: 270,
                       ),

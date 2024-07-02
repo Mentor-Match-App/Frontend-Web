@@ -10,13 +10,13 @@ class MyDropdownWidget extends StatefulWidget {
   final String? initialValue;
 
   const MyDropdownWidget({
-    Key? key,
+    super.key,
     this.hintText = 'Select an item',
     required this.items,
     this.textColor,
     this.initialValue,
     this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   _MyDropdownWidgetState createState() => _MyDropdownWidgetState();

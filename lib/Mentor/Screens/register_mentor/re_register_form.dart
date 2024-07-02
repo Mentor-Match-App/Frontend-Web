@@ -55,7 +55,7 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
   String accountNumber = "";
   String accountName = "";
   List<String> skills = [];
-  List<Map<String, String>> experience = [];
+  List<Map<String, String>> experiences = [];
   bool isLoading = false;
 
   final ProfileService mentorService = ProfileService();
@@ -123,7 +123,7 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
       _accountNameController.text = profileData.user?.accountName ?? '';
       _skills.addAll(
           profileData.user?.skills?.map((skill) => {'skill': skill}) ?? []);
-      experience.addAll(profileData.user?.experiences?.map((exp) => {
+      experiences.addAll(profileData.user?.experiences?.map((exp) => {
                 'role': exp.jobTitle ?? '',
                 'experienceCompany': exp.company ?? ''
               }) ??
@@ -140,7 +140,7 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
 
   void _addExperience() {
     setState(() {
-      experience.add({
+      experiences.add({
         'role': _roleController.text,
         'experienceCompany': _experienceCompanyController.text
       });
@@ -201,8 +201,6 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
           );
         }
       } catch (error) {
-        // Show error message if there is an error updating the mentor profile
-        print('Error updating mentor profile: $error');
         showTopSnackBar(
           context,
           "Failed to update mentor profile",
@@ -777,7 +775,7 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: experience.map((exp) => _buildExperienceChip(exp)).toList(),
+        children: experiences.map((exp) => _buildExperienceChip(exp)).toList(),
       ),
     );
   }
@@ -787,13 +785,13 @@ class _ReRegisterFormScreenState extends State<ReRegisterFormScreen> {
       padding: const EdgeInsets.only(right: 12, top: 8),
       child: Chip(
         label: Text(
-          exp['role']! + " at " + exp['experienceCompany']!,
+          "${exp['role']!} at ${exp['experienceCompany']!}",
           style: FontFamily().regularText.copyWith(color: Colors.white),
         ),
         backgroundColor: ColorStyle().primaryColors,
         deleteIcon: const Icon(Icons.close, size: 12),
         onDeleted: () {
-          setState(() => experience.remove(exp));
+          setState(() => experiences.remove(exp));
         },
       ),
     );

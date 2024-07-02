@@ -10,8 +10,10 @@ import 'package:my_flutter_app/widget/menucategory.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MySessionBooking extends StatefulWidget {
+  const MySessionBooking({super.key});
+
   @override
-  _MySessionBookingState createState() => _MySessionBookingState();
+  State<MySessionBooking> createState() => _MySessionBookingState();
 }
 
 class _MySessionBookingState extends State<MySessionBooking> {
@@ -32,7 +34,7 @@ class _MySessionBookingState extends State<MySessionBooking> {
         DateTime.now().isBefore(endTime) &&
         DateTime.now().isAfter(startTime)) {
       buttonText = "Active";
-    } else if (userSessions.isActive == false && 
+    } else if (userSessions.isActive == false &&
         DateTime.now().isAfter(endTime)) {
       buttonText = "Finished";
     }
@@ -104,12 +106,22 @@ class _MySessionBookingState extends State<MySessionBooking> {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height / 2,
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Center(child: Text('Kamu belum memiliki session')),
-                  )),
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/Handoff/ilustrator/empty_session.png',
+                        width: 270,
+                        height: 270,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             );
           }
           return SingleChildScrollView(
@@ -197,14 +209,14 @@ class _MySessionBookingState extends State<MySessionBooking> {
                                           color: ColorStyle().disableColors),
                                     ),
                                     Text(
-                                      'Jadwal : ${formattedJadwal}',
+                                      'Jadwal : $formattedJadwal',
                                       style: GoogleFonts.poppins(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
                                           color: ColorStyle().disableColors),
                                     ),
                                     Text(
-                                      'Jam : ${formattedStartTime} - ${formattedEndTime}',
+                                      'Jam : $formattedStartTime - $formattedEndTime',
                                       style: GoogleFonts.poppins(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
@@ -267,12 +279,22 @@ class _MySessionBookingState extends State<MySessionBooking> {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height / 2,
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(child: Text('Kamu belum memiliki session')),
-                )),
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height / 2,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/Handoff/ilustrator/empty_session.png',
+                      width: 270,
+                      height: 270,
+                    ),
+                  ],
+                ),
+              ),
+            ),
           );
         }
       },
