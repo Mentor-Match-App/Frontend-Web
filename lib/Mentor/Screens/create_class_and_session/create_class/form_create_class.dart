@@ -75,7 +75,7 @@ class _FormCreatePremiumClassScreenState
     ],
   };
 
-  List<String> selectedDays = [];
+  List<String> selectedDaysList = [];
 
   TextEditingController scheduleController = TextEditingController();
   TextEditingController locationController = TextEditingController();
@@ -266,6 +266,7 @@ class _FormCreatePremiumClassScreenState
 
             setState(() {
               scheduleController.text = sortedDays.join(', ');
+              selectedDaysList = sortedDays.cast<String>();
             });
           },
         );
@@ -292,7 +293,7 @@ class _FormCreatePremiumClassScreenState
           priceController.text.isEmpty ||
           durationInDaysController.text.isEmpty ||
           descriptionCobtroller.text.isEmpty ||
-          selectedDays.isEmpty ||
+          selectedDaysList.isEmpty ||
           (selectedLocation == 'Offline' && addressController.text.isEmpty) ||
           capacitymentee == 0 ||
           startDateController.text.isEmpty ||
@@ -883,7 +884,7 @@ class _FormCreatePremiumClassScreenState
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 Align(

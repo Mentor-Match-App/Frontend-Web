@@ -106,9 +106,14 @@ class _PremiumClassMentorScreenState extends State<PremiumClassMentorScreen> {
     });
   }
 
-  List<AllClass> _sortClassesByPriority(List<AllClass> classes) {
-    classes.sort((a, b) => _getPriority(b).compareTo(_getPriority(a)));
-    return classes;
+  // sort class by priority (Active, Scheduled, Full, Finished, Expired)
+  List<AllClass> _sortClassesByPriority(List<AllClass> userClass) {
+    userClass.sort((a, b) {
+      int priorityA = _getPriority(a);
+      int priorityB = _getPriority(b);
+      return priorityA.compareTo(priorityB);
+    });
+    return userClass;
   }
 
   @override
