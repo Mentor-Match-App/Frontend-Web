@@ -23,48 +23,46 @@ class _DashboardMentorState extends State<DashboardMentor> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Jelajahi Dunia Mentoring\nyang Menginspirasi",
-                      textAlign: TextAlign.left,
-                      style: GoogleFonts.poppins(
-                        fontSize: 24,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Jelajahi Dunia Mentoring\nyang Menginspirasi",
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.poppins(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Tingkatkan karier Anda dengan membagikan\nkisah sukses dan tantangan pribadi Anda! Buat\nkelas premium yang unik dan memberikan\ninspirasi langsung kepada peserta.",
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.poppins(
+                        fontSize: 16,
                         fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "Tingkatkan karier Anda dengan membagikan\nkisah sukses dan tantangan pribadi Anda! Buat\nkelas premium yang unik dan memberikan\ninspirasi langsung kepada peserta.",
-                      textAlign: TextAlign.left,
-                      style: GoogleFonts.poppins(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: ColorStyle().disableColors),
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    ElevatedButtonWidget(
-                      title: "Buat Kelas",
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PersetujuanPremiClassMentor(),
-                          ),
-                        );
-                      },
-                    )
-                  ],
-                ),
+                        color: ColorStyle().disableColors),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  ElevatedButtonWidget(
+                    title: "Buat Kelas",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PersetujuanPremiClassMentor(),
+                        ),
+                      );
+                    },
+                  )
+                ],
               ),
-              SizedBox(
+              const SizedBox(
                 width: 200,
               ),
               Container(
@@ -100,49 +98,47 @@ class _DashboardMentorState extends State<DashboardMentor> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 200,
               ),
-              Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Jelajahi Dunia Mentoring\nyang Menginspirasi",
-                      textAlign: TextAlign.left,
-                      style: GoogleFonts.poppins(
-                        fontSize: 24,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Jelajahi Dunia Mentoring\nyang Menginspirasi",
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.poppins(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Tingkatkan karier Anda dengan membagikan\nkisah sukses dan tantangan pribadi Anda! Buat\nkelas premium yang unik dan memberikan\ninspirasi langsung kepada peserta.",
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.poppins(
+                        fontSize: 16,
                         fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "Tingkatkan karier Anda dengan membagikan\nkisah sukses dan tantangan pribadi Anda! Buat\nkelas premium yang unik dan memberikan\ninspirasi langsung kepada peserta.",
-                      textAlign: TextAlign.left,
-                      style: GoogleFonts.poppins(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: ColorStyle().disableColors),
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    ElevatedButtonWidget(
-                      title: "Buat Session",
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => FormCreateSessionScreen(),
-                          ),
-                        );
-                      },
-                    )
-                  ],
-                ),
+                        color: ColorStyle().disableColors),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  ElevatedButtonWidget(
+                    title: "Buat Session",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FormCreateSessionScreen(),
+                        ),
+                      );
+                    },
+                  )
+                ],
               ),
             ],
           ),

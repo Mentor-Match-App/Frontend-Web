@@ -39,7 +39,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Container(
                 height: MediaQuery.of(context).size.height / 2.0,
-                child: Center(child: CircularProgressIndicator()));
+                child: const Center(child: CircularProgressIndicator()));
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error.toString()}'));
           } else if (snapshot.hasData &&
@@ -58,34 +58,32 @@ class _CommunityScreenState extends State<CommunityScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Mari bergabung di dalam\nKomunitas kami",
-                                textAlign: TextAlign.left,
-                                style: GoogleFonts.poppins(
-                                  fontSize: 24,
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Mari bergabung di dalam\nKomunitas kami",
+                              textAlign: TextAlign.left,
+                              style: GoogleFonts.poppins(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              "Dengan bergabung kedalam komunitas\nkamu akan mendapatkan banyak\npengetahuan dan dapat berinteraksi\ndengan sesama rekan ataupun mentor\nkamu",
+                              textAlign: TextAlign.left,
+                              style: GoogleFonts.poppins(
+                                  fontSize: 16,
                                   fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                "Dengan bergabung kedalam komunitas\nkamu akan mendapatkan banyak\npengetahuan dan dapat berinteraksi\ndengan sesama rekan ataupun mentor\nkamu",
-                                textAlign: TextAlign.left,
-                                style: GoogleFonts.poppins(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    color: ColorStyle().disableColors),
-                              )
-                            ],
-                          ),
+                                  color: ColorStyle().disableColors),
+                            )
+                          ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 200,
                         ),
                         Container(
@@ -111,6 +109,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                   ),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
+                    physics: const AlwaysScrollableScrollPhysics(),
                     child: Row(
                         children: List.generate(communities.length, (index) {
                       return CardCommunity(
@@ -126,7 +125,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
               ),
             );
           } else {
-            return Center(child: Text('No Community Data'));
+            return const Center(child: Text('No Community Data'));
           }
         });
   }
